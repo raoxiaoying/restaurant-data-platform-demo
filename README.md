@@ -1,2 +1,21 @@
-# restaurant-data-platform-demo
-Interactive restaurant analytics demo with role dashboards, report publishing, and data status updates.
+# 餐饮数据分析平台 Demo
+
+多链互联餐饮经营分析 PC 交互原型，提供角色看板、专题报表、常用报表、数据状态与更新，以及基础设置中的数据上架配置。
+
+## 在线访问
+
+GitHub Pages 配置完成后访问：https://raoxiaoying.github.io/restaurant-data-platform-demo/
+
+发布来源：main 分支，仓库根目录。
+
+## 使用说明
+
+- 打开 `index.html` 即可本地查看，无需安装依赖。
+- 顶部可切换角色和业态；数据上架配置入口为“基础设置”。
+- 关联业务主题支持最多 20 行，选择主题后自动带出数据源和模型。
+- 页面与个人设置保存在各访问者的浏览器中，不会同步给其他访问者。
+- 数据、任务更新和时间预估均为交互演示，未接入生产数仓或真实 Quick BI 报表。
+
+## 更新页面
+
+用最新的单文件 Demo 替换根目录 `index.html`，提交到 main 分支后由 GitHub Pages 发布。
