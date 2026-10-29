@@ -64,8 +64,6 @@ p, h1, h2, h3 { margin: 0; }
 .home-intro, .page-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 15px; }
 .home-intro h1, .page-heading h1, h1.page-heading { margin-top: 4px; color: var(--ink); font-size: 25px; line-height: 1.3; font-weight: 750; letter-spacing: -.6px; }
 .home-kicker, .eyebrow { display: block; color: #788ba7; font-size: 12px; line-height: 1.4; font-weight: 550; letter-spacing: .4px; }
-.industry-pill { display: flex; align-items: center; justify-content: center; gap: 5px; flex: none; min-height: 44px; padding: 0 10px 0 12px; border: 1px solid #e2e8f2; border-radius: 12px; background: white; color: #556984; font-size: 13px; font-weight: 550; }
-.industry-pill svg { width: 12px; height: 12px; color: #8797ae; }
 .filter-bar { display: flex; align-items: stretch; width: 100%; margin-bottom: 0; border: 1px solid #e5ebf4; border-radius: 12px; background: white; box-shadow: 0 2px 4px #233f6803; overflow: hidden; }
 .filter-button, .filter-scope { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 44px; padding: 0 12px; background: transparent; color: #354d6d; font-size: 13px; font-weight: 550; }
 .filter-scope { flex: 1; justify-content: flex-start; }
@@ -459,7 +457,6 @@ p, h1, h2, h3 { margin: 0; }
   .identity-button { padding-left: 6px; padding-right: 6px; font-size: 13px; }
   .page-content { padding: 18px 12px calc(var(--nav-height) + var(--safe-bottom) + 20px); }
   .home-intro h1, .page-heading h1, h1.page-heading { font-size: 23px; }
-  .industry-pill { min-height: 44px; padding-left: 9px; padding-right: 8px; }
   .filter-button, .filter-scope { gap: 5px; padding-left: 9px; padding-right: 9px; font-size: 13px; }
   .data-entry { font-size: 12px; }
   .data-entry small { font-size: 12px; }
@@ -19783,7 +19780,7 @@ window.MobileDemoData = {
   function focusView(b){const item=b.insights?.panels?.[0];if(!item)return '';return `<section class="focus-card">${button(`<span class="focus-icon">${icon('spark',20)}</span><span class="focus-copy"><span class="focus-kicker">经营洞察 <small>固定观察</small></span><strong>${e(item.title)}</strong><span class="focus-summary">${e(item.insight)}</span></span>${icon('next',16)}`,'insight','focus-main')}</section>`}
   function boardBody(b,includeCommon=false){if(!availableSample())return `${includeCommon?commonView():''}<div class="card empty-query">${empty('这个范围还没有数据',`当前为 ${dateLabel()} · ${S.scope==='all'?'全部授权门店':'单店范围'}。样例覆盖近 7 天、本月和本季度。`)}${button('返回近 7 天','sample','primary-button')}</div>`;return metricsView(b)+(includeCommon?commonView():'')+focusView(b)+trendsView(b)+driversView(b)+issuesView(b)+(S.report?detailView(b):'')}
 
-  function homeView(){const p=M.home(S.role),b=M.board(p.id,S.industry);return `<div class="home-intro"><div><span class="home-kicker">我的看板</span><h1>${e(p.name)}</h1></div>${button(`${e(D.industries.find(i=>i.id===S.industry).name)}${icon('down',13)}`,'identity','industry-pill')}</div>${dataEntry()}${filterBar()}${b?boardBody(b,true):empty('页面内容待接入')}<p class="demo-note">数据截至 2026-10-15 · 交互原型</p>`}
+  function homeView(){const p=M.home(S.role),b=M.board(p.id,S.industry);return `<div class="home-intro"><div><span class="home-kicker">我的看板</span><h1>${e(p.name)}</h1></div></div>${dataEntry()}${filterBar()}${b?boardBody(b,true):empty('页面内容待接入')}<p class="demo-note">数据截至 2026-10-15 · 交互原型</p>`}
 
   function reportRow(p,{suggestion=false,selecting=false}={}){const fav=context().favorites.includes(p.id),[ic,tone]=reportStyle(p);return `<article class="report-row"><button type="button" class="report-main" data-action="${selecting?'favorite':'open'}" data-id="${p.id}"><span class="report-icon tone-${tone}">${icon(ic,21)}</span><span class="report-info"><strong class="report-title">${e(p.name)}</strong><small class="report-meta">${e(menuPath(p))}</small></span></button>${button(icon(suggestion&&!fav?'plus':'star',20),'favorite',`report-action ${fav?'is-favorite':''}`,`data-id="${p.id}" aria-label="${fav?'取消收藏':'收藏'}${e(p.name)}" aria-pressed="${fav}"`)}</article>`}
   function filteredPages(){const pages=M.eligible(S.role).filter(p=>(S.tab!=='favorites'||context().favorites.includes(p.id))&&(S.tab==='favorites'||S.category==='全部'||p.category===S.category)&&`${p.name} ${p.description} ${menuPath(p)}`.includes(S.search.trim()));return S.tab==='favorites'?pages.sort((a,b)=>context().favorites.indexOf(a.id)-context().favorites.indexOf(b.id)):pages}
