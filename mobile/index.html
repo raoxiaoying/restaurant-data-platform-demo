@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f4f6fa">
+  <meta name="theme-color" content="#f4f5f7">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <title>多链互联 · 移动看板</title>
   <style>:root {
   color-scheme: light;
   --blue: #2563eb; --blue-strong: #1d4ed8; --blue-light: #edf4ff;
-  --ink: #182536; --text: #4e5d70; --muted: #738094; --line: #e5eaf0;
-  --surface: #fff; --canvas: #f3f5f8; --green: #138568; --green-light: #e9f7f1;
-  --orange: #aa6615; --orange-light: #fff4e4; --red: #c5444c; --radius: 14px;
+  --ink: #20293a; --text: #20293a; --muted: #66758a; --line: #d8dee8;
+  --surface: #fff; --canvas: #f4f5f7; --green: #138568; --green-light: #e9f7f1;
+  --red: #c5444c; --radius: 8px;
   --safe-bottom: env(safe-area-inset-bottom, 0px); --nav-height: 64px;
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased; font-synthesis: none;
 }
 * { box-sizing: border-box; }
-html { min-height: 100%; background: #e9edf3; -webkit-text-size-adjust: 100%; }
+html { min-height: 100%; background: #e9edf2; -webkit-text-size-adjust: 100%; }
 body { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.5; }
 body.modal-open { overflow: hidden; overscroll-behavior: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
@@ -26,7 +26,7 @@ button:disabled { cursor: not-allowed; opacity: .45; }
 button:not(:disabled):active { opacity: .76; }
 button, a, input, select { outline-offset: 2px; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #a8c7ff; }
-input, select, textarea { min-width: 0; border-radius: 10px; }
+input, select, textarea { min-width: 0; border-radius: 6px; }
 input::placeholder { color: #8591a1; }
 input[type="checkbox"], input[type="radio"] { accent-color: var(--blue); }
 svg { display: block; flex: none; }
@@ -38,65 +38,65 @@ p, h1, h2, h3 { margin: 0; }
 .app-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 56px; padding: 6px 16px; background: white; border-bottom: 1px solid var(--line); }
 .brand-lockup { min-width: 0; }
 .brand-logo { display: block; width: 112px; height: 34px; object-fit: contain; }
-.identity-button { display: flex; align-items: center; gap: 7px; min-height: 44px; padding: 4px 6px; color: var(--text); font-size: 13px; font-weight: 600; }
+.identity-button { display: flex; align-items: center; gap: 7px; min-height: 44px; padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; background: #f8fafc; color: var(--text); font-size: 13px; font-weight: 600; }
 .identity-button > svg:last-child { color: var(--muted); }
-.avatar { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--blue-light); color: var(--blue); }
+.avatar { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 6px; background: var(--blue-light); color: var(--blue); }
 .page-content { padding: 16px 16px calc(var(--nav-height) + var(--safe-bottom) + 24px); }
 .home-context { margin: -16px -16px 16px; padding: 18px 16px 16px; background: white; border-bottom: 1px solid var(--line); }
 .home-intro, .page-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 h1, .home-intro h1, .page-heading h1 { color: var(--ink); font-size: 24px; line-height: 1.35; font-weight: 700; letter-spacing: -.4px; }
 .home-kicker, .eyebrow { display: block; margin-bottom: 4px; color: var(--muted); font-size: 12px; }
-.data-entry { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 42px; padding: 6px 0; color: var(--text); text-align: left; }
+.data-entry { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 6px 0; color: var(--text); text-align: left; }
 .data-entry-label, .data-entry-time { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; white-space: nowrap; }
-.data-entry-label svg { color: #607a9c; }
+.data-entry-label svg { color: var(--muted); }
 .data-entry-time { color: var(--muted); font-size: 11.5px; }
-.filter-bar { display: flex; align-items: stretch; width: 100%; border: 1px solid #e1e6ed; border-radius: 10px; overflow: hidden; background: #f8f9fb; }
+.filter-bar { display: flex; align-items: stretch; width: 100%; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #f8fafc; }
 .filter-button, .filter-scope { display: flex; flex: 1; align-items: center; gap: 8px; min-width: 0; min-height: 52px; padding: 6px 10px; text-align: left; }
-.filter-bar > button + button { border-left: 1px solid #e1e6ed; }
-.filter-button > svg, .filter-scope > svg { color: #718198; }
+.filter-bar > button + button { border-left: 1px solid var(--line); }
+.filter-button > svg, .filter-scope > svg { color: var(--muted); }
 .filter-button > svg:last-child, .filter-scope > svg:last-child { margin-left: auto; width: 12px; height: 12px; }
 .filter-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; }
-.filter-copy strong { color: #29384c; font-size: 14px; font-weight: 600; white-space: nowrap; }
+.filter-copy strong { color: var(--ink); font-size: 14px; font-weight: 600; white-space: nowrap; }
 .filter-copy small { color: var(--muted); font-size: 12px; white-space: nowrap; }
 .page-detail .filter-bar { margin-bottom: 16px; }
-.overview-hero { margin-bottom: 20px; padding: 16px 16px 0; border: 1px solid var(--line); border-radius: var(--radius); background: white; overflow: hidden; }
-.hero-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--ink); font-size: 17px; font-weight: 650; }
+.overview-hero { margin-bottom: 16px; padding: 16px 16px 0; border: 1px solid var(--line); border-radius: var(--radius); background: white; overflow: hidden; }
+.hero-top { margin: -16px -16px 0; padding: 12px 16px; border-bottom: 1px solid var(--line); background: #f8fafc; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--ink); font-size: 17px; font-weight: 700; }
 .hero-period { color: var(--muted); font-size: 12px; font-weight: 400; }
 .hero-main { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 79px; padding: 12px 0 3px; text-align: left; }
 .hero-primary-copy { display: block; min-width: 0; }
 .metric-label { display: flex; align-items: center; gap: 5px; color: var(--text); font-size: 13px; font-weight: 400; }
-.metric-label svg { color: #8c99aa; }
+.metric-label svg { color: var(--muted); }
 .metric-value { display: block; margin-top: 5px; color: var(--ink); font-size: 36px; line-height: 1.25; font-weight: 700; letter-spacing: -.8px; font-variant-numeric: tabular-nums; }
 .metric-value small { margin-left: 4px; color: var(--text); font-size: 13px; font-weight: 400; letter-spacing: 0; }
-.hero-main .metric-value { color: #1e59d0; font-size: 40px; white-space: nowrap; }
-.hero-main .metric-value small { color: #315e9e; }
-.hero-spark { width: 88px; height: 46px; max-width: 28%; color: #5485df; flex: none; }
+.hero-main .metric-value { color: var(--blue); font-size: 40px; white-space: nowrap; }
+.hero-main .metric-value small { color: var(--blue-strong); }
+.hero-spark { width: 88px; height: 46px; max-width: 28%; color: var(--blue); flex: none; }
 .hero-foot { margin: 0 0 12px; color: var(--muted); font-size: 12px; line-height: 1.5; }
-.hero-secondary { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin: 0 -16px; padding: 13px 16px; border-top: 1px solid var(--line); background: #fbfcfe; }
+.hero-secondary { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin: 0 -16px; padding: 13px 16px; border-top: 1px solid var(--line); background: #f8fafc; }
 .hero-secondary > button { min-width: 0; min-height: 54px; padding: 0 12px 0 0; text-align: left; }
 .hero-secondary > button + button { padding: 0 0 0 16px; border-left: 1px solid var(--line); }
 .hero-secondary .metric-label { font-size: 12px; line-height: 18px; }
 .hero-secondary .metric-value { margin-top: 5px; font-size: 24px; white-space: nowrap; }
 .hero-secondary .metric-value small { font-size: 12px; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 10px; min-height: 30px; }
-.section-heading h2, h2.section-heading { color: var(--ink); font-size: 17px; line-height: 25px; font-weight: 650; }
+.section-heading h2, h2.section-heading { color: var(--ink); font-size: 17px; line-height: 25px; font-weight: 700; }
 .section-link, .link-button { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-width: 44px; min-height: 44px; padding: 0; color: var(--blue); font-size: 13px; font-weight: 500; }
 .count-label { color: var(--muted); font-size: 12px; }
-.card { margin-bottom: 20px; border: 1px solid var(--line); border-radius: var(--radius); background: white; overflow: hidden; }
-.common-section { margin-bottom: 20px; }
+.card { margin-bottom: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: white; overflow: hidden; }
+.common-section { margin-bottom: 16px; }
 .common-section > .section-heading { margin: -5px 0 5px; }
-.common-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 4px; padding: 10px 6px; border: 1px solid var(--line); border-radius: var(--radius); background: white; }
+.common-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; padding: 8px; border: 1px solid var(--line); border-radius: var(--radius); background: white; }
 .common-grid.two-columns { grid-template-columns: repeat(2,minmax(0,1fr)); }
-.common-tile { display: flex; align-items: center; justify-content: flex-start; flex-direction: column; gap: 8px; min-width: 0; min-height: 78px; padding: 8px 3px; border-radius: 8px; text-align: center; }
+.common-tile { display: flex; align-items: center; justify-content: flex-start; flex-direction: column; gap: 8px; min-width: 0; min-height: 78px; padding: 8px 3px; border: 1px solid var(--line); border-radius: 6px; background: #fafbfc; text-align: center; }
 .common-tile:active { background: #f2f6fc; }
-.common-icon, .report-icon { display: grid; place-items: center; width: 34px; height: 34px; flex: none; border-radius: 9px; background: var(--blue-light); color: #3269c5; }
-.common-name { color: #28384f; font-size: 13px; line-height: 19px; font-weight: 500; overflow-wrap: anywhere; }
-.common-empty { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: white; color: var(--text); font-size: 13px; }
+.common-icon, .report-icon { display: grid; place-items: center; width: 34px; height: 34px; flex: none; border-radius: 6px; border: 1px solid #d7e4fb; background: var(--blue-light); color: var(--blue); }
+.common-name { color: var(--ink); font-size: 13px; line-height: 19px; font-weight: 500; overflow-wrap: anywhere; }
+.common-empty { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: white; color: var(--text); font-size: 13px; }
 .trend-card { padding: 16px; }
 .trend-card > .section-heading { margin: 0 0 6px; }
 .chart-tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
-.chart-tabs button { min-height: 44px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; color: var(--text); background: #f8f9fb; font-size: 13px; white-space: nowrap; }
-.chart-tabs .choice-selected { border-color: #b1ccfa; background: var(--blue-light); color: var(--blue); }
+.chart-tabs button { min-height: 44px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; color: var(--text); background: #f8fafc; font-size: 13px; white-space: nowrap; }
+.chart-tabs .choice-selected { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
 .chart-svg { display: block; width: 100%; height: auto; margin-top: 6px; }
 .chart-svg text { font-family: inherit; }
 .chart-caption { margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.6; }
@@ -104,28 +104,11 @@ h1, .home-intro h1, .page-heading h1 { color: var(--ink); font-size: 24px; line-
 .trend-card > .section-heading, .detail-card > .section-heading { margin: 0 0 8px; }
 .detail-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
 .card > .detail-grid { padding: 0 16px 16px; }
-.detail-grid > .detail-item { position: relative; display: flex; align-items: flex-start; flex-direction: column; gap: 8px; min-width: 0; min-height: 85px; padding: 12px; border-radius: 10px; background: #f4f6f9; text-align: left; }
+.detail-grid > .detail-item { position: relative; display: flex; align-items: flex-start; flex-direction: column; gap: 8px; min-width: 0; min-height: 85px; padding: 12px; border: 1px solid var(--line); border-radius: 6px; background: #f8fafc; text-align: left; }
 .detail-grid .detail-item > span { padding-right: 7px; color: var(--text); font-size: 13px; }
 .detail-grid .detail-item > strong { font-size: 22px; line-height: 1.3; }
 .detail-grid .detail-item strong small { margin-left: 3px; color: var(--text); font-size: 12px; font-weight: 400; }
 .detail-grid .detail-item > svg { position: absolute; right: 7px; top: 15px; width: 12px; height: 12px; color: var(--muted); }
-.focus-card { margin: 0 0 20px; padding: 15px; border: 1px solid #d9e6f8; border-left: 3px solid #648fe4; border-radius: 12px; background: #f8fbff; }
-.focus-main { display: flex; align-items: flex-start; gap: 10px; width: 100%; padding: 0; text-align: left; }
-.focus-icon { display: grid; place-items: center; width: 28px; height: 28px; flex: none; border-radius: 8px; color: #477ad1; background: #eaf2ff; }
-.focus-copy { min-width: 0; flex: 1; }
-.focus-kicker { display: flex; align-items: center; gap: 8px; color: #3966a9; font-size: 13px; font-weight: 600; }
-.focus-kicker small { color: var(--muted); font-size: 11px; font-weight: 400; }
-.focus-copy strong { display: block; margin-top: 5px; color: #263b56; font-size: 15px; line-height: 1.5; }
-.focus-summary { display: -webkit-box; margin-top: 5px; color: var(--text); font-size: 13px; line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
-.focus-main > svg:last-child { align-self: center; width: 14px; height: 14px; color: #7691b6; }
-.issue-list { padding: 0 15px; }
-.issue-row { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 84px; padding: 13px 0; border-bottom: 1px solid var(--line); text-align: left; }
-.issue-row:last-child { border-bottom: 0; }
-.issue-icon { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 9px; color: var(--orange); background: var(--orange-light); }
-.issue-copy { flex: 1; min-width: 0; }
-.issue-copy strong { display: block; color: #2e4059; font-size: 14px; line-height: 1.5; }
-.issue-copy small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; }
-.issue-row > svg:last-child { color: var(--muted); }
 .report-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: -8px 0 12px; }
 .report-back { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; padding: 0; color: var(--blue); font-size: 14px; }
 .report-actions { display: flex; }
@@ -141,46 +124,46 @@ h1, .home-intro h1, .page-heading h1 { color: var(--ink); font-size: 24px; line-
 .library-intro { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
 .library-intro p, .collection-copy p { margin-top: 6px; color: var(--muted); font-size: 13px; }
 .library-count { flex: none; color: var(--muted); font-size: 12px; }
-.search-box { display: flex; align-items: center; gap: 9px; min-height: 46px; margin: 0 0 16px; padding: 0 12px; border: 1px solid #e0e6ed; border-radius: 10px; background: white; }
-.catalog-header .search-box { margin-bottom: 0; background: #f5f7f9; border-color: #edf0f4; }
-.search-box svg { width: 19px; height: 19px; color: #7a8799; }
+.search-box { display: flex; align-items: center; gap: 9px; min-height: 46px; margin: 0 0 16px; padding: 0 12px; border: 1px solid var(--line); border-radius: 6px; background: white; }
+.catalog-header .search-box { margin-bottom: 0; background: white; border-color: var(--line); }
+.search-box svg { width: 19px; height: 19px; color: var(--muted); }
 .search-box input { width: 100%; height: 44px; border: 0; padding: 0; outline: 0; background: transparent; font-size: 14px; }
 .search-box:focus-within { border-color: #7fa6ef; box-shadow: 0 0 0 2px #eaf1ff; }
 .search-box input:focus-visible { outline: 0; }
 .search-clear { display: grid; place-items: center; min-width: 44px; min-height: 44px; margin-right: -10px; padding: 0; }
-.catalog-layout { display: grid; grid-template-columns: 88px minmax(0,1fr); align-items: start; min-height: calc(100dvh - 282px - var(--safe-bottom)); border-top: 1px solid var(--line); background: linear-gradient(to right,#f3f5f8 88px,white 88px); }
-.category-rail { position: sticky; top: 0; display: flex; flex-direction: column; padding: 8px 0; }
-.category-option { position: relative; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 3px; min-height: 60px; width: 100%; padding: 8px 5px; color: #5f6c7e; font-size: 13px; text-align: center; }
-.category-option small { color: #8792a1; font-size: 11px; line-height: 14px; }
-.category-selected { background: white; color: #1f59c9; font-weight: 600; }
-.category-selected::before { content:""; position: absolute; left: 0; top: 18px; bottom: 18px; width: 3px; border-radius: 0 3px 3px 0; background: var(--blue); }
+.catalog-layout { display: grid; grid-template-columns: 88px minmax(0,1fr); align-items: start; min-height: calc(100dvh - 282px - var(--safe-bottom)); border-top: 1px solid var(--line); background: linear-gradient(to right,var(--canvas) 88px,white 88px); }
+.category-rail { position: sticky; top: 0; display: flex; flex-direction: column; padding: 8px 0; border-right: 1px solid var(--line); }
+.category-option { position: relative; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 3px; min-height: 60px; width: 100%; padding: 8px 5px; color: var(--muted); font-size: 13px; text-align: center; }
+.category-option small { color: var(--muted); font-size: 11px; line-height: 14px; }
+.category-selected { background: var(--blue-light); color: var(--blue-strong); font-weight: 600; }
+.category-selected::before { content:""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 0 3px 3px 0; background: var(--blue); }
 .category-selected small { color: #5682cc; }
 .catalog-results { min-width: 0; padding: 0 14px 20px; }
 .results-summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 42px; color: var(--muted); font-size: 12px; }
 .catalog-results .results-summary > span:last-child { font-size: 11px; }
 .report-group { margin-bottom: 16px; }
-.report-group-heading { display: flex; align-items: center; gap: 6px; min-height: 36px; padding: 7px 0; border-bottom: 1px solid var(--line); }
-.report-group-heading h2 { font-size: 14px; color: #47566c; font-weight: 600; }
-.report-group-heading span { color: #8995a6; font-size: 11px; }
-.report-list { border: 1px solid var(--line); border-radius: 12px; background: white; overflow: hidden; }
-.report-row { display: flex; align-items: center; gap: 6px; width: 100%; min-height: 80px; padding: 12px; border-bottom: 1px solid var(--line); text-align: left; }
+.report-group-heading { display: flex; align-items: center; gap: 6px; min-height: 36px; padding: 7px 8px; border: 1px solid var(--line); border-radius: 6px; background: #f8fafc; }
+.report-group-heading h2 { font-size: 14px; color: var(--ink); font-weight: 700; }
+.report-group-heading span { color: var(--muted); font-size: 11px; }
+.report-list { border: 1px solid var(--line); border-radius: 8px; background: white; overflow: hidden; }
+.report-row { display: flex; align-items: center; gap: 6px; width: 100%; min-height: 76px; padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; }
 .report-row:last-child { border-bottom: 0; }
 .report-main { display: flex; align-items: center; flex: 1; gap: 10px; min-width: 0; min-height: 52px; padding: 0; text-align: left; }
 .report-info { display: block; min-width: 0; flex: 1; }
-.report-title { display: block; color: #233249; font-size: 15px; line-height: 22px; font-weight: 600; overflow-wrap: anywhere; }
-.report-meta { display: block; margin-top: 4px; color: #758296; font-size: 12px; line-height: 18px; overflow-wrap: anywhere; }
-.report-action { display: grid; place-items: center; width: 44px; height: 44px; flex: none; margin-right: -6px; padding: 0; color: #8d9aaf; border-radius: 8px; }
+.report-title { display: block; color: var(--ink); font-size: 15px; line-height: 22px; font-weight: 600; overflow-wrap: anywhere; }
+.report-meta { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 18px; overflow-wrap: anywhere; }
+.report-action { display: grid; place-items: center; width: 44px; height: 44px; flex: none; margin-right: -6px; padding: 0; color: var(--muted); border-radius: 8px; }
 .report-action.is-favorite, .icon-button.is-favorite { color: #c58720; }
 .is-favorite svg { fill: #fff0c4; }
 .catalog-results .report-list { border: 0; border-radius: 0; }
 .catalog-results .report-row { padding: 10px 0; }
 .catalog-results .report-icon { display: none; }
-.catalog-results .report-meta { font-size: 11px; }
+.catalog-results .report-meta { font-size: 12px; }
 .collection-hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; padding: 3px 0 0; }
 .collection-copy { min-width: 0; }
-.collection-add { display: flex; align-items: center; justify-content: center; gap: 5px; min-width: 75px; min-height: 44px; padding: 0 10px; border-radius: 10px; background: var(--blue-light); color: var(--blue); font-size: 14px; font-weight: 500; }
+.collection-add { display: flex; align-items: center; justify-content: center; gap: 5px; min-width: 75px; min-height: 44px; padding: 0 10px; border: 1px solid #b8cef5; border-radius: 6px; background: var(--blue-light); color: var(--blue); font-size: 14px; font-weight: 500; }
 .favorites-empty { display: flex; flex-direction: column; align-items: center; padding: 26px 16px; margin-bottom: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: white; text-align: center; }
-.empty-bookmark { position: relative; display: grid; place-items: center; width: 60px; height: 60px; margin-bottom: 14px; border-radius: 18px; color: #789bd8; background: #eff5ff; }
+.empty-bookmark { position: relative; display: grid; place-items: center; width: 60px; height: 60px; margin-bottom: 14px; border-radius: 8px; color: #789bd8; background: #eff5ff; }
 .empty-bookmark > svg { width: 31px; height: 36px; }
 .empty-bookmark > span { position: absolute; right: -2px; bottom: -2px; display: grid; place-items: center; width: 26px; height: 26px; border: 2px solid white; border-radius: 50%; color: #bb892b; background: #fff3d7; }
 .empty-bookmark > span svg { width: 13px; height: 13px; }
@@ -188,7 +171,7 @@ h1, .home-intro h1, .page-heading h1 { color: var(--ink); font-size: 24px; line-
 .favorites-empty p { margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.8; }
 .favorites-empty .primary-button { margin-top: 18px; min-width: 160px; }
 .starter-reports .report-action { color: var(--blue); }
-.collection-add-row { margin-top: 16px; border: 1px dashed #c6d7f1; border-radius: 10px; text-align: center; }
+.collection-add-row { margin-top: 16px; border: 1px dashed #c6d7f1; border-radius: 6px; text-align: center; }
 .collection-add-row .link-button { width: 100%; }
 .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 175px; padding: 24px 12px; color: var(--muted); text-align: center; }
 .empty-state > svg { margin-bottom: 14px; color: #91a7c9; }
@@ -196,30 +179,30 @@ h1, .home-intro h1, .page-heading h1 { color: var(--ink); font-size: 24px; line-
 .empty-state p { max-width: 275px; font-size: 13px; line-height: 1.7; }
 .empty-query, .search-empty { padding-bottom: 20px; text-align: center; }
 .empty-query .primary-button { margin: 0 14px; }
-.tag { display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: #f0f3f7; color: #67778e; font-size: 11px; }
-.notice { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 6px 8px; padding: 13px; border: 1px solid #d9e5f5; border-radius: 10px; background: #f4f8ff; color: #4c6688; font-size: 13px; line-height: 1.65; }
+.tag { display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: #f0f3f7; color: var(--muted); font-size: 11px; }
+.notice { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 6px 8px; padding: 13px; border: 1px solid #d9e5f5; border-radius: 6px; background: #f4f8ff; color: #4c6688; font-size: 13px; line-height: 1.65; }
 .notice > p { flex-basis: 100%; }
 .notice .status-dot { margin-top: 7px; }
 .status-dot { display: inline-block; width: 6px; height: 6px; flex: none; border-radius: 50%; background: var(--green); }
 .chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 6px; background: #eff4fc; color: #4d75ac; font-size: 12px; }
-.primary-button, .secondary-button, .danger-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 46px; padding: 0 18px; border: 1px solid transparent; border-radius: 10px; font-size: 14px; font-weight: 600; }
+.primary-button, .secondary-button, .danger-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 46px; padding: 0 18px; border: 1px solid transparent; border-radius: 6px; font-size: 14px; font-weight: 600; }
 .primary-button { color: white; background: var(--blue); }
 .primary-button:hover:not(:disabled) { background: var(--blue-strong); }
-.secondary-button { border-color: #d5dfed; background: white; color: #456591; }
+.secondary-button { border-color: var(--line); background: white; color: var(--ink); }
 .danger-button { border-color: #f0d9da; background: #fff7f7; color: var(--red); }
-.icon-button { display: inline-grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 10px; color: #71849e; }
-.bottom-nav { position: fixed; z-index: 20; bottom: 0; left: 50%; display: flex; width: 100%; max-width: 480px; min-height: calc(var(--nav-height) + var(--safe-bottom)); padding: 4px 14px calc(4px + var(--safe-bottom)); border-top: 1px solid #dde4ee; background: white; transform: translateX(-50%); }
-.nav-item { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 56px; color: #6f7d91; font-size: 12px; }
-.nav-icon { display: grid; place-items: center; width: 44px; height: 29px; border-radius: 9px; }
+.icon-button { display: inline-grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 6px; color: var(--muted); }
+.bottom-nav { position: fixed; z-index: 20; bottom: 0; left: 50%; display: flex; width: 100%; max-width: 480px; min-height: calc(var(--nav-height) + var(--safe-bottom)); padding: 4px 14px calc(4px + var(--safe-bottom)); border-top: 1px solid var(--line); background: white; transform: translateX(-50%); }
+.nav-item { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 56px; color: var(--muted); font-size: 12px; }
+.nav-icon { display: grid; place-items: center; width: 44px; height: 29px; border-radius: 6px; }
 .nav-active { color: var(--blue); font-weight: 600; }
-.nav-active .nav-icon { background: var(--blue-light); }
-.overlay { position: fixed; z-index: 50; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding-top: max(20px, env(safe-area-inset-top, 0px)); background: #12203970; backdrop-filter: blur(2px); animation: overlay-in .16s ease-out; }
-.sheet { display: flex; flex-direction: column; width: 100%; max-width: 480px; max-height: calc(100dvh - max(20px, env(safe-area-inset-top, 0px))); min-height: 0; border-radius: 22px 22px 0 0; background: white; overflow: hidden; box-shadow: 0 -10px 50px #0c1b3129; animation: sheet-in .22s ease-out; }
+.nav-active .nav-icon { border: 1px solid #c4d8f9; background: var(--blue-light); }
+.overlay { position: fixed; z-index: 50; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding-top: max(20px, env(safe-area-inset-top, 0px)); background: #20293a66; animation: overlay-in .16s ease-out; }
+.sheet { display: flex; flex-direction: column; width: 100%; max-width: 480px; max-height: calc(100dvh - max(20px, env(safe-area-inset-top, 0px))); min-height: 0; border-radius: 8px 8px 0 0; border: 1px solid var(--line); background: white; overflow: hidden; box-shadow: 0 -4px 20px #20293a1a; animation: sheet-in .22s ease-out; }
 .sheet::before { content: ""; display: block; width: 34px; height: 4px; flex: none; margin: 9px auto 0; border-radius: 3px; background: #dce3ed; }
-.sheet-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex: none; min-height: 66px; padding: 7px 19px 12px; border-bottom: 1px solid var(--line); }
+.sheet-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex: none; min-height: 66px; padding: 7px 19px 12px; background: #f8fafc; border-bottom: 1px solid var(--line); }
 .sheet-title { font-size: 18px; line-height: 1.4; font-weight: 700; }
-.sheet-header p { margin-top: 4px; color: #637087; font-size: 12px; }
-.sheet-close { display: grid; place-items: center; width: 44px; height: 44px; flex: none; margin-right: -7px; border-radius: 50%; background: transparent; color: #637087; }
+.sheet-header p { margin-top: 4px; color: var(--muted); font-size: 12px; }
+.sheet-close { display: grid; place-items: center; width: 44px; height: 44px; flex: none; margin-right: -7px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--muted); }
 .sheet-close svg { width: 21px; height: 21px; }
 .sheet-body { font-size: 14px; line-height: 1.7; flex: 1; min-height: 0; padding: 20px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
 .sheet-body .section-heading { margin: 20px 0 12px; }
@@ -228,7 +211,7 @@ h1, .home-intro h1, .page-heading h1 { color: var(--ink); font-size: 24px; line-
 .sheet-footer > .primary-button { flex: 1; }
 .sheet-footer > .secondary-button { flex: 1; }
 .update-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
-.update-footer > span { flex: none; color: #657a98; font-size: 12px; white-space: nowrap; }
+.update-footer > span { flex: none; color: var(--muted); font-size: 12px; white-space: nowrap; }
 .update-footer .primary-button { min-width: 0; padding: 0 14px; flex: 1; font-size: 13px; }
 .sheet-footer > .estimate { width: 100%; margin: 0; }
 .sheet-footer:has(.estimate) { flex-wrap: wrap; }
@@ -238,53 +221,49 @@ h1, .home-intro h1, .page-heading h1 { color: var(--ink); font-size: 24px; line-
 .sheet-body > .notice + .reorder-row { margin-top: 12px; }
 .sheet-body > h3 { margin-top: 10px; }
 .sheet-body > p + p { margin-top: 10px; }
-.insight-question { margin-top: 12px; padding: 11px 12px; border-radius: 10px; background: #f3f7fe; color: #5d7da9; font-size: 13px; line-height: 1.65; }
-.insight-definition { margin-top: 21px; padding-top: 5px; border-top: 1px solid var(--line); color: #65768e; font-size: 12px; line-height: 1.8; }
-.insight-definition > summary { min-height: 44px; padding: 11px 0; color: #557aa9; font-size: 12px; font-weight: 550; cursor: pointer; }
-.insight-definition p { margin-top: 8px; }
-.form-label { display: block; margin: 22px 0 10px; color: #657894; font-size: 12px; font-weight: 550; }
+.form-label { display: block; margin: 20px 0 8px; color: var(--ink); font-size: 13px; font-weight: 600; }
 .form-label:first-child { margin-top: 0; }
 .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-.choice { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 9px 8px; border: 1px solid #e3e9f2; border-radius: 10px; background: white; color: #667992; font-size: 13px; text-align: center; }
+.choice { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 9px 8px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--muted); font-size: 13px; text-align: center; }
 .choice small { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; }
-.choice-selected, .choice[aria-pressed="true"] { border-color: #6f9bfa; background: #eff4ff; color: var(--blue); font-weight: 600; }
-.field-input { width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid #dde5f0; border-radius: 10px; background: white; font-size: 14px; }
-.selection-row { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 54px; padding: 12px; border: 1px solid #e4eaf2; border-radius: 11px; background: white; text-align: left; color: var(--text); }
+.choice-selected, .choice[aria-pressed="true"] { border-color: var(--blue); background: var(--blue-light); color: var(--blue); font-weight: 600; }
+.field-input { width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; background: white; font-size: 14px; }
+.selection-row { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 54px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: white; text-align: left; color: var(--text); }
 .selection-row + .selection-row { margin-top: 9px; }
 .selection-row > div:not(.check-indicator) { flex: 1; min-width: 0; }
 .selection-row strong { display: block; font-size: 13px; font-weight: 600; }
-.selection-row small { display: block; margin-top: 3px; color: #76869e; font-size: 12px; }
+.selection-row small { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
 .check-indicator { display: grid; place-items: center; width: 18px; height: 18px; flex: none; border: 1px solid #ccd7e7; border-radius: 5px; background: white; color: #9ba9bc; font-size: 12px; }
 .check-indicator svg { width: 12px; height: 12px; }
-.selection-selected { border-color: #a4bff8; background: #f5f8ff; }
+.selection-selected { border-color: var(--blue); background: var(--blue-light); }
 .selection-selected .check-indicator, .check-indicator.checked { border-color: var(--blue); background: var(--blue); color: white; }
-.resource-card { margin-top: 10px; padding: 14px; border: 1px solid #e3eaf4; border-radius: 12px; background: white; }
-.resource-card.selection-selected { border-color: #9fbbf7; background: #f7faff; }
+.resource-card { margin-top: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: white; }
+.resource-card.selection-selected { border-color: var(--blue); background: var(--blue-light); }
 .resource-card > .selection-row { padding: 0; border: 0; border-radius: 0; background: transparent; }
 .resource-card > .selection-row:disabled { opacity: 1; cursor: default; }
 .resource-head { display: flex; align-items: center; gap: 9px; }
 .resource-head strong { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; }
 .resource-head .tag { margin-left: auto; }
-.resource-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 5px 9px; margin-top: 9px; color: #71829a; font-size: 12px; line-height: 1.6; }
+.resource-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 5px 9px; margin-top: 9px; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .resource-meta .status-dot { width: 5px; height: 5px; }
-.resource-models { margin-top: 9px; color: #60748f; font-size: 12px; line-height: 1.7; }
+.resource-models { margin-top: 9px; color: var(--muted); font-size: 12px; line-height: 1.7; }
 .resource-models .tag { margin-right: 4px; margin-top: 3px; }
 .resource-models details { margin-top: 6px; }
 .resource-models summary { cursor: pointer; color: #6b8cc1; }
 .resource-models > summary { min-height: 44px; padding: 11px 0; }
 .resource-models > p { margin: 0 0 7px; overflow-wrap: anywhere; }
-.segmented { display: flex; gap: 3px; padding: 4px; border-radius: 11px; background: #f0f3f8; }
-.segmented button { flex: 1; min-width: 0; min-height: 44px; padding: 6px 7px; border-radius: 8px; background: transparent; color: #6b7c94; font-size: 12px; white-space: nowrap; }
-.segmented .segment-active, .segmented [aria-selected="true"] { background: white; color: var(--blue); box-shadow: 0 1px 5px #1c2b450a; font-weight: 600; }
+.segmented { display: flex; gap: 3px; padding: 4px; border: 1px solid var(--line); border-radius: 8px; background: var(--canvas); }
+.segmented button { flex: 1; min-width: 0; min-height: 44px; padding: 6px 7px; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--muted); font-size: 12px; white-space: nowrap; }
+.segmented .segment-active, .segmented [aria-selected="true"] { border-color: #b8cef5; background: white; color: var(--blue); box-shadow: 0 1px 1px #20293a08; font-weight: 600; }
 .stages { padding: 0 0 0 3px; }
 .stage { position: relative; display: flex; align-items: flex-start; gap: 11px; min-height: 71px; padding: 0 0 18px; }
-.stage:not(:last-child)::after { content: ""; position: absolute; left: 12px; top: 29px; bottom: 5px; width: 1px; background: #e3eaf4; }
+.stage:not(:last-child)::after { content: ""; position: absolute; left: 12px; top: 29px; bottom: 5px; width: 1px; background: var(--line); }
 .stage:last-child { min-height: 53px; padding-bottom: 0; }
 .stage-number { display: grid; place-items: center; width: 25px; height: 25px; flex: none; border-radius: 50%; background: #f0f3f8; color: #94a2b7; font-size: 12px; font-weight: 600; }
 .stage-number svg { width: 13px; height: 13px; }
 .stage-copy { flex: 1; min-width: 0; padding-top: 1px; }
-.stage-copy strong { display: block; color: #687b97; font-size: 13px; line-height: 22px; font-weight: 600; }
-.stage-copy small, .stage-copy p { display: block; margin-top: 4px; color: #63758f; font-size: 12px; line-height: 1.5; }
+.stage-copy strong { display: block; color: var(--ink); font-size: 13px; line-height: 22px; font-weight: 600; }
+.stage-copy small, .stage-copy p { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.5; }
 .stage-done .stage-number { background: #e9f7f1; color: var(--green); }
 .stage-done .stage-copy strong { color: var(--ink); }
 .stage-done:not(:last-child)::after { background: #ccebe0; }
@@ -293,54 +272,46 @@ h1, .home-intro h1, .page-heading h1 { color: var(--ink); font-size: 24px; line-
 .stage-active .stage-copy small { color: #7896c7; }
 .stage-action { min-height: 44px; padding: 0 8px; flex: none; border: 1px solid #dce6f9; border-radius: 7px; background: white; color: var(--blue); font-size: 12px; }
 .rerun-details { margin-top: 21px; padding-top: 6px; border-top: 1px solid var(--line); }
-.rerun-details > summary { min-height: 44px; padding: 12px 0; color: #5d7394; font-size: 13px; font-weight: 600; cursor: pointer; }
+.rerun-details > summary { min-height: 44px; padding: 12px 0; color: var(--ink); font-size: 13px; font-weight: 600; cursor: pointer; }
 .rerun-details .stages { margin-top: 17px; }
-.estimate { margin: 16px 0 0; padding: 13px; border: 1px solid #dfe9fa; border-radius: 11px; background: #f4f8ff; }
+.estimate { margin: 16px 0 0; padding: 13px; border: 1px solid #b8cef5; border-radius: 8px; background: #f4f8ff; }
 .estimate .section-heading { margin: 0; }
-.estimate .section-heading > strong { display: flex; align-items: center; gap: 6px; color: #5f7da9; font-size: 12px; font-weight: 600; }
-.estimate > strong { display: flex; align-items: center; gap: 6px; color: #5f7da9; font-size: 12px; font-weight: 600; }
+.estimate .section-heading > strong { display: flex; align-items: center; gap: 6px; color: var(--blue-strong); font-size: 12px; font-weight: 600; }
+.estimate > strong { display: flex; align-items: center; gap: 6px; color: var(--blue-strong); font-size: 12px; font-weight: 600; }
 .estimate > strong svg { width: 15px; height: 15px; color: #6b94da; }
-.estimate > p { margin-top: 8px; color: #8a9fbd; font-size: 12px; line-height: 1.65; }
+.estimate > p { margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.65; }
 .estimate-values { display: grid; grid-template-columns: 1fr 1.25fr; gap: 10px; margin-top: 11px; }
-.estimate-values small, .estimate-values label { display: block; margin-bottom: 4px; color: #6f87a9; font-size: 12px; }
-.estimate-values strong { display: block; color: #3565b4; font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.estimate-values small, .estimate-values label { display: block; margin-bottom: 4px; color: var(--muted); font-size: 12px; }
+.estimate-values strong { display: block; color: var(--blue-strong); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .progress-bar { height: 5px; margin: 13px 0 7px; border-radius: 3px; background: #e1eafa; overflow: hidden; }
 .progress-bar > span, .progress-bar > div { display: block; height: 100%; border-radius: inherit; background: var(--blue); transition: width .35s ease; }
-.toast { position: fixed; z-index: 100; bottom: calc(var(--nav-height) + var(--safe-bottom) + 22px); left: 50%; width: max-content; max-width: min(390px, calc(100vw - 40px)); padding: 12px 18px; border-radius: 11px; background: #24334bee; color: white; font-size: 12px; line-height: 1.6; text-align: center; box-shadow: 0 8px 24px #0c1b3121; transform: translateX(-50%); pointer-events: none; animation: toast-in .16s ease-out; }
+.toast { position: fixed; z-index: 100; bottom: calc(var(--nav-height) + var(--safe-bottom) + 22px); left: 50%; width: max-content; max-width: min(390px, calc(100vw - 40px)); padding: 12px 18px; border-radius: 8px; background: #24334bee; color: white; font-size: 12px; line-height: 1.6; text-align: center; box-shadow: 0 2px 8px #20293a1a; transform: translateX(-50%); pointer-events: none; animation: toast-in .16s ease-out; }
 .toast:has(.toast-undo) { display: flex; align-items: center; gap: 16px; padding: 3px 15px; pointer-events: auto; }
 .toast-undo { min-width: 44px; min-height: 44px; padding: 0; color: #a6c7ff; font-size: 12px; font-weight: 600; }
 .drag-handle { display: grid; place-items: center; width: 28px; min-height: 40px; flex: none; margin-left: -6px; color: #a4b1c4; touch-action: none; cursor: grab; }
 .drag-handle:active { cursor: grabbing; }
 .drag-handle svg { width: 17px; height: 17px; }
-.reorder-row { display: flex; align-items: center; gap: 8px; min-height: 66px; padding: 8px 10px; border: 1px solid #e2e9f3; border-radius: 11px; background: white; }
+.reorder-row { display: flex; align-items: center; gap: 8px; min-height: 66px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: white; }
 .reorder-row + .reorder-row { margin-top: 9px; }
 .reorder-row > strong, .reorder-row > span:not(.drag-handle) { flex: 1; min-width: 0; font-size: 13px; font-weight: 550; }
-.reorder-row .report-info strong { display: block; color: #3a5374; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
-.reorder-row .report-info small { display: block; margin-top: 4px; color: #6c7e98; font-size: 12px; line-height: 1.5; font-weight: 400; }
+.reorder-row .report-info strong { display: block; color: var(--ink); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+.reorder-row .report-info small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.5; font-weight: 400; }
 .reorder-row.dragging { opacity: .45; border-color: #99b7f4; }
 .reorder-controls { display: flex; align-items: center; gap: 0; margin-right: -5px; }
-.reorder-controls button { display: grid; place-items: center; width: 44px; height: 44px; background: transparent; color: #60799e; }
+.reorder-controls button { display: grid; place-items: center; width: 44px; height: 44px; background: transparent; color: var(--muted); }
 .reorder-controls button svg { width: 17px; height: 17px; }
-.demo-note { margin: 17px 3px 0; color: #8190a5; font-size: 12px; line-height: 1.7; }
+.support-note { margin: 17px 3px 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
 
-
-.preview-caption { display: none; }
 @keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes sheet-in { from { transform: translateY(22px); opacity: .4; } to { transform: translateY(0); opacity: 1; } }
 @keyframes toast-in { from { opacity: 0; translate: 0 5px; } to { opacity: 1; translate: 0 0; } }
 @media (min-width: 700px) {
  .app-shell, .bottom-nav { max-width: 440px; }
- .app-shell { box-shadow: 0 0 0 1px #dce4ed; }
+ .app-shell { box-shadow: 0 0 0 1px var(--line); }
  .overlay { align-items: center; padding: 24px; }
- .sheet { max-width: 440px; max-height: calc(100dvh - 48px); border-radius: 18px; }
+ .sheet { max-width: 440px; max-height: calc(100dvh - 48px); border-radius: 8px; }
  .sheet::before { display: none; }
  .sheet-header { padding-top: 13px; }
-}
-@media (min-width: 1080px) {
- .preview-caption { position: fixed; top: 90px; left: calc(50% - 480px); display: block; width: 220px; color: #65738a; }
- .preview-caption strong { display: block; margin-bottom: 12px; color: #344b6e; font-size: 20px; }
- .preview-caption p { margin-bottom: 20px; font-size: 13px; }
- .preview-caption span { display: block; max-width: 180px; font-size: 12px; line-height: 1.8; }
 }
 @media (max-width: 699px) { html { background: var(--canvas); } }
 @media (max-width: 359px) {
@@ -357,7 +328,7 @@ h1, .home-intro h1, .page-heading h1 { color: var(--ink); font-size: 24px; line-
  .hero-secondary .metric-label { font-size: 12px; }
  .hero-secondary > button + button { padding-left: 10px; }
  .catalog-header { padding-left: 12px; padding-right: 12px; }
- .catalog-layout { grid-template-columns: 78px minmax(0,1fr); background: linear-gradient(to right,#f3f5f8 78px,white 78px); }
+ .catalog-layout { grid-template-columns: 78px minmax(0,1fr); background: linear-gradient(to right,var(--canvas) 78px,white 78px); }
  .catalog-results { padding-left: 10px; padding-right: 10px; }
  .catalog-results .results-summary > span:last-child { display: none; }
  .report-row { padding-left: 10px; padding-right: 10px; }
@@ -368,9 +339,9 @@ h1, .home-intro h1, .page-heading h1 { color: var(--ink); font-size: 24px; line-
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
+  <meta name="demo-version" content="20261030-blue-product">
 </head>
 <body>
-  <aside class="preview-caption"><strong>多链互联 · 移动看板</strong><p>为工作台里的每一次经营决策</p><span>钉钉 / 飞书 / 企业微信 · H5 交互预览</span></aside>
   <div class="app-shell" id="app"></div>
   <div id="modal-root"></div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
@@ -19597,7 +19568,7 @@ window.MobileDemoData = {
 (() => {
   const M=window.MobileModel,D=M.D,$=id=>document.getElementById(id);
   const e=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const paths={home:'M3 10 12 3l9 7M5 9v11h5v-6h4v6h5V9',chart:'M4 20V10m8 10V4m8 16v-7M2 21h20',grid:'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',star:'m12 3 2.8 5.7 6.3.9-4.6 4.5 1.1 6.3-5.6-3-5.6 3 1.1-6.3L3 9.6l6.2-.9Z',back:'m14 5-7 7 7 7M7 12h14',next:'m9 5 7 7-7 7',down:'m6 9 6 6 6-6',search:'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Zm5.5-2 5 5',user:'M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM3 22v-3c0-5 18-5 18 0v3',calendar:'M4 5h16v16H4zM4 10h16M8 2v6m8-6v6',database:'M21 6c0 5-18 5-18 0s18-5 18 0ZM3 6v12c0 5 18 5 18 0V6M3 12c0 5 18 5 18 0',refresh:'M20 8a8 8 0 1 0 0 8M20 3v5h-5',close:'m5 5 14 14M5 19 19 5',check:'m4 12 5 5L20 6',clock:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM12 6v6l4 2',store:'M3 9h18l-2-6H5zM4 9v12h16V9M9 21v-7h6v7',info:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM12 11v6m0-11v1',pin:'m9 3 6 0-1 6 4 5H6l4-5ZM12 14v8',arrowup:'m6 14 6-6 6 6',arrowdown:'m6 10 6 6 6-6',more:'M5 12h.01M12 12h.01M19 12h.01',shield:'m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6Zm-5 10 3 3 7-7',filter:'M3 6h18M7 12h10m-7 6h4',warning:'m12 3 10 18H2ZM12 9v5m0 3v1',plus:'M12 5v14M5 12h14',wallet:'M3 6h17v15H3V4h14M16 12h6v5h-6z',flag:'M5 22V3h14l-3 4 3 4H5',gift:'M3 8h18v4H3zM5 12v9h14v-9M12 8v13M12 8S4 8 5 4s7 0 7 4Zm0 0s8 0 7-4-7 0-7 4Z',spark:'m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z',bookmark:'M6 3h12v19l-6-4-6 4Z'};
+  const paths={home:'M3 10 12 3l9 7M5 9v11h5v-6h4v6h5V9',chart:'M4 20V10m8 10V4m8 16v-7M2 21h20',grid:'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',star:'m12 3 2.8 5.7 6.3.9-4.6 4.5 1.1 6.3-5.6-3-5.6 3 1.1-6.3L3 9.6l6.2-.9Z',back:'m14 5-7 7 7 7M7 12h14',next:'m9 5 7 7-7 7',down:'m6 9 6 6 6-6',search:'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Zm5.5-2 5 5',user:'M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM3 22v-3c0-5 18-5 18 0v3',calendar:'M4 5h16v16H4zM4 10h16M8 2v6m8-6v6',database:'M21 6c0 5-18 5-18 0s18-5 18 0ZM3 6v12c0 5 18 5 18 0V6M3 12c0 5 18 5 18 0',refresh:'M20 8a8 8 0 1 0 0 8M20 3v5h-5',close:'m5 5 14 14M5 19 19 5',check:'m4 12 5 5L20 6',clock:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM12 6v6l4 2',store:'M3 9h18l-2-6H5zM4 9v12h16V9M9 21v-7h6v7',info:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM12 11v6m0-11v1',pin:'m9 3 6 0-1 6 4 5H6l4-5ZM12 14v8',arrowup:'m6 14 6-6 6 6',arrowdown:'m6 10 6 6 6-6',more:'M5 12h.01M12 12h.01M19 12h.01',shield:'m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6Zm-5 10 3 3 7-7',filter:'M3 6h18M7 12h10m-7 6h4',plus:'M12 5v14M5 12h14',wallet:'M3 6h17v15H3V4h14M16 12h6v5h-6z',flag:'M5 22V3h14l-3 4 3 4H5',gift:'M3 8h18v4H3zM5 12v9h14v-9M12 8v13M12 8S4 8 5 4s7 0 7 4Zm0 0s8 0 7-4-7 0-7 4Z',bookmark:'M6 3h12v19l-6-4-6 4Z'};
   const icon=(name='chart',size=20)=>`<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${(paths[name]?name:'chart')==='more'?'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>':`<path d="${paths[name]||paths.chart}"/>`}</svg>`;
   let saved;try{saved=JSON.parse(localStorage.getItem('dolink_mobile_demo_v1'))}catch(_){}
   const pref=saved&&saved.contexts?saved:{contexts:{}};
@@ -19648,13 +19619,12 @@ window.MobileDemoData = {
   }
   function trendsView(b){const i=Math.min(S.chart,b.charts.length-1),chart=b.charts[i];if(!chart)return '';return `<section class="card trend-card"><div class="section-heading"><h2>${e(chart.label)}趋势</h2>${button(icon('info',17),'chart-info','icon-button','aria-label="趋势统计口径"')}</div>${b.charts.length>1?`<div class="chart-tabs">${b.charts.map((c,i)=>button(e(c.label),'chart',S.chart===i?'chip choice-selected':'chip',`data-id="${i}"`)).join('')}</div>`:''}<p class="chart-caption">单位：${e(chart.unit)} · ${idx()===0?'按日':'按区间汇总'}</p>${chartSvg(chart)}<p class="chart-caption">${e(periodRange())}</p></section>`}
   function driversView(b){const metrics=b.driverMetrics||[];if(!metrics.length)return '';return `<section class="card"><div class="section-heading"><h2>经营关键点</h2><span class="tag">${e(D.industries.find(x=>x.id===S.industry).name)}</span></div><div class="detail-grid">${metrics.slice(0,4).map((m,i)=>button(`<span>${e(m.label)}</span><strong>${metricValue(m)}</strong>${icon('next',14)}`,'driver','detail-item',`data-id="${i}"`)).join('')}</div></section>`}
-  function issuesView(b){return `<section><div class="section-heading"><h2>需要关注</h2><span class="count-label">${b.issues.length} 项 · 本周固定样例</span></div><div class="card issue-list">${b.issues.map((issue,i)=>button(`<span class="issue-icon">${icon('warning',17)}</span><span class="issue-copy"><span class="tag">${e(issue.tag)}</span><strong>${e(issue.title)}</strong><small>查看原因与建议</small></span>${icon('next',16)}`,'issue','issue-row',`data-id="${i}"`)).join('')}</div></section>`}
-  function detailView(b){return `<section><div class="section-heading"><h2>${e(b.detail.title)}</h2></div><p class="chart-caption">${e(b.detail.note)}</p>${b.detail.rows.map(row=>`<article class="card detail-card"><h3>${e(row[0])}</h3>${row.slice(1).map((val,i)=>`<div class="detail-item"><span>${e(b.detail.heads[i+1])}</span><strong>${e(val)}</strong></div>`).join('')}</article>`).join('')}</section>`}
+  function detailHasMetrics(detail){return detail.heads.some((label,i)=>i>0&&/额|率|余额|投入|销售|班次|到岗|缺岗|缺口|覆盖|产出|成本|达标|P90|报损|核销|利用|同比|达成|应收|人效|合格|指标|观察值|当前记录/.test(label)&&detail.rows.some(row=>/[0-9]/.test(String(row[i]||''))))}
+  function detailView(b){if(!detailHasMetrics(b.detail))return '';return `<section><div class="section-heading"><h2>${e(b.detail.title)}</h2></div><p class="chart-caption">${e(b.detail.note.replace(/^本周固定样例 · /,'10/09–10/15 · '))}</p>${b.detail.rows.map(row=>`<article class="card detail-card"><h3>${e(row[0])}</h3>${row.slice(1).map((val,i)=>`<div class="detail-item"><span>${e(b.detail.heads[i+1])}</span><strong>${e(val)}</strong></div>`).join('')}</article>`).join('')}</section>`}
 
-  function focusView(b){const item=b.insights?.panels?.[0];if(!item)return '';return `<section class="focus-card">${button(`<span class="focus-icon">${icon('spark',20)}</span><span class="focus-copy"><span class="focus-kicker">经营洞察 <small>固定观察</small></span><strong>${e(item.title)}</strong><span class="focus-summary">${e(item.insight)}</span></span>${icon('next',16)}`,'insight','focus-main')}</section>`}
-  function boardBody(b,includeCommon=false){if(!availableSample())return `${includeCommon?commonView():''}<div class="card empty-query">${empty('这个范围还没有数据',`当前为 ${dateLabel()} · ${S.scope==='all'?'全部授权门店':'单店范围'}。样例覆盖近 7 天、本月和本季度。`)}${button('返回近 7 天','sample','primary-button')}</div>`;return metricsView(b)+(includeCommon?commonView():'')+trendsView(b)+driversView(b)+focusView(b)+issuesView(b)+(S.report?detailView(b):'')}
+  function boardBody(b,includeCommon=false){if(!availableSample())return `${includeCommon?commonView():''}<div class="card empty-query">${empty('这个范围还没有数据',`当前为 ${dateLabel()} · ${S.scope==='all'?'全部授权门店':'单店范围'}。当前可用期间为近 7 天、本月和本季度。`)}${button('返回近 7 天','sample','primary-button')}</div>`;return metricsView(b)+(includeCommon?commonView():'')+trendsView(b)+driversView(b)+(S.report?detailView(b):'')}
 
-  function homeView(){const p=M.home(S.role),b=M.board(p.id,S.industry);return `<div class="home-context"><div class="home-intro"><div><span class="home-kicker">我的看板</span><h1>${e(p.name)}</h1></div></div>${dataEntry()}${filterBar()}</div>${b?boardBody(b,true):empty('页面内容待接入')}<p class="demo-note">数据截至 2026-10-15 · 交互原型</p>`}
+  function homeView(){const p=M.home(S.role),b=M.board(p.id,S.industry);return `<div class="home-context"><div class="home-intro"><div><span class="home-kicker">我的看板</span><h1>${e(p.name)}</h1></div></div>${dataEntry()}${filterBar()}</div>${b?boardBody(b,true):empty('页面内容待接入')}<p class="support-note">数据截至 2026-10-15</p>`}
   function reportRow(p,{suggestion=false,selecting=false}={}){const fav=context().favorites.includes(p.id),[ic,tone]=reportStyle(p);return `<article class="report-row"><button type="button" class="report-main" data-action="${selecting?'favorite':'open'}" data-id="${p.id}"><span class="report-icon tone-${tone}">${icon(ic,21)}</span><span class="report-info"><strong class="report-title">${e(p.name)}</strong><small class="report-meta">${e(menuPath(p))}</small></span></button>${button(icon(suggestion&&!fav?'plus':'star',20),'favorite',`report-action ${fav?'is-favorite':''}`,`data-id="${p.id}" aria-label="${fav?'取消收藏':'收藏'}${e(p.name)}" aria-pressed="${fav}"`)}</article>`}
   function filteredPages(){const pages=M.eligible(S.role).filter(p=>(S.tab!=='favorites'||context().favorites.includes(p.id))&&(S.tab==='favorites'||S.category==='全部'||p.category===S.category)&&`${p.name} ${p.description} ${menuPath(p)}`.includes(S.search.trim()));return S.tab==='favorites'?pages.sort((a,b)=>context().favorites.indexOf(a.id)-context().favorites.indexOf(b.id)):pages}
 
@@ -19667,10 +19637,10 @@ window.MobileDemoData = {
   function favoritesView(){const favorites=M.eligible(S.role).filter(p=>context().favorites.includes(p.id)).sort((a,b)=>context().favorites.indexOf(a.id)-context().favorites.indexOf(b.id));
     const hero=`<div class="collection-hero"><div class="collection-copy"><h1>我的收藏</h1><p>${favorites.length?`已收藏 ${favorites.length} 张报表`:'常看的报表，集中在这里'}</p></div>${button(`${icon('plus',18)} 添加`,'add-favorites','collection-add','aria-label="添加收藏"')}</div>`;
     if(!favorites.length){const defaults=M.common(S.role,context()),candidates=M.unique([...defaults.map(p=>p.id),...M.eligible(S.role).map(p=>p.id)]).slice(0,3).map(M.page);return hero+`<section class="favorites-empty"><div class="empty-bookmark">${icon('bookmark',46)}<span>${icon('star',18)}</span></div><h2>还没有收藏报表</h2><p>收藏经常查看的报表<br>下次从这里直接打开</p>${button(`${icon('plus',17)} 挑选报表`,'add-favorites','primary-button')}</section><section class="starter-reports"><div class="section-heading"><h2>快速添加</h2><span class="count-label">点 + 收藏</span></div><div class="report-list">${candidates.map(p=>reportRow(p,{suggestion:true})).join('')}</div></section>`}
-    return hero+searchView()+`<div id="results">${resultsView()}</div><div class="collection-add-row">${button(`${icon('plus',17)} 继续添加报表`,'add-favorites','link-button')}</div><p class="demo-note">收藏为个人保存，不影响常用报表和角色配置</p>`;
+    return hero+searchView()+`<div id="results">${resultsView()}</div><div class="collection-add-row">${button(`${icon('plus',17)} 继续添加报表`,'add-favorites','link-button')}</div><p class="support-note">收藏为个人保存，不影响常用报表和角色配置</p>`;
   }
-  function reportView(){const p=currentPage(),b=currentBoard(),fav=context().favorites.includes(p.id);return `<div class="report-top">${button(`${icon('back',18)}<span>${S.returnTab==='home'?'返回看板':S.returnTab==='favorites'?'返回收藏':'返回报表'}</span>`,'back','report-back')}<div class="report-actions">${button(icon('star',21),'favorite',`icon-button ${fav?'is-favorite':''}`,`data-id="${p.id}" aria-label="${fav?'取消收藏':'收藏'}"`)}${button(icon('pin',20),'pin','icon-button',`data-id="${p.id}" aria-label="固定为常用报表"`)}</div></div><div class="page-heading"><div><span class="eyebrow">${e(menuPath(p))}</span><h1>${e(p.name)}</h1></div></div><p class="context-note">沿用看板查询条件 · ${e(D.industries.find(i=>i.id===S.industry).name)}</p>${dataEntry()}${filterBar()}${b?boardBody(b):specialReport(p)}<p class="demo-note">交互原型 · 业务样例与 PC 端一致</p>`}
-  function specialReport(p){const sample=D.reportSamples?.[p.id];if(sample?.rows?.length)return `<div class="notice">${e(sample.note)}。独立固定样例，不随当前期间或业态重算。</div>${sample.rows.map(row=>`<article class="card detail-card"><h3>${e(row[0])}</h3>${row.slice(1).map((val,i)=>`<div class="detail-item"><span>${e(sample.heads[i+1])}</span><strong>${e(val)}</strong></div>`).join('')}</article>`).join('')}`;return `<div class="card detail-card"><h2>${e(p.name)}</h2><p>${e(p.description)}</p>${empty('报表内容待接入','已保留移动端入口、查询上下文与返回路径。该页面尚未提供可复用的移动端业务样例。')}</div>`}
+  function reportView(){const p=currentPage(),b=currentBoard(),fav=context().favorites.includes(p.id);return `<div class="report-top">${button(`${icon('back',18)}<span>${S.returnTab==='home'?'返回看板':S.returnTab==='favorites'?'返回收藏':'返回报表'}</span>`,'back','report-back')}<div class="report-actions">${button(icon('star',21),'favorite',`icon-button ${fav?'is-favorite':''}`,`data-id="${p.id}" aria-label="${fav?'取消收藏':'收藏'}"`)}${button(icon('pin',20),'pin','icon-button',`data-id="${p.id}" aria-label="固定为常用报表"`)}</div></div><div class="page-heading"><div><span class="eyebrow">${e(menuPath(p))}</span><h1>${e(p.name)}</h1></div></div><p class="context-note">沿用看板查询条件 · ${e(D.industries.find(i=>i.id===S.industry).name)}</p>${dataEntry()}${filterBar()}${b?boardBody(b):specialReport(p)}`}
+  function specialReport(p){const sample=D.reportSamples?.[p.id];if(sample?.rows?.length)return `<div class="notice">当前数据不随期间、门店或业态筛选变化；实时数据尚未接入。</div>${sample.rows.map(row=>`<article class="card detail-card"><h3>${e(row[0])}</h3>${row.slice(1).map((val,i)=>`<div class="detail-item"><span>${e(sample.heads[i+1])}</span><strong>${e(val)}</strong></div>`).join('')}</article>`).join('')}`;return `<div class="card detail-card"><h2>${e(p.name)}</h2><p>${e(p.description)}</p>${empty('报表内容待接入','该报表暂未接入移动端内容。')}</div>`}
   function render(restoreScroll){
     if(S.report&&!M.eligible(S.role).some(p=>p.id===S.report))S.report=null;
     const y=restoreScroll??window.scrollY;
@@ -19699,41 +19669,35 @@ window.MobileDemoData = {
       title='添加收藏';sub='点击报表或星标收藏，选择后自动保存';body=`<div class="report-list">${M.eligible(S.role).map(p=>reportRow(p,{selecting:true})).join('')}</div>`;foot=button('完成','close','primary-button');
     }else if(sheet.type==='manage-favorites'){
       title='整理收藏';sub='按你的习惯排序，常看的放在前面';const ids=context().favorites.filter(id=>M.eligible(S.role).some(p=>p.id===id));body=ids.map((id,i)=>{const p=M.page(id);return `<div class="reorder-row"><span class="report-info"><strong>${e(p.name)}</strong><small>${e(p.category)}</small></span><div class="reorder-controls">${button(icon('arrowup',16),'move-favorite','icon-button',`data-id="${id}" data-direction="-1" aria-label="上移${e(p.name)}" ${i===0?'disabled':''}`)}${button(icon('arrowdown',16),'move-favorite','icon-button',`data-id="${id}" data-direction="1" aria-label="下移${e(p.name)}" ${i===ids.length-1?'disabled':''}`)}${button(icon('close',16),'favorite','icon-button',`data-id="${id}" aria-label="移除${e(p.name)}"`)}</div></div>`}).join('')||empty('还没有收藏','先添加需要的报表。');foot=button('完成','close','primary-button');
-    }else if(sheet.type==='insight'){
-      const item=currentBoard().insights.panels[0];title='经营洞察';sub=item.note;body=`<span class="tag">${e(D.industries.find(i=>i.id===S.industry).name)}</span><h3>${e(item.title)}</h3><p class="insight-question">${e(item.question)}</p><label class="form-label">数据给出的线索</label><p>${e(item.insight)}</p><label class="form-label">建议下一步</label><p>${e(item.action)}</p><details class="insight-definition"><summary>统计口径与数据范围</summary><p>${e(item.definition)}</p><p>${e(item.source)}</p></details>`;
     }else if(sheet.type==='identity'){
-      title='角色与业态';sub='切换视角，查看对应经营重点';body=`<label class="form-label">角色视角</label><div class="choice-grid">${D.roles.map(r=>button(e(r.name),'choose-role',`choice ${S.role===r.id?'choice-selected':''}`,`data-id="${r.id}"`)).join('')}</div><label class="form-label">业态视角</label><div class="choice-grid">${D.industries.map(i=>button(e(i.name),'choose-industry',`choice ${S.industry===i.id?'choice-selected':''}`,`data-id="${i.id}"`)).join('')}</div><p class="demo-note">本原型可切换角色；正式应用将根据平台身份匹配角色及数据权限。</p>`;foot=button('完成','close','primary-button');
+      title='角色与业态';sub='切换视角，查看对应经营重点';body=`<label class="form-label">角色视角</label><div class="choice-grid">${D.roles.map(r=>button(e(r.name),'choose-role',`choice ${S.role===r.id?'choice-selected':''}`,`data-id="${r.id}"`)).join('')}</div><label class="form-label">业态视角</label><div class="choice-grid">${D.industries.map(i=>button(e(i.name),'choose-industry',`choice ${S.industry===i.id?'choice-selected':''}`,`data-id="${i.id}"`)).join('')}</div><p class="support-note">当前角色视角仅在本地切换，工作台身份认证尚未接入。</p>`;foot=button('完成','close','primary-button');
     }else if(sheet.type==='filters'){
-      title='查询条件';body=`<label class="form-label">期间</label><div class="choice-grid">${D.periods.map(p=>button(e(p.name),'period',`choice ${sheet.period===p.id?'choice-selected':''}`,`data-id="${p.id}"`)).join('')}</div>${sheet.period==='year-range'?`<div class="choice-grid"><label class="form-label">开始年度<select class="field-input" id="year-start">${['2023','2024','2025','2026'].map(y=>`<option ${y===sheet.yearStart?'selected':''}>${y}</option>`).join('')}</select></label><label class="form-label">结束年度<select class="field-input" id="year-end">${['2023','2024','2025','2026'].map(y=>`<option ${y===sheet.yearEnd?'selected':''}>${y}</option>`).join('')}</select></label></div>`:''}<label class="form-label">数据范围</label><select class="field-input" id="query-scope"><option value="all">全部授权品牌 / 市场 / 门店</option><option value="single" ${sheet.scope==='single'?'selected':''}>单店范围（待接入样例）</option></select><div class="notice">数据截至 2026-10-15；近 7 天为 10/09–10/15。年度区间默认最近两个自然年。</div>`;foot=button('重置','reset-filter')+button('查询','apply-filter','primary-button');
+      title='查询条件';body=`<label class="form-label">期间</label><div class="choice-grid">${D.periods.map(p=>button(e(p.name),'period',`choice ${sheet.period===p.id?'choice-selected':''}`,`data-id="${p.id}"`)).join('')}</div>${sheet.period==='year-range'?`<div class="choice-grid"><label class="form-label">开始年度<select class="field-input" id="year-start">${['2023','2024','2025','2026'].map(y=>`<option ${y===sheet.yearStart?'selected':''}>${y}</option>`).join('')}</select></label><label class="form-label">结束年度<select class="field-input" id="year-end">${['2023','2024','2025','2026'].map(y=>`<option ${y===sheet.yearEnd?'selected':''}>${y}</option>`).join('')}</select></label></div>`:''}<label class="form-label">数据范围</label><select class="field-input" id="query-scope"><option value="all">全部授权品牌 / 市场 / 门店</option><option value="single" ${sheet.scope==='single'?'selected':''}>单店范围（暂无数据）</option></select><div class="notice">数据截至 2026-10-15；近 7 天为 10/09–10/15。年度区间默认最近两个自然年。</div>`;foot=button('重置','reset-filter')+button('查询','apply-filter','primary-button');
     }else if(sheet.type==='metric'||sheet.type==='driver'){
       const b=currentBoard(),m=(sheet.type==='metric'?b.primaryMetrics:b.driverMetrics)[sheet.index];title=m.label;body=`<div class="metric-value">${metricValue(m)}</div><label class="form-label">统计口径</label><p>${e(m.def)}</p><label class="form-label">怎么看</label><p>${e(m.decision)}</p>`;
     }else if(sheet.type==='chart-info'){
       const c=currentBoard().charts[S.chart];title='趋势统计口径';body=`<h3>${e(c.label)}</h3><p>${e(c.note)}</p><p class="notice">${e(periodRange())} · 单位 ${e(c.unit)}</p>`;
-    }else if(sheet.type==='issue'){
-      const issue=currentBoard().issues[sheet.index];title='经营问题详情';body=`<span class="tag">${e(issue.tag)}</span><h3>${e(issue.title)}</h3><label class="form-label">已观察到</label><p>${e(issue.fact)}</p><label class="form-label">待核实原因</label>${issue.hypotheses.map(h=>`<p>· ${e(h)}</p>`).join('')}<label class="form-label">建议下一步</label><p>${e(issue.action)}</p><div class="notice">负责角色：${e(issue.owner)}</div><p class="chart-caption">${e(issue.guard)}</p>`;foot=button('查看分析明细','detail','primary-button');
-    }else if(sheet.type==='detail'){
-      title=currentBoard().detail.title;body=detailView(currentBoard());
     }else if(sheet.type==='common'){
-      title='管理常用报表';sub='最多 6 张 · 固定优先，常看自动补充';const selected=M.common(S.role,context());body=`<p class="notice">点击上下箭头调整顺序。手动固定的报表不会被自动替换。</p>${selected.map((p,i)=>`<div class="reorder-row"><span class="report-info"><strong>${e(p.name)}</strong><small class="report-meta">${context().pins.includes(p.id)?'已固定':'角色默认 / 常看'} · ${e(p.category)}</small></span><div class="reorder-controls">${button(icon('arrowup',16),'move-common','icon-button',`data-id="${p.id}" data-direction="-1" aria-label="上移${e(p.name)}" ${i===0?'disabled':''}`)}${button(icon('arrowdown',16),'move-common','icon-button',`data-id="${p.id}" data-direction="1" aria-label="下移${e(p.name)}" ${i===selected.length-1?'disabled':''}`)}</div></div>`).join('')}<label class="form-label">选择固定报表</label>${M.eligible(S.role).filter(p=>p.id!==M.home(S.role).id).map(p=>button(`<span class="report-info"><strong>${e(p.name)}</strong><small class="report-meta">${e(menuPath(p))}</small></span><span class="check-indicator">${context().pins.includes(p.id)?icon('check',16):'+'}</span>`,'pin',`selection-row ${context().pins.includes(p.id)?'selection-selected':''}`,`data-id="${p.id}"`)).join('')||empty('暂无其他授权报表')}<p class="demo-note">近 30 天内至少 3 天有效查看的报表可自动补入，每周更新；收藏独立保留。</p>`;foot=button('完成','close','primary-button');
+      title='管理常用报表';sub='最多 6 张 · 固定优先，常看自动补充';const selected=M.common(S.role,context());body=`<p class="notice">点击上下箭头调整顺序。手动固定的报表不会被自动替换。</p>${selected.map((p,i)=>`<div class="reorder-row"><span class="report-info"><strong>${e(p.name)}</strong><small class="report-meta">${context().pins.includes(p.id)?'已固定':'角色默认 / 常看'} · ${e(p.category)}</small></span><div class="reorder-controls">${button(icon('arrowup',16),'move-common','icon-button',`data-id="${p.id}" data-direction="-1" aria-label="上移${e(p.name)}" ${i===0?'disabled':''}`)}${button(icon('arrowdown',16),'move-common','icon-button',`data-id="${p.id}" data-direction="1" aria-label="下移${e(p.name)}" ${i===selected.length-1?'disabled':''}`)}</div></div>`).join('')}<label class="form-label">选择固定报表</label>${M.eligible(S.role).filter(p=>p.id!==M.home(S.role).id).map(p=>button(`<span class="report-info"><strong>${e(p.name)}</strong><small class="report-meta">${e(menuPath(p))}</small></span><span class="check-indicator">${context().pins.includes(p.id)?icon('check',16):'+'}</span>`,'pin',`selection-row ${context().pins.includes(p.id)?'selection-selected':''}`,`data-id="${p.id}"`)).join('')||empty('暂无其他授权报表')}<p class="support-note">近 30 天内至少 3 天有效查看的报表可自动补入，每周更新；收藏独立保留。</p>`;foot=button('完成','close','primary-button');
     }else if(sheet.type==='data'){
       title='数据状态与更新';sub=job&&!job.done?M.page(job.pageId).name:currentPage().name;({body,foot}=dataSheet());
     }else if(sheet.type==='confirm-run'){
-      title=sheet.stage?'确认阶段重跑':'确认更新数据';const plan=M.scope(currentId(),sheet.mode,sheet.selected),eta=M.estimate(plan,sheet.stage);body=`<div class="notice">${e(scopeName(sheet.mode))} · ${plan.sourceIds.length} 个数据源 / ${plan.modelIds.length} 个模型（已去重）</div>${etaView(eta)}<label class="form-label">本次执行</label><p>${stages.slice(sheet.stage).join(' → ')}</p>${sheet.stage?`<p>前置阶段沿用上次成功结果。${sheet.stage===3?'重新发布不会拉取新数据。':'从当前阶段执行到数据就绪。'}</p>`:''}<p class="chart-caption">${sheet.mode==='source'?'按数据源更新会执行该适配器的全部模型，可能影响其他报表。':'共享模型只执行一次。'} 更新完成前，仍可查看上次成功的数据。</p><p class="demo-note">预计时间为量级示意。本次会加速演示，不连接真实数据仓库。</p>`;foot=button('返回','data-back')+button('确认开始','start-run','primary-button');
+      title=sheet.stage?'确认阶段重跑':'确认更新数据';const plan=M.scope(currentId(),sheet.mode,sheet.selected),eta=M.estimate(plan,sheet.stage);body=`<div class="notice">${e(scopeName(sheet.mode))} · ${plan.sourceIds.length} 个数据源 / ${plan.modelIds.length} 个模型（已去重）</div>${etaView(eta)}<label class="form-label">本次执行</label><p>${stages.slice(sheet.stage).join(' → ')}</p>${sheet.stage?`<p>前置阶段沿用上次成功结果。${sheet.stage===3?'重新发布不会拉取新数据。':'从当前阶段执行到数据就绪。'}</p>`:''}<p class="chart-caption">${sheet.mode==='source'?'按数据源更新会执行该适配器的全部模型，可能影响其他报表。':'共享模型只执行一次。'} 更新完成前，仍可查看上次成功的数据。</p><p class="support-note">任务服务尚未连接。本次仅运行本地流程，不会更新实际数据；预计时间仅供参考。</p>`;foot=button('返回','data-back')+button('确认开始','start-run','primary-button');
     }
     $('modal-root').innerHTML=`<div class="overlay" data-action="dismiss"><section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" tabindex="-1">${sheetHead(title,sub)}<div class="sheet-body">${body}</div>${foot?`<footer class="sheet-footer">${foot}</footer>`:''}</section></div>`;
   }
   const stages=['数据拉取','数据清洗','数据加工','数据已准备就绪'];
   const scopeName=mode=>mode==='source'?'按数据源更新':mode==='theme'?'按业务主题更新':'当前页面全部数据';
   function duration(seconds){return seconds<60?`${seconds} 秒`:`${Math.ceil(seconds/60)} 分钟`}
-  function etaView(eta){const now=Date.now(),fmt=t=>new Date(t).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});return `<div class="estimate"><div class="section-heading"><strong>${icon('clock',17)} 更新时间预估</strong><span class="tag">示例预估</span></div><div class="estimate-values"><div><small>预计耗时</small><strong>约 ${duration(eta.low)}–${duration(eta.high)}</strong></div><div><small>预计完成时间</small><strong>${fmt(now+eta.low*1000)}–${fmt(now+eta.high*1000)}</strong></div></div></div>`}
+  function etaView(eta){const now=Date.now(),fmt=t=>new Date(t).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});return `<div class="estimate"><div class="section-heading"><strong>${icon('clock',17)} 更新时间预估</strong><span class="tag">参考预估</span></div><div class="estimate-values"><div><small>预计耗时</small><strong>约 ${duration(eta.low)}–${duration(eta.high)}</strong></div><div><small>预计完成时间</small><strong>${fmt(now+eta.low*1000)}–${fmt(now+eta.high*1000)}</strong></div></div></div>`}
   function resourceRow(item,mode){const checked=mode==='all'||sheet.selected.includes(item.id),modelNames=item.modelIds.map(id=>D.models.find(m=>m.id===id).name),time=mode==='source'?adapterVersions[item.id].updated:versions[item.id].updated;return `<div class="resource-card">${button(`<span class="check-indicator">${checked?icon('check',15):''}</span><span class="report-info"><strong>${e(item.name)}</strong><small class="resource-meta">${item.modelIds.length} 个模型${item.sourceIds?' · '+item.sourceIds.map(id=>D.adapters.find(a=>a.id===id).name).join(' / '):''}</small></span>`,'resource',`selection-row ${checked?'selection-selected':''}`,`data-id="${item.id}" ${mode==='all'?'disabled':''}`)}<div class="resource-meta"><span class="status-dot"></span>${e(mode==='source'?adapterVersions[item.id].status:versions[item.id].status)}<span>更新于 ${e(time.slice(5))}</span></div><details class="resource-models"><summary>查看模型与数据截止</summary><p>${e(modelNames.join('、'))}</p><p>数据截至 2026-10-15</p></details></div>`}
   function dataSheet(){
     const bound=M.themes(currentId()),mode=sheet.mode||'all',plan=M.scope(currentId(),mode,sheet.selected||[]),sourceIds=M.unique(bound.flatMap(t=>t.sourceIds)),items=mode==='source'?D.adapters.filter(a=>sourceIds.includes(a.id)):bound;
-    if(job&&!job.done){const eta=M.estimate(job.plan,job.stage);return {body:`<div class="notice">${icon('refresh',18)} 正在${stages[job.stage]}<p>原有数据仍可查看，关闭面板后继续执行。</p></div>${etaView(eta)}<p class="chart-caption">当前为加速交互演示，剩余步骤自动推进。</p><div class="progress-bar"><span style="width:${job.stage*25+10}%"></span></div><div class="stages">${stages.map((s,i)=>`<div class="stage ${i<job.stage?'stage-done':i===job.stage?'stage-active':''}"><span class="stage-number">${i<job.stage?icon('check',15):i+1}</span><div class="stage-copy"><strong>${s}</strong><small>${i<job.stage?'已完成':i===job.stage?'正在执行':'等待执行'}</small></div></div>`).join('')}</div>`,foot:button('关闭，继续后台执行','close','secondary-button')};}
-    return {body:`<div class="notice"><span class="status-dot"></span>${job?.done&&job.pageId===currentId()?'本次更新已完成':'当前数据可用'}<p>数据截至 2026-10-15 · 最近更新 ${e(latest(currentId()))}</p></div><label class="form-label">更新范围</label><div class="segmented">${[['all','全部数据'],['source','数据源'],['theme','业务主题']].map(([id,label])=>button(label,'scope-mode',mode===id?'segment-active':'',`data-id="${id}"`)).join('')}</div><p class="chart-caption">${mode==='all'?'更新本页依赖的所有模型。':mode==='source'?'选择数据源，将执行该适配器的全部模型。':'选择主题，自动带出相关数据源与模型。'}</p>${items.map(item=>resourceRow(item,mode)).join('')}<details class="rerun-details"><summary>阶段重跑</summary><p class="chart-caption">作用于当前所选范围，从所选阶段执行至就绪。</p><div class="stages">${stages.map((s,i)=>`<div class="stage"><span class="stage-number">${i+1}</span><div class="stage-copy"><strong>${s}</strong></div>${button(i===3?'重新发布':'从此重跑','rerun','stage-action',`data-id="${i}" ${!plan.modelIds.length?'disabled':''}`)}</div>`).join('')}</div></details><p class="demo-note">原型仅演示流程；预计耗时不是实时任务承诺。查询条件不会缩小数据更新范围。</p>`,foot:`<div class="update-footer"><span>${plan.modelIds.length} 个模型${mode==='all'?' · 已去重':''}</span>${button(`${icon('refresh',17)} ${mode==='all'?'更新全部数据':'更新所选数据'}`,'run','primary-button',!plan.modelIds.length?'disabled':'')}</div>`};
+    if(job&&!job.done){const eta=M.estimate(job.plan,job.stage);return {body:`<div class="notice">${icon('refresh',18)} 正在${stages[job.stage]}<p>原有数据仍可查看，关闭面板后继续执行。</p></div>${etaView(eta)}<div class="progress-bar"><span style="width:${job.stage*25+10}%"></span></div><div class="stages">${stages.map((s,i)=>`<div class="stage ${i<job.stage?'stage-done':i===job.stage?'stage-active':''}"><span class="stage-number">${i<job.stage?icon('check',15):i+1}</span><div class="stage-copy"><strong>${s}</strong><small>${i<job.stage?'已完成':i===job.stage?'正在执行':'等待执行'}</small></div></div>`).join('')}</div>`,foot:button('关闭，继续执行','close','secondary-button')};}
+    return {body:`<div class="notice"><span class="status-dot"></span>${job?.done&&job.pageId===currentId()?'流程已完成，实际数据未变更':'当前数据可用'}<p>数据截至 2026-10-15 · 最近更新 ${e(latest(currentId()))}</p></div><label class="form-label">更新范围</label><div class="segmented">${[['all','全部数据'],['source','数据源'],['theme','业务主题']].map(([id,label])=>button(label,'scope-mode',mode===id?'segment-active':'',`data-id="${id}"`)).join('')}</div><p class="chart-caption">${mode==='all'?'更新本页依赖的所有模型。':mode==='source'?'选择数据源，将执行该适配器的全部模型。':'选择主题，自动带出相关数据源与模型。'}</p>${items.map(item=>resourceRow(item,mode)).join('')}<details class="rerun-details"><summary>阶段重跑</summary><p class="chart-caption">作用于当前所选范围，从所选阶段执行至就绪。</p><div class="stages">${stages.map((s,i)=>`<div class="stage"><span class="stage-number">${i+1}</span><div class="stage-copy"><strong>${s}</strong></div>${button(i===3?'重新发布':'从此重跑','rerun','stage-action',`data-id="${i}" ${!plan.modelIds.length?'disabled':''}`)}</div>`).join('')}</div></details><p class="support-note">查询条件不会缩小数据更新范围。</p>`,foot:`<div class="update-footer"><span>${plan.modelIds.length} 个模型${mode==='all'?' · 已去重':''}</span>${button(`${icon('refresh',17)} ${mode==='all'?'更新全部数据':'更新所选数据'}`,'run','primary-button',!plan.modelIds.length?'disabled':'')}</div>`};
   }
   function confirmRun(stage=0){if(job&&!job.done){notify('已有任务执行中');return}const plan=M.scope(currentId(),sheet.mode||'all',sheet.selected||[]);if(!plan.modelIds.length){notify('请先选择更新范围');return}showSheet('confirm-run',{mode:sheet.mode||'all',selected:sheet.selected||[],stage});}
-  function startRun(){if(job&&!job.done)return;const plan=M.scope(currentId(),sheet.mode,sheet.selected);job={plan,stage:sheet.stage,start:sheet.stage,pageId:currentId(),done:false,mode:sheet.mode,selected:sheet.selected};showSheet('data',{mode:job.mode,selected:job.selected});render();clearInterval(runTimer);runTimer=setInterval(()=>{job.stage++;if(job.stage>3){clearInterval(runTimer);job.done=true;const at=stamp();for(const t of job.plan.complete)versions[t.id]={updated:at,status:'已就绪'};if(job.start<3)for(const t of job.plan.partial)versions[t.id].status='可用 · 待同步';for(const a of D.adapters){if(a.modelIds.every(id=>job.plan.modelIds.includes(id)))adapterVersions[a.id]={updated:at,status:'已就绪'};else if(job.start<3&&a.modelIds.some(id=>job.plan.modelIds.includes(id)))adapterVersions[a.id].status='可用 · 部分更新';}notify('数据更新已完成');render()}if(sheet?.type==='data')renderSheet()},2100)}
+  function startRun(){if(job&&!job.done)return;const plan=M.scope(currentId(),sheet.mode,sheet.selected);job={plan,stage:sheet.stage,start:sheet.stage,pageId:currentId(),done:false,mode:sheet.mode,selected:sheet.selected};showSheet('data',{mode:job.mode,selected:job.selected});render();clearInterval(runTimer);runTimer=setInterval(()=>{job.stage++;if(job.stage>3){clearInterval(runTimer);job.done=true;const at=stamp();for(const t of job.plan.complete)versions[t.id]={updated:at,status:'已就绪'};if(job.start<3)for(const t of job.plan.partial)versions[t.id].status='可用 · 待同步';for(const a of D.adapters){if(a.modelIds.every(id=>job.plan.modelIds.includes(id)))adapterVersions[a.id]={updated:at,status:'已就绪'};else if(job.start<3&&a.modelIds.some(id=>job.plan.modelIds.includes(id)))adapterVersions[a.id].status='可用 · 部分更新';}notify('流程已完成，实际数据未变更');render()}if(sheet?.type==='data')renderSheet()},2100)}
   function rememberDraft(){if(sheet?.type!=='filters')return;sheet.yearStart=$('year-start')?.value||sheet.yearStart;sheet.yearEnd=$('year-end')?.value||sheet.yearEnd;sheet.scope=$('query-scope')?.value||sheet.scope}
   document.addEventListener('click',event=>{
     const el=event.target.closest('[data-action]');if(!el||el.disabled)return;const action=el.dataset.action,id=el.dataset.id;
@@ -19758,13 +19722,11 @@ window.MobileDemoData = {
     else if(action==='manage-favorites')showSheet('manage-favorites');
     else if(action==='move-favorite'){const ids=context().favorites,index=ids.indexOf(id),target=index+Number(el.dataset.direction);if(target<0||target>=ids.length)return;[ids[index],ids[target]]=[ids[target],ids[index]];save();render();renderSheet()}
     else if(action==='undo-favorite'){if(undoFavorite&&undoFavorite.role===S.role){const c=context();if(!c.favorites.includes(undoFavorite.id))c.favorites.splice(undoFavorite.index,0,undoFavorite.id);save();render();if(sheet?.type==='add-favorites'||sheet?.type==='manage-favorites')renderSheet();undoFavorite=null;notify('已恢复收藏')}}
-    else if(action==='insight')showSheet('insight');
     else if(action==='favorite')toggleFavorite(id);
     else if(action==='pin')pin(id);
     else if(action==='common')showSheet('common');
     else if(action==='move-common'){const ids=M.common(S.role,context()).map(p=>p.id),index=ids.indexOf(id),target=index+Number(el.dataset.direction);[ids[index],ids[target]]=[ids[target],ids[index]];context().order=ids;save();render();renderSheet()}
-    else if(['metric','driver','issue'].includes(action))showSheet(action,{index:Number(id)});
-    else if(action==='detail'){recordVisit();showSheet('detail')}
+    else if(['metric','driver'].includes(action))showSheet(action,{index:Number(id)});
     else if(action==='chart-info')showSheet('chart-info');
     else if(action==='chart'){S.chart=Number(id);render()}
     else if(action==='data')showSheet('data',{mode:'all',selected:[]});
