@@ -1055,73 +1055,124 @@ select option { background: #f5f8ff; color: var(--ink); }
 
 </style>
   <style>
-.sp-page { min-width: 0; }
-.sp-eyebrow { display:flex; align-items:center; gap:9px; color:var(--muted); font-size:11px; margin-bottom:5px; }
-.sp-eyebrow span { opacity:.4; }
-.sp-page .dashboard-heading { align-items:center; margin-bottom:20px; }
-.sp-page .dashboard-heading p { font-size:12px; margin:7px 0 0; }
-.sp-page .heading-tools { flex-wrap:wrap; justify-content:flex-end; }
-.sp-filters { display:flex; align-items:flex-end; flex-wrap:wrap; gap:18px; padding:18px 20px; margin-bottom:20px; }
-.sp-scope-fields { display:flex; gap:16px; flex:1; }
-.sp-scope-fields label { display:grid; gap:7px; min-width:130px; flex:1; }
-.sp-filters label, .sp-scope-fields label>span { color:var(--muted); font-size:12px; }
-.sp-filters select, .sp-period input { border:1px solid var(--control-line); border-radius:10px; height:37px; padding:0 11px; background:#ffffff75; color:var(--ink); font:inherit; font-size:12px; min-width:0; }
-.sp-filters select:disabled { color:var(--ink); opacity:1; cursor:default; -webkit-text-fill-color:var(--ink); }
-.sp-period { display:grid; gap:7px; }
-.sp-period>div { display:flex; align-items:center; gap:9px; }
-.sp-period input { width:145px; }
-.sp-period>div>span { color:var(--muted); font-size:12px; }
-.sp-filter-actions { display:flex; gap:8px; }
-.sp-filter-actions .btn { min-height:37px; padding:7px 17px; }
-#sp-filter-error { color:var(--red); width:100%; font-size:12px; margin:0; }
-.sp-tabs { display:flex; align-items:center; gap:5px; overflow-x:auto; padding:5px; margin-bottom:20px; border:1px solid var(--glass-edge); border-radius:14px; background:#dbe8fa80; scrollbar-width:thin; }
-.sp-tabs button { flex:1 0 auto; min-height:40px; padding:10px 14px; border:1px solid transparent; border-radius:10px; color:#526987; background:transparent; font-size:13px; white-space:nowrap; cursor:pointer; }
-.sp-tabs button:hover { background:#ffffff65; color:var(--blue-dark); }
-.sp-tabs button.active { color:var(--blue-dark); background:linear-gradient(140deg,#ffffffdc,#f2f7ffb0); border-color:#ffffffdc; box-shadow:0 3px 10px #406caa10,inset 0 1px 0 #fff; font-weight:650; }
-.sp-layout { display:grid; grid-template-columns:minmax(0,1fr); gap:20px; align-items:start; }
-.sp-layout.has-assistant { grid-template-columns:minmax(0,1fr) 305px; }
-.sp-content { min-width:0; display:grid; gap:20px; }
-.sp-metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
-.sp-metric { min-width:0; padding:18px 16px 15px; background:var(--glass-panel); border:1px solid var(--glass-edge); border-radius:16px; box-shadow:var(--glass-shadow); -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px); }
-.sp-metric.primary { background:linear-gradient(135deg,#e0eeffdd,#f9fcffb8); border-color:#c2daf9; }
-.sp-metric>span { color:var(--muted); font-size:12px; }
-.sp-metric strong { display:block; font-size:25px; letter-spacing:-.7px; line-height:1.3; margin:12px 0 9px; font-weight:650; font-variant-numeric:tabular-nums; white-space:nowrap; }
-.sp-metric.primary strong { color:var(--blue-dark); }
-.sp-metric strong small { font-size:11px; font-weight:500; margin-left:4px; letter-spacing:0; color:var(--muted); }
-.sp-metric p { margin:0; font-size:10px; color:var(--muted); line-height:1.6; }
-.sp-section-head { padding:19px 20px 17px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.sp-section-head h2 { margin:0; font-size:15px; }
-.sp-section-head p { margin:5px 0 0; font-size:11px; color:var(--muted); }
-.sp-table-card { min-width:0; }
-.sp-table-scroll { overflow:auto; max-height:535px; scrollbar-width:thin; scrollbar-color:#b8c9df transparent; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-.sp-table { border-collapse:separate; border-spacing:0; width:100%; font-size:12px; font-variant-numeric:tabular-nums; white-space:nowrap; }
-.sp-target-table { min-width:1180px; }
-.sp-table th,.sp-table td { padding:14px 15px; text-align:right; border-bottom:1px solid var(--line); }
-.sp-table th { font-weight:550; font-size:11px; background:#eaf2fd; color:#456185; position:sticky; top:0; z-index:1; }
-.sp-target-table thead tr:nth-child(2) th { top:42px; }
-.sp-target-table th[rowspan] { vertical-align:middle; }
-.sp-table .sp-group-head { text-align:center; border-left:1px solid #b9cee650; padding:12px; height:42px; }
-.sp-table td:first-child,.sp-table th:first-child { text-align:left; }
-.sp-table tbody tr:nth-child(even) td { background:#eaf2ff42; }
-.sp-table tbody tr:hover td { background:#e0edff8c; }
-.sp-table tbody tr:last-child td { border-bottom:0; }
-.sp-table .sp-total td { background:#e4efffd6; font-weight:650; }
-.sp-table .sp-total small { color:var(--muted); font-weight:400; margin-left:8px; }
-.sp-table .sp-row-selected td { background:#dceaffb8!important; }
-.sp-table th button { display:inline-flex; gap:6px; background:none; border:0; padding:0; color:inherit; font:inherit; cursor:pointer; }
-.sp-table th button span { color:#7a97b9; }
-.sp-month-link { font:inherit; color:var(--blue-dark); border:0; background:transparent; cursor:pointer; padding:3px 0; }
-.sp-month-link:hover { text-decoration:underline; }
-.sp-pending { display:block; color:#8a7a56; font-size:10px; margin-top:3px; }
-.sp-actual { font-weight:550; color:#234873; }
-.sp-rate { color:var(--ink); }
-.sp-rate.is-good { color:var(--green); }
-.sp-rate.is-low { color:var(--red); }
-.sp-muted { color:var(--muted); }
-.sp-gap { min-width:118px; height:25px; position:relative; display:flex; justify-content:flex-end; align-items:center; }
-.sp-gap i { position:absolute; right:0; height:24px; background:linear-gradient(90deg,#fb647c18,#ee6b7e45); border-right:2px solid #e56f80; border-radius:3px 0 0 3px; }
-.sp-gap i.positive { background:#24a37a25; border-color:#24a37a; }
-.sp-gap b { position:relative; font-size:12px; font-weight:500; padding:0 5px; }
+/* Store manager report. Colors are local to this workspace. */
+.sp-page {
+  --sp-navy: #16355f;
+  --sp-label: #516983;
+  --sp-surface: rgba(255,255,255,.82);
+  min-width: 0;
+}
+.sp-page .workspace-return-row { margin-bottom: 9px; }
+.sp-page .workspace-return-row .btn { background: transparent; border-color: transparent; box-shadow: none; padding: 0; color: var(--sp-label); min-height: 26px; }
+.sp-page .workspace-return-row .btn:hover { color: var(--blue-dark); }
+.sp-eyebrow { display: flex; align-items: center; gap: 7px; color: var(--sp-label); font-size: 11px; margin-bottom: 3px; }
+.sp-eyebrow span { color: #90a4ba; }
+.sp-page .dashboard-heading { align-items: center; gap: 12px; margin-bottom: 16px; }
+.sp-page .dashboard-heading h1 { margin: 0; font-size: clamp(24px,2.1vw,32px); line-height: 1.25; color: var(--sp-navy); }
+.sp-page .dashboard-heading p { font-size: 13px; margin: 5px 0 0; }
+.sp-page .heading-tools { flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+.sp-page .heading-tools .board-status-row { margin: 0; }
+.sp-page .card { border-radius: 15px; background-color: var(--sp-surface); }
+.sp-filters {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 14px; padding: 12px 16px;
+}
+.sp-scope-fields { display: flex; flex-wrap: wrap; gap: 5px 12px; align-items: center; flex: 1; }
+.sp-scope-fields > div { display: grid; gap: 2px; line-height: 1.5; }
+.sp-scope-fields > div + div { border-left: 1px solid var(--line); padding-left: 12px; }
+.sp-scope-fields > div > span { color: var(--sp-label); font-size: 11px; }
+.sp-scope-fields b { font-weight: 580; font-size: 13px; color: var(--sp-navy); }
+.sp-period { display: flex; gap: 8px; align-items: center; }
+.sp-period label, .sp-period > div > span { font-size: 12px; color: var(--sp-label); }
+.sp-period > div { display: flex; align-items: center; gap: 6px; }
+.sp-period input {
+  width: 132px; height: 35px; min-width: 0; border: 1px solid var(--control-line); border-radius: 8px;
+  padding: 0 8px; background: var(--glass-strong); color: var(--ink); font: inherit; font-size: 12px;
+}
+.sp-filter-actions { display: flex; gap: 6px; }
+.sp-filter-actions .btn { min-height: 35px; padding: 6px 14px; border-radius: 8px; }
+#sp-filter-error { color: var(--red); flex-basis: 100%; font-size: 12px; margin: 0; }
+.sp-tabs {
+  display: flex; align-items: center; gap: 3px; overflow-x: auto; scrollbar-width: thin;
+  padding: 4px; margin: 0 0 16px; border: 1px solid #cad8ec; border-radius: 11px; background: #f2f7ffc9;
+}
+.sp-tabs button {
+  flex: 1 0 auto; min-height: 35px; padding: 6px 11px; border: 1px solid transparent; border-radius: 7px;
+  color: #465d76; background: transparent; font-size: 13px; font-weight: 550; white-space: nowrap; cursor: pointer;
+}
+.sp-tabs button:hover { background: #ffffffad; color: var(--blue-dark); }
+.sp-tabs button.active { color: #163c75; background: #fff; border-color: #bbd1f1; box-shadow: 0 1px 4px #19375414; font-weight: 650; }
+.sp-layout { display: grid; grid-template-columns: minmax(0,1fr); gap: 16px; align-items: start; }
+.sp-layout.has-assistant { grid-template-columns: minmax(0,1fr) clamp(255px,21vw,330px); }
+.sp-content { min-width: 0; display: grid; gap: 14px; }
+.sp-metrics { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
+.sp-metric {
+  position: relative; isolation: isolate; overflow: hidden; min-width: 0; padding: 13px 15px 12px;
+  background: var(--sp-surface); border: 1px solid var(--glass-edge); border-radius: 13px; box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+}
+.sp-metric.primary {
+  background: linear-gradient(118deg,#173a6c 4%,#23549b 100%); color: white;
+  border-color: #28528a; box-shadow: 0 5px 14px #173a6c21,inset 0 1px 0 #ffffff36;
+}
+.sp-metric.primary::after {
+  content: ''; position: absolute; z-index: -1; pointer-events: none;
+  width: 144px; height: 144px; bottom: -106px; right: -46px; border-radius: 50%;
+  box-shadow: 0 0 0 1px #afcfff45,0 0 0 14px #accdff12,0 0 0 28px #accdff0c;
+}
+.sp-metric > span { color: var(--sp-label); font-size: 12px; font-weight: 560; }
+.sp-metric strong {
+  display: block; font-size: clamp(22px,1.9vw,32px); letter-spacing: -.025em; line-height: 1.2;
+  margin: 6px 0; font-weight: 660; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--sp-navy);
+}
+.sp-metric strong small { font-size: 11px; font-weight: 500; margin-left: 4px; letter-spacing: 0; color: var(--sp-label); }
+.sp-metric p { margin: 0; font-size: 11px; color: var(--sp-label); line-height: 1.5; }
+.sp-metric.primary strong { color: white; }
+.sp-metric.primary > span, .sp-metric.primary p, .sp-metric.primary strong small { color: #e1edff; }
+.sp-insight-strip {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 11px 14px; border: 1px solid #bbd5f5; border-radius: 12px; background: linear-gradient(105deg,#e0edffeb,#f7fbffe0);
+}
+.sp-insight-strip > div { display: grid; gap: 3px; min-width: 0; }
+.sp-insight-strip small { color: #3a619a; font-size: 11px; font-weight: 620; }
+.sp-insight-strip strong { color: var(--sp-navy); font-size: 13px; font-weight: 610; line-height: 1.55; }
+.sp-insight-strip button {
+  flex: none; border: 1px solid #b7cdee; border-radius: 8px; background: #ffffffa6; color: var(--blue-dark);
+  font: inherit; font-size: 12px; font-weight: 580; padding: 6px 10px; cursor: pointer;
+}
+.sp-insight-strip button:hover { background: #fff; border-color: #819ecc; }
+.sp-section-head { padding: 15px 16px 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sp-section-head h2 { margin: 0; color: var(--sp-navy); font-size: 16px; }
+.sp-section-head p { margin: 3px 0 0; font-size: 11px; color: var(--sp-label); }
+.sp-table-card { min-width: 0; }
+.sp-table-scroll { overflow: auto; max-height: 510px; scrollbar-width: thin; scrollbar-color: #9db3d1 transparent; border-block: 1px solid var(--line); }
+.sp-table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sp-table th, .sp-table td { padding: 9px 12px; text-align: right; border-bottom: 1px solid #dde5ef; line-height: 1.55; }
+.sp-table th { font-weight: 600; font-size: 11px; background: #edf3fa; color: #4c6380; position: sticky; top: 0; z-index: 1; }
+.sp-target-table th[rowspan] { vertical-align: middle; }
+.sp-table .sp-group-head { text-align: center; border-left: 1px solid #d7e3f1; height: 30px; padding-block: 5px; }
+.sp-target-table thead tr:nth-child(2) th { top: 30px; }
+.sp-table td:first-child, .sp-table th:first-child { text-align: left; }
+.sp-table tbody tr:nth-child(even) td { background: #edf4fd3d; }
+.sp-table tbody tr:hover td { background: #eaf3ffc7; }
+.sp-table tbody tr:last-child td { border-bottom: 0; }
+.sp-table .sp-total td { color: #1c426f; background: #e2eeff; font-weight: 650; }
+.sp-table .sp-total small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.sp-table .sp-row-selected td, .sp-table .sp-focus-active td { background: #dceaff !important; }
+.sp-table .sp-row-selected td:first-child, .sp-table .sp-focus-active td:first-child { box-shadow: inset 3px 0 var(--blue); }
+.sp-table th button { display: inline-flex; gap: 5px; background: none; border: 0; padding: 0; color: inherit; font: inherit; cursor: pointer; }
+.sp-table th button span { color: #58769b; }
+.sp-month-link { font: inherit; font-weight: 560; color: var(--blue-dark); border: 0; background: transparent; cursor: pointer; padding: 2px 0; }
+.sp-month-link:hover { text-decoration: underline; }
+.sp-pending { display: inline-block; vertical-align: middle; padding: 1px 4px; margin-left: 5px; font-size: 10px; border-radius: 4px; background: #f8efd9; color: #775014; }
+.sp-actual { font-weight: 620; color: #1d406b; }
+.sp-rate { color: var(--ink); }
+.sp-shortfall, .sp-rate.is-low { color: #ac3b38; }
+.sp-rate.is-good { color: #14674e; }
+.sp-muted { color: var(--muted); }
+.sp-gap { min-width: 85px; height: 22px; position: relative; display: flex; justify-content: flex-end; align-items: center; }
+.sp-gap i { position: absolute; right: 0; height: 22px; background: #ee6b7e25; border-right: 2px solid #df8f9b; border-radius: 3px 0 0 3px; }
+.sp-gap i.positive { background: #24a37a25; border-color: #249979; }
+.sp-gap b { position: relative; font-size: 12px; font-weight: 500; padding: 0 4px; }
 .sp-table-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 18px; font-size:11px; color:var(--muted); }
 .sp-table-footer>div { display:flex; gap:6px; align-items:center; }
 .sp-table-footer .iconbtn { width:27px; height:27px; }
@@ -1162,18 +1213,23 @@ select option { background: #f5f8ff; color: var(--ink); }
 .sp-action-card p { color:var(--muted); font-size:12px; margin:0 0 12px; line-height:1.8; }
 .sp-action-card .linkbtn { margin-right:18px; }
 .sp-action-card .linkbtn .icon { width:13px; height:13px; }
-.sp-assistant { position:sticky; top:84px; overflow:hidden; display:flex; flex-direction:column; max-height:calc(100vh - 103px); background:linear-gradient(155deg,#f8fbffd6,#f0f6ffb0)!important; }
-.sp-assistant-head { display:flex; align-items:center; gap:10px; padding:18px 16px; border-bottom:1px solid #ffffffd0; }
-.sp-assistant-icon { width:35px; height:35px; flex-shrink:0; border-radius:12px; display:grid; place-items:center; color:var(--blue-dark); background:linear-gradient(135deg,#daeaff,#e7e5ff); box-shadow:inset 0 1px 0 #fff; }
-.sp-assistant-head h2 { margin:0; font-size:14px; }
-.sp-assistant-head p { margin:4px 0 0; font-size:10px; color:var(--muted); }
-.sp-assistant-head .iconbtn { margin-left:auto; width:25px; height:25px; flex-shrink:0; }
-.sp-assistant-head .iconbtn svg { width:16px; height:16px; }
-.sp-assistant-scroll { overflow:auto; padding:18px; scrollbar-width:thin; min-height:0; flex:1; }
-.sp-analysis-context { display:flex; flex-direction:column; gap:5px; font-size:10px; color:var(--muted); margin-bottom:18px; }
-.sp-analysis-context b { font-size:11px; color:#51709d; font-weight:500; }
-.sp-assistant h3 { margin:0 0 13px; font-size:13px; }
-.sp-assistant .sp-analysis-title { font-size:17px; line-height:1.6; color:#214778; }
+.sp-assistant.card {
+  position: sticky; top: calc(var(--header-height) + 12px); overflow: hidden; display: flex; flex-direction: column;
+  max-height: calc(100vh - var(--header-height) - 24px); border-color: #c0d4ef;
+  background: linear-gradient(165deg,#f7fbffed,#eff6ffd9);
+}
+.sp-assistant-head { display: flex; align-items: center; gap: 10px; padding: 13px 14px; border-bottom: 1px solid #c9d9ec; background: linear-gradient(100deg,#e5efff,#f4f9ff); }
+.sp-assistant-icon { width: 33px; height: 33px; flex-shrink: 0; border-radius: 10px; display: grid; place-items: center; color: #fff; background: #284f87; }
+.sp-assistant-head h2 { margin: 0; color: var(--sp-navy); font-size: 15px; }
+.sp-assistant-head p { margin: 2px 0 0; font-size: 11px; color: var(--sp-label); }
+.sp-assistant-head .iconbtn { margin-left: auto; width: 28px; height: 28px; flex-shrink: 0; }
+.sp-assistant-head .iconbtn svg { width: 16px; height: 16px; }
+.sp-assistant-scroll { overflow: auto; padding: 15px; scrollbar-width: thin; min-height: 0; flex: 1; }
+.sp-analysis-context { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 8px; font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+.sp-analysis-context b { font-size: 10px; font-weight: 550; padding: 1px 6px; border-radius: 5px; background: #deebfc; color: #365883; }
+.sp-assistant h3 { margin: 0 0 10px; font-size: 13px; }
+.sp-assistant .sp-analysis-title { font-size: 19px; line-height: 1.4; letter-spacing: -.02em; color: var(--sp-navy); }
+.sp-assistant.sp-focus-active { box-shadow: 0 0 0 1px #6f9bd4, var(--glass-shadow); }
 .sp-findings { padding:0; list-style:none; margin:0; font-size:12px; color:#4c6483; line-height:1.85; }
 .sp-findings li { margin:0 0 12px; padding-left:12px; position:relative; }
 .sp-findings li:before { content:''; position:absolute; left:0; top:8px; width:4px; height:4px; border-radius:50%; background:#76a1df; }
@@ -1200,14 +1256,37 @@ select option { background: #f5f8ff; color: var(--ink); }
 .sp-empty>.icon { width:40px; height:40px; color:#88a9d4; margin-bottom:16px; }
 .sp-empty p { margin:10px 0 22px; color:var(--muted); font-size:13px; }
 .sp-page .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
-@media (max-width:1450px) { .sp-layout.has-assistant { grid-template-columns:minmax(0,1fr) 285px; gap:16px; } .sp-metrics { gap:8px; } .sp-metric { padding:16px 12px; } .sp-metric strong { font-size:22px; } .sp-scope-fields label { min-width:110px; } .sp-scope-fields { gap:12px; } .sp-filters { gap:12px; } .sp-period input { width:137px; } .sp-tabs button { font-size:12px; padding:10px 12px; } }
-@media (max-width:1250px) { .sp-layout.has-assistant { grid-template-columns:minmax(0,1fr) 270px; } .sp-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); } .sp-bottom-grid { grid-template-columns:minmax(0,1fr); } .sp-filters { align-items:end; } .sp-scope-fields { flex-basis:100%; } .sp-filter-actions { margin-left:auto; } }
-@media (max-width:950px) { .sp-layout.has-assistant { grid-template-columns:minmax(0,1fr); } .sp-assistant { position:relative; top:0; max-height:none; } .sp-assistant-scroll { max-height:600px; } .sp-page .dashboard-heading { align-items:flex-start; gap:15px; flex-direction:column; } }
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) { .sp-metric,.sp-assistant,.sp-columns>div { background:#f4f8ff!important; } }
-@media (prefers-reduced-transparency:reduce) { .sp-metric,.sp-assistant,.sp-columns>div { background:#f4f8ff!important; backdrop-filter:none; } }
+@media (max-width: 1340px) {
+  .sp-layout.has-assistant { grid-template-columns: minmax(0,1fr) 252px; gap: 12px; }
+  .sp-metric { padding: 12px; }
+  .sp-tabs button { padding-inline: 8px; }
+  .sp-period input { width: 125px; }
+  .sp-table th, .sp-table td { padding-inline: 10px; }
+}
+@media (max-width: 1130px) {
+  .sp-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .sp-bottom-grid { grid-template-columns: minmax(0,1fr); }
+  .sp-scope-fields { flex-basis: 100%; }
+  .sp-filter-actions { margin-left: auto; }
+}
+@media (max-width: 960px) {
+  .sp-layout.has-assistant { grid-template-columns: minmax(0,1fr); }
+  .sp-assistant.card { position: relative; top: 0; max-height: none; }
+  .sp-assistant-scroll { max-height: 480px; }
+  .sp-page .dashboard-heading { align-items: flex-start; gap: 9px; flex-direction: column; }
+  .sp-page .heading-tools { justify-content: flex-start; }
+  .sp-insight-strip { flex-wrap: wrap; }
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  .sp-metric:not(.primary), .sp-columns > div, .sp-assistant.card { background: #f7faff; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .sp-page { --sp-surface: #fff; }
+  .sp-metric:not(.primary), .sp-columns > div, .sp-assistant.card { background: #f7faff; backdrop-filter: none; }
+}
 
 </style>
-  <meta name="demo-version" content="20261103-store-performance">
+  <meta name="demo-version" content="20261104-store-review">
 </head>
 <body>
   <div id="app"></div>
@@ -5301,7 +5380,7 @@ const spMonths = [
   orders:dine===null?null:Math.round((dine+delivery)/126),reviews:dine===null?null:Math.round((dine+delivery)/2200)
 }));
 const spTabs=[['target','经营分析及目标达成'],['returns','退菜分析'],['reviews','舆情分析'],['dishes','菜品分析'],['loss','损耗分析'],['schedule','合理排班'],['people','人员发展'],['inspection','巡店分析']];
-let spState={tab:'target',start:'2025-01',end:'2025-08',draftStart:'2025-01',draftEnd:'2025-08',sort:'month',direction:-1,page:1,size:12,assistant:true,answer:'',focus:'',columns:{org:true,total:true,dine:true,delivery:true}};
+let spState={tab:'target',start:'2025-01',end:'2025-08',draftStart:'2025-01',draftEnd:'2025-08',sort:'month',direction:-1,page:1,size:12,assistant:true,answer:'',focus:'',columns:{org:false,dine:false,delivery:false,progress:false}};
 const spNumber=(n,d=0)=>n==null?'—':Number(n).toLocaleString('zh-CN',{maximumFractionDigits:d,minimumFractionDigits:d});
 const spPercent=(n,d)=>!d?'—':spNumber(n/d*100,2)+'%';
 const spSum=(rows,key)=>rows.reduce((total,row)=>total+(Number(row[key])||0),0);
@@ -5312,15 +5391,55 @@ function spScope(){const dims=boardQueryDimensions({role:'store',industry:state.
 function spSorted(rows){return [...rows].sort((a,b)=>{const x=spState.sort==='rate'?spRatio(a):a.month,y=spState.sort==='rate'?spRatio(b):b.month;if(x==null)return 1;if(y==null)return -1;return (x<y?-1:x>y?1:0)*spState.direction})}
 function spMetric(label,value,unit,note,tone=''){return `<article class="sp-metric ${tone}"><span>${label}</span><strong>${value}<small>${unit}</small></strong><p>${note}</p></article>`}
 function spRateCell(value,target){const r=value==null?null:value/target*100;return `<span class="sp-rate ${r===null?'':r>=100?'is-good':r<80?'is-low':''}">${r===null?'—':spNumber(r,2)+'%'}</span>`}
-function spGap(row){const rate=spRatio(row);return rate==null?'<span class="sp-muted">—</span>':`<div class="sp-gap"><i style="width:${Math.min(Math.abs(rate-100),100)}%" class="${rate>=100?'positive':''}"></i><b>${rate>100?'+':''}${spNumber(rate-100,2)}%</b></div>`}
 function spSortButton(key,label){return `<button type="button" data-sp-action="sort" data-value="${key}">${label}<span>${spState.sort===key?(spState.direction===1?'↑':'↓'):'↕'}</span></button>`}
-function spColumnPicker(){const c=spState.columns,count=2+(c.org?2:0)+(c.total?4:0)+(c.dine?3:0)+(c.delivery?3:0);return `<details class="sp-columns"><summary>${icon('settings')}显示字段 <span>${count}</span>${icon('down')}</summary><div>${[['org','品牌与区域'],['total','折后营收'],['dine','堂食折后营收'],['delivery','外卖折后营收']].map(([key,label])=>`<label><input type="checkbox" data-sp-column="${key}" ${c[key]?'checked':''}>${label}</label>`).join('')}<small>门店与月份始终显示</small></div></details>`}
-function spTargetTable(){
-  const all=spSorted(spRows()),ready=spReady(),c=spState.columns,s=spScope(),rows=all.slice((spState.page-1)*spState.size,spState.page*spState.size);
-  const groups=[['total','折后营收','actual','target'],['dine','堂食折后营收','dine','dineTarget'],['delivery','外卖折后营收','delivery','deliveryTarget']].filter(([key])=>c[key]);
-  const cells=row=>groups.map(([,title,value,target])=>`<td>${spRateCell(row[value],row[target])}</td><td>${spNumber(row[target])}</td><td class="sp-actual">${spNumber(row[value])}</td>`).join('');
-  const summary=Object.fromEntries(['actual','target','dine','dineTarget','delivery','deliveryTarget'].map(key=>[key,spSum(ready,key)]));
-  return `<section class="card sp-table-card"><div class="sp-section-head"><div><h2>月度达成率</h2><p>金额单位：元 · 达成率按已出数月份加权汇总</p></div>${spColumnPicker()}</div><div class="sp-table-scroll" tabindex="0" aria-label="月度达成率表格，可横向滚动"><table class="sp-table sp-target-table"><thead><tr>${c.org?'<th rowspan="2">品牌</th><th rowspan="2">区域</th>':''}<th rowspan="2">门店名称</th><th rowspan="2">${spSortButton('month','年月')}</th>${c.total?'<th rowspan="2" title="已结束月份的实际达成率减100%">营收进度差</th>':''}${groups.map(([,title])=>`<th colspan="3" class="sp-group-head">${title}</th>`).join('')}</tr><tr>${groups.map(([key])=>`<th>${key==='total'?spSortButton('rate','达成率'):'达成率'}</th><th>目标</th><th>实际</th>`).join('')}</tr></thead><tbody>${ready.length?`<tr class="sp-total"><td colspan="${c.org?4:2}">已出数月份合计 <small>${ready.length} 个月</small></td>${c.total?`<td>${spGap(summary)}</td>`:''}${cells(summary)}</tr>`:''}${rows.map(row=>`<tr class="${spState.focus===row.month?'sp-row-selected':''}">${c.org?`<td>${esc(s.brand)}</td><td>${s.region}</td>`:''}<td>${s.store}</td><td><button class="sp-month-link" data-sp-action="focus" data-value="${row.month}" aria-label="分析${row.month}">${row.month}</button>${row.actual===null?'<small class="sp-pending">待出数</small>':''}</td>${c.total?`<td>${spGap(row)}</td>`:''}${cells(row)}</tr>`).join('')}</tbody></table></div><div class="sp-table-footer"><span>共 ${all.length} 条${all.some(row=>row.actual===null)?' · 待出数月份不计入合计':''}</span><div><button class="iconbtn" data-sp-action="page" data-value="-1" aria-label="上一页" ${spState.page===1?'disabled':''}>${icon('back')}</button><span>${spState.page} / ${Math.max(1,Math.ceil(all.length/spState.size))}</span><button class="iconbtn" data-sp-action="page" data-value="1" aria-label="下一页" ${spState.page*spState.size>=all.length?'disabled':''}>${icon('arrow')}</button><select data-sp-size aria-label="每页条数">${options([[6,'6 条 / 页'],[12,'12 条 / 页']],spState.size)}</select></div></div></section>`;
+function spInsightStrip(rows) {
+  if (!rows.length) return '';
+  const month = rows.reduce((lowest, row) => row.actual - row.target < lowest.actual - lowest.target ? row : lowest);
+  const shortfall = month.target - month.actual;
+  const monthLabel = Number(month.month.slice(5)) + ' 月';
+  const finding = shortfall > 0
+    ? monthLabel + '营收距目标还差 ' + spNumber(shortfall / 10000, 2) + ' 万元'
+    : '已出数月份均达到营收目标';
+  return `<div class="sp-insight-strip"><div><small>本期关注</small><strong>${finding}</strong></div>
+    <button type="button" class="linkbtn" data-sp-action="focus" data-value="${month.month}">查看 ${monthLabel}分析 ${icon('arrow')}</button></div>`;
+}
+function spColumnPicker() {
+  const groups = [['dine', '堂食明细', 3], ['delivery', '外卖明细', 3], ['org', '品牌、区域与门店', 3], ['progress','营收进度差', 1]];
+  const count = groups.reduce((n,[key,,width]) => n + (spState.columns[key] ? width : 0), 5);
+  return `<details class="sp-columns"><summary>${icon('settings')}显示字段 <span>${count}</span>${icon('down')}</summary>
+    <div>${groups.map(([key, label]) => `<label><input type="checkbox" data-sp-column="${key}" ${spState.columns[key] ? 'checked' : ''}>${label}</label>`).join('')}</div></details>`;
+}
+function spTargetTable() {
+  const all = spSorted(spRows()), ready = spReady(), scope = spScope();
+  const rows = all.slice((spState.page - 1) * spState.size, spState.page * spState.size);
+  const channels = [['dine','堂食','dineTarget'], ['delivery','外卖','deliveryTarget']].filter(([key]) => spState.columns[key]);
+  const headers = [spSortButton('month','年月'),'实际营收','营收目标',spSortButton('rate','达成率'),'实际 − 目标'];
+  for (const [, label] of channels) headers.push(label + '实际', label + '目标', label + '达成率');
+  if (spState.columns.org) headers.push('品牌','区域','门店');
+  if (spState.columns.progress) headers.push('营收进度差');
+  const summary = Object.fromEntries(['actual','target','dine','dineTarget','delivery','deliveryTarget'].map(key => [key, spSum(ready,key)]));
+  function rowCells(row, total) {
+    const focused = !total && spState.focus === row.month;
+    const month = total ? `合计 <small>${ready.length} 个月</small>`
+      : `<button class="sp-month-link" data-sp-action="focus" data-value="${row.month}" aria-label="分析${row.month}" aria-pressed="${focused}">${row.month}</button>${row.actual === null ? '<small class="sp-pending">待出数</small>' : ''}`;
+    const gap = row.actual === null ? null : row.actual - row.target;
+    const cells = [month, spNumber(row.actual), spNumber(row.target), spRateCell(row.actual,row.target),
+      `<span class="${gap < 0 ? 'sp-shortfall' : ''}">${spNumber(gap)}</span>`];
+    for (const [key,,target] of channels) cells.push(spNumber(row[key]), spNumber(row[target]), spRateCell(row[key],row[target]));
+    if (spState.columns.org) cells.push(...(total ? ['—','—','—'] : [scope.brand,scope.region,scope.store].map(esc)));
+    if (spState.columns.progress) cells.push(gap === null ? '—' : spPercent(gap,row.target));
+    return `<tr class="${total ? 'sp-total' : focused ? 'sp-row-selected' : ''}">${cells.map((cell,i) => `<td${i === 1 ? ' class="sp-actual"' : ''}>${cell}</td>`).join('')}</tr>`;
+  }
+  return `<section class="card sp-table-card"><div class="sp-section-head"><div><h2>月度达成率</h2>
+    <p>金额单位：元 · 点击月份查看分析</p></div>${spColumnPicker()}</div>
+    <div class="sp-table-scroll" tabindex="0" aria-label="月度达成率表格"><table class="sp-table sp-target-table">
+    <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>${ready.length ? rowCells(summary,true) : ''}${rows.map(row => rowCells(row,false)).join('')}</tbody></table></div>
+    <div class="sp-table-footer"><span>共 ${all.length} 条${all.some(row => row.actual === null) ? ' · 待出数月份不计入合计' : ''}</span>
+    <div><button class="iconbtn" data-sp-action="page" data-value="-1" aria-label="上一页" ${spState.page===1?'disabled':''}>${icon('back')}</button>
+    <span>${spState.page} / ${Math.max(1,Math.ceil(all.length/spState.size))}</span>
+    <button class="iconbtn" data-sp-action="page" data-value="1" aria-label="下一页" ${spState.page*spState.size>=all.length?'disabled':''}>${icon('arrow')}</button>
+    <select data-sp-size aria-label="每页条数">${options([[6,'6 条 / 页'],[12,'12 条 / 页']],spState.size)}</select></div></div></section>`;
 }
 function spTrend(rows,key='actual',target='target',title='营收与目标趋势',unit='万元'){
   const data=rows.filter(row=>row[key]!=null),max=Math.max(1,...data.map(r=>r[key]),...data.map(r=>target?r[target]||0:0))*1.14;
@@ -5328,7 +5447,7 @@ function spTrend(rows,key='actual',target='target',title='营收与目标趋势'
   const val=n=>unit==='万元'?spNumber(n/10000,0):spNumber(n,0);
   return `<section class="card sp-chart-card"><div class="sp-section-head"><div><h2>${title}</h2><p>${unit}</p></div><div class="sp-legend"><span><i></i>${target?'实际':'本期'}</span>${target?'<span><i class="target"></i>目标</span>':''}</div></div><svg viewBox="0 0 650 215" role="img" aria-label="${title}">${[0,1,2,3].map(n=>`<line x1="45" x2="620" y1="${170-n*44}" y2="${170-n*44}" class="sp-gridline"/><text x="36" y="${174-n*44}" text-anchor="end">${val(max*n/3)}</text>`).join('')}${target?`<polyline points="${data.map((r,i)=>point(r,i,target)).join(' ')}" class="sp-target-line"/>`:''}<polyline points="${data.map((r,i)=>point(r,i,key)).join(' ')}" class="sp-data-line"/>${data.map((r,i)=>{const[x,y]=point(r,i,key).split(',');return `<circle cx="${x}" cy="${y}" r="4" class="sp-data-point"><title>${r.month}：${spNumber(r[key])}${unit==='万元'?'元':unit}</title></circle><text x="${x}" y="201" text-anchor="middle">${r.month.slice(5)}月</text>`}).join('')}</svg></section>`;
 }
-function spTargetContent(){const rows=spReady(),actual=spSum(rows,'actual'),target=spSum(rows,'target'),dine=spSum(rows,'dine'),delivery=spSum(rows,'delivery');return `<div class="sp-metrics">${spMetric('折后营收',spNumber(actual/10000,2),'万元',`已出数 ${rows.length} / ${spRows().length} 个月`,'primary')}${spMetric('目标达成率',spNumber(actual/target*100,2),'%',`对应目标 ${spNumber(target/10000,1)} 万元`)}${spMetric('堂食达成率',spNumber(dine/spSum(rows,'dineTarget')*100,2),'%',`堂食营收 ${spNumber(dine/10000,2)} 万元`)}${spMetric('外卖达成率',spNumber(delivery/spSum(rows,'deliveryTarget')*100,2),'%',`外卖营收 ${spNumber(delivery/10000,2)} 万元`)}</div>${spTargetTable()}<div class="sp-bottom-grid">${spTrend(spRows())}<section class="card sp-channel-card"><div class="sp-section-head"><div><h2>营收渠道构成</h2><p>已出数月份 · 折后营收</p></div>${icon('chart')}</div><div class="sp-channel-total"><small>合计</small><strong>¥ ${spNumber(actual/10000,2)} <small>万</small></strong></div>${[['堂食',dine,''],['外卖',delivery,'delivery']].map(([name,value,cls])=>`<div class="sp-channel"><div><span>${name}</span><b>${spPercent(value,actual)}</b></div><div class="sp-channel-bar"><i class="${cls}" style="width:${value/actual*100}%"></i></div><small>${spNumber(value)} 元</small></div>`).join('')}</section></div>`}
+function spTargetContent(){const rows=spReady(),actual=spSum(rows,'actual'),target=spSum(rows,'target'),dine=spSum(rows,'dine'),delivery=spSum(rows,'delivery');return `<div class="sp-metrics">${spMetric('折后营收',spNumber(actual/10000,2),'万元',`已出数 ${rows.length} / ${spRows().length} 个月`,'primary')}${spMetric('目标达成率',spNumber(actual/target*100,2),'%',`对应目标 ${spNumber(target/10000,1)} 万元`)}${spMetric('堂食达成率',spNumber(dine/spSum(rows,'dineTarget')*100,2),'%',`堂食营收 ${spNumber(dine/10000,2)} 万元`)}${spMetric('外卖达成率',spNumber(delivery/spSum(rows,'deliveryTarget')*100,2),'%',`外卖营收 ${spNumber(delivery/10000,2)} 万元`)}</div>${spInsightStrip(rows)}${spTargetTable()}<div class="sp-bottom-grid">${spTrend(spRows())}<section class="card sp-channel-card"><div class="sp-section-head"><div><h2>营收渠道构成</h2><p>已出数月份 · 折后营收</p></div>${icon('chart')}</div><div class="sp-channel-total"><small>合计</small><strong>¥ ${spNumber(actual/10000,2)} <small>万</small></strong></div>${[['堂食',dine,''],['外卖',delivery,'delivery']].map(([name,value,cls])=>`<div class="sp-channel"><div><span>${name}</span><b>${spPercent(value,actual)}</b></div><div class="sp-channel-bar"><i class="${cls}" style="width:${value/actual*100}%"></i></div><small>${spNumber(value)} 元</small></div>`).join('')}</section></div>`}
 function spTabData(){
   const rows=spReady(),last=rows.at(-1)||{},actual=spSum(rows,'actual'),hours=spSum(rows,'hours'),returns=spSum(rows,'returns'),orders=spSum(rows,'orders');
   const views={
@@ -5341,13 +5460,13 @@ function spTabData(){
     inspection:{title:'巡店得分与整改',metrics:[['最新巡店得分',spNumber(last.score),'分',last.month+' 月检查'],['发现问题',spNumber(spSum(rows,'issues')),'项','所选期间累计'],['已完成整改',spNumber(spSum(rows,'closed')),'项','对应所选问题批次'],['整改完成率',spPercent(spSum(rows,'closed'),spSum(rows,'issues')),'','已完成 / 发现问题']],headers:['年月','巡店得分','发现问题','已完成整改','待整改','整改完成率'],values:r=>[r.month,r.score+' / 100',r.issues,r.closed,r.issues-r.closed,spPercent(r.closed,r.issues)],trend:'score',unit:'分',trendTitle:'巡店得分趋势',focus:'先核实未闭环问题',copy:'逐项检查食品安全、出品标准、服务与排班问题的整改证据，优先处理高风险和重复发生的问题。',links:[['reviews','对照舆情分析'],['people','查看人员培训']]}
   };return views[spState.tab];
 }
-function spDetailContent(){const v=spTabData(),rows=spSorted(spRows()),ready=spReady();return `<div class="sp-metrics">${v.metrics.map((m,i)=>spMetric(...m,i===0?'primary':'')).join('')}</div><section class="card sp-table-card"><div class="sp-section-head"><div><h2>${v.title}</h2><p>${esc(spScope().store)} · ${spState.start} 至 ${spState.end}</p></div><span class="chip">${ready.length} 个月已出数</span></div><div class="sp-table-scroll" tabindex="0" aria-label="${v.title}"><table class="sp-table"><thead><tr>${v.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${(row.actual===null?[row.month,...v.headers.slice(1).map(()=>'—')]:v.values(row)).map((value,i)=>`<td>${i===0?`<button class="sp-month-link" data-sp-action="focus" data-value="${row.month}">${value}</button>${row.actual===null?'<small class="sp-pending">待出数</small>':''}`:value}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="sp-table-footer">共 ${rows.length} 条 · 点击月份查看分析</div></section>${spTrend(spRows(),v.trend,v.target||null,v.trendTitle,v.unit)}<section class="card sp-action-card"><span class="sp-action-icon">${icon('filter')}</span><div><h3>${v.focus}</h3><p>${v.copy}</p><div>${v.links.map(([tab,label])=>`<button class="linkbtn" data-sp-action="tab" data-value="${tab}">${label}${icon('arrow')}</button>`).join('')}</div></div></section>`}
+function spDetailContent(){const v=spTabData(),rows=spRows().reverse(),ready=spReady();return `<div class="sp-metrics">${v.metrics.map((m,i)=>spMetric(...m,i===0?'primary':'')).join('')}</div><section class="card sp-table-card"><div class="sp-section-head"><div><h2>${v.title}</h2><p>${esc(spScope().store)} · ${spState.start} 至 ${spState.end}</p></div><span class="chip">${ready.length} 个月已出数</span></div><div class="sp-table-scroll" tabindex="0" aria-label="${v.title}"><table class="sp-table"><thead><tr>${v.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr class="${spState.focus===row.month?'sp-row-selected':''}">${(row.actual===null?[row.month,...v.headers.slice(1).map(()=>'—')]:v.values(row)).map((value,i)=>`<td>${i===0?`<button class="sp-month-link" data-sp-action="focus" data-value="${row.month}" aria-pressed="${spState.focus===row.month}">${value}</button>${row.actual===null?'<small class="sp-pending">待出数</small>':''}`:value}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="sp-table-footer">共 ${rows.length} 条 · 点击月份查看分析</div></section>${spTrend(spRows(),v.trend,v.target||null,v.trendTitle,v.unit)}<section class="card sp-action-card"><span class="sp-action-icon">${icon('filter')}</span><div><h3>${v.focus}</h3><p>${v.copy}</p><div>${v.links.map(([tab,label])=>`<button class="linkbtn" data-sp-action="tab" data-value="${tab}">${label}${icon('arrow')}</button>`).join('')}</div></div></section>`}
 function spAnalysis(){
   const rows=spReady(),focus=spState.focus?spRows().find(r=>r.month===spState.focus):null,selected=focus&&focus.actual!==null?[focus]:rows;
   if(!selected.length||focus?.actual===null)return {title:'当前范围尚无可分析数据',facts:['所选月份尚未出数，不能将缺失值视为零。'],actions:['调整期间查看已出数月份，或在数据状态与更新中核实处理进度。']};
-  const actual=spSum(selected,'actual'),target=spSum(selected,'target'),last=selected.at(-1),previous=selected.at(-2),rate=spPercent(actual,target);
+  const actual=spSum(selected,'actual'),target=spSum(selected,'target'),last=selected.at(-1),previous=rows[rows.indexOf(last)-1],rate=spPercent(actual,target);
   const views={
-    target:{title:`目标达成 ${rate}`,facts:[`折后营收 ${spNumber(actual/10000,2)} 万元，对应目标 ${spNumber(target/10000,2)} 万元，差额 ${spNumber((actual-target)/10000,2)} 万元。`,`堂食达成 ${spPercent(spSum(selected,'dine'),spSum(selected,'dineTarget'))}，外卖达成 ${spPercent(spSum(selected,'delivery'),spSum(selected,'deliveryTarget'))}。`,previous?`${last.month} 营收较上月${last.actual<previous.actual?'下降':'增长'} ${spNumber(Math.abs(last.actual/previous.actual-1)*100,1)}%，先核实营业天数与数据完整性。`:'当前为单月范围，可扩大期间查看变化。'],actions:['核实目标金额、营业天数和已入账订单。','分别检查堂食客流、客单及外卖订单变化。','结合退菜、排班和巡店记录验证原因。']},
+    target:{title:`目标达成 ${rate}`,facts:[`折后营收 ${spNumber(actual/10000,2)} 万元，对应目标 ${spNumber(target/10000,2)} 万元，差额 ${spNumber((actual-target)/10000,2)} 万元。`,`堂食达成 ${spPercent(spSum(selected,'dine'),spSum(selected,'dineTarget'))}，外卖达成 ${spPercent(spSum(selected,'delivery'),spSum(selected,'deliveryTarget'))}。`,previous?`${last.month} 营收较上月${last.actual<previous.actual?'下降':'增长'} ${spNumber(Math.abs(last.actual/previous.actual-1)*100,1)}%，先核实营业天数与数据完整性。`:'所选期间没有更早的已出数月份可供比较。'],actions:['核实目标金额、营业天数和已入账订单。','分别检查堂食客流、客单及外卖订单变化。','结合退菜、排班和巡店记录验证原因。']},
     returns:{title:`退菜率 ${spPercent(spSum(selected,'returns'),spSum(selected,'orders'))}`,facts:[`期间退菜 ${spNumber(spSum(selected,'returns'))} 单，金额 ${spNumber(spSum(selected,'refund'))} 元。`,`最近出数月份 ${last.month} 退菜 ${last.returns} 单；需进一步核对退菜原因和菜品分布。`],actions:['按菜品与餐段整理退菜记录。','核对原始原因、退款金额与客诉记录。','比较改善前后同口径退菜率。']},
     reviews:{title:`最新综合评分 ${spNumber(last.rating,1)} 分`,facts:[`期间差评 ${spSum(selected,'badReviews')} 条，占评价总数 ${spPercent(spSum(selected,'badReviews'),spSum(selected,'reviews'))}。`,'评价反映顾客体验，具体原因需要回看原文与订单。'],actions:['核对近期差评的发生时间与内容。','对照退菜、出餐与服务记录。','复查整改后同渠道评分和差评占比。']},
     dishes:{title:`平均订单金额 ¥${spNumber(actual/spSum(selected,'orders'),1)}`,facts:[`期间成交 ${spNumber(spSum(selected,'orders'))} 单，菜品销售 ${spNumber(actual/10000,2)} 万元。`,`堂食占比 ${spPercent(spSum(selected,'dine'),actual)}，外卖占比 ${spPercent(spSum(selected,'delivery'),actual)}。`],actions:['核实渠道与订单结构变化。','检查退菜、缺货对畅销菜的影响。','结合成本变化评估菜单调整。']},
@@ -5357,10 +5476,10 @@ function spAnalysis(){
     inspection:{title:`最新巡店得分 ${last.score} 分`,facts:[`期间发现问题 ${spSum(selected,'issues')} 项，已整改 ${spSum(selected,'closed')} 项。`,`对应问题批次尚有 ${spSum(selected,'issues')-spSum(selected,'closed')} 项未完成整改。`],actions:['先检查食品安全等高风险问题。','为重复问题补充现场证据。','按整改期限复查执行结果。']}
   };return views[spState.tab];
 }
-function spAssistant(){const a=spAnalysis(),tab=spTabs.find(([id])=>id===spState.tab)[1];return `<aside class="sp-assistant card" aria-label="经营分析助手"><div class="sp-assistant-head"><span class="sp-assistant-icon">${icon('spark')}</span><div><h2>经营分析助手</h2><p>围绕本店数据，找到下一步</p></div><button class="iconbtn" data-sp-action="assistant" aria-label="收起分析助手">${icon('close')}</button></div><div class="sp-assistant-scroll"><div class="sp-analysis-context"><span>${spState.focus||spState.start+' 至 '+spState.end}</span><b>${tab}</b></div>${spState.focus?'<button class="linkbtn sp-clear-month" data-sp-action="focus" data-value="">查看整个查询期间</button>':''}<h3 class="sp-analysis-title">${a.title}</h3><ol class="sp-findings">${a.facts.map(t=>`<li>${t}</li>`).join('')}</ol><div class="sp-assistant-divider"></div><h3>建议排查顺序</h3><ol class="sp-steps">${a.actions.map(t=>`<li><span>${t}</span></li>`).join('')}</ol>${spState.answer?`<div class="sp-answer" role="status"><h3>分析回复</h3><p>${esc(spState.answer)}</p></div>`:''}<div class="sp-question-list"><small>你可以继续了解</small>${['本期主要问题是什么','先从哪里开始排查','如何验证改善效果'].map((q,i)=>`<button data-sp-action="ask" data-value="${i}">${q}${icon('arrow')}</button>`).join('')}</div></div><form class="sp-composer" id="sp-question-form"><label class="sr-only" for="sp-question">分析问题</label><textarea id="sp-question" rows="2" placeholder="例如：本期主要问题是什么？" maxlength="300"></textarea><div><span>基于当前报表数据</span><button type="submit" class="sp-send" aria-label="提交分析问题">${icon('arrow')}</button></div></form></aside>`}
+function spAssistant(){const a=spAnalysis(),tab=spTabs.find(([id])=>id===spState.tab)[1];return `<aside id="sp-assistant" tabindex="-1" class="sp-assistant card ${spState.focus?'sp-focus-active':''}" aria-label="经营分析助手"><div class="sp-assistant-head"><span class="sp-assistant-icon">${icon('spark')}</span><div><h2>经营分析助手</h2><p>${spState.focus ? spState.focus + ' · 单月分析' : '当前查询期间'}</p></div><button class="iconbtn" data-sp-action="assistant" aria-label="收起分析助手">${icon('close')}</button></div><div class="sp-assistant-scroll"><div class="sp-analysis-context"><span>${spState.focus||spState.start+' 至 '+spState.end}</span><b>${tab}</b></div>${spState.focus?'<button class="linkbtn sp-clear-month" data-sp-action="focus" data-value="">返回期间分析</button>':''}<h3 class="sp-analysis-title">${a.title}</h3><ol class="sp-findings">${a.facts.map(t=>`<li>${t}</li>`).join('')}</ol><div class="sp-assistant-divider"></div><h3>建议排查顺序</h3><ol class="sp-steps">${a.actions.map(t=>`<li><span>${t}</span></li>`).join('')}</ol>${spState.answer?`<div class="sp-answer" role="status"><h3>分析回复</h3><p>${esc(spState.answer)}</p></div>`:''}<div class="sp-question-list"><small>你可以继续了解</small>${['本期主要问题是什么','先从哪里开始排查','如何验证改善效果'].map((q,i)=>`<button data-sp-action="ask" data-value="${i}">${q}${icon('arrow')}</button>`).join('')}</div></div><form class="sp-composer" id="sp-question-form"><label class="sr-only" for="sp-question">分析问题</label><textarea id="sp-question" rows="2" placeholder="例如：本期主要问题是什么？" maxlength="300"></textarea><div><span>基于当前报表数据</span><button type="submit" class="sp-send" aria-label="提交分析问题">${icon('arrow')}</button></div></form></aside>`}
 function storePerformancePage(p){
   const s=spScope(),hasRows=spReady().length>0;
-  return `<div class="report-workspace">${workspaceSidebar()}<main class="main workspace-main sp-page"><div class="workspace-return-row">${btn(icon('back')+'返回角色首页','back-home')}${state.reportOrigin?btn('返回报表列表','back-library','','linkbtn'):''}<span>${icon('shield')}本店授权范围</span></div><div class="page-heading dashboard-heading"><div><div class="sp-eyebrow">门店运营 <span>/</span> 经营复盘</div><h1>${esc(p.name)}</h1><p>从目标达成到现场执行，查看本店经营表现。</p></div><div class="heading-tools"><div class="board-status-row" id="board-data-status" aria-live="polite">${dashboardReady()}</div>${commonPinButton(p)}<button class="btn ${spState.assistant?'':'primary'}" data-sp-action="assistant" aria-expanded="${spState.assistant}">${icon('spark')}${spState.assistant?'收起分析':'经营分析助手'}</button></div></div><form class="card sp-filters" id="sp-filter-form"><div class="sp-scope-fields">${[['品牌',s.brand],['区域',s.region],['门店',s.store]].map(([label,value])=>`<label><span>${label}</span><select disabled aria-label="${label}"><option>${esc(value)}</option></select></label>`).join('')}</div><div class="sp-period"><label for="sp-start">期间</label><div><input type="month" id="sp-start" aria-label="起始月份" value="${spState.draftStart}" required><span>至</span><input type="month" id="sp-end" aria-label="结束月份" value="${spState.draftEnd}" required></div></div><div class="sp-filter-actions"><button class="btn" type="button" data-sp-action="reset">重置</button><button class="btn primary" type="submit">查询</button></div><p id="sp-filter-error" role="alert" hidden></p></form><nav class="sp-tabs" role="tablist" aria-label="门店经营分析专题">${spTabs.map(([id,label])=>`<button id="sp-tab-${id}" type="button" role="tab" aria-selected="${spState.tab===id}" aria-controls="sp-tabpanel" class="${spState.tab===id?'active':''}" data-sp-action="tab" data-value="${id}">${label}</button>`).join('')}</nav><div class="sp-layout ${spState.assistant?'has-assistant':''}"><div id="sp-tabpanel" role="tabpanel" aria-labelledby="sp-tab-${spState.tab}" class="sp-content">${!hasRows?`<section class="card sp-empty">${icon('calendar')}<h2>当前期间暂无已出数数据</h2><p>${spState.start} 至 ${spState.end}，请调整期间后查询。</p><button class="btn primary" data-sp-action="reset">查看默认期间</button></section>`:spState.tab==='target'?spTargetContent():spDetailContent()}</div>${spState.assistant?spAssistant():''}</div></main></div>`;
+  return `<div class="report-workspace">${workspaceSidebar()}<main class="main workspace-main sp-page"><div class="workspace-return-row">${btn(icon('back')+'返回角色首页','back-home')}${state.reportOrigin?btn('返回报表列表','back-library','','linkbtn'):''}<span>${icon('shield')}本店授权范围</span></div><div class="page-heading dashboard-heading"><div><div class="sp-eyebrow">门店运营</div><h1>${esc(p.name)}</h1></div><div class="heading-tools"><div class="board-status-row" id="board-data-status" aria-live="polite">${dashboardReady()}</div>${commonPinButton(p)}<button class="btn ${spState.assistant?'':'primary'}" data-sp-action="assistant" aria-expanded="${spState.assistant}">${icon('spark')}${spState.assistant?'收起分析':'经营分析助手'}</button></div></div><form class="card sp-filters" id="sp-filter-form"><div class="sp-scope-fields">${[['品牌',s.brand],['区域',s.region],['门店',s.store]].map(([label,value])=>`<div><span>${label}</span><b>${esc(value)}</b></div>`).join('')}</div><div class="sp-period"><label for="sp-start">期间</label><div><input type="month" id="sp-start" aria-label="起始月份" value="${spState.draftStart}" required><span>至</span><input type="month" id="sp-end" aria-label="结束月份" value="${spState.draftEnd}" required></div></div><div class="sp-filter-actions"><button class="btn" type="button" data-sp-action="reset">重置</button><button class="btn primary" type="submit">查询</button></div><p id="sp-filter-error" role="alert" hidden></p></form><nav class="sp-tabs" role="tablist" aria-label="门店经营分析专题">${spTabs.map(([id,label])=>`<button id="sp-tab-${id}" type="button" role="tab" aria-selected="${spState.tab===id}" aria-controls="sp-tabpanel" tabindex="${spState.tab===id?0:-1}" class="${spState.tab===id?'active':''}" data-sp-action="tab" data-value="${id}">${label}</button>`).join('')}</nav><div class="sp-layout ${spState.assistant?'has-assistant':''}"><div id="sp-tabpanel" role="tabpanel" aria-labelledby="sp-tab-${spState.tab}" class="sp-content">${!hasRows?`<section class="card sp-empty">${icon('calendar')}<h2>当前期间暂无已出数数据</h2><p>${spState.start} 至 ${spState.end}，请调整期间后查询。</p><button class="btn primary" data-sp-action="reset">查看默认期间</button></section>`:spState.tab==='target'?spTargetContent():spDetailContent()}</div>${spState.assistant?spAssistant():''}</div></main></div>`;
 }
 function spAnswer(index){const a=spAnalysis();spState.answer=index===0?[a.title,...a.facts].join(' '):index===1?a.actions.map((x,i)=>`${i+1}. ${x}`).join('\n'):'保留本次期间作为基线，记录实际调整日期；选择营业天数可比的后续期间，复查当前指标，并同时核实数据完整性及服务质量。';spState.assistant=true;render()}
 document.addEventListener('click',event=>{
@@ -5368,16 +5487,39 @@ document.addEventListener('click',event=>{
   const action=el.dataset.spAction,value=el.dataset.value;
   if(action==='tab'&&spTabs.some(([id])=>id===value)){spState.tab=value;spState.page=1;spState.focus='';spState.answer=''}
   else if(action==='assistant')spState.assistant=!spState.assistant;
-  else if(action==='focus'){spState.focus=value;spState.assistant=true;spState.answer=''}
+  else if(action==='focus'){
+    if(value && !spRows().some(row => row.month === value))return;
+    spState.focus=value;spState.assistant=true;spState.answer='';
+    if(value && spState.tab==='target'){
+      const index=spSorted(spRows()).findIndex(row => row.month === value);
+      spState.page=Math.floor(index/spState.size)+1;
+    }
+  }
   else if(action==='sort'&&['month','rate'].includes(value)){spState.direction=spState.sort===value?-spState.direction:-1;spState.sort=value;spState.page=1}
   else if(action==='page')spState.page=Math.max(1,Math.min(Math.ceil(spRows().length/spState.size),spState.page+Number(value)));
   else if(action==='reset'){Object.assign(spState,{start:'2025-01',end:'2025-08',draftStart:'2025-01',draftEnd:'2025-08',page:1,focus:'',answer:''})}
   else if(action==='ask'){spAnswer(Number(value));return}else return;
   markCommonInteraction();render();
+  if(action==='focus'){
+    const panel=document.getElementById('sp-assistant');
+    panel?.focus({preventScroll:true});panel?.scrollIntoView({block:'nearest'});
+  }
   if(action==='tab')document.getElementById?.('sp-tab-'+value)?.focus({preventScroll:true});
 });
+document.addEventListener('keydown', event => {
+  const tab = event.target.closest?.('.sp-tabs [role="tab"]');
+  if (!tab) return;
+  const index = spTabs.findIndex(([id]) => id === tab.dataset.value);
+  const destinations = {ArrowLeft:index-1, ArrowRight:index+1, Home:0, End:spTabs.length-1};
+  if (!Object.hasOwn(destinations,event.key)) return;
+  event.preventDefault();
+  const next = (destinations[event.key]+spTabs.length) % spTabs.length;
+  document.getElementById('sp-tab-'+spTabs[next][0])?.click();
+});
 document.addEventListener('input',event=>{if(event.target.id==='sp-start')spState.draftStart=event.target.value;if(event.target.id==='sp-end')spState.draftEnd=event.target.value});
-document.addEventListener('change',event=>{const el=event.target;if(el.dataset.spColumn){spState.columns[el.dataset.spColumn]=el.checked;render()}if(el.hasAttribute?.('data-sp-size')){spState.size=Number(el.value);spState.page=1;render()}});
+document.addEventListener('change',event=>{const el=event.target;if(el.dataset.spColumn){spState.columns[el.dataset.spColumn]=el.checked;render();
+    const picker=document.querySelector('.sp-columns');
+    if(picker){picker.open=true;picker.querySelector?.('[data-sp-column="'+el.dataset.spColumn+'"]')?.focus({preventScroll:true})}}if(el.hasAttribute?.('data-sp-size')){spState.size=Number(el.value);spState.page=1;render()}});
 document.addEventListener('submit',event=>{
   if(!['sp-filter-form','sp-question-form'].includes(event.target.id))return;event.preventDefault();
   if(state.role!=='store'||state.page!=='store-performance')return;
