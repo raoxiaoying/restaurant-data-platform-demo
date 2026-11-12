@@ -987,6 +987,28 @@ h3 { font-size: 14px; font-weight: 600; }
 .query-field select:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 .query-date:focus-within { border-color: var(--blue); }
 .query-date select:focus-visible { outline: none; }
+.query-select { position: relative; min-width: 0; width: 100%; }
+.query-select.is-open { z-index: 30; }
+.query-select>select[hidden], .query-select-menu[hidden] { display: none; }
+.query-year-range>.query-select { flex: 1; width: 0; }
+.query-select-trigger { display: flex; align-items: center; gap: 9px; width: 100%; height: 40px; padding: 0 14px; border: 1px solid var(--control-line); border-radius: 999px; background: #fff; color: #25364e; font-size: 13px; text-align: left; cursor: pointer; }
+.query-select-trigger:hover:not(:disabled) { border-color: #83a6f4; background: #fcfdff; }
+.query-select-trigger[aria-expanded=true] { border-color: var(--blue); box-shadow: 0 0 0 3px #326fff12; }
+.query-select-trigger:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.query-select-trigger:disabled { color: var(--muted); background: var(--surface-muted); cursor: default; }
+.query-select-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.query-select-trigger>.icon { width: 16px; height: 16px; color: #6b82a5; flex: none; }
+.query-select-chevron { width: 16px; height: 16px; flex: none; fill: none; stroke: #647892; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; transition: transform .15s; }
+.query-select-trigger[aria-expanded=true] .query-select-chevron { transform: rotate(180deg); stroke: var(--blue); }
+.query-select-menu { position: absolute; top: calc(100% + 8px); left: 0; width: 100%; min-width: 180px; max-height: 288px; overflow-y: auto; overscroll-behavior: contain; padding: 5px; border: 1px solid #dce5f3; border-radius: 12px; background: #fff; box-shadow: 0 8px 28px #1e3d7021; scrollbar-width: thin; }
+.query-select-menu.opens-above { top: auto; bottom: calc(100% + 8px); }
+.query-select-option { display: flex; align-items: center; gap: 12px; min-height: 36px; padding: 8px 10px; border-radius: 8px; color: #34465f; font-size: 13px; line-height: 1.5; cursor: pointer; }
+.query-select-option>span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.query-select-option>svg { width: 16px; height: 16px; flex: none; visibility: hidden; fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.query-select-option:hover, .query-select-option.is-highlighted { background: var(--surface-muted); }
+.query-select-option[aria-selected=true] { background: var(--blue-soft); color: var(--blue-dark); font-weight: 600; }
+.query-select-option[aria-selected=true]>svg { visibility: visible; }
+.query-select-option.is-highlighted { box-shadow: inset 0 0 0 1px #adc5ff; }
 .workspace-main .report-library-sidebar-heading { color: #34465f; font-size: 13px; font-weight: 650; }
 .workspace-main .report-library-nav button { font-size: 13px; }
 .workspace-main .report-library-nav button.active { border-color: #adc5ff; }
@@ -1271,7 +1293,7 @@ h3 { font-size: 14px; font-weight: 600; }
 .menu-permissions td input { width: 16px; height: 16px; }
 
 </style>
-  <meta name="demo-version" content="20261111-clean-surface">
+  <meta name="demo-version" content="20261112-query-ui">
 </head>
 <body>
   <div id="app"></div>
@@ -2397,7 +2419,7 @@ function boardQueryCompatibilityNotice(){return `<div class="workspace-query-war
 function dashboardQueryFilters(d){
   syncBoardQuery(d);const dims=boardQueryDimensions(d,boardQueryDraft),range=boardQueryDraft.period==='range'?boardQueryDraft:defaultBoardYearRange();
   for(const key of boardQueryIncompatible(boardQueryDraft,d))dims[key]=[[boardQueryDraft[key],(boardQueryLabels[key][boardQueryDraft[key]]||boardQueryDraft[key])+'（需调整）'],...dims[key]];
-  return `<section class="dashboard-query card" role="search" aria-label="看板查询"><div class="query-section-heading"><strong>${icon('filter')}查询条件</strong><span class="${boardQueryDirty?'query-pending':''}" role="status">${boardQueryDirty?'条件已修改 · 点击查询生效':'选择范围后点击查询'}</span></div>${[['brand','品牌'],['market','市场'],['store','门店']].map(([key,label])=>`<label class="query-field query-${key}"><span>${label}</span><select data-board-query="${key}" aria-label="查询${label}" ${dims[key].length===1?'disabled':''}>${options(dims[key],boardQueryDraft[key])}</select></label>`).join('')}<div class="query-field query-years"><span>年度</span><div class="query-year-range"><select data-board-query="yearStart" aria-label="查询起始年度">${options(boardQueryYears.map(year=>[year,year+' 年']),boardQueryDraft.yearStart)}</select><span>至</span><select data-board-query="yearEnd" aria-label="查询结束年度">${options(boardQueryYears.map(year=>[year,year+' 年']),boardQueryDraft.yearEnd)}</select></div></div><label class="query-field query-period"><span>期间</span><span class="query-date">${icon('calendar')}<select data-board-query="period" aria-label="查询期间">${options(Object.keys(boardPeriods).map(id=>[id,id==='range'?`年度区间 · ${range.yearStart}年 – ${range.yearEnd}年`:boardPeriodLabel(id,{yearStart:'2026',yearEnd:'2026'})]),boardQueryDraft.period)}</select></span></label><div class="query-actions"><button type="button" class="btn primary" data-action="board-query-apply">查询</button><button type="button" class="btn" data-action="board-query-reset">重置</button></div></section>`;
+  return `<section class="dashboard-query card" role="search" aria-label="看板查询"><div class="query-section-heading"><strong>${icon('filter')}查询条件</strong><span class="${boardQueryDirty?'query-pending':''}" role="status">${boardQueryDirty?'条件已修改 · 点击查询生效':'选择范围后点击查询'}</span></div>${[['brand','品牌'],['market','市场'],['store','门店']].map(([key,label])=>`<div class="query-field query-${key}"><span>${label}</span>${boardQuerySelect(key,label,dims[key],boardQueryDraft[key],dims[key].length===1)}</div>`).join('')}<div class="query-field query-years"><span>年度</span><div class="query-year-range">${boardQuerySelect('yearStart','起始年度',boardQueryYears.map(year=>[year,year+' 年']),boardQueryDraft.yearStart)}<span>至</span>${boardQuerySelect('yearEnd','结束年度',boardQueryYears.map(year=>[year,year+' 年']),boardQueryDraft.yearEnd)}</div></div><div class="query-field query-period"><span>期间</span>${boardQuerySelect('period','期间',Object.keys(boardPeriods).map(id=>[id,id==='range'?`年度区间 · ${range.yearStart}年 – ${range.yearEnd}年`:boardPeriodLabel(id,{yearStart:'2026',yearEnd:'2026'})]),boardQueryDraft.period,false,true)}</div><div class="query-actions"><button type="button" class="btn primary" data-action="board-query-apply">查询</button><button type="button" class="btn" data-action="board-query-reset">重置</button></div></section>`;
 }
 function changeBoardQuery(key,value){
   if(!['brand','market','store','period','yearStart','yearEnd'].includes(key))return;
@@ -2421,6 +2443,75 @@ function boardQueryEmpty(){return `<section class="empty board-query-empty">${ic
 function boardQueryPreview(includeScope=true){return `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><body style="margin:0;min-height:100vh;box-sizing:border-box;font:14px/1.8 -apple-system,system-ui,sans-serif;padding:30px;color:#536b88;background:#fcfdff"><h2>${hasBoardPeriodData()?'当前筛选暂无数据':'当前周期暂无完整数据'}</h2><p>${esc(includeScope?boardQuerySummary():boardPeriodLabel())}</p><p>${esc(boardQueryEmptyMessage())}当前未请求外部页面。</p></body></html>`}
 function boardQueryParam(key,role){if(role!==state.role||!boardQueryContext)return 'all';return boardQueryIncompatible().includes(key)?state[key]:normalizeBoardQuery(state)[key]}
 function dashboardReady(){if(state.nav==='home'&&state.tab!=='overview')return '';return `<button class="board-data-entry" data-action="data" aria-label="数据状态与更新"><span class="board-data-entry-title">${icon('database')}数据状态与更新</span><small>最近更新 ${dataBoardUpdated()}</small>${icon('arrow')}</button>`}
+
+</script>
+  <script>
+'use strict';
+let openQuerySelect=null;
+
+function boardQuerySelect(key,label,items,value,disabled=false,calendar=false){
+  const selected=items.find(item=>item[0]===value)||items[0],id='query-options-'+key;
+  return `<div class="query-select"><select hidden tabindex="-1" aria-hidden="true" data-board-query="${key}" ${disabled?'disabled':''}>${options(items,value)}</select><button type="button" class="query-select-trigger" data-query-select="${key}" role="combobox" aria-label="查询${label}" aria-haspopup="listbox" aria-expanded="false" aria-controls="${id}" ${disabled?'disabled':''}>${calendar?icon('calendar'):''}<span class="query-select-value">${esc(selected[1])}</span><svg class="query-select-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="m5 8 5 5 5-5"/></svg></button><div class="query-select-menu" id="${id}" role="listbox" aria-label="${label}" hidden>${items.map(([v,text],i)=>`<div class="query-select-option" id="${id}-${i}" role="option" aria-selected="${v===value}" data-query-option="${key}" data-value="${esc(v)}"><span>${esc(text)}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg></div>`).join('')}</div></div>`;
+}
+function closeQuerySelect(){
+  if(!openQuerySelect)return;
+  const {trigger,menu}=openQuerySelect;
+  trigger.setAttribute('aria-expanded','false');trigger.removeAttribute('aria-activedescendant');
+  menu.hidden=true;trigger.parentElement.classList.remove('is-open');openQuerySelect=null;
+}
+function highlightQueryOption(index){
+  const view=openQuerySelect;
+  view.index=Math.max(0,Math.min(index,view.items.length-1));
+  view.items.forEach((item,i)=>item.classList.toggle('is-highlighted',i===view.index));
+  const item=view.items[view.index];
+  view.trigger.setAttribute('aria-activedescendant',item.id);item.scrollIntoView({block:'nearest'});
+}
+function showQuerySelect(trigger){
+  if(trigger.disabled)return;
+  closeQuerySelect();
+  const menu=trigger.parentElement.querySelector('.query-select-menu'),items=[...menu.querySelectorAll('[role="option"]')];
+  openQuerySelect={trigger,menu,items,index:0};
+  menu.hidden=false;trigger.setAttribute('aria-expanded','true');trigger.parentElement.classList.add('is-open');
+  trigger.focus();
+  const rect=trigger.getBoundingClientRect(),below=window.innerHeight-rect.bottom-16,above=rect.top-16;
+  const upwards=below<Math.min(288,menu.scrollHeight)&&above>below;
+  menu.classList.toggle('opens-above',upwards);
+  menu.style.maxHeight=Math.max(80,Math.min(288,upwards?above:below))+'px';
+  menu.style.right=rect.left+menu.offsetWidth>window.innerWidth-12?'0':'';
+  menu.style.left=menu.style.right?'auto':'';
+  highlightQueryOption(Math.max(0,items.findIndex(item=>item.getAttribute('aria-selected')==='true')));
+}
+function chooseQueryOption(item){
+  const key=item.dataset.queryOption,value=item.dataset.value;
+  const changed=openQuerySelect.trigger.parentElement.querySelector('select').value!==value;
+  closeQuerySelect();
+  if(changed)changeBoardQuery(key,value);
+  document.querySelector(`[data-query-select="${key}"]`)?.focus();
+}
+document.addEventListener('click',event=>{
+  const trigger=event.target.closest('[data-query-select]');
+  if(trigger){if(openQuerySelect?.trigger===trigger)closeQuerySelect();else showQuerySelect(trigger);return}
+  const item=event.target.closest('[data-query-option]');
+  if(item&&openQuerySelect?.menu.contains(item)){chooseQueryOption(item);return}
+  closeQuerySelect();
+});
+document.addEventListener('mousedown',event=>{if(openQuerySelect&&event.target.closest('[data-query-option]'))event.preventDefault()});
+document.addEventListener('keydown',event=>{
+  const trigger=event.target.closest?.('[data-query-select]');
+  if(!trigger||trigger.disabled||event.isComposing)return;
+  if(event.key==='Tab'){closeQuerySelect();return}
+  if(event.key==='Escape'&&openQuerySelect){event.preventDefault();closeQuerySelect();return}
+  if(['ArrowDown','ArrowUp','Home','End'].includes(event.key)){
+    event.preventDefault();
+    if(openQuerySelect?.trigger!==trigger){showQuerySelect(trigger);if(event.key==='ArrowDown'||event.key==='ArrowUp')return}
+    highlightQueryOption(event.key==='Home'?0:event.key==='End'?openQuerySelect.items.length-1:openQuerySelect.index+(event.key==='ArrowDown'?1:-1));
+  }else if((event.key==='Enter'||event.key===' ')&&openQuerySelect?.trigger===trigger){
+    event.preventDefault();chooseQueryOption(openQuerySelect.items[openQuerySelect.index]);
+  }
+});
+document.addEventListener('focusin',event=>{if(openQuerySelect&&!openQuerySelect.trigger.parentElement.contains(event.target))closeQuerySelect()});
+document.addEventListener('scroll',event=>{if(openQuerySelect&&!openQuerySelect.menu.contains(event.target))closeQuerySelect()},true);
+if(typeof window.addEventListener==='function')window.addEventListener('resize',closeQuerySelect);
 
 </script>
   <script>
