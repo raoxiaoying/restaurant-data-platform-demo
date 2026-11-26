@@ -1273,9 +1273,8 @@ document.addEventListener('keydown',event=>{
   if(['Enter',' '].includes(event.key)){event.preventDefault();showTrendTooltip(point);}
   if(['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();const points=[...document.querySelectorAll('g[data-trend-month]')],index=points.indexOf(point)+(event.key==='ArrowLeft'?-1:1);points[Math.max(0,Math.min(points.length-1,index))].focus();}
 });
-$('#methodButton').remove();
+document.querySelector('.top-actions').remove();
 $('#closeDialog').onclick=()=>$('#detailDialog').close();
-$('#fullscreenButton').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{}};
 window.addEventListener('hashchange',applyReportRoute);
 applyReportRoute();
 </script>
