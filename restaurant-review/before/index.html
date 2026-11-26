@@ -1162,7 +1162,8 @@ function selectScope(field,value){
 function render(){
   const openDetails=$('.report-trend-table');if(openDetails)overviewDetailsOpen=openDetails.open;
   trendResizeObserver.disconnect();
-  $('#breadcrumb').textContent=reportState.detail?reportLines.find(([id])=>id===reportState.detail)[1]+'明细':'经营看板';
+  $('#breadcrumb').hidden=!reportState.detail;
+  $('#breadcrumb').textContent=reportState.detail?reportLines.find(([id])=>id===reportState.detail)[1]+'明细':'';
   if(reportState.detail){renderMetricDetail();return;}
   document.title='好美味餐饮集团经营看板 · 经营报表系统';
   const detailsOpen=overviewDetailsOpen;
@@ -1254,7 +1255,7 @@ document.querySelector('.brand').innerHTML='<span class="legacy-mark">▦</span>
 document.querySelector('.brand').removeAttribute('data-step');document.querySelector('.brand').setAttribute('aria-label','经营报表系统首页');
 document.querySelector('.nav-label').textContent='报表目录';
 document.querySelector('.sidebar-chain')?.remove();document.querySelector('.sidebar-foot')?.remove();
-$('#systemName').textContent='仪表板';$('#breadcrumb').textContent='经营看板';
+$('#systemName').textContent='仪表板';
 $('#navigation').innerHTML='<button class="active" data-action="back-report">▦ <span>经营看板</span></button>';
 document.body.classList.add('overview-page','report-dashboard');document.title='好美味餐饮集团经营看板 · 经营报表系统';
 document.addEventListener('click',event=>{
