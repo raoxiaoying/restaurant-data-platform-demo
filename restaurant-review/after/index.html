@@ -615,6 +615,40 @@
 .ai-platform .ai-summary .ai-progress-grid p{margin:10px 0 0;color:#7488a7;font-size:11px;line-height:1.8}
 .ai-platform .ai-result-block>.ai-data-figure{margin-block:22px}
 
+.ai-platform .ai-contribution-composition{margin:27px 0 20px;padding-top:23px;border-top:1px solid #e5ebf5}
+.ai-platform .ai-contribution-composition>header h4{margin:0 0 6px;color:#304c75;font-size:17px;font-weight:650;line-height:1.6}
+.ai-platform .ai-summary .ai-contribution-composition>header p{margin:0 0 19px;color:#617590;font-size:13px;line-height:1.85}
+.ai-platform .ai-donut-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ai-platform .ai-donut-card{min-width:0;margin:0;padding:20px 18px 16px;border:1px solid #e3e9f3;border-radius:13px;background:#fff;--donut-tone:#be3453}
+.ai-platform .ai-donut-card[data-kind=gain]{--donut-tone:#087760}
+.ai-platform .ai-donut-card>header h4{margin:0;color:var(--donut-tone);font-size:15px;font-weight:650;line-height:1.6}
+.ai-platform .ai-donut-content{display:flex;flex-direction:column;gap:14px}
+.ai-platform .ai-donut-plot{width:180px;max-width:100%;margin:10px auto 0}
+.ai-platform .ai-donut-svg{display:block;width:100%;height:auto;overflow:visible;font-family:inherit}
+.ai-platform .ai-donut-svg text{text-anchor:middle}
+.ai-platform .ai-donut-center-label{fill:#798ba5;font-size:11px}
+.ai-platform .ai-donut-center-total{fill:var(--donut-tone);font-size:26px;font-weight:650;letter-spacing:-.7px;font-variant-numeric:tabular-nums}
+.ai-platform .ai-donut-center-unit{fill:#798ba5;font-size:12px}
+.ai-platform .ai-donut-legend{display:grid;gap:4px;margin:0;padding:0;list-style:none}
+.ai-platform .ai-donut-legend button{display:grid;grid-template-columns:9px minmax(0,1fr) auto auto;align-items:center;gap:9px;width:100%;padding:9px 0;border:0;border-bottom:1px solid #edf1f7;border-radius:0;background:transparent;color:#526b8d;text-align:left;cursor:pointer}
+.ai-platform .ai-donut-legend li:last-child button{border-bottom:0}
+.ai-platform .ai-donut-legend button:hover{background:#f5f8fd;color:#2f5b9d}
+.ai-platform .ai-donut-dot{display:block;width:8px;height:8px;border-radius:50%}
+.ai-platform .ai-donut-label{min-width:0;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.ai-platform .ai-donut-value{color:#6c809e;font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ai-platform .ai-donut-share{min-width:44px;color:#334f78;font-size:15px;font-weight:650;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ai-platform .ai-donut-card>figcaption{margin-top:12px;padding-top:11px;border-top:1px solid #e9eef6;color:#617590;font-size:12px;line-height:1.85}
+.ai-platform .ai-contribution-net{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;margin-top:17px;padding:17px 19px;border:1px solid #e1e9f5;border-radius:11px;background:#f5f8fd}
+.ai-platform .ai-contribution-net small{display:block;color:#7084a3;font-size:12px}
+.ai-platform .ai-contribution-net strong{display:block;margin-top:5px;font-size:23px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.6px;white-space:nowrap}
+.ai-platform .ai-contribution-net .is-loss strong{color:#be3453}
+.ai-platform .ai-contribution-net .is-gain strong{color:#087760}
+.ai-platform .ai-contribution-net strong span{margin-left:5px;color:#7c8ea8;font-size:11px;font-weight:400;letter-spacing:0}
+.ai-platform .ai-contribution-net>b{color:#8ea3c1;font-size:21px;font-weight:400}
+.ai-platform .ai-contribution-detail{margin-top:18px}
+.ai-platform .ai-contribution-detail>summary{width:fit-content;padding:8px 0;color:#5176b0;font-size:13px;line-height:1.7;cursor:pointer}
+.ai-platform .ai-contribution-detail[open]>summary{margin-bottom:12px}
+
 .ai-platform .ai-week-variance{min-width:0}
 .ai-platform .ai-week-variance .is-loss{--variance-color:#be3453;--variance-fill:#df6c82;--variance-soft:#fff3f6}
 .ai-platform .ai-week-variance .is-gain{--variance-color:#087760;--variance-fill:#28a68b;--variance-soft:#eef9f4}
@@ -673,6 +707,11 @@
   .ai-platform .ai-variance-equation{gap:8px}
   .ai-platform .ai-variance-equation>div{padding:13px 10px}
   .ai-platform .ai-variance-equation strong{font-size:18px}
+  .ai-platform .ai-donut-grid{grid-template-columns:minmax(0,1fr)}
+  .ai-platform .ai-donut-content{display:grid;grid-template-columns:170px minmax(0,1fr);align-items:center;gap:18px}
+  .ai-platform .ai-donut-plot{width:170px;margin:10px auto}
+  .ai-platform .ai-contribution-net{gap:8px;padding:15px}
+  .ai-platform .ai-contribution-net strong{font-size:21px}
 }
 @media(max-width:760px){
   .ai-platform .hmw-shell,.ai-platform.sidebar-collapsed .hmw-shell{grid-template-columns:minmax(0,1fr)}
@@ -786,6 +825,17 @@
   .ai-platform .ai-variance-equation>b{text-align:center;font-size:17px;line-height:1.1}
   .ai-platform .ai-variance-groups{gap:13px}
   .ai-platform .ai-variance-groups>section{padding:16px}
+  .ai-platform .ai-donut-card{padding:18px 14px 14px}
+  .ai-platform .ai-donut-content{display:flex;gap:10px}
+  .ai-platform .ai-donut-plot{width:170px;margin:9px auto 0}
+  .ai-platform .ai-donut-legend{width:100%}
+  .ai-platform .ai-donut-legend button{gap:8px}
+  .ai-platform .ai-donut-label,.ai-platform .ai-donut-value{font-size:11px}
+  .ai-platform .ai-donut-share{font-size:14px;min-width:39px}
+  .ai-platform .ai-contribution-net{grid-template-columns:minmax(0,1fr);gap:4px;padding:14px}
+  .ai-platform .ai-contribution-net>div{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .ai-platform .ai-contribution-net strong{margin:0;font-size:22px}
+  .ai-platform .ai-contribution-net>b{text-align:center;font-size:17px;line-height:1.1}
   .ai-platform .ai-artifact-head{align-items:flex-start;flex-wrap:wrap}
   .ai-platform .ai-strategy-footer .hmw-button{white-space:normal}
 }
@@ -1538,7 +1588,32 @@
     </figure>`;
   }
 
-  globalThis.AiVisuals = { comparison };
+  function donut({ title, rows, kind = 'loss', note = '' }) {
+    if (!['loss','gain'].includes(kind)) throw new TypeError('Unsupported contribution group');
+    rows.forEach(row => {
+      if (!Number.isFinite(row.value) || row.value < 0) throw new TypeError('Donut values must be finite nonnegative numbers');
+      if (!/^#[0-9a-f]{6}$/i.test(row.color)) throw new TypeError('Donut colors must use #RRGGBB');
+    });
+    const total = rows.reduce((sum, row) => sum + row.value, 0);
+    if (!Number.isFinite(total) || total <= 0) throw new RangeError('Donut requires a positive total');
+    const group = kind === 'loss' ? '减利合计' : '增利抵消合计';
+    let offset = 0;
+    const segments = rows.map(row => {
+      const share = row.value / total * 100;
+      const segment = row.value ? `<circle class="ai-donut-segment" cx="100" cy="100" r="70" fill="none" stroke="${row.color}" stroke-width="22" pathLength="100" stroke-dasharray="${share} ${100-share}" stroke-dashoffset="${-offset}" transform="rotate(-90 100 100)" data-value="${row.value}" data-share="${share}"/>` : '';
+      offset += share;
+      return segment;
+    }).join('');
+    const legend = rows.map(row => {
+      const share = row.value / total * 100;
+      const percent = share.toLocaleString('zh-CN',{minimumFractionDigits:1,maximumFractionDigits:1});
+      return `<li><button type="button" data-cause="${escape(row.id)}" data-value="${row.value}" data-share="${share}"><i class="ai-donut-dot" style="background:${row.color}" aria-hidden="true"></i><span class="ai-donut-label">${escape(row.label)}</span><strong class="ai-donut-value">${format(row.value)}<small>万元</small></strong><span class="ai-donut-share">${percent}%</span></button></li>`;
+    }).join('');
+    const caption = `${note ? escape(note) + ' ' : ''}百分比以本组${group}${format(total)}万元为分母；占比显示因四舍五入可能略有差异。`;
+    return `<figure class="ai-donut-card" data-total="${total}" data-kind="${kind}" aria-label="${escape(title)}"><header><h4>${escape(title)}</h4></header><div class="ai-donut-content"><div class="ai-donut-plot"><svg class="ai-donut-svg" viewBox="0 0 200 200" width="200" height="200" aria-hidden="true"><circle cx="100" cy="100" r="70" fill="none" stroke="#edf1f7" stroke-width="22"/>${segments}<text class="ai-donut-center-label" x="100" y="84" text-anchor="middle" font-size="12">${group}</text><text class="ai-donut-center-total" x="100" y="114" text-anchor="middle" font-size="26" font-weight="650">${format(total)}</text><text class="ai-donut-center-unit" x="100" y="135" text-anchor="middle" font-size="12">万元</text></svg></div><ul class="ai-donut-legend">${legend}</ul></div><figcaption class="ai-donut-caption">${caption}</figcaption></figure>`;
+  }
+
+  globalThis.AiVisuals = { comparison, donut };
 })();
 </script>
   <script>const M = globalThis.HaomeiweiModel;
@@ -1575,7 +1650,10 @@ function attributionChartRows(){
   return M.causes.flatMap(c=>c.id==='volume'?[{...c,shortName:names[c.id]},{name:'10月基准',impact:M.attribution.baseline.profit,total:true,checkpoint:true}]:[{...c,shortName:names[c.id]}]);
 }
 function attributionImpactGraphic(){
-  return globalThis.AiVisuals.comparison({title:'各因素利润影响大小',description:'按影响绝对值排序；负值减少利润，正值增加利润。',rows:[...M.causes].sort((a,b)=>Math.abs(b.impact)-Math.abs(a.impact)).map(c=>({label:c.name,value:c.impact,tone:c.impact<0?'negative':'positive'})),note:`增利${num(M.group.positiveOffset)}万元与减利${num(M.group.negativeTotal)}万元相抵，利润净减少${num(M.group.profitDecline)}万元。条形表示金额，不表示贡献占比。`});
+  const colors={pricing:'#d87a45',food:'#8a65d1',labor:'#477ed0',volume:'#35a1ae',opex:'#249474'};
+  const labels={pricing:'促销及净成交价',food:'食材标准成本',labor:'人工结构与工时',volume:'堂食人次与外卖订单',opex:'其他经营费用'};
+  const rows=direction=>M.causes.filter(c=>direction*c.impact>0).sort((a,b)=>Math.abs(b.impact)-Math.abs(a.impact)).map(c=>({id:c.id,label:labels[c.id],value:Math.abs(c.impact),color:colors[c.id]}));
+  return `<section class="ai-contribution-composition"><header><h4>减利与增利抵消的构成</h4><p>按顶层因素的净影响分组；每张图以本组总额为分母，均不使用净下降280万元作为分母。</p></header><div class="ai-donut-grid">${globalThis.AiVisuals.donut({title:'减利因素构成',rows:rows(-1),kind:'loss',note:'显示金额为各项减利影响的绝对值。'})}${globalThis.AiVisuals.donut({title:'增利抵消构成',rows:rows(1),kind:'gain',note:'其他经营费用包含规模摊薄，不等于已兑现整改收益。'})}</div><div class="ai-contribution-net" aria-label="减利与增利相抵后的利润净变化"><div class="is-loss"><small>减利影响</small><strong>−${num(M.group.negativeTotal)}<span>万元</span></strong></div><b aria-hidden="true">＋</b><div class="is-gain"><small>增利抵消</small><strong>${num(M.group.positiveOffset)}<span>万元</span></strong></div><b aria-hidden="true">＝</b><div class="is-loss"><small>环比净变化</small><strong>−${num(M.group.profitDecline)}<span>万元</span></strong></div></div></section>`;
 }
 function attributionMethodGraphic(){
   const t=M.attribution;
@@ -1780,7 +1858,7 @@ function aiAttributionBrief(){
   const positive=M.group.positiveOffset,negative=M.group.negativeTotal,rent=M.getCauseDetail('opex-rent');
   return `<div class="ai-attribution-brief"><section class="ai-brief-intro"><h2>整体归因总结</h2><p>以<strong>9月实际经营模式</strong>为基准：将9月堂食人均与外卖单均代入10月实际业务量，再按9月各项成本费用率计算，10月基准利润为<strong class="ai-value-reference">${num(t.baseline.profit)}万元</strong>；实际利润<strong class="ai-value-actual">${num(b.profit)}万元</strong>，较基准少<strong class="ai-value-negative">${num(t.baselineGap)}万元</strong>。与9月实际${num(a.profit,0)}万元相比，利润净减少${num(decline,0)}万元。</p><div class="ai-summary-metrics"><div data-tone="history"><small>9月实际利润</small><strong>${num(a.profit,0)}<span>万元</span></strong></div><div data-tone="reference"><small>9月模式下10月基准</small><strong>${num(t.baseline.profit)}<span>万元</span></strong><em>已计入10月实际业务量</em></div><div data-tone="actual"><small>10月实际利润</small><strong>${num(b.profit,0)}<span>万元</span></strong><em class="ai-value-negative">较基准少${num(t.baselineGap)}万元</em></div></div></section>
     <section class="ai-brief-section"><header><h3>一、利润变化全景</h3><p>从9月实绩出发，先形成10月基准，再解释实际与基准之间的差异。</p></header><figure class="ai-brief-figure"><div class="ai-brief-chart-meta"><span>金额单位：万元</span><div class="ai-brief-legend"><span><i class="total"></i>实绩</span><span><i class="reference"></i>基准检查点</span><span><i class="positive"></i>增加利润</span><span><i class="negative"></i>减少利润</span></div></div>${bridgeSvg(attributionChartRows(),a.profit,b.profit)}<figcaption class="ai-brief-caption"><strong>图表解读</strong><p>业务量变化在9月费率口径下增加利润<strong class="${badClass(volume.impact)}">${num(volume.impact)}万元</strong>，形成<strong class="ai-value-reference">${num(t.baseline.profit)}万元</strong>基准。随后促销净价<strong class="${badClass(pricing.impact)}">${signed(pricing.impact)}万元</strong>、食材<strong class="${badClass(food.impact)}">${signed(food.impact)}万元</strong>、人工<strong class="${badClass(labor.impact)}">${signed(labor.impact)}万元</strong>、其他费用<strong class="${badClass(opex.impact)}">${signed(opex.impact)}万元</strong>，衔接到实际${num(b.profit)}万元。其他费用中租金<strong class="${badClass(rent.impact)}">${signed(rent.impact)}万元</strong>属于固定成本摊薄，实际租金未减少。</p></figcaption></figure>${attributionImpactGraphic()}
-    <div class="hmw-table-wrap ai-brief-table-wrap"><table class="hmw-table ai-brief-table"><caption>各因素对环比净下降${num(decline,0)}万元的贡献</caption><thead><tr><th>经营因素</th><th class="numeric">利润影响 / 万元</th><th class="numeric">对利润净下降的贡献</th></tr></thead><tbody>${M.causes.map(c=>`<tr data-brief-cause="${c.id}"><td><button class="hmw-link" data-cause="${c.id}">${esc(c.name)}</button></td><td class="numeric ${badClass(c.impact)}">${signed(c.impact)}</td><td class="numeric ${badClass(c.impact)}">${signed(c.netDeclineShare,1)}%</td></tr>`).join('')}<tr class="total" data-brief-total><td>利润净变化</td><td class="numeric bad">${signed(-decline)}</td><td class="numeric">100.0%</td></tr></tbody></table></div><p class="ai-brief-method"><strong>占比口径：</strong>本表贡献＝−单项利润影响 ÷ 环比净下降${num(decline,0)}万元，原始贡献合计100%；分项显示可能因四舍五入与合计略有差异。增利因素抵减降幅，记负贡献；减利因素记正贡献，可超过100%。顶层增利合计${num(positive)}万元、减利合计${num(negative)}万元；${num(t.baseline.profit)}万元基准是检查点，不作为额外贡献相加。</p></section>
+    <details class="ai-contribution-detail"><summary>查看对净下降${num(decline,0)}万元的完整贡献表</summary><div class="hmw-table-wrap ai-brief-table-wrap"><table class="hmw-table ai-brief-table"><caption>各因素对环比净下降${num(decline,0)}万元的贡献</caption><thead><tr><th>经营因素</th><th class="numeric">利润影响 / 万元</th><th class="numeric">对利润净下降的贡献</th></tr></thead><tbody>${M.causes.map(c=>`<tr data-brief-cause="${c.id}"><td><button class="hmw-link" data-cause="${c.id}">${esc(c.name)}</button></td><td class="numeric ${badClass(c.impact)}">${signed(c.impact)}</td><td class="numeric ${badClass(c.impact)}">${signed(c.netDeclineShare,1)}%</td></tr>`).join('')}<tr class="total" data-brief-total><td>利润净变化</td><td class="numeric bad">${signed(-decline)}</td><td class="numeric">100.0%</td></tr></tbody></table></div><p class="ai-brief-method"><strong>占比口径：</strong>本表贡献＝−单项利润影响 ÷ 环比净下降${num(decline,0)}万元，原始贡献合计100%；分项显示可能因四舍五入与合计略有差异。增利因素抵减降幅，记负贡献；减利因素记正贡献，可超过100%。顶层增利合计${num(positive)}万元、减利合计${num(negative)}万元；${num(t.baseline.profit)}万元基准是检查点，不作为额外贡献相加。</p></details></section>
     <section class="ai-brief-section"><header><h3>二、9月模式下的10月基准如何形成</h3></header>${attributionMethodGraphic()}<p>堂食以9月折后人均${num(t.channels.september.dineIn.unitPrice)}元，测算10月${num(t.channels.october.dineIn.guests,0)}就餐人次；外卖以9月折后单均${num(t.channels.september.delivery.unitPrice)}元，测算10月${num(t.channels.october.delivery.orders,0)}个有效订单。逐店基准收入合计${num(t.baseline.revenue)}万元，扣减9月费率参考成本费用${num(t.baseline.expenses)}万元，得到基准利润${num(t.baseline.profit)}万元。</p><div class="ai-message-actions"><button class="hmw-button" data-action="baseline">查看渠道与费用测算</button><button class="hmw-button" data-action="substitution">逐步核对连环替代</button></div><p class="ai-brief-method">固定替换顺序：业务量 → 净成交价 → 标准成本衔接 → 菜品组合 → 采购价格 → 耗用 → 人工 → 其他费用。基准与实际的缺口为${num(t.baselineGap)}万元，和环比下降${num(decline)}万元分别计算。</p></section>
     <section class="ai-brief-section"><header><h3>三、标准成本明细与优先核查事项</h3></header><ol class="ai-brief-priorities"><li data-category="pricing"><strong>促销与净成交价：<span class="${badClass(pricing.impact)}">${signed(pricing.impact)}万元</span>。</strong><p>在同一10月业务量下比较渠道净价。销售优惠只冲减一次收入；量价分解不能证明促销造成客流增长。</p><button class="hmw-link" data-cause="pricing">查看渠道净价与促销明细</button></li><li data-category="food"><strong>食材标准成本差异：<span class="${badClass(food.impact)}">${signed(food.impact)}万元</span>。</strong><p>标准成本先与费率基准衔接，再分开核对菜品组合${num(t.foodStandard.mixCost)}万元、采购价差${num(t.foodStandard.priceCost)}万元和超耗报损${num(t.foodStandard.excessCost)}万元。基准衔接${signed(t.foodStandard.alignmentImpact,4)}万元单列，不重复分配到采购或耗用。</p><button class="hmw-link" data-cause="food">查看标准成本及8项原料</button></li><li data-category="labor"><strong>人工净影响：<span class="${badClass(labor.impact)}">${signed(labor.impact)}万元</span>。</strong><p>费率基准到固定人工与弹性工时标准，结构摊薄${signed(t.laborStandard.structureImpact)}万元；高峰、低峰合计超标准工时影响${signed(t.laborStandard.executionImpact)}万元。两部分合并解释，不把摊薄当作整改收益。</p><button class="hmw-link" data-cause="labor">查看人工结构与工时</button></li><li data-category="opex"><strong>其他费用净影响：<span class="${badClass(opex.impact)}">${signed(opex.impact)}万元</span>。</strong><p>租金及其他费用逐科目列示正负影响。租金实际仍为${num(b.rent)}万元，费率摊薄带来的正向差异与真实费用压降分别解释。</p><button class="hmw-link" data-cause="opex">查看各科目费用差异</button></li></ol></section><div class="ai-message-context">方法版本 ${t.version} · 同一组120家门店 · 9月模式基准＋连环替代＋标准成本下钻。<button class="hmw-link" data-action="methodology">查看数据与方法口径</button>。业务原因和措施收益仍需经营证据核验。</div></div>`;
 }
