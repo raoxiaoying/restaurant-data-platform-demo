@@ -228,6 +228,18 @@
 @media(min-width:1001px) and (max-width:1150px){.legacy-system.report-dashboard .report-card-comparisons strong{font-size:13px}.legacy-system.report-dashboard .report-card-comparisons>:is(div,span){padding-inline:3px}}
 @media(max-width:620px){.legacy-system.report-dashboard .report-board{gap:13px}.legacy-system.report-dashboard .board-heading{align-items:flex-start;gap:12px}.legacy-system.report-dashboard .board-heading h1{font-size:20px}.legacy-system.report-dashboard .board-heading-tools{flex:none;padding-top:3px}.legacy-system.report-dashboard .qbi-report-toolbar{padding:11px 13px;gap:10px}.legacy-system.report-dashboard .qbi-report-filters{gap:9px;align-items:flex-start}.legacy-system.report-dashboard .report-month-select{min-height:30px;padding:4px 24px 4px 8px;font-size:11px}.legacy-system.report-dashboard .report-card-grid{grid-template-columns:minmax(0,1fr);gap:12px}.legacy-system.report-dashboard .report-card,.legacy-system.report-dashboard.meeting-mode .report-card{min-height:228px;padding:16px 18px 12px}.legacy-system.report-dashboard .report-card-head{gap:9px}.legacy-system.report-dashboard .report-card-number strong{font-size:32px}.legacy-system.report-dashboard .report-card-comparisons strong{font-size:16px}.legacy-system.report-dashboard .report-trend-panel>header{padding:15px}.legacy-system.report-dashboard .report-trend-panel h2{font-size:15px}.legacy-system.report-dashboard .report-trend-legend{gap:15px;font-size:11px}.legacy-system.report-dashboard .report-trend-summary{margin:15px 14px 3px;padding:12px;gap:9px}.legacy-system.report-dashboard .report-trend-summary>div+div{padding-left:11px}.legacy-system.report-dashboard .report-trend-summary strong{font-size:19px}.legacy-system.report-dashboard .report-trend-summary span,.legacy-system.report-dashboard .report-trend-summary small{font-size:10px}.legacy-system.report-dashboard .report-chart-wrap{padding:10px 10px 12px}.legacy-system.report-dashboard .report-trend-table{padding:0 14px 15px}}
 @media(prefers-reduced-motion:reduce){.legacy-system.report-dashboard .report-card{transition:none}}
+/* Linked brand, region, store and period controls. */
+.legacy-system.report-dashboard .qbi-report-toolbar{align-items:flex-end;gap:18px}
+.legacy-system.report-dashboard .qbi-report-filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr) minmax(0,1.45fr) minmax(0,1fr);align-items:end;flex:1;gap:14px;min-width:0}
+.legacy-system.report-dashboard .report-filter-field{display:grid;gap:6px;min-width:0;color:#8592a4;font-size:11px;line-height:1.5}
+.legacy-system.report-dashboard .report-filter-field>span{font-weight:400}
+.legacy-system.report-dashboard .report-filter-field select{display:block;width:100%;min-width:0;max-width:100%;min-height:34px;margin:0;padding:6px 28px 6px 10px;border:1px solid #dce2eb;border-radius:4px;background:#fff;color:#43536b;font:inherit;font-size:12px;line-height:1.5}
+.legacy-system.report-dashboard .report-filter-field select:focus-visible{border-color:#8dafff;outline:3px solid #d9e6ff;outline-offset:2px}
+.legacy-system.report-dashboard .report-filter-summary{display:grid;flex:none;gap:4px;align-self:end;padding-bottom:2px;color:#9aa6b7;text-align:right;font-size:10px;line-height:1.6;white-space:nowrap}
+.legacy-system.report-dashboard .report-filter-summary b{color:#75859c;font-size:11px;font-weight:400}
+@media(max-width:1100px){.legacy-system.report-dashboard .qbi-report-filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px}}
+@media(max-width:620px){.legacy-system.report-dashboard .qbi-report-toolbar{align-items:stretch;gap:11px}.legacy-system.report-dashboard .qbi-report-filters{flex-basis:100%;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px}.legacy-system.report-dashboard .report-filter-field{gap:5px;font-size:10px}.legacy-system.report-dashboard .report-filter-field select{min-height:34px;padding-inline:8px 22px;font-size:11px}.legacy-system.report-dashboard .report-filter-summary{display:flex;align-items:center;justify-content:space-between;width:100%;min-width:0;gap:12px;padding:0;text-align:left}.legacy-system.report-dashboard .report-filter-summary b{font-size:10px}}
+@media(max-width:340px){.legacy-system.report-dashboard .qbi-report-filters{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body class="legacy-system">
@@ -765,8 +777,76 @@
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
 </script>
+  <script>/* 经营看板的同门店范围汇总；不修改共享历史或智能决策模型。 */
+(function (root) {
+  'use strict';
+  const M = root.HaomeiweiModel || (typeof module !== 'undefined' && module.exports ? require('./haomeiwei-model.js') : null);
+  const H = root.ReportHistory || (typeof module !== 'undefined' && module.exports ? require('./report-history.js') : null);
+  const brands = [{ id: 'haomeiwei', name: '好美味' }];
+  const stores = M.stores.map(row => ({ id: row.id, name: row.name, region: row.region, brandId: 'haomeiwei' }));
+  const regions = [...new Set(stores.map(row => row.region))];
+  const storeById = new Map(stores.map(row => [row.id, row]));
+  const scale = 1000000;
+  const round = value => Math.round(value * scale) / scale;
+  const sum = values => values.reduce((total, value) => total + Math.round(value * scale), 0) / scale;
+  const amountKeys = ['grossSales', 'discount', 'revenue', ...M.expenseKeys, 'guests', 'orders'];
+  function normalize(filters = {}) {
+    const brand = brands.some(row => row.id === filters.brand) ? filters.brand : 'all';
+    const region = regions.includes(filters.region) ? filters.region : 'all';
+    const selected = storeById.get(filters.store);
+    const store = selected && (brand === 'all' || selected.brandId === brand) && (region === 'all' || selected.region === region) ? selected.id : 'all';
+    return { brand, region, store };
+  }
+  function storeOptions(filters = {}) {
+    const scope = normalize(filters);
+    return stores.filter(row => (scope.brand === 'all' || row.brandId === scope.brand) && (scope.region === 'all' || row.region === scope.region));
+  }
+  function selectedStores(filters) {
+    const scope = normalize(filters);
+    return storeOptions(scope).filter(row => scope.store === 'all' || row.id === scope.store);
+  }
+  function aggregate(rows) {
+    const result = Object.fromEntries(amountKeys.map(key => [key, sum(rows.map(row => row[key]))]));
+    result.grossProfit = round(result.revenue - result.food);
+    result.expenses = sum(M.expenseKeys.map(key => result[key]));
+    result.operatingExpenses = round(result.expenses - result.food);
+    result.otherExRent = sum(['utilities', 'tableware', 'consumables', 'maintenance', 'marketing', 'otherStoreExpense'].map(key => result[key]));
+    result.other = round(result.rent + result.otherExRent);
+    result.profit = round(result.revenue - result.expenses);
+    result.margin = result.revenue ? result.profit / result.revenue * 100 : 0;
+    result.foodRate = result.revenue ? result.food / result.revenue * 100 : 0;
+    result.laborRate = result.revenue ? result.labor / result.revenue * 100 : 0;
+    result.perCapita = result.guests ? result.revenue * 10000 / result.guests : 0;
+    return result;
+  }
+  function getMonth(id, filters = {}) {
+    const month = H.getMonth(id);
+    if (!month) return null;
+    const ids = new Set(selectedStores(filters).map(row => row.id));
+    const byStore = ids.size === stores.length ? month.byStore : month.byStore.filter(row => ids.has(row.storeId));
+    return { id: month.id, year: month.year, month: month.month, label: month.label,
+      totals: byStore.length === stores.length ? month.totals : aggregate(byStore), byStore, storeCount: byStore.length };
+  }
+  function metrics(id, field, filters = {}) {
+    const currentMonth = getMonth(id, filters);
+    if (!currentMonth || !H.fields.includes(field)) return null;
+    const scope = normalize(filters), { year, month, totals } = currentMonth;
+    const previousMonth = getMonth(`${month === 1 ? year - 1 : year}-${String(month === 1 ? 12 : month - 1).padStart(2, '0')}`, scope);
+    const priorYearMonth = getMonth(`${year - 1}-${String(month).padStart(2, '0')}`, scope);
+    const current = totals[field], previous = previousMonth ? previousMonth.totals[field] : null, priorYear = priorYearMonth ? priorYearMonth.totals[field] : null;
+    return { current, previous, priorYear,
+      mom: previous !== null && previous > 0 ? (current / previous - 1) * 100 : null,
+      yoy: priorYear !== null && priorYear > 0 ? (current / priorYear - 1) * 100 : null,
+      share: totals.revenue > 0 ? current / totals.revenue * 100 : null };
+  }
+  const model = { brands, regions, stores, normalize, storeOptions, getMonth, metrics };
+  root.ReportScope = model;
+  if (typeof module !== 'undefined' && module.exports) module.exports = model;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
   <script>const M = globalThis.HaomeiweiModel;
 const H = globalThis.ReportHistory;
+const S = globalThis.ReportScope;
 const $ = selector => document.querySelector(selector);
 const money = (value,decimals=2) => (Number(Number(value).toFixed(decimals))||0).toLocaleString('zh-CN',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
 const signed = (value,decimals=1) => `${Number(Number(value).toFixed(decimals))>0?'+':''}${money(value,decimals)}`;
@@ -774,7 +854,7 @@ const reportLines = [
   ['grossSales','折前营业额','income'],['discount','销售折扣','expense'],['revenue','折后营业额','subtotal'],['food','食材成本','expense'],['grossProfit','销售毛利','subtotal'],['labor','人工费用','expense'],['rent','租金及物业费','expense'],['utilities','能耗费用','expense'],['tableware','餐具','expense'],['consumables','物耗','expense'],['maintenance','维修维护费','expense'],['marketing','市场推广费','expense'],['otherStoreExpense','其他费用','expense'],['profit','门店经营利润','result']
 ];
 const cardOrder=['revenue','food','grossProfit','profit','grossSales','discount','labor','rent','utilities','tableware','consumables','maintenance','marketing','otherStoreExpense'];
-const reportState={month:H.defaultMonth,metric:'revenue',trendMode:'amount'};
+const reportState={month:H.defaultMonth,metric:'revenue',trendMode:'amount',brand:'all',region:'all',store:'all'};
 const value = (row,key) => key==='grossProfit'?row.revenue-row.food:row[key];
 const selectedMetric = () => reportLines.find(([id])=>id===reportState.metric);
 const changeText = rate => rate==null?'—':signed(rate,1)+'%';
@@ -782,12 +862,12 @@ const changeClass = (id,rate) => rate!=null&&['revenue','grossSales','grossProfi
 function currentRows(){
   const [year,month]=reportState.month.split('-').map(Number);
   const previousId=month===1?`${year-1}-12`:`${year}-${String(month-1).padStart(2,'0')}`;
-  return {current:H.getMonth(reportState.month),previous:H.getMonth(previousId),priorYear:H.getMonth(`${year-1}-${String(month).padStart(2,'0')}`)};
+  return {current:S.getMonth(reportState.month,reportState),previous:S.getMonth(previousId,reportState),priorYear:S.getMonth(`${year-1}-${String(month).padStart(2,'0')}`,reportState)};
 }
 function trendRows(id=reportState.metric,mode=reportState.trendMode){
   const year=Number(reportState.month.slice(0,4));
   const amount=row=>mode==='share'?value(row.totals,id)/row.totals.revenue*100:value(row.totals,id);
-  return H.availableMonths.map(monthId=>{const current=H.getMonth(monthId),prior=H.getMonth(`${year-1}-${monthId.slice(5)}`);return {id:monthId,month:Number(monthId.slice(5)),current:amount(current),priorYear:amount(prior)};});
+  return H.availableMonths.map(monthId=>{const current=S.getMonth(monthId,reportState),prior=S.getMonth(`${year-1}-${monthId.slice(5)}`,reportState);return {id:monthId,month:Number(monthId.slice(5)),current:amount(current),priorYear:amount(prior)};});
 }
 function sparkline(id){
   const rows=trendRows(id,'amount'),values=rows.map(r=>r.current),lo=Math.min(...values),hi=Math.max(...values),range=hi-lo||1;
@@ -796,19 +876,38 @@ function sparkline(id){
   return `<svg viewBox="0 0 240 38" role="img" aria-label="${reportLines.find(r=>r[0]===id)[1]}1至10月金额趋势"><polyline points="${points}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="${x(selected)}" cy="${y(values[selected])}" r="3" fill="currentColor" stroke="white" stroke-width="1.3"/></svg>`;
 }
 function metricCard(id){
-  const [,label]=reportLines.find(row=>row[0]===id),d=H.metrics(reportState.month,id),active=id===reportState.metric;
+  const [,label]=reportLines.find(row=>row[0]===id),d=S.metrics(reportState.month,id,reportState),active=id===reportState.metric;
   return `<button class="report-card ${active?'active':''}" data-metric="${id}" aria-pressed="${active}"><span class="report-card-head"><span class="report-card-icon" aria-hidden="true">${id==='profit'?'◈':id==='grossProfit'?'▥':id==='revenue'?'▤':'▦'}</span><span class="report-card-title">${label}</span><span class="report-card-period">${Number(reportState.month.slice(5))}月</span></span><span class="report-card-number"><strong>${money(d.current)}</strong><small>万元</small></span><span class="report-card-comparisons"><span><span>同比</span><strong class="${changeClass(id,d.yoy)}" title="去年同月 ${money(d.priorYear)}万元">${changeText(d.yoy)}</strong></span><span><span>环比</span><strong class="${changeClass(id,d.mom)}" title="上月 ${money(d.previous)}万元">${changeText(d.mom)}</strong></span><span><span>占折后营收</span><strong class="neutral" title="${label} ÷ 折后营业额">${money(d.share,1)}%</strong></span></span><span class="report-sparkline">${sparkline(id)}</span><span class="report-card-foot"><span>1—10月趋势</span><span>查看 ↗</span></span></button>`;
+}
+function scopeLabel(){
+  const store=S.stores.find(s=>s.id===reportState.store);
+  const brand=reportState.brand==='all'?'全部品牌':S.brands.find(b=>b.id===reportState.brand).name;
+  return `${brand} · ${reportState.region==='all'?'全部区域':reportState.region} · ${store?store.id+' '+store.name:S.storeOptions(reportState).length+'家直营门店'}`;
+}
+function renderFilters(){
+  const stores=S.storeOptions(reportState),selected=S.getMonth(reportState.month,reportState);
+  const options=(rows,current)=>rows.map(([id,label])=>`<option value="${id}" ${id===current?'selected':''}>${label}</option>`).join('');
+  const fields=[['reportBrand','品牌',options([['all','全部品牌'],...S.brands.map(b=>[b.id,b.name])],reportState.brand)],['reportRegion','区域',options([['all','全部区域'],...S.regions.map(r=>[r,r])],reportState.region)],['reportStore','门店',options([['all',`全部门店（${stores.length}家）`],...stores.map(s=>[s.id,`${s.id} · ${s.name}`])],reportState.store)],['reportMonth','期间',options([...H.availableMonths].reverse().map(id=>[id,`${id.slice(0,4)}年${Number(id.slice(5))}月`]),reportState.month)]];
+  return `<section class="qbi-report-toolbar" aria-label="报表条件"><div class="qbi-report-filters">${fields.map(([id,label,choices])=>`<label class="report-filter-field" for="${id}"><span>${label}</span><select class="report-month-select" id="${id}">${choices}</select></label>`).join('')}</div><span class="report-filter-summary"><b>${selected.storeCount}家直营门店</b><span>单位：万元</span></span></section>`;
+}
+function selectScope(field,value){
+  const next={...reportState,[field]:value};
+  if(field==='brand'){next.region='all';next.store='all';}
+  if(field==='region')next.store='all';
+  if(field==='store'&&value!=='all'){const store=S.stores.find(s=>s.id===value);next.brand=store.brandId;next.region=store.region;}
+  Object.assign(reportState,S.normalize(next));render();
+  $('#'+({brand:'reportBrand',region:'reportRegion',store:'reportStore'}[field])).focus({preventScroll:true});
 }
 function render(){
   const detailsOpen=$('.report-trend-table')?.open||false;
-  $('#main').innerHTML=`<section class="report-board" aria-label="集团经营分析看板"><header class="board-heading"><div><h1>${M.group.name}经营看板</h1></div><div class="board-heading-tools"><button class="button board-meeting-button" data-action="meeting">${document.body.classList.contains('meeting-mode')?'退出会议视图':'会议视图'}</button></div></header><section class="qbi-report-toolbar" aria-label="报表条件"><div class="qbi-report-filters"><div class="qbi-report-filter"><span>统计范围</span><b>${M.group.storeCount}家直营门店</b></div><div class="qbi-report-filter"><label for="reportMonth">统计月份</label><select class="report-month-select" id="reportMonth">${[...H.availableMonths].reverse().map(id=>`<option value="${id}" ${id===reportState.month?'selected':''}>${id.slice(0,4)}年${Number(id.slice(5))}月</option>`).join('')}</select></div></div><span class="qbi-report-unit">单位：万元</span></section><section class="report-card-grid" aria-label="管理利润表指标卡片">${cardOrder.map(metricCard).join('')}</section><section class="report-trend-panel" id="reportTrend" aria-label="月份趋势">${renderTrend()}</section></section>`;
+  $('#main').innerHTML=`<section class="report-board" aria-label="集团经营分析看板"><header class="board-heading"><div><h1>${M.group.name}经营看板</h1></div><div class="board-heading-tools"><button class="button board-meeting-button" data-action="meeting">${document.body.classList.contains('meeting-mode')?'退出会议视图':'会议视图'}</button></div></header>${renderFilters()}<section class="report-card-grid" aria-label="管理利润表指标卡片">${cardOrder.map(metricCard).join('')}</section><section class="report-trend-panel" id="reportTrend" aria-label="月份趋势">${renderTrend()}</section></section>`;
   $('.report-trend-table').open=detailsOpen;
 }
 function renderTrend(){
   const [,label]=selectedMetric(),rows=currentRows();
   const amount=row=>reportState.trendMode==='share'?value(row.totals,reportState.metric)/row.totals.revenue*100:value(row.totals,reportState.metric);
   const unit=reportState.trendMode==='share'?'%':'万元',year=Number(reportState.month.slice(0,4));
-  return `<header><div><h2>${label} · 月份趋势</h2><p>${year}年1—10月 / 当前选中${Number(reportState.month.slice(5))}月</p></div><div class="report-trend-tools"><div class="report-trend-legend"><span><i></i>${year}年</span><span><i class="dashed"></i>${year-1}年同期</span></div><div class="report-trend-switch" aria-label="趋势指标口径"><button data-trend-mode="amount" class="${reportState.trendMode==='amount'?'active':''}" aria-pressed="${reportState.trendMode==='amount'}">金额</button><button data-trend-mode="share" class="${reportState.trendMode==='share'?'active':''}" aria-pressed="${reportState.trendMode==='share'}">收入占比</button></div></div></header><div class="report-trend-summary">${[['当前月份',rows.current],['上月',rows.previous],['去年同月',rows.priorYear]].map(([name,row])=>`<div><span>${name} · ${row.label}</span><strong>${money(amount(row))}<small>${unit}</small></strong></div>`).join('')}</div><div class="report-chart-wrap">${trendSvg()}</div><details class="report-trend-table"><summary>查看月度数据明细</summary><div class="report-history-scroll"><table class="report-history-table"><thead><tr><th>月份</th><th>${year}年金额 / 万元</th><th>${year-1}年同期</th><th>同比</th><th>环比</th><th>占折后营收</th></tr></thead><tbody>${H.availableMonths.map(id=>{const d=H.metrics(id,reportState.metric);return `<tr class="${id===reportState.month?'selected':''}"><th><button data-report-month="${id}">${Number(id.slice(5))}月</button></th><td>${money(d.current)}</td><td>${money(d.priorYear)}</td><td>${changeText(d.yoy)}</td><td>${changeText(d.mom)}</td><td>${money(d.share,1)}%</td></tr>`;}).join('')}</tbody></table></div></details>`;
+  return `<header><div><h2>${label} · 月份趋势</h2><p>${scopeLabel()} · ${year}年1—10月 / 当前选中${Number(reportState.month.slice(5))}月</p></div><div class="report-trend-tools"><div class="report-trend-legend"><span><i></i>${year}年</span><span><i class="dashed"></i>${year-1}年同期</span></div><div class="report-trend-switch" aria-label="趋势指标口径"><button data-trend-mode="amount" class="${reportState.trendMode==='amount'?'active':''}" aria-pressed="${reportState.trendMode==='amount'}">金额</button><button data-trend-mode="share" class="${reportState.trendMode==='share'?'active':''}" aria-pressed="${reportState.trendMode==='share'}">收入占比</button></div></div></header><div class="report-trend-summary">${[['当前月份',rows.current],['上月',rows.previous],['去年同月',rows.priorYear]].map(([name,row])=>`<div><span>${name} · ${row.label}</span><strong>${money(amount(row))}<small>${unit}</small></strong></div>`).join('')}</div><div class="report-chart-wrap">${trendSvg()}</div><details class="report-trend-table"><summary>查看月度数据明细</summary><div class="report-history-scroll"><table class="report-history-table"><thead><tr><th>月份</th><th>${year}年金额 / 万元</th><th>${year-1}年同期</th><th>同比</th><th>环比</th><th>占折后营收</th></tr></thead><tbody>${H.availableMonths.map(id=>{const d=S.metrics(id,reportState.metric,reportState);return `<tr class="${id===reportState.month?'selected':''}"><th><button data-report-month="${id}">${Number(id.slice(5))}月</button></th><td>${money(d.current)}</td><td>${money(d.priorYear)}</td><td>${changeText(d.yoy)}</td><td>${changeText(d.mom)}</td><td>${money(d.share,1)}%</td></tr>`;}).join('')}</tbody></table></div></details>`;
 }
 function trendSvg(){
   const rows=trendRows(),values=rows.flatMap(r=>[r.current,r.priorYear]),minimum=Math.min(...values),maximum=Math.max(...values);
@@ -827,8 +926,8 @@ function selectMonth(id){
 }
 function statement(){
   const rows=currentRows();
-  $('#dialogTitle').textContent=`${rows.current.label}管理利润表`;$('#dialogEyebrow').textContent='好美味餐饮集团 · 120家直营门店';
-  $('#dialogContent').innerHTML=`<div class="report-history-scroll"><table><thead><tr><th>项目 / 万元</th><th>当前月份</th><th>上月</th><th>去年同月</th><th>占折后营收</th></tr></thead><tbody>${reportLines.map(([key,label])=>{const d=H.metrics(reportState.month,key);return `<tr data-pl-id="${key}"><td>${label}</td><td>${money(d.current)}</td><td>${money(d.previous)}</td><td>${money(d.priorYear)}</td><td>${money(d.share,1)}%</td></tr>`;}).join('')}</tbody></table></div>`;
+  $('#dialogTitle').textContent=`${rows.current.label}管理利润表`;$('#dialogEyebrow').textContent=scopeLabel();
+  $('#dialogContent').innerHTML=`<div class="report-history-scroll"><table><thead><tr><th>项目 / 万元</th><th>当前月份</th><th>上月</th><th>去年同月</th><th>占折后营收</th></tr></thead><tbody>${reportLines.map(([key,label])=>{const d=S.metrics(reportState.month,key,reportState);return `<tr data-pl-id="${key}"><td>${label}</td><td>${money(d.current)}</td><td>${money(d.previous)}</td><td>${money(d.priorYear)}</td><td>${money(d.share,1)}%</td></tr>`;}).join('')}</tbody></table></div>`;
   $('#detailDialog').showModal();
 }
 document.querySelector('.brand').innerHTML='<span class="legacy-mark">▦</span><span><b>经营报表</b></span>';
@@ -844,7 +943,7 @@ document.addEventListener('click',event=>{
   const mode=event.target.closest('[data-trend-mode]');if(mode){const open=$('.report-trend-table').open;reportState.trendMode=mode.dataset.trendMode;$('#reportTrend').innerHTML=renderTrend();$('.report-trend-table').open=open;return;}
   if(event.target.closest('[data-action="meeting"]')){document.body.classList.toggle('meeting-mode');render();window.scrollTo(0,0);}
 });
-document.addEventListener('change',event=>{if(event.target.id==='reportMonth')selectMonth(event.target.value);});
+document.addEventListener('change',event=>{if(event.target.id==='reportMonth')selectMonth(event.target.value);const fields={reportBrand:'brand',reportRegion:'region',reportStore:'store'};if(fields[event.target.id])selectScope(fields[event.target.id],event.target.value);});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!$('#detailDialog').open){document.body.classList.remove('meeting-mode');render();}if(['Enter',' '].includes(event.key)&&event.target.matches('g[data-report-month]')){event.preventDefault();const top=scrollY;selectMonth(event.target.dataset.reportMonth);window.scrollTo(0,top);}});
 $('#methodButton').textContent='查看利润表';$('#methodButton').setAttribute('aria-label','查看当前月份管理利润表');$('#methodButton').onclick=statement;
 $('#closeDialog').onclick=()=>$('#detailDialog').close();
