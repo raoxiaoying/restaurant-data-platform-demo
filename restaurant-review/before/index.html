@@ -145,8 +145,8 @@
 .legacy-system.report-dashboard .qbi-report-filters{flex-wrap:wrap;gap:14px 25px}
 .legacy-system.report-dashboard .report-month-select{min-height:31px;max-width:100%;padding:4px 28px 4px 10px;border:1px solid #dce2eb;border-radius:4px;background:#fff;color:#43536b;font:inherit;font-size:12px}
 .legacy-system.report-dashboard .report-month{display:flex;align-items:center;gap:10px;color:#8b94a3;font-size:12px}
-.legacy-system.report-dashboard .report-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;min-width:0}
-.legacy-system.report-dashboard .report-card{display:flex;flex-direction:column;min-width:0;min-height:184px;width:100%;padding:14px 16px 11px;border:1px solid #e4e8ef;border-radius:7px;background:#fff;color:#344258;text-align:left;font:inherit;cursor:pointer;box-shadow:0 1px 3px #18325c03;transition:border-color .15s,box-shadow .15s,background .15s}
+.legacy-system.report-dashboard .report-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;min-width:0}
+.legacy-system.report-dashboard .report-card{display:flex;flex-direction:column;min-width:0;min-height:220px;width:100%;padding:15px 17px 12px;border:1px solid #e4e8ef;border-radius:7px;background:#fff;color:#344258;text-align:left;font:inherit;cursor:pointer;box-shadow:0 1px 3px #18325c03;transition:border-color .15s,box-shadow .15s,background .15s}
 .legacy-system.report-dashboard .report-card:hover{border-color:#b6caf2;box-shadow:0 3px 12px #245bdb08}
 .legacy-system.report-dashboard .report-card.active{border-color:#8aafff;background:#f4f8ff;box-shadow:inset 3px 0 0 #2f6bff}
 .legacy-system.report-dashboard .report-card:focus-visible,.legacy-system.report-dashboard .report-month-select:focus-visible{outline:3px solid #9bb9ff;outline-offset:3px}
@@ -155,17 +155,23 @@
 .legacy-system.report-dashboard .report-card-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7}
 .legacy-system.report-dashboard .report-card-title{min-width:0;color:#3e4c62;font-size:14px;font-weight:550;line-height:1.4}
 .legacy-system.report-dashboard .report-card-period{flex:none;margin-left:auto;color:#9aa5b5;font-size:11px;white-space:nowrap}
-.legacy-system.report-dashboard .report-card-number{display:flex;align-items:baseline;gap:6px;margin:10px 0 11px;min-width:0;font-variant-numeric:tabular-nums}
-.legacy-system.report-dashboard .report-card-number strong{color:#233b5b;font-size:31px;line-height:1.2;font-weight:650;letter-spacing:-.6px;white-space:nowrap}
+.legacy-system.report-dashboard .report-card-values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:12px 0 14px;min-width:0}
+.legacy-system.report-dashboard .report-card-actual,.legacy-system.report-dashboard .report-card-target{min-width:0}
+.legacy-system.report-dashboard .report-card-target{padding-left:13px;border-left:1px solid #e8edf5}
+.legacy-system.report-dashboard .report-card-value-label{display:block;margin-bottom:6px;color:#8b98ab;font-size:11px;line-height:1.5;font-weight:400}
+.legacy-system.report-dashboard .report-card-number,.legacy-system.report-dashboard .report-card-target-number{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 4px;min-height:36px;min-width:0;margin:0;font-variant-numeric:tabular-nums}
+.legacy-system.report-dashboard .report-card-number strong{color:#233b5b;font-size:28px;line-height:1.25;font-weight:650;letter-spacing:-.6px;white-space:nowrap}
+.legacy-system.report-dashboard .report-card-target-number strong{color:#536f94;font-size:24px;line-height:1.4;font-weight:550;letter-spacing:-.4px;white-space:nowrap}
 .legacy-system.report-dashboard .report-card.active .report-card-number strong{color:#2e62b8}
-.legacy-system.report-dashboard .report-card-number small{color:#95a1b3;font-size:11px;white-space:nowrap}
-.legacy-system.report-dashboard .report-card-comparisons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding:9px 0;border:1px solid #f0f2f6;border-radius:5px;background:#f8f9fb}
+.legacy-system.report-dashboard .report-card-number small,.legacy-system.report-dashboard .report-card-target-number small{color:#95a1b3;font-size:10px;white-space:nowrap}
+.legacy-system.report-dashboard .report-card-comparisons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;padding:0 11px;border:1px solid #f0f2f6;border-radius:5px;background:#f8f9fb}
 .legacy-system.report-dashboard .report-card.active .report-card-comparisons{border-color:#e5edfc;background:#eaf1ff}
-.legacy-system.report-dashboard .report-card-comparisons>:is(div,span){min-width:0;padding:0 5px;text-align:center}
-.legacy-system.report-dashboard .report-card-comparisons>:is(div,span)+:is(div,span){border-left:1px solid #e5eaf1}
-.legacy-system.report-dashboard .report-card-comparisons>:is(div,span)>span{display:block;margin-bottom:3px;color:#8592a4;font-size:11px;line-height:1.4;white-space:nowrap}
+.legacy-system.report-dashboard .report-card-comparisons>:is(div,span){display:flex;align-items:center;justify-content:space-between;gap:7px;min-width:0;padding:8px 0;text-align:left}
+.legacy-system.report-dashboard .report-card-comparisons>:is(div,span):nth-child(odd){padding-right:10px}
+.legacy-system.report-dashboard .report-card-comparisons>:is(div,span):nth-child(even){padding-left:10px;border-left:1px solid #e5eaf1}
+.legacy-system.report-dashboard .report-card-comparisons>:is(div,span):nth-child(n+3){border-top:1px solid #e8ecf3}
+.legacy-system.report-dashboard .report-card-comparisons>:is(div,span)>span{display:inline-block;margin:0;color:#8592a4;font-size:11px;line-height:1.5;white-space:nowrap}
 .legacy-system.report-dashboard .report-card-comparisons strong{display:block;color:#43546f;font-size:14px;line-height:1.5;font-weight:550;white-space:nowrap}
-.legacy-system.report-dashboard .report-card-comparisons small{display:block;margin-top:3px;color:#9ca6b5;font-size:10px}
 .legacy-system.report-dashboard .report-card-comparisons .rise{color:#149577}
 .legacy-system.report-dashboard .report-card-comparisons .fall{color:#d54e5b}
 .legacy-system.report-dashboard .report-card-comparisons .neutral{color:#43546f}
@@ -210,15 +216,15 @@
 .legacy-system.report-dashboard .report-month-chart g[data-trend-month]:focus-visible{outline:2px solid #2f6bff;outline-offset:2px}
 .legacy-system.report-dashboard .report-trend-panel{scroll-margin-top:68px}
 .legacy-system.report-dashboard .report-chart-tooltip{position:absolute;z-index:2;padding:10px 13px;border:1px solid #dce6f6;border-radius:5px;background:#fff;color:#52729e;box-shadow:0 4px 18px #18325c14;font-size:12px;pointer-events:none}
-.legacy-system.report-dashboard.meeting-mode .report-card{min-height:174px;padding:12px 16px 10px}
-.legacy-system.report-dashboard.meeting-mode .report-card-number{margin:8px 0 10px}
-.legacy-system.report-dashboard.meeting-mode .report-card-number strong{font-size:30px}
-.legacy-system.report-dashboard.meeting-mode .report-card-comparisons{padding:9px 0}
-@media(min-width:1700px){.legacy-system.report-dashboard .report-card{padding:16px 20px 12px;min-height:194px}.legacy-system.report-dashboard .report-card-title{font-size:15px}.legacy-system.report-dashboard .report-card-number strong{font-size:35px}.legacy-system.report-dashboard .report-card-comparisons strong{font-size:17px}.legacy-system.report-dashboard.meeting-mode .report-card-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
-@media(max-width:1320px){.legacy-system.report-dashboard .report-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.legacy-system.report-dashboard .report-card-number strong{font-size:30px}}
-@media(max-width:1000px){.legacy-system.report-dashboard .report-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.legacy-system.report-dashboard .board-heading h1{font-size:21px}.legacy-system.report-dashboard .report-trend-panel>header{padding:16px 18px}}
-@media(min-width:1001px) and (max-width:1150px){.legacy-system.report-dashboard .report-card-comparisons strong{font-size:13px}.legacy-system.report-dashboard .report-card-comparisons>:is(div,span){padding-inline:3px}}
-@media(max-width:620px){.legacy-system.report-dashboard .report-board{gap:13px}.legacy-system.report-dashboard .board-heading{align-items:flex-start;gap:12px}.legacy-system.report-dashboard .board-heading h1{font-size:20px}.legacy-system.report-dashboard .board-heading-tools{flex:none;padding-top:3px}.legacy-system.report-dashboard .qbi-report-toolbar{padding:11px 13px;gap:10px}.legacy-system.report-dashboard .qbi-report-filters{gap:9px;align-items:flex-start}.legacy-system.report-dashboard .report-month-select{min-height:30px;padding:4px 24px 4px 8px;font-size:11px}.legacy-system.report-dashboard .report-card-grid{grid-template-columns:minmax(0,1fr);gap:12px}.legacy-system.report-dashboard .report-card,.legacy-system.report-dashboard.meeting-mode .report-card{min-height:190px;padding:14px 18px 11px}.legacy-system.report-dashboard .report-card-head{gap:9px}.legacy-system.report-dashboard .report-card-number strong{font-size:32px}.legacy-system.report-dashboard .report-card-comparisons strong{font-size:16px}.legacy-system.report-dashboard .report-trend-panel>header{padding:15px}.legacy-system.report-dashboard .report-trend-panel h2{font-size:15px}.legacy-system.report-dashboard .report-trend-legend{gap:15px;font-size:11px}.legacy-system.report-dashboard .report-trend-summary{margin:15px 14px 3px;padding:12px;gap:9px}.legacy-system.report-dashboard .report-trend-summary>div+div{padding-left:11px}.legacy-system.report-dashboard .report-trend-summary strong{font-size:19px}.legacy-system.report-dashboard .report-trend-summary span,.legacy-system.report-dashboard .report-trend-summary small{font-size:10px}.legacy-system.report-dashboard .report-chart-wrap{padding:10px 10px 12px}.legacy-system.report-dashboard .report-trend-table{padding:0 14px 15px}}
+.legacy-system.report-dashboard.meeting-mode .report-card{min-height:210px;padding:13px 17px 11px}
+.legacy-system.report-dashboard.meeting-mode .report-card-values{margin:10px 0 12px}
+.legacy-system.report-dashboard.meeting-mode .report-card-number strong{font-size:28px}
+.legacy-system.report-dashboard.meeting-mode .report-card-comparisons>:is(div,span){padding-top:7px;padding-bottom:7px}
+@media(min-width:1700px){.legacy-system.report-dashboard .report-card-grid,.legacy-system.report-dashboard.meeting-mode .report-card-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.legacy-system.report-dashboard .report-card{padding:16px 20px 13px;min-height:224px}.legacy-system.report-dashboard .report-card-title{font-size:15px}.legacy-system.report-dashboard .report-card-number strong{font-size:30px}.legacy-system.report-dashboard .report-card-target-number strong{font-size:26px}.legacy-system.report-dashboard .report-card-comparisons strong{font-size:14px}}
+@media(max-width:1320px){.legacy-system.report-dashboard .report-card-number strong{font-size:26px}.legacy-system.report-dashboard .report-card-target-number strong{font-size:22px}}
+@media(max-width:1200px){.legacy-system.report-dashboard .report-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1000px){.legacy-system.report-dashboard .board-heading h1{font-size:21px}.legacy-system.report-dashboard .report-trend-panel>header{padding:16px 18px}}
+@media(max-width:620px){.legacy-system.report-dashboard .report-board{gap:13px}.legacy-system.report-dashboard .board-heading{align-items:flex-start;gap:12px}.legacy-system.report-dashboard .board-heading h1{font-size:20px}.legacy-system.report-dashboard .board-heading-tools{flex:none;padding-top:3px}.legacy-system.report-dashboard .qbi-report-toolbar{padding:11px 13px;gap:10px}.legacy-system.report-dashboard .qbi-report-filters{gap:9px;align-items:flex-start}.legacy-system.report-dashboard .report-month-select{min-height:30px;padding:4px 24px 4px 8px;font-size:11px}.legacy-system.report-dashboard .report-card-grid{grid-template-columns:minmax(0,1fr);gap:12px}.legacy-system.report-dashboard .report-card,.legacy-system.report-dashboard.meeting-mode .report-card{min-height:220px;padding:15px 17px 12px}.legacy-system.report-dashboard .report-card-head{gap:9px}.legacy-system.report-dashboard .report-card-number strong{font-size:27px}.legacy-system.report-dashboard .report-card-target-number strong{font-size:23px}.legacy-system.report-dashboard .report-card-comparisons strong{font-size:14px}.legacy-system.report-dashboard .report-trend-panel>header{padding:15px}.legacy-system.report-dashboard .report-trend-panel h2{font-size:15px}.legacy-system.report-dashboard .report-trend-legend{gap:15px;font-size:11px}.legacy-system.report-dashboard .report-trend-summary{margin:15px 14px 3px;padding:12px;gap:9px}.legacy-system.report-dashboard .report-trend-summary>div+div{padding-left:11px}.legacy-system.report-dashboard .report-trend-summary strong{font-size:19px}.legacy-system.report-dashboard .report-trend-summary span,.legacy-system.report-dashboard .report-trend-summary small{font-size:10px}.legacy-system.report-dashboard .report-chart-wrap{padding:10px 10px 12px}.legacy-system.report-dashboard .report-trend-table{padding:0 14px 15px}}
 @media(prefers-reduced-motion:reduce){.legacy-system.report-dashboard .report-card{transition:none}}
 /* Linked brand, region, store and period controls. */
 .legacy-system.report-dashboard .qbi-report-toolbar{align-items:flex-end;gap:18px}
@@ -251,6 +257,7 @@
 .legacy-system.report-dashboard .report-tooltip-row i.dashed{border-top-style:dashed;border-color:#9baed3}
 .legacy-system.report-dashboard .report-tooltip-change{margin-top:8px;padding-top:7px;border-top:1px solid #edf1f6;color:#6e819d;font-size:12px;line-height:1.7}
 @media(max-width:620px){.legacy-system.report-dashboard .report-trend-panel>.report-trend-legend{padding:6px 14px 0}}
+@media(max-width:360px){.legacy-system.report-dashboard .report-card-values{gap:10px}.legacy-system.report-dashboard .report-card-target{padding-left:10px}.legacy-system.report-dashboard .report-card-number strong{font-size:24px}.legacy-system.report-dashboard .report-card-target-number strong{font-size:21px}.legacy-system.report-dashboard .report-card-comparisons{padding-inline:8px}.legacy-system.report-dashboard .report-card-comparisons>:is(div,span){gap:4px}.legacy-system.report-dashboard .report-card-comparisons>:is(div,span)>span{font-size:10px}.legacy-system.report-dashboard .report-card-comparisons strong{font-size:12px}}
 </style>
 </head>
 <body class="legacy-system">
@@ -801,6 +808,7 @@
   const round = value => Math.round(value * scale) / scale;
   const sum = values => values.reduce((total, value) => total + Math.round(value * scale), 0) / scale;
   const amountKeys = ['grossSales', 'discount', 'revenue', ...M.expenseKeys, 'guests', 'orders'];
+  const targetKeys = ['revenue', 'discount', ...M.expenseKeys];
   function normalize(filters = {}) {
     const brand = brands.some(row => row.id === filters.brand) ? filters.brand : 'all';
     const region = regions.includes(filters.region) ? filters.region : 'all';
@@ -830,25 +838,38 @@
     result.perCapita = result.guests ? result.revenue * 10000 / result.guests : 0;
     return result;
   }
+  function aggregateTargets(month, ids) {
+    if (!Array.isArray(month.targetByStore)) return null;
+    const rows = month.targetByStore.filter(row => row && ids.has(row.storeId));
+    if (rows.length !== ids.size || new Set(rows.map(row => row.storeId)).size !== ids.size ||
+        rows.some(row => targetKeys.some(key => !Number.isFinite(row[key]) || row[key] < 0))) return null;
+    return aggregate(rows.map(row => {
+      const target = Object.fromEntries(targetKeys.map(key => [key, round(row[key])]));
+      return { ...target, grossSales: round(target.revenue + target.discount), guests: 0, orders: 0 };
+    }));
+  }
   function getMonth(id, filters = {}) {
     const month = H.getMonth(id);
     if (!month) return null;
     const ids = new Set(selectedStores(filters).map(row => row.id));
     const byStore = ids.size === stores.length ? month.byStore : month.byStore.filter(row => ids.has(row.storeId));
     return { id: month.id, year: month.year, month: month.month, label: month.label,
-      totals: byStore.length === stores.length ? month.totals : aggregate(byStore), byStore, storeCount: byStore.length };
+      totals: byStore.length === stores.length ? month.totals : aggregate(byStore), byStore, storeCount: byStore.length,
+      targetTotals: aggregateTargets(month, ids) };
   }
   function metrics(id, field, filters = {}) {
     const currentMonth = getMonth(id, filters);
     if (!currentMonth || !H.fields.includes(field)) return null;
-    const scope = normalize(filters), { year, month, totals } = currentMonth;
+    const scope = normalize(filters), { year, month, totals, targetTotals } = currentMonth;
     const previousMonth = getMonth(`${month === 1 ? year - 1 : year}-${String(month === 1 ? 12 : month - 1).padStart(2, '0')}`, scope);
     const priorYearMonth = getMonth(`${year - 1}-${String(month).padStart(2, '0')}`, scope);
     const current = totals[field], previous = previousMonth ? previousMonth.totals[field] : null, priorYear = priorYearMonth ? priorYearMonth.totals[field] : null;
     return { current, previous, priorYear,
       mom: previous !== null && previous > 0 ? (current / previous - 1) * 100 : null,
       yoy: priorYear !== null && priorYear > 0 ? (current / priorYear - 1) * 100 : null,
-      share: totals.revenue > 0 ? current / totals.revenue * 100 : null };
+      share: totals.revenue > 0 ? current / totals.revenue * 100 : null,
+      target: targetTotals ? targetTotals[field] : null,
+      targetShare: targetTotals && targetTotals.revenue > 0 ? targetTotals[field] / targetTotals.revenue * 100 : null };
   }
   const model = { brands, regions, stores, normalize, storeOptions, getMonth, metrics };
   root.ReportScope = model;
@@ -883,7 +904,7 @@ function trendRows(id=reportState.metric,mode=reportState.trendMode){
 }
 function metricCard(id){
   const [,label]=reportLines.find(row=>row[0]===id),d=S.metrics(reportState.month,id,reportState),active=id===reportState.metric;
-  return `<button class="report-card ${active?'active':''}" data-metric="${id}" aria-pressed="${active}"><span class="report-card-head"><span class="report-card-icon" aria-hidden="true">${id==='profit'?'◈':id==='grossProfit'?'▥':id==='revenue'?'▤':'▦'}</span><span class="report-card-title">${label}</span><span class="report-card-period">${Number(reportState.month.slice(5))}月</span></span><span class="report-card-number"><strong>${money(d.current)}</strong><small>万元</small></span><span class="report-card-comparisons"><span><span>同比</span><strong class="${changeClass(id,d.yoy)}" title="去年同月 ${money(d.priorYear)}万元">${changeText(d.yoy)}</strong></span><span><span>环比</span><strong class="${changeClass(id,d.mom)}" title="上月 ${money(d.previous)}万元">${changeText(d.mom)}</strong></span><span><span>占折后营收</span><strong class="neutral" title="${label} ÷ 折后营业额">${money(d.share,1)}%</strong></span></span><span class="report-card-foot"><span class="report-card-selection">${active?'已选择':''}</span><span>查看趋势 →</span></span></button>`;
+  return `<button class="report-card ${active?'active':''}" data-metric="${id}" aria-pressed="${active}"><span class="report-card-head"><span class="report-card-icon" aria-hidden="true">${id==='profit'?'◈':id==='grossProfit'?'▥':id==='revenue'?'▤':'▦'}</span><span class="report-card-title">${label}</span><span class="report-card-period">${Number(reportState.month.slice(5))}月</span></span><span class="report-card-values"><span class="report-card-actual"><span class="report-card-value-label">实际金额</span><span class="report-card-number"><strong>${money(d.current)}</strong><small>万元</small></span></span><span class="report-card-target"><span class="report-card-value-label">目标金额</span><span class="report-card-target-number" title="${d.target==null?'尚未下达本期间及门店范围的完整目标':'同期间、同门店范围的目标金额'}"><strong>${d.target==null?'—':money(d.target)}</strong>${d.target==null?'':'<small>万元</small>'}</span></span></span><span class="report-card-comparisons"><span><span>同比</span><strong class="${changeClass(id,d.yoy)}" title="去年同月 ${money(d.priorYear)}万元">${changeText(d.yoy)}</strong></span><span><span>环比</span><strong class="${changeClass(id,d.mom)}" title="上月 ${money(d.previous)}万元">${changeText(d.mom)}</strong></span><span><span>实际占收入比</span><strong class="neutral" title="${label}实际金额 ÷ 同期实际折后营业额">${money(d.share,1)}%</strong></span><span><span>目标占收入比</span><strong class="neutral" title="${label}目标金额 ÷ 同期目标折后营业额">${d.targetShare==null?'—':money(d.targetShare,1)+'%'}</strong></span></span><span class="report-card-foot"><span class="report-card-selection">${active?'已选择':''}</span><span>查看趋势 →</span></span></button>`;
 }
 function scopeLabel(){
   const store=S.stores.find(s=>s.id===reportState.store);
