@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#15243e">
-  <meta name="description" content="好美味餐饮集团智能决策平台，10月利润归因、11月经营预测与周期执行跟进。">
-  <title>好美味餐饮集团智能决策平台</title>
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="好美味 AI 应用平台，通过任务对话、经营应用和数据知识完成利润归因、方案测算与执行跟进。">
+  <title>好美味 AI 应用平台</title>
   <style>.hmw-app{margin:0;background:#f3f5f9;color:#24334b;font:14px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
 .hmw-app *{box-sizing:border-box}
 .hmw-app button,.hmw-app input,.hmw-app select{font:inherit}
@@ -151,20 +151,335 @@
 @media(max-width:620px){.ai-workspace #hmwMain{padding:22px 14px 32px}.ai-workspace .hmw-brand{padding:13px 16px}.ai-workspace .hmw-brand b{font-size:15px}.ai-workspace .hmw-nav{gap:5px;padding:0 11px 11px}.ai-workspace .hmw-nav button{min-height:40px;padding:7px 5px}.ai-workspace .ai-task-icon,.ai-workspace .ai-task-badge{display:none}.ai-workspace .ai-task-body b{font-size:12px}.ai-workspace .hmw-topbar{padding:10px 14px}.ai-workspace .ai-message{padding:18px 16px;border-radius:8px}.ai-workspace .ai-thread-head{gap:9px;margin-bottom:11px}.ai-workspace .ai-avatar{width:32px;height:32px;border-radius:8px;font-size:18px}.ai-workspace .ai-thread-head h2{font-size:14px}.ai-workspace .ai-thread-head small{font-size:10px}.ai-workspace .ai-summary h2{font-size:18px;line-height:1.7}.ai-workspace .ai-summary p,.ai-workspace .ai-summary ul{font-size:12px}.ai-workspace .ai-summary-metrics{gap:7px;margin-top:14px}.ai-workspace .ai-summary-metrics>div{padding:11px 9px}.ai-workspace .ai-summary-metrics small{font-size:10px}.ai-workspace .ai-summary-metrics strong{font-size:21px}.ai-workspace .ai-summary-metrics strong span{font-size:10px;margin-left:2px}.ai-workspace .ai-summary-metrics em{font-size:9px}.ai-workspace .ai-message-actions{gap:7px}.ai-workspace .ai-message-actions .hmw-button{font-size:11px;padding:5px 10px}.ai-workspace .ai-message-context{font-size:10px}.ai-workspace .ai-artifact-head{gap:9px}.ai-workspace .ai-artifact-head h2,.ai-workspace .ai-artifact-head h3{font-size:14px}.ai-workspace .ai-artifact .hmw-kpi{padding:14px}.ai-workspace .ai-artifact .hmw-kpi strong{font-size:26px}.ai-workspace .ai-strategy-panel{padding:18px 15px}.ai-workspace .ai-strategy-panel>header{gap:10px;flex-wrap:wrap}.ai-workspace .ai-strategy-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 11px}.ai-workspace .ai-strategy-grid label{font-size:11px}.ai-workspace .ai-strategy-grid input:not([type=range]),.ai-workspace .ai-strategy-grid select{font-size:13px}.ai-workspace .ai-number-input{padding-right:8px;gap:4px}.ai-workspace .ai-number-input input:not([type=range]){font-size:14px;padding-inline:9px}.ai-workspace .ai-number-input>span{font-size:10px}.ai-workspace .ai-execution-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.ai-workspace .ai-strategy-footer{align-items:flex-start;flex-direction:column;gap:12px}.ai-workspace .ai-strategy-footer .hmw-top-actions{width:100%}.ai-workspace .ai-strategy-footer .hmw-button.primary{flex:1}.ai-workspace .ai-result-comparison{grid-template-columns:minmax(0,1fr);gap:10px}.ai-workspace .ai-result-comparison>div,.ai-workspace .ai-result-comparison>article{padding:14px 16px}.ai-workspace .ai-result-comparison strong{font-size:26px}.ai-workspace .ai-changes-summary{gap:7px 13px;padding:11px 12px;font-size:11px}.ai-workspace .ai-result-block>header{flex-wrap:wrap}.ai-workspace .ai-pending{font-size:11px}}
 @media(max-width:620px){.ai-workspace .ai-summary-metrics .ai-date{font-size:17px;white-space:nowrap}}
 </style>
+  <style>/* Codex-inspired application shell; the existing financial views remain reusable. */
+.hmw-app.ai-workspace.ai-platform{height:100dvh;overflow:hidden;background:#fff;color:#202123;font-size:16px;line-height:1.65}
+.ai-platform [hidden]{display:none!important}
+.ai-platform .platform-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.ai-platform [data-platform-icon]{display:inline-flex;align-items:center;justify-content:center;flex:none;width:18px;height:18px}
+.ai-platform [data-platform-icon]>svg{display:block;width:100%;height:100%}
+.ai-platform button,.ai-platform input,.ai-platform select,.ai-platform textarea{font:inherit}
+.ai-platform button{font-size:14px}
+.ai-platform textarea:focus-visible{outline:none}
+.ai-platform button:focus-visible,.ai-platform a:focus-visible,.ai-platform input:focus-visible,.ai-platform select:focus-visible,.ai-platform summary:focus-visible{outline:2px solid #497bf2;outline-offset:3px}
+.ai-platform .hmw-shell{display:grid;grid-template-columns:248px minmax(0,1fr);height:100dvh;min-height:0;overflow:hidden}
+.ai-platform .hmw-sidebar{position:fixed;inset:0 auto 0 0;z-index:30;display:flex;flex-direction:column;width:248px;height:100dvh;padding:0 12px;background:#f7f7f8;border-right:1px solid #ececee;color:#44454a;overflow-y:auto;overscroll-behavior:contain}
+.ai-platform .hmw-brand{flex:none;min-height:82px;gap:10px;padding:19px 10px;border:0}
+.ai-platform .hmw-logo{width:34px;height:34px;flex-basis:34px;border-radius:10px;background:#2868e8;box-shadow:none;color:#fff;font-size:21px}
+.ai-platform .hmw-brand b{color:#252629;font-size:15px;font-weight:650;letter-spacing:0}
+.ai-platform .hmw-brand small{color:#777a81;font-size:12px;letter-spacing:0}
+.ai-platform .platform-brand-badge{flex:none;margin-left:auto;padding:2px 5px;border-radius:4px;background:#eaecef;color:#9296a0;font-size:10px;line-height:1.7;white-space:nowrap}
+.ai-platform .platform-sidebar-actions{display:grid;gap:3px;margin:0 0 24px}
+.ai-platform .platform-nav-button{display:flex;align-items:center;gap:11px;width:100%;min-height:42px;padding:10px 12px;border:0;border-radius:8px;background:transparent;color:#45464b;text-align:left}
+.ai-platform .platform-nav-button:hover,.ai-platform .platform-history-item:hover{background:#ededf0}
+.ai-platform .platform-nav-button.active{background:#e9e9ed;color:#161719;font-weight:550}
+.ai-platform .platform-nav-button svg{flex:none;width:18px;height:18px}
+.ai-platform .platform-nav-button>span:not([data-platform-icon]){min-width:0;flex:1}
+.ai-platform .platform-nav-button kbd{padding:0 4px;border:1px solid #dedee3;border-radius:4px;color:#85858d;font-family:inherit;font-size:11px;line-height:1.7}
+.ai-platform .platform-sidebar-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0;padding:0 12px 10px;color:#8a8b92;font-size:12px;font-weight:500}
+.ai-platform .platform-sidebar-label button{padding:0;border:0;background:transparent;color:#8a8b92;font-size:16px}
+.ai-platform #hmwNav{display:grid;grid-template-columns:minmax(0,1fr);gap:3px;padding:0;margin-bottom:25px}
+.ai-platform #hmwNav button{display:flex;align-items:center;justify-content:flex-start;gap:9px;min-height:58px;padding:9px 11px;border:0;border-radius:8px;background:transparent;color:#5c5d63;text-align:left;font-weight:400}
+.ai-platform #hmwNav button:hover{background:#ededf0;color:#202123}
+.ai-platform #hmwNav button.active{background:#e9e9ed;color:#202123}
+.ai-platform .ai-task-icon{display:grid;flex:none;place-items:center;width:24px;height:28px;border-radius:0;background:transparent;color:#73757d}
+.ai-platform .active .ai-task-icon{background:transparent;color:#303238}
+.ai-platform .ai-task-icon svg{width:18px;height:18px}
+.ai-platform .ai-task-body{display:block;flex:1;min-width:0}
+.ai-platform .ai-task-body b{display:block;overflow:hidden;color:inherit;font-size:14px;font-weight:500;line-height:1.6;text-overflow:ellipsis;white-space:nowrap}
+.ai-platform .ai-task-body small{display:block;margin-top:2px;color:#92939a;font-size:12px;line-height:1.4}
+.ai-platform .ai-task-badge,.ai-platform .active .ai-task-badge{flex:none;min-width:18px;padding:1px 5px;border-radius:5px;background:#e1e2e7;color:#70727b;font-size:11px;line-height:1.6}
+.ai-platform #platformHistory{display:grid;gap:3px;margin-bottom:24px}
+.ai-platform .platform-history-item{display:flex;align-items:center;gap:9px;width:100%;min-width:0;overflow:hidden;padding:8px 12px;border:0;border-radius:7px;background:transparent;color:#62636b;text-align:left;font-size:14px;text-decoration:none;white-space:nowrap}
+.ai-platform .platform-history-item>svg{flex:none;width:15px;height:15px;color:#9296a0}
+.ai-platform .platform-history-item>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.ai-platform .platform-history-item.active{background:#e9e9ed;color:#202123}
+.ai-platform .platform-history-empty{margin:0;padding:1px 12px 8px;color:#a1a3ac;font-size:12px;line-height:1.8}
+.ai-platform .platform-sidebar-bottom{margin-top:auto;padding:14px 0 12px;border-top:1px solid #e8e8ed}
+.ai-platform .platform-sidebar-bottom>.platform-nav-button{color:#73747c}
+.ai-platform .platform-profile{display:flex;align-items:center;gap:10px;width:100%;min-width:0;padding:12px 10px 3px;border:0;border-radius:7px;background:transparent;color:#414249;text-align:left;font-size:14px}
+.ai-platform .platform-profile:hover{background:#ededf0}
+.ai-platform .platform-profile-avatar{display:grid;flex:none;place-items:center;width:32px;height:32px;border-radius:50%;background:#e3e7ee;color:#4e596d;font-size:13px;font-weight:600}
+.ai-platform .platform-profile>span:not(.platform-profile-avatar):not([data-platform-icon]){min-width:0;flex:1}
+.ai-platform .platform-profile>[data-platform-icon]{width:14px;height:14px;color:#9296a0}
+.ai-platform .platform-profile b{display:block;font-size:14px;font-weight:500}
+.ai-platform .platform-profile small{display:block;color:#92939b;font-size:12px}
+.ai-platform .hmw-workspace{grid-column:2;display:flex;flex-direction:column;width:100%;min-width:0;height:100dvh;overflow:hidden;background:#fff}
+.ai-platform .hmw-topbar{position:relative;top:auto;z-index:15;flex:none;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding:12px 25px;border-bottom:1px solid #f0f0f2;background:#fff;backdrop-filter:none}
+.ai-platform .platform-header-title{display:flex;align-items:center;gap:13px;min-width:0}
+.ai-platform .hmw-breadcrumb{min-width:0;color:#83848b;font-size:14px}
+.ai-platform .hmw-breadcrumb b{display:block;overflow:hidden;color:#35363c;font-size:15px;font-weight:500;text-overflow:ellipsis;white-space:nowrap}
+.ai-platform .hmw-breadcrumb>span,.ai-platform .hmw-breadcrumb>i{display:none}
+.ai-platform .hmw-top-actions{flex:none;flex-wrap:nowrap;gap:10px}
+.ai-platform .platform-icon-button{display:inline-flex;align-items:center;justify-content:center;flex:none;width:34px;height:34px;padding:7px;border:0;border-radius:7px;background:transparent;color:#76777e}
+.ai-platform .platform-icon-button:hover{background:#f3f3f5;color:#24252a}
+.ai-platform .platform-icon-button svg{display:block;width:19px;height:19px}
+.ai-platform .platform-scope-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid #e9e9ed;border-radius:6px;color:#787a82;font-size:12px;white-space:nowrap}
+.ai-platform .platform-scope-chip svg{width:14px;height:14px}
+.ai-platform .hmw-button{min-height:35px;padding:7px 12px;border:1px solid #dfdfe5;border-radius:7px;background:#fff;color:#45464d;font-size:14px;line-height:1.4}
+.ai-platform .hmw-button:hover{border-color:#a7a8b0;background:#fafafa;color:#202123}
+.ai-platform .hmw-button.primary{border-color:#25262b;background:#25262b;color:#fff}
+.ai-platform .hmw-button.primary:hover{border-color:#44454a;background:#44454a;color:#fff}
+.ai-platform .hmw-button.ghost{border-color:transparent;background:transparent;color:#777982}
+.ai-platform #hmwMain{flex:1;min-height:0;width:100%;max-width:none;margin:0;padding:30px 32px 24px;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;scroll-behavior:smooth}
+.ai-platform .platform-thread{width:100%;max-width:860px;min-width:0;margin:0 auto}
+.ai-platform .platform-task-heading{margin:2px 0 28px}
+.ai-platform .platform-eyebrow{display:block;margin-bottom:9px;color:#9498a2;font-size:12px;line-height:1.8}
+.ai-platform .platform-eyebrow>span{padding-inline:5px;color:#c0c3cc}
+.ai-platform .platform-task-heading h1{margin:0;color:#242529;font-size:25px;font-weight:600;line-height:1.5;letter-spacing:-.5px}
+.ai-platform .platform-task-heading p{margin:7px 0 0;color:#90919a;font-size:13px}
+.ai-platform .platform-request{display:flex;justify-content:flex-end;margin:0 0 24px}
+.ai-platform .platform-user-message{width:fit-content;max-width:85%;margin:0 0 20px auto;padding:13px 18px;border-radius:17px 17px 4px 17px;background:#f3f3f6;color:#41424b;font-size:15px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+.ai-platform .platform-request .platform-user-message{margin-bottom:0}
+.ai-platform .platform-run{margin:0 0 23px;color:#84858d;font-size:13px}
+.ai-platform .platform-run summary{display:flex;align-items:center;gap:8px;width:fit-content;cursor:pointer;list-style:none}
+.ai-platform .platform-run summary::-webkit-details-marker{display:none}
+.ai-platform .platform-run summary svg{width:15px;height:15px}
+.ai-platform .platform-run summary::after{content:'⌄';margin-left:3px;color:#a0a1a8}
+.ai-platform .platform-run[open] summary::after{transform:rotate(180deg)}
+.ai-platform .platform-run-steps{display:grid;gap:8px;margin:12px 0 0 7px;padding:0 0 0 20px;border-left:1px solid #e9e9ee;color:#8a8c94;font-size:13px}
+.ai-platform .platform-run-steps>div{display:flex;align-items:center;gap:8px}
+.ai-platform .platform-run-steps svg{width:14px;height:14px;color:#47816b}
+.ai-platform .platform-run-steps p{display:flex;align-items:center;gap:8px;margin:0}
+.ai-platform .platform-run-steps svg{flex:none}
+.ai-platform .platform-run summary small{margin-left:4px;color:#a5a8b0;font-size:12px}
+.ai-platform .ai-message{margin:0 0 22px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.ai-platform .ai-thread-head{gap:10px;margin-bottom:14px}
+.ai-platform .ai-avatar{width:29px;height:29px;border:0;border-radius:8px;background:#f0f3f8;color:#4474c4;font-size:18px}
+.ai-platform .ai-avatar>svg{display:block;width:19px;height:19px}
+.ai-platform .ai-thread-head h2{color:#35363d;font-size:14px;font-weight:600}
+.ai-platform .ai-thread-head small{color:#92939b;font-size:12px}
+.ai-platform .ai-thread-head>.hmw-tag{margin-left:auto}
+.ai-platform .ai-summary h2{margin:0 0 12px;color:#26272c;font-size:21px;line-height:1.65;font-weight:600;letter-spacing:0}
+.ai-platform .ai-summary p,.ai-platform .ai-summary ul{margin:10px 0;color:#575961;font-size:16px;line-height:1.95}
+.ai-platform .ai-summary ul{padding-left:21px}
+.ai-platform .ai-summary-metrics{gap:0;margin:20px 0;padding:17px 0;border:1px solid #ededf1;border-radius:10px;background:#fdfdfe}
+.ai-platform .ai-summary-metrics>div{min-width:0;padding:0 20px;border:0;border-radius:0;background:transparent}
+.ai-platform .ai-summary-metrics>div+div{border-left:1px solid #e9e9ee}
+.ai-platform .ai-summary-metrics small{color:#7e8089;font-size:13px}
+.ai-platform .ai-summary-metrics strong{margin:6px 0 3px;color:#303139;font-size:27px;font-weight:600;letter-spacing:-.5px}
+.ai-platform .ai-summary-metrics strong span{margin-left:5px;color:#858791;font-size:12px;letter-spacing:0}
+.ai-platform .ai-summary-metrics em{display:block;color:#9698a1;font-size:12px;line-height:1.7}
+.ai-platform .ai-message-actions{gap:8px;margin-top:19px}
+.ai-platform .ai-message-actions .hmw-button{min-height:35px;padding:7px 11px;font-size:13px}
+.ai-platform .ai-message-context{margin-top:17px;padding-top:12px;border-color:#ededf0;color:#93959e;font-size:12px;line-height:1.8}
+.ai-platform .platform-artifact-button{display:flex;align-items:center;gap:13px;width:100%;min-width:0;margin:20px 0 24px;padding:15px 17px;border:1px solid #e3e4eb;border-radius:10px;background:#fff;color:#363841;text-align:left}
+.ai-platform .platform-artifact-button:hover{border-color:#b9c7e1;background:#fcfdff}
+.ai-platform .platform-artifact-button>svg{flex:none;width:25px;height:25px;color:#5d7cab}
+.ai-platform .platform-artifact-button>div{min-width:0;flex:1}
+.ai-platform .platform-artifact-button b{display:block;color:#454750;font-size:14px;font-weight:500}
+.ai-platform .platform-artifact-button small{display:block;margin-top:4px;color:#9496a0;font-size:12px;line-height:1.7}
+.ai-platform .platform-artifact-button>span{flex:none;color:#848995;font-size:12px}
+.ai-platform .ai-artifact{margin:23px 0 0;padding-top:22px;border-top:1px solid #ebebef}
+.ai-platform .ai-artifact-head h2,.ai-platform .ai-artifact-head h3{color:#3a3d46;font-size:17px}
+.ai-platform .ai-artifact-head small,.ai-platform .ai-message-label{color:#828795;font-size:13px}
+.ai-platform .platform-chat-turn{margin-top:28px;padding-top:24px;border-top:1px solid #efeff2}
+.ai-platform .platform-assistant-message{color:#575961;font-size:16px;line-height:1.95;overflow-wrap:anywhere}
+.ai-platform .platform-assistant-message p{margin:10px 0;white-space:pre-wrap}
+.ai-platform .platform-assistant-message strong{color:#30323a;font-weight:600}
+.ai-platform .platform-assistant-message .ai-thread-head{line-height:1.5}
+.ai-platform .platform-composer-wrap{flex:none;width:100%;padding:12px 32px 10px;background:linear-gradient(#ffffffed,#fff 18px)}
+.ai-platform #platformComposer{width:100%;max-width:860px;min-width:0;margin:0 auto}
+.ai-platform .platform-composer{min-width:0;padding:13px 16px 11px;border:1px solid #dedee5;border-radius:20px;background:#fff;box-shadow:0 2px 8px #1b234005}
+.ai-platform .platform-composer:focus-within{border-color:#b0b4bd;box-shadow:0 2px 10px #1b234008}
+.ai-platform #platformPrompt{display:block;width:100%;min-height:45px;max-height:140px;padding:1px 1px 5px;border:0;resize:none;background:transparent;color:#30323b;font:15px/1.8 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;overflow-y:auto}
+.ai-platform #platformPrompt::placeholder{color:#9a9ca5}
+.ai-platform .platform-composer-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ai-platform .platform-composer-context{display:flex;align-items:center;flex-wrap:wrap;gap:7px;color:#858792;font-size:12px}
+.ai-platform .platform-composer-context svg{width:15px;height:15px}
+.ai-platform .platform-composer-context>[data-platform-icon]{width:15px;height:15px}
+.ai-platform .platform-composer-divider{width:1px;height:12px;margin-inline:3px;background:#e1e3e9}
+.ai-platform .platform-composer-context button,.ai-platform .platform-composer-context select{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:3px 6px;border:0;border-radius:5px;background:transparent;color:#777a85;font-size:12px}
+.ai-platform .platform-composer-context button:hover{background:#f4f4f7}
+.ai-platform .platform-send{display:grid;flex:none;place-items:center;width:33px;height:33px;padding:8px;border:0;border-radius:10px;background:#27282d;color:#fff}
+.ai-platform .platform-send:hover{background:#45464e}
+.ai-platform .platform-send:disabled{background:#d8d9df;color:#fff;opacity:1}
+.ai-platform .platform-send svg{width:18px;height:18px}
+.ai-platform .platform-composer-note{max-width:860px;margin:7px auto 0;color:#a1a2ab;text-align:center;font-size:11px;line-height:1.5}
+.ai-platform .platform-welcome{width:100%;max-width:860px;margin:clamp(25px,8vh,90px) auto 0;padding-bottom:20px;text-align:center}
+.ai-platform .platform-welcome-mark{display:grid;place-items:center;width:46px;height:46px;margin:0 auto 20px;border:1px solid #e5eaf3;border-radius:14px;background:#f5f8fd;color:#2f6bce;font-size:27px}
+.ai-platform .platform-welcome-mark>svg{display:block;width:27px;height:27px}
+.ai-platform .platform-welcome h1{margin:0;color:#2d2f36;font-size:30px;font-weight:550;letter-spacing:-.8px;line-height:1.5}
+.ai-platform .platform-welcome>p{margin:12px 0 0;color:#92949d;font-size:15px;line-height:1.8}
+.ai-platform .platform-suggestions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:40px;text-align:left}
+.ai-platform .platform-suggestion{display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:184px;padding:20px;border:1px solid #e6e7ee;border-radius:12px;background:#fff;color:#565965;text-align:left}
+.ai-platform .platform-suggestion:hover{border-color:#bfcbdc;background:#fcfdff}
+.ai-platform .platform-suggestion>svg{width:21px;height:21px;margin-bottom:14px;color:#758499}
+.ai-platform .platform-suggestion h3{margin:0 0 7px;color:#383b44;font-size:15px;font-weight:550}
+.ai-platform .platform-suggestion p{margin:0 0 14px;color:#90939e;font-size:13px;line-height:1.85}
+.ai-platform .platform-suggestion small{margin-top:auto;color:#8c919d;font-size:12px}
+.ai-platform .platform-welcome-hint{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:25px;color:#a3a7b1;font-size:12px}
+.ai-platform .platform-welcome-hint>svg{flex:none;width:14px;height:14px}
+.ai-platform .platform-catalog{width:100%;max-width:1000px;margin:7px auto 28px}
+.ai-platform .platform-catalog>header{margin-bottom:28px}
+.ai-platform .platform-catalog h1{margin:0;color:#2b2e35;font-size:27px;font-weight:600;line-height:1.5}
+.ai-platform .platform-catalog>header p{margin:8px 0 0;color:#8c909c;font-size:15px}
+.ai-platform .platform-catalog-note{margin-top:23px;color:#9ba0ad;font-size:13px;line-height:1.9}
+.ai-platform .platform-app-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.ai-platform .platform-app-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:23px;border:1px solid #e7e8ef;border-radius:13px;background:#fff}
+.ai-platform .platform-app-icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:17px;border-radius:12px;background:#f0f4fb;color:#567fb9}
+.ai-platform .platform-app-icon svg{width:23px;height:23px}
+.ai-platform .platform-app-card h2{margin:0 0 9px;color:#393d47;font-size:17px;font-weight:600}
+.ai-platform .platform-app-card p{margin:0 0 18px;color:#8b909c;font-size:14px;line-height:1.9}
+.ai-platform .platform-app-card small{margin-top:auto;padding-top:10px;color:#8b92a0;font-size:12px}
+.ai-platform .platform-app-card button{width:100%;margin-top:20px}
+.ai-platform .platform-resource-list{display:grid;gap:12px}
+.ai-platform .platform-resource-list>article{display:flex;align-items:center;gap:17px;min-width:0;padding:20px;border:1px solid #e6e8ee;border-radius:11px;background:#fff}
+.ai-platform .platform-resource-list>article>svg{flex:none;width:25px;height:25px;color:#7488a4}
+.ai-platform .platform-resource-list>article>div{min-width:0;flex:1}
+.ai-platform .platform-resource-list h3{margin:0;color:#414752;font-size:16px;font-weight:550}
+.ai-platform .platform-resource-list p{margin:5px 0 0;color:#9299a5;font-size:14px;line-height:1.85}
+.ai-platform .platform-resource-list>article>span{flex:none;color:#8f99a8;font-size:12px}
+.ai-platform .platform-context-drawer{position:fixed;inset:64px 0 0 auto;z-index:25;width:300px;max-width:100vw;padding:24px;border-left:1px solid #e6e8ee;background:#fff;box-shadow:-12px 0 32px #1d2c4b05;overflow-y:auto;overscroll-behavior:contain}
+.ai-platform .platform-context-drawer>header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:25px}
+.ai-platform .platform-context-drawer h2{margin:0;color:#3a3e48;font-size:17px;font-weight:600}
+.ai-platform .platform-context-drawer>p{color:#8e96a3;font-size:14px}
+.ai-platform .platform-context-section{margin-top:23px;padding-top:20px;border-top:1px solid #eceef3}
+.ai-platform .platform-context-section h3{margin:0 0 12px;color:#727d8f;font-size:12px;font-weight:500}
+.ai-platform .platform-context-section p,.ai-platform .platform-context-section li{margin:8px 0;color:#626e80;font-size:14px;line-height:1.9}
+.ai-platform .platform-context-section ul{margin:0;padding-left:17px}
+.ai-platform .platform-context-section small{color:#939caa;font-size:12px}
+.ai-platform .platform-mobile-backdrop{position:fixed;inset:0;z-index:29;border:0;background:#20252e45;backdrop-filter:blur(1px)}
+.ai-platform.sidebar-collapsed .hmw-shell{grid-template-columns:minmax(0,1fr)}
+.ai-platform.sidebar-collapsed .hmw-sidebar{display:none}
+.ai-platform.sidebar-collapsed .hmw-workspace{grid-column:1}
+
+/* Readable report attachments and drilldowns inside the narrower conversation. */
+.ai-platform .hmw-grid,.ai-platform .hmw-grid.wide{grid-template-columns:minmax(0,1fr)}
+.ai-platform .hmw-kpis{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.ai-platform .hmw-kpi strong,.ai-platform .ai-artifact .hmw-kpi strong{color:#3c4350;font-size:28px}
+.ai-platform .hmw-table{font-size:14px}
+.ai-platform .hmw-table th{background:#f7f8fa;color:#7c8797}
+.ai-platform .hmw-table td{color:#566276}
+.ai-platform #aiEvidence :is(small,em,.hmw-tag,.hmw-note,.hmw-cause-share,.hmw-action-meta,.hmw-detail summary,.ai-result-version,.ai-draft-badge,.ai-pending,.ai-changes-summary,.ai-message-context),.ai-platform #hmwDialog :is(small,em,.hmw-tag,.hmw-note,.hmw-cause-share,.hmw-action-meta,.hmw-detail summary){font-size:14px}
+.ai-platform #aiEvidence :is(p,label,.hmw-cause,.hmw-equation,.hmw-search),.ai-platform .hmw-dialog-body p,.ai-platform .hmw-tabs button{font-size:14px}
+.ai-platform #aiEvidence :is(h2,h3),.ai-platform .hmw-dialog-body h3{color:#4b576a;font-size:16px}
+.ai-platform #aiEvidence .hmw-kpi strong span,.ai-platform .hmw-mini-kpis strong span,.ai-platform .hmw-plan-kpis strong span{font-size:14px}
+.ai-platform .hmw-chart text{font-size:14px}
+.ai-platform .hmw-plan-title{flex-wrap:wrap;color:#4d596d;font-size:16px}
+.ai-platform .hmw-plan-title>div{min-width:0}
+.ai-platform .hmw-plan-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ai-platform .hmw-plan.selected{border-color:#c1cfe4;box-shadow:inset 0 2px 0 #688bbd}
+.ai-platform .ai-strategy-panel{background:#f8fafd;border-color:#e2e8f1}
+.ai-platform .ai-strategy-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ai-platform .ai-execution-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ai-platform .ai-strategy-grid input:not([type=range]),.ai-platform .ai-strategy-grid select{font-size:14px}
+.ai-platform .ai-strategy-footer{align-items:flex-start;flex-wrap:wrap;font-size:14px}
+.ai-platform .ai-strategy-footer p{margin:0}
+.ai-platform .ai-strategy-footer>div{display:flex;flex-wrap:wrap;gap:8px}
+.ai-platform .hmw-insight{align-items:flex-start;flex-wrap:wrap}
+.ai-platform .hmw-panel>header,.ai-platform .ai-artifact .hmw-panel>header{align-items:flex-start;flex-wrap:wrap}
+.ai-platform #hmwDialog{border-color:#e1e5ec;border-radius:13px;color:#4f5b6f}
+.ai-platform #hmwDialog>header{border-color:#e8ebf1}
+.ai-platform #hmwDialog header h2{color:#3f4e64}
+.ai-platform .hmw-toast{color:#536072;border-color:#e3e7ee;border-radius:9px;font-size:14px}
+
+@media(max-width:1100px){
+  .ai-platform .hmw-topbar{padding-inline:20px}
+  .ai-platform #hmwMain{padding:26px 24px 20px}
+  .ai-platform .platform-composer-wrap{padding-inline:24px}
+  .ai-platform .platform-suggestions{gap:10px}
+  .ai-platform .platform-suggestion{padding:17px}
+  .ai-platform .platform-app-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ai-platform .platform-scope-chip{display:none}
+  .ai-platform .ai-summary-metrics>div{padding-inline:14px}
+  .ai-platform .ai-summary-metrics strong{font-size:25px}
+}
+@media(max-width:760px){
+  .ai-platform .hmw-shell,.ai-platform.sidebar-collapsed .hmw-shell{grid-template-columns:minmax(0,1fr)}
+  .ai-platform .hmw-sidebar,.ai-platform.sidebar-collapsed .hmw-sidebar{display:none}
+  .ai-platform.sidebar-open .hmw-sidebar{display:flex;max-width:calc(100vw - 55px);box-shadow:10px 0 40px #1d263b15}
+  .ai-platform.sidebar-open .platform-mobile-backdrop:not([hidden]){display:block}
+  .ai-platform .hmw-workspace{grid-column:1}
+  .ai-platform .hmw-topbar{min-height:58px;gap:10px;padding:10px 13px}
+  .ai-platform .platform-header-title{gap:8px}
+  .ai-platform .hmw-breadcrumb b{font-size:14px}
+  .ai-platform .hmw-top-actions{gap:3px}
+  .ai-platform .hmw-topbar [data-action=statement],.ai-platform .platform-scope-chip{display:none}
+  .ai-platform #hmwMain{padding:22px 16px 18px}
+  .ai-platform .platform-task-heading{margin-bottom:22px}
+  .ai-platform .platform-task-heading h1{font-size:23px}
+  .ai-platform .platform-task-heading p{font-size:12px;line-height:1.8}
+  .ai-platform .platform-user-message{max-width:91%;padding:11px 14px;font-size:14px}
+  .ai-platform .platform-run{margin-bottom:21px;font-size:12px}
+  .ai-platform .ai-thread-head>.hmw-tag{font-size:11px}
+  .ai-platform .ai-summary h2{font-size:20px}
+  .ai-platform .ai-summary p,.ai-platform .ai-summary ul{font-size:16px;line-height:1.9}
+  .ai-platform .ai-summary-metrics{margin:18px 0;padding:14px 0}
+  .ai-platform .ai-summary-metrics>div{padding-inline:10px}
+  .ai-platform .ai-summary-metrics small{font-size:12px}
+  .ai-platform .ai-summary-metrics strong{font-size:23px}
+  .ai-platform .ai-summary-metrics strong span{display:block;margin:1px 0 0;font-size:11px}
+  .ai-platform .ai-summary-metrics em{font-size:11px}
+  .ai-platform .ai-summary-metrics .ai-date{font-size:18px}
+  .ai-platform .ai-message-actions .hmw-button{font-size:13px;white-space:normal}
+  .ai-platform .platform-artifact-button{gap:10px;padding:13px}
+  .ai-platform .platform-artifact-button>span{font-size:11px}
+  .ai-platform .platform-artifact-button small{font-size:11px}
+  .ai-platform .platform-composer-wrap{padding:9px 12px max(10px,env(safe-area-inset-bottom))}
+  .ai-platform .platform-composer{padding:11px 13px 10px;border-radius:17px}
+  .ai-platform #platformPrompt{font-size:16px}
+  .ai-platform .platform-composer-context{gap:4px;font-size:11px}
+  .ai-platform .platform-composer-note{font-size:10px}
+  .ai-platform .platform-welcome{margin-top:30px;padding-bottom:12px}
+  .ai-platform .platform-welcome h1{font-size:26px}
+  .ai-platform .platform-welcome>p{font-size:14px}
+  .ai-platform .platform-suggestions{grid-template-columns:minmax(0,1fr);gap:9px;margin-top:26px}
+  .ai-platform .platform-suggestion{position:relative;display:block;min-height:0;padding:14px 17px 14px 48px}
+  .ai-platform .platform-suggestion>svg{position:absolute;top:18px;left:17px;width:18px;height:18px;margin:0}
+  .ai-platform .platform-suggestion h3{margin-bottom:3px;font-size:14px}
+  .ai-platform .platform-suggestion p{margin:0;font-size:12px}
+  .ai-platform .platform-suggestion small{display:none}
+  .ai-platform .platform-catalog{margin-top:1px}
+  .ai-platform .platform-catalog h1{font-size:24px}
+  .ai-platform .platform-app-grid{grid-template-columns:minmax(0,1fr);gap:13px}
+  .ai-platform .platform-app-card{padding:21px}
+  .ai-platform .platform-resource-list>article{align-items:flex-start;flex-wrap:nowrap;gap:12px;padding:17px}
+  .ai-platform .platform-resource-list>article>span{display:none}
+  .ai-platform .platform-resource-list>article>.hmw-button{flex:none}
+  .ai-platform .platform-resource-list p{font-size:13px}
+  .ai-platform .platform-context-drawer{top:58px;width:min(340px,100vw);padding:21px;box-shadow:-16px 0 50px #1d2c4b15}
+  .ai-platform .hmw-plan-grid{grid-template-columns:minmax(0,1fr)}
+  .ai-platform .hmw-plan-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ai-platform .ai-strategy-grid{grid-template-columns:minmax(0,1fr)}
+  .ai-platform .ai-execution-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ai-platform .ai-result-comparison{grid-template-columns:minmax(0,1fr)}
+  .ai-platform .hmw-kpis{grid-template-columns:minmax(0,1fr)}
+  .ai-platform .hmw-mini-kpis{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .ai-platform .hmw-mini-kpis strong{font-size:20px}
+  .ai-platform .hmw-cause{grid-template-columns:minmax(0,1fr) 75px 53px;gap:8px}
+  .ai-platform .hmw-cause-bar{grid-column:1/-1;grid-row:2}
+  .ai-platform .hmw-panel-body{padding:16px}
+  .ai-platform .ai-artifact-head{align-items:flex-start;flex-wrap:wrap}
+  .ai-platform .ai-strategy-footer .hmw-button{white-space:normal}
+}
+@media(prefers-reduced-motion:reduce){
+  .ai-platform #hmwMain{scroll-behavior:auto}
+}
+</style>
 </head>
-<body class="hmw-app ai-workspace">
+<body class="hmw-app ai-workspace ai-platform">
   <div class="hmw-shell">
     <aside class="hmw-sidebar">
-      <a class="hmw-brand" href="#attribution"><span class="hmw-logo">好</span><span><b>好美味餐饮集团</b><small>智能决策平台</small></span></a>
-      <div class="ai-sidebar-section"><b>AI 工作台</b><small>经营助手主动推送</small></div>
+      <a class="hmw-brand" href="#attribution"><span class="hmw-logo">好</span><span><b>好美味 AI</b><small>餐饮经营工作台</small></span><span class="platform-brand-badge">工作空间</span></a>
+      <div class="platform-sidebar-actions">
+        <button class="platform-nav-button" data-platform-view="new"><span data-platform-icon="compose"></span><span>新任务</span><kbd>⌘ K</kbd></button>
+        <button class="platform-nav-button" data-platform-view="apps"><span data-platform-icon="apps"></span><span>应用</span></button>
+        <button class="platform-nav-button" data-platform-view="resources"><span data-platform-icon="database"></span><span>数据与知识</span></button>
+      </div>
+      <div class="platform-sidebar-label"><span>经营任务</span><span>好美味餐饮集团</span></div>
       <nav class="hmw-nav" id="hmwNav" aria-label="经营决策导航"></nav>
-      <div class="ai-sidebar-status"><span>120家直营正餐门店</span><small>月度分析 · 经营推演 · 周度跟进</small></div>
+      <div class="platform-sidebar-label platform-history-label"><span>我的任务</span><span id="platformHistoryCount">0</span></div>
+      <nav id="platformHistory" aria-label="我的任务"></nav>
+      <div class="platform-sidebar-bottom"><button class="platform-profile" data-platform-action="workspace"><span class="platform-profile-avatar">好</span><span><b>好美味餐饮集团</b><small>集团经营工作空间</small></span><span data-platform-icon="chevrons"></span></button></div>
     </aside>
     <div class="hmw-workspace">
-      <header class="hmw-topbar"><div class="hmw-breadcrumb"><span>好美味餐饮集团智能决策平台</span><i>/</i><b id="hmwBreadcrumb">10月利润归因</b></div><div class="hmw-top-actions"><button class="hmw-button ghost" data-action="statement">管理利润表</button><button class="hmw-button ghost" id="hmwFullscreen">全屏</button></div></header>
+      <header class="hmw-topbar"><div class="platform-header-title"><button class="platform-icon-button" id="platformSidebarToggle" aria-label="切换侧边栏" aria-expanded="true"><span data-platform-icon="sidebar"></span></button><div class="hmw-breadcrumb"><span>经营工作空间</span><i>/</i><b id="hmwBreadcrumb">10月利润归因</b></div></div><div class="hmw-top-actions"><span class="platform-scope-chip">好美味 · 120家门店</span><button class="hmw-button ghost platform-statement" data-action="statement">管理利润表</button><button class="platform-icon-button" data-platform-action="context" aria-label="查看任务上下文"><span data-platform-icon="panel"></span></button><button class="platform-icon-button" id="hmwFullscreen" aria-label="全屏"><span data-platform-icon="expand"></span></button></div></header>
       <main id="hmwMain" tabindex="-1"></main>
+      <div class="platform-composer-wrap" id="platformComposerWrap"><form class="platform-composer" id="platformComposer"><label class="platform-sr-only" for="platformPrompt">向经营助手描述任务</label><textarea id="platformPrompt" rows="2" maxlength="2000" placeholder="继续追问，或描述你想完成的经营任务…" required></textarea><div class="platform-composer-toolbar"><div class="platform-composer-context"><span data-platform-icon="apps"></span><label class="platform-sr-only" for="platformAppSelect">选择经营应用</label><select id="platformAppSelect"><option value="auto">自动选择应用</option><option value="attribution">利润归因</option><option value="forecast">经营预测</option><option value="tracking">执行跟进</option></select><span class="platform-composer-divider"></span><span>集团 · 120家门店</span></div><button class="platform-send" type="submit" aria-label="发送任务"><span data-platform-icon="send"></span></button></div></form><p class="platform-composer-note">经营分析助手 · 支持归因、方案测算与执行查询 <span>Enter 发送 · Shift + Enter 换行</span></p></div>
     </div>
   </div>
+  <button class="platform-mobile-backdrop" id="platformMobileBackdrop" aria-label="关闭侧边栏" hidden></button>
+  <aside class="platform-context-drawer" id="platformContext" aria-label="任务上下文" hidden></aside>
   <dialog id="hmwDialog"><header><div><small id="hmwDialogLabel"></small><h2 id="hmwDialogTitle"></h2></div><button class="hmw-button ghost" id="hmwClose" aria-label="关闭详情">✕</button></header><div class="hmw-dialog-body" id="hmwDialogBody"></div></dialog>
   <div class="hmw-toast" id="hmwToast" role="status" hidden></div>
   <script>/* 好美味餐饮集团：用于产品演示的合成业务模型。金额：万元；采购价格：元/公斤。 */
@@ -964,6 +1279,7 @@ function aiSummary(page){
   return `<h2>本周已核对120家门店，3家重点偏差需要继续跟进。</h2><p>门店经营利润${num(s.actual.profit,2)}万元，较周计划少${num(s.plan.profit-s.actual.profit,2)}万元。上海06店客流与工时未联动，北京07店临采价差，深圳02店报损和设备能耗，是本轮重点。</p><div class="ai-summary-metrics"><div><small>本周实际门店利润</small><strong>${num(s.actual.profit,2)}<span>万元</span></strong><em>周计划 ${num(s.plan.profit,2)}万元</em></div><div><small>待复核重点门店</small><strong>3<span>家</span></strong><em>动作完成后仍核对实际效果</em></div><div><small>下一次复核</small><strong class="ai-date">11月14日</strong><em>费用、出餐与客诉一起看</em></div></div><div class="ai-message-actions"><button class="hmw-button primary" data-action="focus-abnormal">查看3家重点门店</button><button class="hmw-button" data-store="HMW-006" data-context="tracking">核查上海06店工时</button><button class="hmw-button" data-action="show-evidence">查看周计划与实际</button></div><div class="ai-message-context">执行依据：10月31日锁定的周年庆 V1，11月1—7日独立周计划。人工预测试算不改写本周计划或实际。</div>`;
 }
 function workspaceView(page,content){
+  if(globalThis.AiPlatform)return globalThis.AiPlatform.threadView(page,content);
   const task=pushTasks().find(t=>t.id===page);
   return `<section class="ai-message"><div class="ai-thread-head"><span class="ai-avatar">✦</span><div><h2>好美味经营助手</h2><small>${task.trigger} · ${task.status}</small></div><span class="hmw-tag blue">AI 主动推送</span></div><div class="ai-summary">${aiSummary(page)}</div></section><section class="ai-artifact" id="aiEvidence"><header class="ai-artifact-head"><div><span class="ai-message-label">AI 分析附件</span><h2>${task.artifact}</h2></div><span class="hmw-tag">120家直营门店</span></header><div class="ai-work-area">${content}</div></section>`;
 }
@@ -973,7 +1289,7 @@ function markDraft(){
   if($('#aiDraftHint'))$('#aiDraftHint').textContent=draftHint();
   if($('#aiAppliedContext'))$('#aiAppliedContext').textContent=scenario.dirty?'草稿已修改，此处仍为上次已测算结果；重新测算后更新。':'本结果为当前已应用参数。营销预算按填写总额计入，折扣已从营业额扣减。';
 }
-function chooseStrategy(plan){scenario.draft=AI.defaults(plan);markDraft();render();$('#aiStrategyForm').scrollIntoView({block:'start',behavior:'instant'});}
+function chooseStrategy(plan){globalThis.AiPlatform?.revealEvidence();scenario.draft=AI.defaults(plan);markDraft();render();$('#aiStrategyForm').scrollIntoView({block:'start',behavior:'instant'});}
 function recalculate(){
   const previous=scenario.applied.inputs,next=AI.normalize(scenario.draft);
   scenario.lastChanges=[];
@@ -983,12 +1299,14 @@ function recalculate(){
   scenario.applied=AI.calculate(next);scenario.draft={...next};scenario.revision++;scenario.dirty=false;state.search='';
   render();$('#aiForecastResult').scrollIntoView({block:'start',behavior:'instant'});toast('已重新测算集团、120家门店及相应行动条件');
 }
-function navigate(page){if(!pages.some(([id])=>id===page))page='attribution';if($('#hmwDialog').open)$('#hmwDialog').close();state.search='';location.hash=page;if(state.page===page)render();}
+function navigate(page){if(!pages.some(([id])=>id===page))page='attribution';globalThis.AiPlatform?.openPage();if($('#hmwDialog').open)$('#hmwDialog').close();state.search='';location.hash=page;render();}
 function render(){
   state.page=pages.some(([id])=>id===location.hash.slice(1))?location.hash.slice(1):'attribution';
+  if(globalThis.AiPlatform?.renderView())return;
   $('#hmwNav').innerHTML=pushTasks().map(t=>`<button data-nav="${t.id}" class="${state.page===t.id?'active':''}" ${state.page===t.id?'aria-current="page"':''}><span class="ai-task-icon">${icon(t.id)}</span><span class="ai-task-body"><b>${t.title}</b><small>${t.period}</small></span><span class="ai-task-badge">${t.id==='tracking'?'3':'✦'}</span></button>`).join('');
-  const title=pages.find(([id])=>id===state.page)[1];$('#hmwBreadcrumb').textContent=title;document.title=`${title} · 好美味餐饮集团智能决策平台`;
+  const title=pages.find(([id])=>id===state.page)[1];$('#hmwBreadcrumb').textContent=title;document.title=`${title} · 好美味 AI 应用平台`;
   $('#hmwMain').innerHTML=workspaceView(state.page,({attribution:renderAttribution,forecast:renderForecast,tracking:renderTracking})[state.page]());
+  globalThis.AiPlatform?.afterRender();
 }
 document.addEventListener('click',event=>{
   const nav=event.target.closest('[data-nav]');if(nav){navigate(nav.dataset.nav);return;}
@@ -999,10 +1317,10 @@ document.addEventListener('click',event=>{
   const adjustment=event.target.closest('[data-adjust]');if(adjustment){adjustments[adjustment.dataset.adjust]=true;try{localStorage.setItem('haomeiwei-actions-v1',JSON.stringify(adjustments));}catch{}const dialogStore=$('#hmwDialogBody').dataset.activeStore;render();if($('#hmwDialog').open&&dialogStore)showStore(dialogStore,'tracking');toast('整改动作已登记，执行效果待下一周期复核');return;}
   const action=event.target.closest('[data-action]')?.dataset.action;
   if(action==='statement')dialog('9月与10月管理利润表',pnlTable([{label:'9月实际',row:M.actuals.september,rate:true},{label:'10月实际',row:M.actuals.october,rate:true}]));
-  if(action==='show-evidence')$('#aiEvidence').scrollIntoView({block:'start',behavior:'instant'});
-  if(action==='edit-strategy')$('#aiStrategyForm').scrollIntoView({block:'start',behavior:'instant'});
+  if(action==='show-evidence'){globalThis.AiPlatform?.revealEvidence();$('#aiEvidence').scrollIntoView({block:'start',behavior:'instant'});}
+  if(action==='edit-strategy'){globalThis.AiPlatform?.revealEvidence();$('#aiStrategyForm').scrollIntoView({block:'start',behavior:'instant'});}
   if(action==='reset-draft')chooseStrategy(scenario.draft.plan);
-  if(action==='focus-abnormal'){state.trackingFilter='abnormal';$('#trackingFilter').value='abnormal';$('#trackingStores').innerHTML=trackingStoreTable(state.search);$('#trackingStores').scrollIntoView({block:'start',behavior:'instant'});}
+  if(action==='focus-abnormal'){globalThis.AiPlatform?.revealEvidence();state.trackingFilter='abnormal';$('#trackingFilter').value='abnormal';$('#trackingStores').innerHTML=trackingStoreTable(state.search);$('#trackingStores').scrollIntoView({block:'start',behavior:'instant'});}
 });
 document.addEventListener('submit',event=>{if(event.target.id==='aiStrategyForm'){event.preventDefault();if(event.target.reportValidity())recalculate();}});
 document.addEventListener('input',event=>{
@@ -1018,6 +1336,129 @@ $('#hmwDialog').addEventListener('click',event=>{if(event.target===$('#hmwDialog
 $('#hmwFullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{toast('请在独立浏览器中使用全屏');}};
 window.addEventListener('hashchange',()=>{state.search='';render();window.scrollTo(0,0);});
 render();
+</script>
+  <script>/* AI application shell. Responses use the existing business model; no remote model is connected. */
+(function () {
+  'use strict';
+  const storageKey='haomeiwei-platform-v1';
+  const paths={compose:'<path d="M14 4h6v6M20 4 9 15l-4 1 1-4L17 1M12 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-7"/>',apps:'<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',database:'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/>',sidebar:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/>',panel:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M15 4v16"/>',expand:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/>',send:'<path d="m6 12 6-6 6 6m-6-6v14"/>',chevrons:'<path d="m9 8 3-3 3 3m-6 8 3 3 3-3"/>',file:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8m-8 4h5"/>',check:'<path d="m5 12 4 4L19 6"/>',close:'<path d="m6 6 12 12M6 18 18 6"/>',spark:'<path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/>'};
+  const svg=name=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.file}</svg>`;
+  const apps=[
+    {id:'attribution',name:'利润归因',description:'从利润变化出发，逐层定位经营因素、原料和门店。',prompt:'帮我复盘10月经营，营收增长了，为什么利润反而下降？',tag:'经营诊断',detail:'利润变化桥 · 量价拆解 · 门店穿透'},
+    {id:'forecast',name:'经营预测',description:'比较经营方案，调整客流、优惠与成本条件，重新测算利润。',prompt:'帮我比较11月的经营方案，找到更合适的营销与整改策略。',tag:'方案推演',detail:'策略对比 · 人工试算 · 行动条件'},
+    {id:'tracking',name:'执行跟进',description:'对照冻结计划核验经营结果，跟进异常门店和整改证据。',prompt:'检查本周经营执行，哪些门店存在偏差，需要优先跟进？',tag:'执行管理',detail:'计划对照 · 门店异常 · 整改复核'}
+  ];
+  let saved={tasks:[],messages:{}};
+  try{
+    const raw=JSON.parse(localStorage.getItem(storageKey)||'null');
+    const validMessage=m=>m&&typeof m.question==='string'&&typeof m.answer==='string';
+    if(raw){
+      saved.tasks=(Array.isArray(raw.tasks)?raw.tasks:[]).filter(t=>/^task-\d+$/.test(t.id)&&apps.some(a=>a.id===t.page)&&typeof t.title==='string'&&Array.isArray(t.messages)).slice(0,30).map(t=>({...t,title:t.title.slice(0,40),messages:t.messages.filter(validMessage).slice(-30)}));
+      apps.forEach(a=>saved.messages[a.id]=(Array.isArray(raw.messages?.[a.id])?raw.messages[a.id]:[]).filter(validMessage).slice(-30));
+    }
+  }catch{}
+  const opened=new Set();
+  const route=()=>location.hash.slice(1)||'attribution';
+  const activeTask=()=>saved.tasks.find(t=>t.id===route());
+  const persist=()=>{try{localStorage.setItem(storageKey,JSON.stringify(saved));}catch{toast('浏览器存储不可用，本次会话仍可继续');}};
+  const appFor=page=>apps.find(a=>a.id===page)||apps[0];
+  function closeSidebar(){document.body.classList.remove('sidebar-open');$('#platformMobileBackdrop').hidden=true;$('#platformSidebarToggle').setAttribute('aria-expanded',String(innerWidth>760&&!document.body.classList.contains('sidebar-collapsed')));}
+  function sidebar(){
+    const task=activeTask();
+    document.querySelectorAll('[data-platform-view]').forEach(b=>{const active=b.dataset.platformView===route();b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+    $('#platformHistoryCount').textContent=saved.tasks.length;
+    $('#platformHistory').innerHTML=saved.tasks.length?saved.tasks.map(t=>`<a class="platform-history-item ${task?.id===t.id?'active':''}" href="#${t.id}" ${task?.id===t.id?'aria-current="page"':''}>${svg('file')}<span>${esc(t.title)}</span></a>`).join(''):'<p class="platform-history-empty">新建的任务会保存在这里</p>';
+  }
+  function renderView(){
+    const id=route(),task=activeTask(),standalone=['new','apps','resources'].includes(id);
+    sidebar();
+    $('#platformComposerWrap').hidden=id==='apps'||id==='resources';
+    $('#hmwMain').dataset.view=standalone?id:'thread';
+    if(task){state.page=task.page;return false;}
+    if(!standalone)return false;
+    $('#hmwNav').innerHTML=pushTasks().map(t=>`<button data-nav="${t.id}"><span class="ai-task-icon">${icon(t.id)}</span><span class="ai-task-body"><b>${t.title}</b><small>${t.period}</small></span></button>`).join('');
+    const title={new:'新任务',apps:'应用',resources:'数据与知识'}[id];
+    $('#hmwBreadcrumb').textContent=title;document.title=`${title} · 好美味 AI 应用平台`;
+    $('#hmwMain').innerHTML=id==='new'?welcome():id==='apps'?catalog():resources();
+    return true;
+  }
+  function welcome(){return `<section class="platform-welcome"><div class="platform-welcome-mark">${svg('spark')}</div><span class="platform-eyebrow">好美味 · 经营工作空间</span><h1>把经营问题，交给 AI 一起解决。</h1><p>从一个问题开始，连接分析、决策与行动。</p><div class="platform-suggestions">${apps.map(a=>`<button class="platform-suggestion" data-platform-prompt="${a.id}">${icon(a.id)}<h3>${a.name}</h3><p>${a.prompt}</p><small>${a.tag}</small></button>`).join('')}</div><div class="platform-welcome-hint">${svg('database')} 工作空间已包含120家门店的经营资料</div></section>`;}
+  function catalog(){return `<section class="platform-catalog"><header><span class="platform-eyebrow">为餐饮经营而构建</span><h1>应用</h1><p>选择专业应用，把数据变成可执行的经营决策。</p></header><div class="platform-app-grid">${apps.map(a=>`<article class="platform-app-card"><div class="platform-app-icon">${icon(a.id)}</div><span class="hmw-tag">${a.tag}</span><h2>${a.name}</h2><p>${a.description}</p><small>${a.detail}</small><button class="hmw-button primary" data-platform-app="${a.id}">开始任务</button><button class="hmw-button ghost" data-nav="${a.id}">查看已有任务</button></article>`).join('')}</div><div class="platform-catalog-note">三个应用共享经营口径，可在任务中继续追问，并打开报告或测算方案。</div></section>`;}
+  function resources(){
+    const rows=[['statement','管理利润表','9月与10月 · 14项损益指标 · 集团及120家门店','结构化数据'],['stores','门店档案','华东、华北、华南 · 120家直营正餐门店','门店资料'],['materials','菜品与原料','8种重点原料 · 标准用量、采购价格及价差','经营数据'],['rules','经营规则与指标口径','利润口径、量价拆解、方案测算与执行核验规则','知识文档']];
+    return `<section class="platform-catalog"><header><span class="platform-eyebrow">经营分析的共同依据</span><h1>数据与知识</h1><p>管理应用当前可使用的资料，查看来源、范围与计算口径。</p></header><div class="platform-resource-list">${rows.map(([id,name,desc,type])=>`<article>${svg(id==='rules'?'file':'database')}<div><h3>${name}</h3><p>${desc}</p></div><span class="hmw-tag">${type}</span><button class="hmw-button" ${id==='statement'?'data-action="statement"':`data-platform-resource="${id}"`}>查看</button></article>`).join('')}</div><p class="platform-catalog-note">当前为工作空间内置资料，来自产品演示业务模型；外部业务系统尚未连接。</p></section>`;
+  }
+  function turns(messages){return messages.map(m=>`<article class="platform-chat-turn"><div class="platform-user-message">${esc(m.question)}</div><div class="platform-assistant-message"><div class="ai-thread-head"><span class="ai-avatar">${svg('spark')}</span><b>经营助手</b></div><p>${esc(m.answer)}</p>${m.action?replyAction(m.action):''}</div></article>`).join('');}
+  function replyAction(a){
+    if(a.type==='cause'&&M.getCauseDetail(a.id))return `<button class="hmw-button" data-cause="${esc(a.id)}">查看因素明细</button>`;
+    if(a.type==='store'&&getStore(a.id))return `<button class="hmw-button" data-store="${esc(a.id)}" data-context="${apps.some(app=>app.id===a.context)?a.context:'attribution'}">查看门店详情</button>`;
+    return `<button class="hmw-button" data-action="${state.page==='forecast'?'edit-strategy':'show-evidence'}">${state.page==='forecast'?'打开策略测算':'查看完整报告'}</button>`;
+  }
+  function threadView(page,content){
+    const task=pushTasks().find(t=>t.id===page),custom=activeTask(),app=appFor(page),messages=custom?custom.messages:saved.messages[page]||[];
+    return `<div class="platform-thread"><header class="platform-task-heading"><span class="platform-eyebrow">${app.tag} <span> / </span> 好美味餐饮集团</span><h1>${esc(custom?.title||task.title)}</h1><p>${task.period} · 120家直营门店 · ${custom?'我的任务':'经营助手主动推送'}</p></header>${custom?'':`<div class="platform-request"><div class="platform-user-message">${app.prompt}</div></div>`}<details class="platform-run"><summary>${svg('check')}<span>已完成经营分析</span><small>查看分析依据</small></summary><div class="platform-run-steps"><p>${svg('check')} 核对同一范围的120家门店与管理利润口径</p><p>${svg('check')} ${page==='attribution'?'分解客流、促销净价、食材与经营费用':page==='forecast'?'比较两套策略，并保留人工测算与同策略基线':'对照冻结周计划，定位门店偏差与整改证据'}</p><p>${svg('check')} 生成可穿透的经营分析报告</p></div></details>${custom?'':`<section class="ai-message"><div class="ai-thread-head"><span class="ai-avatar">${svg('spark')}</span><div><h2>好美味经营助手</h2><small>${task.status}</small></div></div><div class="ai-summary">${aiSummary(page).replace('据此推演11月方案 →','推演11月方案')}</div></section>`}<button class="platform-artifact-button" data-action="show-evidence">${svg('file')}<div><b>${task.artifact}</b><small>${app.detail} · 120家门店</small></div><span>打开报告</span></button><section class="ai-artifact" id="aiEvidence" ${opened.has(custom?.id||page)?'':'hidden'}><header class="ai-artifact-head"><div><span class="ai-message-label">任务成果</span><h2>${task.artifact}</h2></div><button class="hmw-button ghost" data-platform-action="hide-report">收起报告</button></header><div class="ai-work-area">${content}</div></section><div id="platformConversation" aria-live="polite">${turns(messages)}</div></div>`;
+  }
+  function afterRender(){
+    const task=activeTask();
+    if(task){$('#hmwBreadcrumb').textContent=task.title;document.title=`${task.title} · 好美味 AI 应用平台`;document.querySelectorAll('#hmwNav button').forEach(b=>{b.classList.remove('active');b.removeAttribute('aria-current');});}
+    sidebar();
+  }
+  function revealEvidence(){opened.add(activeTask()?.id||state.page);if($('#aiEvidence'))$('#aiEvidence').hidden=false;}
+  function classify(text,fallback,newTask){if(/执行|跟进|整改进度|本周|周计划|异常门店/.test(text))return 'tracking';if(/经营预测|经营推演|11月|优惠.*(?:增加|提高|多|加)/.test(text)||newTask&&/预测|推演|方案|营销|预算/.test(text))return 'forecast';if(/归因|10月/.test(text))return 'attribution';if(newTask&&/利润|食材|采购|原料|人工/.test(text))return 'attribution';return fallback;}
+  function answer(question,page){
+    const store=M.stores.find(s=>question.includes(s.id)||question.includes(s.name));
+    if(store){const row=page==='forecast'?scenario.applied.byStore.find(s=>s.storeId===store.id):page==='tracking'?M.tracking.stores.find(s=>s.storeId===store.id)?.actual:store.october;return {answer:`${store.name}（${store.region}）${page==='forecast'?'当前方案预测':page==='tracking'?'本周实际':'10月实际'}：折后营业额${num(row.revenue)}万元，门店经营利润${num(row.profit)}万元。可打开门店详情，继续核对费用与行动条件。`,action:{type:'store',id:store.id,context:page}};}
+    if(page==='forecast'){
+      const f=scenario.applied,match=question.match(/优惠.*?(?:增加|提高|多|加)\s*(\d+(?:\.\d+)?)\s*元/);
+      if(match){const discount=f.inputs.discountPerGuest+Number(match[1]);if(discount>40)return {answer:'增加后的每客优惠超过当前模型40元上限。请在策略测算中选择范围内的优惠，并确认客流假设。'};const next=AI.calculate({...f.inputs,discountPerGuest:discount});return {answer:`在当前已测算方案、客流和其他条件不变时，人均优惠由${num(f.inputs.discountPerGuest)}元增加至${num(discount)}元，预计营业额${num(next.totals.revenue)}万元，利润${num(next.totals.profit)}万元，利润变化${signed(next.totals.profit-f.totals.profit)}万元。\n这是独立试算，尚未应用到方案。可打开策略编辑器调整参数后重新测算。`,action:{type:'report'}};}
+      return {answer:`现行营销与整改方案预计利润301万元；周年庆与目标成本联动方案预计利润481.60万元。\n当前已测算版本预计营业额${num(f.totals.revenue)}万元，利润${num(f.totals.profit)}万元。你可以调整客流、优惠、营销预算及五项整改达成率，提交后重新计算。采购报价与门店产能仍需确认。`,action:{type:'report'}};
+    }
+    if(page==='tracking')return {answer:`本周120家门店实际利润${num(M.tracking.summary.actual.profit)}万元，较冻结周计划少${num(M.tracking.summary.plan.profit-M.tracking.summary.actual.profit)}万元。\n优先跟进上海06店客流与工时、北京07店临采价差、深圳02店报损及设备能耗。登记动作完成后，收益仍需在后续周期复核。`,action:{type:'report'}};
+    if(/采购|原料|食材|牛肉|新品/.test(question))return {answer:'食材相关不利影响合计142万元：菜品组合52万元、同规格采购价差70万元、超标准耗用与报损20万元。\n采购价差中，鸡肉15万元、牛肉20万元、五花肉10万元，五类新品原料合计25万元；新品25万元已包含在70万元中。可继续穿透到原料量价与各门店金额。',action:{type:'cause',id:'food'}};
+    if(/人工|工时|排班/.test(question))return {answer:'10月超标准人工费用导致利润减少120万元。建议核对低峰排班、临时工与加班工时，并结合客流调整可变工时。固定基本人工保留，工时优化仍需同时核验出餐效率与客诉。',action:{type:'cause',id:'labor'}};
+    if(/利润|归因|营收|收入|复盘|10月/.test(question))return {answer:'10月折后营业额4,800万元，较9月增长20%；门店利润由400万元降至120万元，减少280万元。\n客流贡献+500万元，被促销净价−400万元、食材−142万元、人工−120万元和其他费用−118万元抵消。促销是最大负向项，应优先核查。',action:{type:'report'}};
+    return {answer:'当前工作空间支持10月利润归因、11月方案测算与周执行查询。你可以问“采购价差70万元由哪些原料构成”，或“人均优惠增加1元，利润会如何变化”。\n其他开放式问题需要接入真实大模型后处理。'};
+  }
+  function submit(){
+    const input=$('#platformPrompt'),question=input.value.trim();if(!question)return;
+    const chosen=$('#platformAppSelect').value,existing=activeTask(),page=chosen==='auto'?classify(question,existing?.page||state.page,route()==='new'):chosen;
+    const response=answer(question,page),message={question,...response};
+    if(route()==='new'||page!==(existing?.page||state.page)){
+      const task={id:'task-'+Date.now(),title:question.slice(0,24),page,messages:[message]};saved.tasks.unshift(task);saved.tasks=saved.tasks.slice(0,30);location.hash=task.id;
+    }else if(existing){existing.messages.push(message);existing.messages=existing.messages.slice(-30);}
+    else{saved.messages[page]||=[];saved.messages[page].push(message);saved.messages[page]=saved.messages[page].slice(-30);}
+    persist();input.value='';render();$('#platformConversation')?.scrollIntoView({block:'end',behavior:'instant'});input.focus();
+  }
+  function context(){
+    const box=$('#platformContext');box.hidden=!box.hidden;if(box.hidden)return;
+    const app=appFor(state.page),task=pushTasks().find(t=>t.id===state.page);
+    box.innerHTML=`<header><h2>任务上下文</h2><button class="platform-icon-button" data-platform-action="context" aria-label="关闭任务上下文">${svg('close')}</button></header><section class="platform-context-section"><small>当前应用</small><h3>${app.name}</h3><p>${app.description}</p></section><section class="platform-context-section"><small>数据范围</small><h3>好美味餐饮集团</h3><p>120家直营正餐门店<br>华东 · 华北 · 华南</p><button class="hmw-button" data-action="statement">查看管理利润表</button></section><section class="platform-context-section"><small>任务成果</small><h3>${task.artifact}</h3><p>${app.detail}</p><button class="hmw-button" data-platform-action="context-report">打开报告</button></section><section class="platform-context-section"><small>能力说明</small><p>使用内置经营模型与资料。当前未连接外部业务系统或真实大模型。</p></section>`;
+  }
+  document.querySelectorAll('[data-platform-icon]').forEach(el=>el.innerHTML=svg(el.dataset.platformIcon));
+  document.addEventListener('click',event=>{
+    const view=event.target.closest('[data-platform-view]');if(view){location.hash=view.dataset.platformView;closeSidebar();return;}
+    const app=event.target.closest('[data-platform-app]');if(app){$('#platformAppSelect').value=app.dataset.platformApp;location.hash='new';$('#platformPrompt').value='';$('#platformPrompt').focus();closeSidebar();return;}
+    const prompt=event.target.closest('[data-platform-prompt]');if(prompt){const app=appFor(prompt.dataset.platformPrompt);$('#platformAppSelect').value=app.id;$('#platformPrompt').value=app.prompt;$('#platformPrompt').focus();return;}
+    const action=event.target.closest('[data-platform-action]')?.dataset.platformAction;
+    if(action==='context')context();
+    if(action==='context-report'){if(['new','apps','resources'].includes(route()))navigate(state.page);revealEvidence();$('#platformContext').hidden=true;$('#aiEvidence')?.scrollIntoView({block:'start'});}
+    if(action==='hide-report'){opened.delete(activeTask()?.id||state.page);$('#aiEvidence').hidden=true;$('.platform-artifact-button').scrollIntoView({block:'center'});}
+    if(action==='workspace')dialog('好美味经营工作空间','<p>面向120家直营餐饮门店，包含利润归因、经营预测与执行跟进三个应用。</p><h3>当前能力</h3><p>支持查看内置经营资料、确定性方案测算、门店下钻及浏览器内任务历史。新建任务与追问记录保存在当前浏览器。</p><h3>连接状态</h3><p>当前为前端交互演示，未接入真实大模型、企业数据接口、团队同步或自动调度。</p>','AI 应用平台');
+    const resource=event.target.closest('[data-platform-resource]')?.dataset.platformResource;
+    if(resource==='materials')dialog('菜品与原料资料',materialsTable());
+    if(resource==='stores')dialog('120家门店档案',`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>编号</th><th>门店</th><th>区域</th><th>业态</th><th>座位数</th></tr></thead><tbody>${M.stores.map(s=>`<tr><td>${s.id}</td><td>${s.name}</td><td>${s.region}</td><td>${s.format}</td><td>${s.seats}</td></tr>`).join('')}</tbody></table></div>`);
+    if(resource==='rules')dialog('经营规则与指标口径','<h3>门店经营利润</h3><p>折后营业额减列示的食材成本与门店经营费用；未计总部费用、折旧摊销、利息和所得税。</p><h3>量价与归因</h3><p>采购价差按标准数量与同规格价差计算；超标耗用单列，避免价格与用量重复归因。不利影响占比以780万元为分母。</p><h3>预测与执行</h3><p>人次乘以折后人均得到营业额。销售优惠冲减收入，营销总预算单列费用。修改草稿后须显式重新测算；人工预测不改写冻结周计划。</p>');
+  });
+  $('#platformComposer').addEventListener('submit',event=>{event.preventDefault();submit();});
+  $('#platformPrompt').addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();$('#platformComposer').requestSubmit();}});
+  $('#platformSidebarToggle').onclick=()=>{if(innerWidth<=760){const open=document.body.classList.toggle('sidebar-open');$('#platformMobileBackdrop').hidden=!open;$('#platformSidebarToggle').setAttribute('aria-expanded',String(open));}else{const collapsed=document.body.classList.toggle('sidebar-collapsed');$('#platformSidebarToggle').setAttribute('aria-expanded',String(!collapsed));}};
+  $('#platformMobileBackdrop').onclick=closeSidebar;
+  document.addEventListener('keydown',event=>{if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==='k'){event.preventDefault();location.hash='new';$('#platformPrompt').focus();}if(event.key==='Escape'){closeSidebar();$('#platformContext').hidden=true;}});
+  window.addEventListener('hashchange',()=>{closeSidebar();$('#platformContext').hidden=true;$('#hmwMain').scrollTop=0;});
+  window.addEventListener('resize',closeSidebar);
+  globalThis.AiPlatform={renderView,threadView,afterRender,revealEvidence,openPage:closeSidebar};
+  render();closeSidebar();
+})();
 </script>
 </body>
 </html>
