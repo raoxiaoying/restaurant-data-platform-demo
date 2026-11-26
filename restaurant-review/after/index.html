@@ -18,8 +18,7 @@
 .board-heading{display:flex;align-items:center;justify-content:space-between;gap:20px}
 .board-eyebrow{font-size:12px;color:#8291a6;margin-bottom:4px}.board-eyebrow span{padding:0 10px;color:#c4cddb}
 .board-heading h1{font-size:28px;font-weight:650;letter-spacing:.5px}.board-heading p{font-size:13px;color:#8290a5;margin-top:5px}
-.board-heading-tools{display:flex;align-items:center;gap:20px}.board-scope{display:flex;align-items:center;gap:15px;font-size:13px;color:#7d8da3}
-.board-scope b{font-weight:500;color:#456a9c;background:#edf3fc;border:1px solid #dce6f5;padding:7px 13px;border-radius:5px}.board-meeting-button{font-size:12px;padding:7px 12px;color:#59779f}
+.board-heading-tools{display:flex;align-items:center;gap:20px}.board-meeting-button{font-size:12px;padding:7px 12px;color:#59779f}
 .pl-panel{border:1px solid #dfe5ef;border-radius:8px;overflow:hidden;background:#fff;min-width:0}
 .pl-panel>header{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:19px 23px;border-bottom:1px solid #e8edf4}
 .pl-panel h2{font-size:17px;font-weight:650}.pl-panel>header>span{font-size:12px;color:#8a99ae}
@@ -38,7 +37,7 @@
 .meeting-mode .pl-panel>header{padding:20px 28px}.meeting-mode .pl-panel h2{font-size:20px}.meeting-mode .pl-table{font-size:16px}
 .meeting-mode .pl-table thead th{font-size:14px;padding:17px 24px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table tbody td{padding:10px 24px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table thead th:first-child{padding-left:30px}
 @media(min-width:1000px) and (max-height:850px){.meeting-mode main{padding:18px 28px}.meeting-mode .meeting-board{gap:12px}.meeting-mode .board-heading h1{font-size:27px}.meeting-mode .board-heading p{margin-top:2px;font-size:11px}.meeting-mode .board-eyebrow{font-size:10px;margin-bottom:0}.meeting-mode .pl-panel>header{padding:13px 21px}.meeting-mode .pl-panel h2{font-size:16px}.meeting-mode .pl-table{font-size:14px}.meeting-mode .pl-table thead th{font-size:11px;padding:11px 16px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table tbody td{padding:5px 16px}}
-@media(max-width:1200px){.board-scope{display:none}.pl-table{font-size:12px}.pl-table thead th{font-size:10px;padding:13px 10px}.pl-table tbody th,.pl-table tbody td{padding:14px 10px}.pl-table tbody th,.pl-table thead th:first-child{padding-left:16px}}
+@media(max-width:1200px){.pl-table{font-size:12px}.pl-table thead th{font-size:10px;padding:13px 10px}.pl-table tbody th,.pl-table tbody td{padding:14px 10px}.pl-table tbody th,.pl-table thead th:first-child{padding-left:16px}}
 @media(max-width:700px){.meeting-board{gap:13px}.board-heading h1{font-size:23px}.board-heading p{font-size:11px}.board-eyebrow{font-size:10px}.board-meeting-button{font-size:10px;padding:6px 9px}.pl-panel>header{padding:14px}.pl-panel h2{font-size:14px}.pl-panel>header>span{font-size:10px}.pl-table{min-width:740px}.meeting-mode main{padding:18px 15px}.meeting-mode .board-heading h1{font-size:23px}.meeting-mode .pl-panel>header{padding:14px}.meeting-mode .pl-panel h2{font-size:14px}.meeting-mode .pl-table{font-size:12px}.meeting-mode .pl-table thead th{font-size:10px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table tbody td{padding:14px 10px}}
 
 .pl-table .pl-memo th,.pl-table .pl-memo td{color:#8c9aad;font-weight:400}
@@ -61,7 +60,6 @@
 .legacy-system .sidebar-foot small{color:#a0aabd}
 .legacy-system .avatar{background:#ecf0f5;color:#7f90a8}
 .legacy-system .board-heading h1{color:#2e4059}
-.legacy-system .board-scope b{background:#f1f4f8;border-color:#e1e7ef;color:#6a7e99}
 .legacy-system .pl-panel{border-radius:5px}
 .legacy-system .pl-current-col{background:#f8fafc}
 .legacy-system .pl-table thead th:nth-child(3){background:#edf2f8;color:#57789e}
@@ -69,6 +67,78 @@
 .legacy-system .board-meeting-button{border-radius:4px;color:#6c7e98}
 .dolink-system .topbar{box-shadow:0 1px 6px #20385b04}
 @media(max-width:940px){.legacy-system .legacy-mark{margin-inline:auto}.legacy-system .brand{padding:28px 20px}}
+</style>
+  <style>/* Quick BI-inspired report reading view, limited to the reporting system. */
+.legacy-system{--blue:#2f6bff;background:#f5f6f8;color:#1f2329}
+.legacy-system .shell{display:block;padding-top:52px}
+.legacy-system .sidebar{top:52px;width:200px;background:#f8f9fb;border-right:1px solid #e6e8eb}
+.legacy-system .brand{position:fixed;top:0;left:0;width:200px;height:52px;z-index:25;gap:9px;padding:0 20px;background:#303338;border-bottom:1px solid #303338;color:#fff}
+.legacy-system .brand b{color:#fff;font-size:20px;font-weight:650;letter-spacing:-.4px}
+.legacy-system .brand small{display:none}
+.legacy-system .legacy-mark{width:27px;height:27px;border-radius:5px;background:#3370ff;color:#fff}
+.legacy-system .legacy-mark .icon{width:18px;height:18px;stroke-width:1.6}
+.legacy-system .nav-label{padding:21px 18px 12px;font-size:12px;color:#9299a5}
+.legacy-system nav{padding:0 10px}
+.legacy-system nav button{min-height:38px;padding:9px 12px;gap:9px;border-radius:3px;font-size:13px;color:#5c6573}
+.legacy-system nav button.active{padding-left:10px;border-left:2px solid #2f6bff;background:#eaf1ff;color:#2f6bff;font-weight:550}
+.legacy-system nav button:hover{background:#eef3fc;color:#2f6bff}
+.legacy-system nav .icon{width:16px;height:16px}
+.legacy-system .sidebar-foot{padding:15px 14px;background:#f8f9fb;border-color:#e6e8eb}
+.legacy-system .sidebar-foot b{font-size:11px;color:#7c8797}.legacy-system .sidebar-foot small{font-size:10px;color:#a3aab6}
+.legacy-system .avatar{width:28px;height:28px;font-size:12px;border-radius:4px;background:#e9eef8;color:#7c8eac}
+.legacy-system .main-shell{margin-left:200px}
+.legacy-system .topbar{position:fixed;top:0;left:200px;right:0;z-index:20;height:52px;padding:0 24px;background:#303338;border-bottom:1px solid #303338}
+.legacy-system .breadcrumb{font-size:13px;gap:22px;color:#c3c7cf}.legacy-system .breadcrumb b{color:#d5d8df;font-weight:400}.legacy-system .breadcrumb #systemName{height:52px;display:flex;align-items:center;border-bottom:2px solid #79a2ff;color:#fff;font-weight:500}.legacy-system .breadcrumb #systemName+span{display:none}
+.legacy-system .top-actions{gap:16px}.legacy-system .top-actions button{font-size:12px;color:#c3c8d2;padding:5px 2px}
+.legacy-system main{max-width:none;padding:22px 24px 28px}
+.legacy-system .meeting-board{gap:14px;color:#1f2329}
+.legacy-system .board-heading{min-height:43px;align-items:center}
+.legacy-system .board-eyebrow{display:none}
+.legacy-system .board-heading h1{font-size:22px;color:#1f2329;letter-spacing:0;font-weight:600}
+.legacy-system .board-heading p{display:none}
+.legacy-system .board-heading-tools{gap:10px}
+.legacy-system .board-meeting-button{border:1px solid #d9dee7;border-radius:3px;background:white;color:#4e5969;font-size:12px;padding:6px 13px;box-shadow:0 1px 2px #00000002}
+.legacy-system .board-meeting-button:hover{border-color:#8db1ff;color:#2f6bff}
+.legacy-system .qbi-report-toolbar{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:10px 16px;background:#fff;border:1px solid #e6e8eb;border-radius:3px}
+.legacy-system .qbi-report-filters{display:flex;align-items:center;gap:26px;min-width:0}
+.legacy-system .qbi-report-filter{display:flex;align-items:center;gap:11px;font-size:12px;color:#8b94a3;white-space:nowrap}
+.legacy-system .qbi-report-filter b{font-weight:400;color:#4e5969;padding:3px 10px;border:1px solid #e4e7ed;border-radius:3px;background:#fff}
+.legacy-system .qbi-report-unit{font-size:12px;color:#8b94a3;white-space:nowrap}
+.legacy-system .pl-panel{background:#fff;border:1px solid #e6e8eb;border-radius:3px;box-shadow:0 1px 4px #14223703}
+.legacy-system .pl-panel>header{min-height:46px;padding:12px 16px;border-bottom:1px solid #edf0f4}
+.legacy-system .pl-panel h2{font-size:14px;font-weight:600;color:#414c5d}
+.legacy-system .pl-panel>header>span{font-size:11px;color:#9aa3b1}
+.legacy-system .pl-table{font-size:14px;color:#303a49}
+.legacy-system .pl-name-col{width:25%}
+.legacy-system .pl-current-col{background:#f8fbff}
+.legacy-system .pl-table thead th{padding:12px 16px;border-right:1px solid #e0e9f5;border-bottom:1px solid #dbe5f3;background:#edf4ff;color:#597291;font-size:12px;font-weight:500}
+.legacy-system .pl-table thead th:nth-child(3){background:#e4efff;color:#3464a1}
+.legacy-system .pl-table thead th:first-child{padding-left:20px}
+.legacy-system .pl-table tbody th,.legacy-system .pl-table tbody td{padding:9px 16px;border-right:1px solid #edf0f4;border-bottom:1px solid #e9edf3}
+.legacy-system .pl-table tbody th{padding-left:20px;color:#505e72;font-weight:400}
+.legacy-system .pl-table tbody td:nth-child(3){font-weight:500;color:#335a8e}
+.legacy-system .pl-table tr>*:last-child{border-right:0}
+.legacy-system .pl-table .pl-income th{font-weight:550;color:#3b5b87}
+.legacy-system .pl-table .pl-subtotal>*{background:#f5f8fc;color:#43576f;font-weight:550}
+.legacy-system .pl-table .pl-result>*{background:#eaf2ff!important;border-top:1px solid #d4e2f7;font-weight:600}
+.legacy-system .pl-table .pl-result th{color:#31547e}
+.legacy-system .pl-table .pl-result td:nth-child(3){color:#335a8e}
+.legacy-system .pl-table .pl-result td:nth-child(4),.legacy-system .pl-table .pl-result td:nth-child(5){color:#d54e55}
+.legacy-system .pl-table .pl-memo th,.legacy-system .pl-table .pl-memo td{color:#a0a9b6;font-weight:400}
+.legacy-system .pl-table tbody tr:hover>*{background:#eef5ff!important}
+.legacy-system.meeting-mode .shell{padding-top:0}
+.legacy-system.meeting-mode .main-shell{margin-left:0}
+.legacy-system.meeting-mode main{max-width:1920px;margin:auto;padding:24px 40px}
+.legacy-system.meeting-mode .board-heading h1{font-size:28px}
+.legacy-system.meeting-mode .qbi-report-toolbar{min-height:42px;padding:6px 14px}
+.legacy-system.meeting-mode .pl-panel>header{min-height:44px;padding:11px 18px}
+.legacy-system.meeting-mode .pl-panel h2{font-size:16px}
+.legacy-system.meeting-mode .pl-table{font-size:15px}
+.legacy-system.meeting-mode .pl-table thead th{font-size:13px;padding:12px 18px}
+.legacy-system.meeting-mode .pl-table tbody th,.legacy-system.meeting-mode .pl-table tbody td{padding:8px 18px}
+@media(min-width:1000px) and (max-height:850px){.legacy-system.meeting-mode main{padding:15px 25px}.legacy-system.meeting-mode .meeting-board{gap:10px}.legacy-system.meeting-mode .board-heading{min-height:34px}.legacy-system.meeting-mode .board-heading h1{font-size:24px}.legacy-system.meeting-mode .qbi-report-toolbar{min-height:36px;padding:4px 12px}.legacy-system.meeting-mode .pl-panel>header{min-height:35px;padding:8px 15px}.legacy-system.meeting-mode .pl-panel h2{font-size:14px}.legacy-system.meeting-mode .pl-table{font-size:13px}.legacy-system.meeting-mode .pl-table thead th{font-size:11px;padding:9px 14px}.legacy-system.meeting-mode .pl-table tbody th,.legacy-system.meeting-mode .pl-table tbody td{padding:5px 14px}}
+@media(max-width:940px){.legacy-system .sidebar{width:72px}.legacy-system .brand{width:72px;padding:0 22px}.legacy-system .main-shell{margin-left:72px}.legacy-system .topbar{left:72px;padding:0 18px}.legacy-system .nav-label{display:none}.legacy-system nav{padding:20px 8px}.legacy-system nav button{justify-content:center;padding:10px}.legacy-system nav button.active{padding-left:8px}.legacy-system .sidebar-foot{padding:18px 21px}.legacy-system main{padding:18px}.legacy-system .qbi-report-filters{gap:16px}.legacy-system .qbi-report-filter{gap:8px}}
+@media(max-width:620px){.legacy-system .sidebar{display:none}.legacy-system .main-shell{margin-left:0}.legacy-system .topbar{left:0;padding:0 15px;gap:12px}.legacy-system .breadcrumb{font-size:11px;gap:8px}.legacy-system .top-actions{gap:10px}.legacy-system .top-actions button{font-size:10px}.legacy-system main{padding:16px 12px}.legacy-system .board-heading h1{font-size:20px}.legacy-system .board-meeting-button{font-size:10px;padding:5px 9px}.legacy-system .qbi-report-toolbar{padding:9px 11px;align-items:flex-start}.legacy-system .qbi-report-filters{flex-direction:column;align-items:flex-start;gap:7px}.legacy-system .qbi-report-filter{font-size:10px;gap:9px}.legacy-system .qbi-report-filter b{padding:2px 6px}.legacy-system .qbi-report-unit{font-size:10px;margin-top:3px}.legacy-system .pl-panel>header{padding:11px 13px}.legacy-system .pl-panel h2{font-size:13px}.legacy-system .pl-panel>header>span{font-size:10px}.legacy-system .pl-table{font-size:12px}.legacy-system .pl-table thead th{font-size:10px;padding:10px}.legacy-system .pl-table tbody th,.legacy-system .pl-table tbody td{padding:10px}.legacy-system.meeting-mode main{padding:16px 12px}.legacy-system.meeting-mode .board-heading h1{font-size:20px}.legacy-system.meeting-mode .pl-table{font-size:12px}}
 </style>
 </head>
 <body class="dolink-system">
@@ -359,7 +429,8 @@ function renderOverview(){
   const rows=M.managementStatement();
   const amount=value=>value==null?'—':money(value,2);
   return `<section class="meeting-board" aria-label="9月与10月管理利润表对比">
-    <header class="board-heading"><div><div class="board-eyebrow">经营报表 <span>/</span> 月度对比</div><h1>集团管理利润表</h1><p>10月与9月经营数据对比</p></div><div class="board-heading-tools"><div class="board-scope"><b>100家可比门店</b><span>10月 / 对比9月</span></div><button class="button board-meeting-button" data-action="meeting">${document.body.classList.contains('meeting-mode')?'退出会议视图':'会议视图'}</button></div></header>
+    <header class="board-heading"><div><div class="board-eyebrow">经营报表 <span>/</span> 月度对比</div><h1>集团管理利润表</h1><p>10月与9月经营数据对比</p></div><div class="board-heading-tools"><button class="button board-meeting-button" data-action="meeting">${document.body.classList.contains('meeting-mode')?'退出会议视图':'会议视图'}</button></div></header>
+    <section class="qbi-report-toolbar" aria-label="报表条件"><div class="qbi-report-filters"><div class="qbi-report-filter"><span>统计范围</span><b>100家可比门店</b></div><div class="qbi-report-filter"><span>对比月份</span><b>9月 / 10月</b></div></div><span class="qbi-report-unit">单位：万元</span></section>
     <section class="pl-panel"><header><h2>管理利润表大项目对比</h2><span>金额单位：万元</span></header>
       <div class="pl-table-wrap"><table class="pl-table"><colgroup><col class="pl-name-col"><col><col class="pl-current-col"><col><col><col><col></colgroup><thead><tr><th scope="col">项目</th><th scope="col">9月金额</th><th scope="col">10月金额</th><th scope="col">增减额</th><th scope="col">环比变化</th><th scope="col">9月收入占比</th><th scope="col">10月收入占比</th></tr></thead><tbody>${rows.map(row=>{
         const filled=row.previous!=null&&row.current!=null;
@@ -484,7 +555,8 @@ brand.dataset.step=String(initialStep);
 brand.setAttribute('aria-label',`${systemName}首页`);
 if(isLegacy){
   brand.innerHTML=`<span class="legacy-mark">${icon('overview')}</span><span><b>经营报表</b><small>集团财务系统</small></span>`;
-  document.querySelector('.nav-label').textContent='财务报表';
+  document.querySelector('.nav-label').textContent='报表目录';
+  $('#systemName').textContent='电子表格';
   document.querySelector('.sidebar-chain').remove();
 }
 render();
