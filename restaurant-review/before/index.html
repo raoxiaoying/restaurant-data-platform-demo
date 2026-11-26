@@ -878,9 +878,9 @@ const $ = selector => document.querySelector(selector);
 const money = (value,decimals=2) => (Number(Number(value).toFixed(decimals))||0).toLocaleString('zh-CN',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
 const signed = (value,decimals=1) => `${Number(Number(value).toFixed(decimals))>0?'+':''}${money(value,decimals)}`;
 const reportLines = [
-  ['grossSales','折前营业额','income'],['discount','销售折扣','expense'],['revenue','折后营业额','subtotal'],['food','食材成本','expense'],['grossProfit','销售毛利','subtotal'],['labor','人工费用','expense'],['rent','租金及物业费','expense'],['utilities','能耗费用','expense'],['tableware','餐具','expense'],['consumables','物耗','expense'],['maintenance','维修维护费','expense'],['marketing','市场推广费','expense'],['otherStoreExpense','其他费用','expense'],['profit','门店经营利润','result']
+  ['grossSales','折前营业额','income'],['discount','销售折扣','expense'],['revenue','折后营业额','subtotal'],['food','食材成本','expense'],['grossProfit','销售毛利','subtotal'],['labor','人工费用','expense'],['rent','场租及物业费','expense'],['utilities','能耗费用','expense'],['tableware','餐具','expense'],['consumables','物耗','expense'],['maintenance','维修维护费','expense'],['marketing','市场推广费','expense'],['otherStoreExpense','其他费用','expense'],['profit','经营利润','result']
 ];
-const cardOrder=reportLines.map(([id])=>id);
+const cardOrder=['grossSales','discount','revenue','food','grossProfit','labor','rent','utilities','otherStoreExpense','profit','tableware','consumables','maintenance','marketing'];
 const reportState={month:H.defaultMonth,metric:'revenue',trendMode:'amount',brand:'all',region:'all',store:'all',showCurrent:true,showPrior:true};
 const value = (row,key) => key==='grossProfit'?row.revenue-row.food:row[key];
 const selectedMetric = () => reportLines.find(([id])=>id===reportState.metric);
