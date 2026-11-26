@@ -27,7 +27,7 @@
 .pl-name-col{width:26%}.pl-current-col{background:#f7faff}
 .pl-table thead th{padding:15px 16px;text-align:right;background:#f4f7fc;color:#8090a7;font-size:12px;font-weight:500;border-bottom:1px solid #e4eaf4;white-space:nowrap}
 .pl-table thead th:first-child{text-align:left;padding-left:24px}.pl-table thead th:nth-child(3){background:#eaf1fd;color:#416ca7}
-.pl-table tbody th,.pl-table tbody td{padding:16px;border-bottom:1px solid #edf0f5;text-align:right;white-space:nowrap}
+.pl-table tbody th,.pl-table tbody td{padding:12px 16px;border-bottom:1px solid #edf0f5;text-align:right;white-space:nowrap}
 .pl-table tbody th{padding-left:24px;text-align:left;font-weight:450;color:#5d718e}
 .pl-table tbody td:nth-child(3){font-weight:600;color:#365d95}.pl-table tr:last-child>*{border-bottom:0}
 .pl-table .pl-income th{color:#2c5287;font-weight:600}.pl-table .pl-subtotal>*{background:#f9fafc;font-weight:550}.pl-table .pl-subtotal th{color:#445f83}
@@ -35,11 +35,13 @@
 .meeting-mode .sidebar,.meeting-mode .topbar{display:none}
 .meeting-mode .shell{display:block}.meeting-mode .main-shell{padding:0}.meeting-mode main{max-width:1920px;padding:32px 48px;margin:0 auto}
 .meeting-mode .board-heading h1{font-size:32px}
-.meeting-mode .pl-panel>header{padding:20px 28px}.meeting-mode .pl-panel h2{font-size:20px}.meeting-mode .pl-table{font-size:18px}
-.meeting-mode .pl-table thead th{font-size:14px;padding:17px 24px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table tbody td{padding:19px 24px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table thead th:first-child{padding-left:30px}
-@media(min-width:1000px) and (max-height:850px){.meeting-mode main{padding:18px 28px}.meeting-mode .meeting-board{gap:12px}.meeting-mode .board-heading h1{font-size:27px}.meeting-mode .board-heading p{margin-top:2px;font-size:11px}.meeting-mode .board-eyebrow{font-size:10px;margin-bottom:0}.meeting-mode .pl-panel>header{padding:13px 21px}.meeting-mode .pl-panel h2{font-size:16px}.meeting-mode .pl-table{font-size:14px}.meeting-mode .pl-table thead th{font-size:11px;padding:11px 16px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table tbody td{padding:12px 16px}}
+.meeting-mode .pl-panel>header{padding:20px 28px}.meeting-mode .pl-panel h2{font-size:20px}.meeting-mode .pl-table{font-size:16px}
+.meeting-mode .pl-table thead th{font-size:14px;padding:17px 24px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table tbody td{padding:10px 24px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table thead th:first-child{padding-left:30px}
+@media(min-width:1000px) and (max-height:850px){.meeting-mode main{padding:18px 28px}.meeting-mode .meeting-board{gap:12px}.meeting-mode .board-heading h1{font-size:27px}.meeting-mode .board-heading p{margin-top:2px;font-size:11px}.meeting-mode .board-eyebrow{font-size:10px;margin-bottom:0}.meeting-mode .pl-panel>header{padding:13px 21px}.meeting-mode .pl-panel h2{font-size:16px}.meeting-mode .pl-table{font-size:14px}.meeting-mode .pl-table thead th{font-size:11px;padding:11px 16px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table tbody td{padding:5px 16px}}
 @media(max-width:1200px){.board-scope{display:none}.pl-table{font-size:12px}.pl-table thead th{font-size:10px;padding:13px 10px}.pl-table tbody th,.pl-table tbody td{padding:14px 10px}.pl-table tbody th,.pl-table thead th:first-child{padding-left:16px}}
 @media(max-width:700px){.meeting-board{gap:13px}.board-heading h1{font-size:23px}.board-heading p{font-size:11px}.board-eyebrow{font-size:10px}.board-meeting-button{font-size:10px;padding:6px 9px}.pl-panel>header{padding:14px}.pl-panel h2{font-size:14px}.pl-panel>header>span{font-size:10px}.pl-table{min-width:740px}.meeting-mode main{padding:18px 15px}.meeting-mode .board-heading h1{font-size:23px}.meeting-mode .pl-panel>header{padding:14px}.meeting-mode .pl-panel h2{font-size:14px}.meeting-mode .pl-table{font-size:12px}.meeting-mode .pl-table thead th{font-size:10px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table tbody td{padding:14px 10px}}
+
+.pl-table .pl-memo th,.pl-table .pl-memo td{color:#8c9aad;font-weight:400}
 </style>
   <style>/* Distinct product shells for the report system and Dolink platform. */
 .main-shell{padding-bottom:0}
@@ -92,9 +94,31 @@
   // `other` 始终包含租金；utilities 已含在 otherExRent 中，单列时须从其他费用扣除，不能重复相加。
   const profit = row => round(row.revenue - row.food - row.labor - row.other);
   const actuals = {
-    september: { revenue: 4000, food: 1400, labor: 1000, rent: 600, utilities: 120, otherExRent: 600, other: 1200, profit: 400, orders: 200000, grossSales: 4200, discount: 200 },
-    october: { revenue: 4800, food: 1962, labor: 1320, rent: 600, utilities: 174, otherExRent: 798, other: 1398, profit: 120, orders: 260000, grossSales: 5460, discount: 660 }
+    september: { revenue: 4000, food: 1400, labor: 1000, rent: 600, utilities: 120, tableware: 32, consumables: 48, maintenance: 40, marketing: 100, otherStoreExpense: 260, vat: null, otherExRent: 600, other: 1200, profit: 400, orders: 200000, grossSales: 4200, discount: 200 },
+    october: { revenue: 4800, food: 1962, labor: 1320, rent: 600, utilities: 174, tableware: 38.4, consumables: 67.2, maintenance: 48, marketing: 153.6, otherStoreExpense: 316.8, vat: null, otherExRent: 798, other: 1398, profit: 120, orders: 260000, grossSales: 5460, discount: 660 }
   };
+  // 细分金额为管理展示分配；增值税暂无税额明细，不从不含税收入重复扣减。
+  function managementStatement() {
+    const lines = [
+      ['grossSales', '折前营业额', 'income'],
+      ['discount', '销售折扣', 'expense'],
+      ['revenue', '折后营业额', 'subtotal'],
+      ['food', '食材成本', 'expense'],
+      ['grossProfit', '销售毛利', 'subtotal'],
+      ['vat', '税金（增值税）', 'memo'],
+      ['labor', '人工费用', 'expense'],
+      ['rent', '租金及物业费', 'expense'],
+      ['utilities', '能耗费用', 'expense'],
+      ['tableware', '餐具', 'expense'],
+      ['consumables', '物耗', 'expense'],
+      ['maintenance', '维修维护费', 'expense'],
+      ['marketing', '市场推广费', 'expense'],
+      ['otherStoreExpense', '其他费用', 'expense'],
+      ['profit', '门店经营利润', 'result']
+    ];
+    const value = (row, key) => key === 'grossProfit' ? round(row.revenue - row.food) : row[key];
+    return lines.map(([id, label, kind]) => ({ id, label, kind, previous:value(actuals.september,id), current:value(actuals.october,id) }));
+  }
   const bridge = [
     { id: 'volume', label: '销量增长贡献', value: 380, owner: '财务 / 运营', detail: '交易订单量增长30%；按9月商品结构、折扣及标准资源消耗测算，增量收入1200，增量食材420、人工250、其他150。', formula: '1200 − 420 − 250 − 150 = +380' },
     { id: 'promotion', label: '促销折让', value: -400, owner: '营销 / 财务', detail: '按9月每单折扣10元×10月26万单测算折扣260，实际折扣660，折扣加深少收400。折扣已冲减净营收，不再记为费用。', formula: '−(660 − 260) = −400' },
@@ -259,9 +283,9 @@
   const model = {
     unit: '万元', currency: '人民币', simulated: true,
     scope: '集团100多家门店；9月与10月均为同一组100家可比门店完整月数据。',
-    metricDefinition: '经营利润＝折后不含税净营收－食材耗用成本－用工费用－其他经营费用。其他已含租金物业、平台/配送、水电、营销、折旧摊销及总部费用分摊；不含所得税、融资成本和非经常损益。所有对象的other均含租金，rent与otherExRent仅为穿透明细，不可重复加总。',
+    metricDefinition: '门店经营利润＝折后不含税营业额－食材成本－人工－租金物业－能耗－餐具－物耗－维修维护－市场推广－其他门店费用。其他门店费用含平台配送与门店折旧等；不含总部费用分摊、所得税、融资成本和非经常损益。所有对象的other均含租金，rent与otherExRent仅为穿透明细，不可重复加总。',
     foodDefinition: '食材按实际耗用计价，不以采购付款额替代；收入已扣折扣，折扣不在费用中重复扣减。利润桥采用固定顺序的逐项替换法，同一影响仅归一项。',
-    actuals, bridge, quoteLines, forecast, pilot, review,
+    actuals, managementStatement, bridge, quoteLines, forecast, pilot, review,
     historicalChecks: {
       revenueGrowth: 20,
       profitChangePercent: -70,
@@ -332,21 +356,15 @@ function insight(title,body){return `<div class="insight">${icon('spark')}<div><
 function panel(title,body,extra='',className=''){return `<section class="panel ${className}"><div class="panel-head"><h2>${title}</h2>${extra}</div>${body}</section>`;}
 function renderOverview(){
   const previous=M.actuals.september,current=M.actuals.october;
-  const rows=[
-    {label:'净营收',previous:previous.revenue,current:current.revenue,kind:'income'},
-    {label:'食材成本',previous:previous.food,current:current.food},
-    {label:'毛利',previous:previous.revenue-previous.food,current:current.revenue-current.food,kind:'subtotal'},
-    {label:'人工费用',previous:previous.labor,current:current.labor},
-    {label:'租金及物业费',previous:previous.rent,current:current.rent},
-    {label:'水电燃气费',previous:previous.utilities,current:current.utilities},
-    {label:'其他经营费用',previous:previous.otherExRent-previous.utilities,current:current.otherExRent-current.utilities},
-    {label:'经营费用合计',previous:previous.labor+previous.other,current:current.labor+current.other,kind:'subtotal'},
-    {label:'经营利润',previous:previous.profit,current:current.profit,kind:'result'}
-  ];
+  const rows=M.managementStatement();
+  const amount=value=>value==null?'—':money(value,2);
   return `<section class="meeting-board" aria-label="9月与10月管理利润表对比">
     <header class="board-heading"><div><div class="board-eyebrow">经营报表 <span>/</span> 月度对比</div><h1>集团管理利润表</h1><p>10月与9月经营数据对比</p></div><div class="board-heading-tools"><div class="board-scope"><b>100家可比门店</b><span>10月 / 对比9月</span></div><button class="button board-meeting-button" data-action="meeting">${document.body.classList.contains('meeting-mode')?'退出会议视图':'会议视图'}</button></div></header>
     <section class="pl-panel"><header><h2>管理利润表大项目对比</h2><span>金额单位：万元</span></header>
-      <div class="pl-table-wrap"><table class="pl-table"><colgroup><col class="pl-name-col"><col><col class="pl-current-col"><col><col><col><col></colgroup><thead><tr><th scope="col">项目</th><th scope="col">9月金额</th><th scope="col">10月金额</th><th scope="col">增减额</th><th scope="col">环比变化</th><th scope="col">9月收入占比</th><th scope="col">10月收入占比</th></tr></thead><tbody>${rows.map(row=>`<tr class="pl-${row.kind||'expense'}"><th scope="row">${row.label}</th><td>${money(row.previous,2)}</td><td>${money(row.current,2)}</td><td>${signed(row.current-row.previous,2)}</td><td>${signed((row.current/row.previous-1)*100,1)}%</td><td>${money(row.previous/previous.revenue*100,1)}%</td><td>${money(row.current/current.revenue*100,1)}%</td></tr>`).join('')}</tbody></table></div>
+      <div class="pl-table-wrap"><table class="pl-table"><colgroup><col class="pl-name-col"><col><col class="pl-current-col"><col><col><col><col></colgroup><thead><tr><th scope="col">项目</th><th scope="col">9月金额</th><th scope="col">10月金额</th><th scope="col">增减额</th><th scope="col">环比变化</th><th scope="col">9月收入占比</th><th scope="col">10月收入占比</th></tr></thead><tbody>${rows.map(row=>{
+        const filled=row.previous!=null&&row.current!=null;
+        return `<tr class="pl-${row.kind}" data-pl-id="${row.id}" ${row.kind==='memo'?'title="营业额为不含税口径，增值税仅作备查，税额尚未填报"':''}><th scope="row">${row.label}</th><td>${amount(row.previous)}</td><td>${amount(row.current)}</td><td>${filled?signed(row.current-row.previous,2):'—'}</td><td>${filled?signed((row.current/row.previous-1)*100,1)+'%':'—'}</td><td>${row.previous!=null?money(row.previous/previous.revenue*100,1)+'%':'—'}</td><td>${row.current!=null?money(row.current/current.revenue*100,1)+'%':'—'}</td></tr>`;
+      }).join('')}</tbody></table></div>
     </section>
   </section>`;
 }
@@ -355,7 +373,7 @@ function renderPreflight(){
   return heading('BEFORE THE MEETING','把核对留在会前，把决策带到会上','同一场10月经营复盘会')+
   insight('从同一笔经营业务，关联到利润变化与执行动作','经营数据核对完成后，再生成利润归因、两套方案与待确认条件。')+
   `<div class="verify-grid">${cards.map(c=>`<article class="verify-card"><div class="verify-icon">${icon(c[0])}</div><h3>${c[1]}</h3><p>${c[2]}</p><span class="tag green">${c[3]}</span></article>`).join('')}</div><div class="ontology-map"><span>门店</span><i></i><span>订单 / 菜品</span><i></i><span>配方 / 食材</span><i></i><span>采购 / 库存</span><i></i><span>班次 / 工时</span></div>`+
-  panel('统一口径与复核边界',`<div class="panel-body"><div class="definition-grid"><div><small>门店范围</small><b>100家可比门店</b><p>不混入新开、闭店与停业门店</p></div><div><small>经营利润</small><b>净营收 − 食材 − 人工 − 其他经营费用</b><p>含租金、折旧、总部费用分摊</p></div></div></div>`,`<button class="link-button" data-action="method">查看完整口径</button>`);
+  panel('统一口径与复核边界',`<div class="panel-body"><div class="definition-grid"><div><small>门店范围</small><b>100家可比门店</b><p>不混入新开、闭店与停业门店</p></div><div><small>经营利润</small><b>净营收 − 食材 − 人工 − 其他经营费用</b><p>含租金与门店折旧</p></div></div></div>`,`<button class="link-button" data-action="method">查看完整口径</button>`);
 }
 function bridgeSvg(){
   const rows=[{label:'9月利润',value:400,total:true},...M.bridge,{label:'10月利润',value:120,total:true}];
@@ -428,11 +446,12 @@ function go(step){
 function toast(message){$('#toast').textContent=message;$('#toast').classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').classList.remove('visible'),3200);}
 function dialog(title,html,eyebrow='数据口径'){$('#dialogTitle').textContent=title;$('#dialogEyebrow').textContent=eyebrow;$('#dialogContent').innerHTML=html;$('#detailDialog').showModal();}
 function statement(){
- const a=M.actuals;dialog('9—10月损益表勾稽',`<table><thead><tr><th>项目 / 万元</th><th>9月</th><th>10月</th><th>变化</th></tr></thead><tbody>${[['净营收','revenue'],['食材成本','food'],['人工费用','labor'],['其他经营费用','other'],['经营利润','profit']].map(([l,k])=>`<tr><td>${l}</td><td>${money(a.september[k])}</td><td>${money(a.october[k])}</td><td>${signed(a.october[k]-a.september[k])}</td></tr>`).join('')}</tbody></table><div class="formula">经营利润 = 净营收 − 食材成本 − 人工费用 − 其他经营费用</div><p>净营收已扣商家承担的折让与退款。食材为当期耗用，包含采购价差与报损，不能直接用采购付款替代。人工按实际发生额入账。其他费用含租金、能耗、折旧及总部费用分摊；经营利润不含利息与所得税。</p><p>9月经营利润率10.0%，10月2.5%，下降7.5个百分点。同比口径和新增门店不在本次分析中。</p>`);
+ const rows=M.managementStatement();
+ dialog('9—10月管理利润表',`<table><thead><tr><th>项目 / 万元</th><th>9月</th><th>10月</th><th>变化</th></tr></thead><tbody>${rows.map(row=>`<tr><td>${row.label}</td><td>${row.previous==null?'—':money(row.previous,2)}</td><td>${row.current==null?'—':money(row.current,2)}</td><td>${row.previous==null||row.current==null?'—':signed(row.current-row.previous,2)}</td></tr>`).join('')}</tbody></table><p>折后营业额为不含税口径，收入占比以折后营业额为分母。增值税仅作备查，暂无税额明细，不重复扣减。门店经营利润不含总部费用分摊、利息及所得税。</p>`);
 }
 function method(){
  if(isLegacy){statement();return;}
- dialog('数据口径与测算边界',`<h3>实际损益与利润归因</h3><p>100家持续营业可比门店，不含新开、闭店或停业门店。统一不含税、权责发生制口径。净营收已扣商家折让与退款；经营利润＝净营收−食材耗用−人工−其他经营费用。其他费用含租金、能耗、折旧、总部分摊，不含利息与所得税。</p><div class="formula">4,000 → 4,800万元（+20%）；400 → 120万元（−70%）<br>400 + ${M.bridge.map(r=>`(${signed(r.value)})`).join(' + ')} = 120万元</div><p>差异桥顺序：销量→促销→销售结构→采购价格→食材耗用→人工→其他费用。差异桥按固定顺序逐项计算。促销降价只在净营收中计一次；历史采购与耗用以固定顺序分解；未来方案按不同品类清单计算采购与耗用收益，避免重复。</p><h3>11月情景预测</h3><p>按30天单独编制，排除将国庆客流直接外推。两案采用同样的净营收、相同销售组合与同口径经营费用，仅采购、耗用和可调临时人工不同。销量系数作用于100家门店全盘销量，净单价与菜品结构保持不变，故净营收随销量同比例变化。取实报价时，目标价未达到的部分仅按已有报价计入，尚未谈成的额外降幅不计收益；品质、规格与交付标准保持一致。</p><h3>20店一周试点</h3><p>11月5—11日，逐店一周预算与班次汇总；独立预算，不能将100店月度方案按20%再按7/30机械分摊。审批采用“实报价＋销量80%”版本。费用上限包含新增执行费，新增执行费不再次相加。试点期与前一可比7日的利润率只作观察比较，不认定为干预净效应。</p><h3>服务指标与闭环</h3><p>出餐P90为堂食订单从下单到最后一道热菜的时长，第90百分位，采用合并订单口径，不对各店P90取平均。有效客诉率＝去重有效客诉订单数÷完成订单数。无单店未闭环偏差才评估扩大。排班调整只记录计划与预计费用，不提前记为实现收益。</p><button class="button" data-action="statement">查看损益明细</button>`);
+ dialog('数据口径与测算边界',`<h3>实际损益与利润归因</h3><p>100家持续营业可比门店，不含新开、闭店或停业门店。统一不含税、权责发生制口径。净营收已扣商家折让与退款；经营利润＝净营收−食材耗用−人工−其他经营费用。其他费用含租金、能耗和门店折旧，不含利息与所得税。</p><div class="formula">4,000 → 4,800万元（+20%）；400 → 120万元（−70%）<br>400 + ${M.bridge.map(r=>`(${signed(r.value)})`).join(' + ')} = 120万元</div><p>差异桥顺序：销量→促销→销售结构→采购价格→食材耗用→人工→其他费用。差异桥按固定顺序逐项计算。促销降价只在净营收中计一次；历史采购与耗用以固定顺序分解；未来方案按不同品类清单计算采购与耗用收益，避免重复。</p><h3>11月情景预测</h3><p>按30天单独编制，排除将国庆客流直接外推。两案采用同样的净营收、相同销售组合与同口径经营费用，仅采购、耗用和可调临时人工不同。销量系数作用于100家门店全盘销量，净单价与菜品结构保持不变，故净营收随销量同比例变化。取实报价时，目标价未达到的部分仅按已有报价计入，尚未谈成的额外降幅不计收益；品质、规格与交付标准保持一致。</p><h3>20店一周试点</h3><p>11月5—11日，逐店一周预算与班次汇总；独立预算，不能将100店月度方案按20%再按7/30机械分摊。审批采用“实报价＋销量80%”版本。费用上限包含新增执行费，新增执行费不再次相加。试点期与前一可比7日的利润率只作观察比较，不认定为干预净效应。</p><h3>服务指标与闭环</h3><p>出餐P90为堂食订单从下单到最后一道热菜的时长，第90百分位，采用合并订单口径，不对各店P90取平均。有效客诉率＝去重有效客诉订单数÷完成订单数。无单店未闭环偏差才评估扩大。排班调整只记录计划与预计费用，不提前记为实现收益。</p><button class="button" data-action="statement">查看损益明细</button>`);
 }
 function planDetail(){const f=M.forecast(state);dialog('经营方案的计算与执行条件',`<p>当前销量系数 ${money(state.volumeFactor*100)}%，采购${state.actualQuotes?'采用已取得报价':'按目标价测算'}。所有金额单位为万元。</p><div class="formula">${M.forecastExplanation||''}</div><table><thead><tr><th>损益项目</th><th>营销方案</th><th>联动方案</th></tr></thead><tbody>${[['净营收',f.revenue,f.revenue],['食材成本',f.marketing.food,f.joint.food],['人工费用',f.marketing.labor,f.joint.labor],['其他经营费用',f.marketing.other,f.joint.other],['经营利润',f.marketing.profit,f.joint.profit]].map(r=>`<tr><td>${r[0]}</td><td>${money(r[1],2)}</td><td>${money(r[2],2)}</td></tr>`).join('')}</tbody></table><h3>与10月实际的差异</h3><p>11月基准另含营销与销售组合调整、国庆后用工和费用回归。利润由10月120万元变为本方案500万元，并非都由联动动作产生；两案之间的100万元差额才对应采购、耗用与用工三项动作（实报价后为88万元）。共同经营费用均已计入。</p><h3>采购报价与数量边界</h3><p>${M.quoteExplanation||''}</p><table><thead><tr><th>食材</th><th>原合同 / 元每公斤</th><th>目标价</th><th>已报价</th><th>报价进展</th></tr></thead><tbody>${M.quoteLines.map(q=>`<tr><td>${q.item}</td><td>${q.currentPrice}</td><td>${q.targetPrice}</td><td>${q.quotedPrice}</td><td>${q.quotedPrice<=q.targetPrice?'已达目标价':'已有报价 / 目标仍在谈'}</td></tr>`).join('')}</tbody></table><h3>收益确认顺序</h3><p>按已报价数量确认采购节约；耗用节约来自另一组已确认品类清单，和采购优化范围互斥；人工只算可取消的临时班次。预测收益需通过销量、出品与排班的实际执行核验。</p>`);}
 function storeList(){const rows=M.pilot.stores;dialog('20家试点门店 · 一周独立预算',`<p>金额单位：万元。</p><table><thead><tr><th>门店</th><th>净营收计划</th><th>经营利润计划</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.id} · ${r.name}</td><td>${money(r.revenue,2)}</td><td>${money(r.profit,2)}</td></tr>`).join('')}<tr><td>合计</td><td>${money(M.pilot.revenue,2)}</td><td>${money(M.pilot.profit,2)}</td></tr></tbody></table>`);}
