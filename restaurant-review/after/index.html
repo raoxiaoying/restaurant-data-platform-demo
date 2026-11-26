@@ -615,6 +615,47 @@
 .ai-platform .ai-summary .ai-progress-grid p{margin:10px 0 0;color:#7488a7;font-size:11px;line-height:1.8}
 .ai-platform .ai-result-block>.ai-data-figure{margin-block:22px}
 
+.ai-platform .ai-week-variance{min-width:0}
+.ai-platform .ai-week-variance .is-loss{--variance-color:#be3453;--variance-fill:#df6c82;--variance-soft:#fff3f6}
+.ai-platform .ai-week-variance .is-gain{--variance-color:#087760;--variance-fill:#28a68b;--variance-soft:#eef9f4}
+.ai-platform .ai-week-variance .is-flat{--variance-color:#526b8f;--variance-soft:#f2f6fc}
+.ai-platform .ai-variance-summary{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:center;gap:24px;padding:22px;border:1px solid #f0d1d9;border-radius:13px;background:#fff5f7;--outcome-color:#be3453;--outcome-soft:#fbe4eb}
+.ai-platform .ai-variance-summary[data-direction=gain]{border-color:#cbe6dc;background:#f0faf5;--outcome-color:#087760;--outcome-soft:#dbf2e8}
+.ai-platform .ai-variance-summary[data-direction=flat]{border-color:#dfe7f4;background:#f6f9fd;--outcome-color:#526b8f;--outcome-soft:#e8eef7}
+.ai-platform .ai-variance-outcome{display:flex;align-items:center;gap:14px;min-width:0}
+.ai-platform .ai-variance-icon,.ai-platform .ai-variance-group-icon{display:grid;place-items:center;flex:none;width:43px;height:43px;border-radius:12px;background:var(--outcome-soft);color:var(--outcome-color)}
+.ai-platform .ai-variance-icon svg{width:25px;height:25px}
+.ai-platform .ai-variance-outcome>div{min-width:0}
+.ai-platform .ai-variance-outcome small{display:block;color:#886272;font-size:13px}
+.ai-platform .ai-variance-outcome strong{display:block;margin-top:3px;color:var(--outcome-color);font-size:33px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-1px;line-height:1.45;white-space:nowrap}
+.ai-platform .ai-variance-outcome strong>span{margin-left:6px;font-size:14px;font-weight:500;letter-spacing:0}
+.ai-platform .ai-variance-summary dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0;padding-left:22px;border-left:1px solid #e8cdd7}
+.ai-platform .ai-variance-summary dt{color:#7b7f94;font-size:12px}
+.ai-platform .ai-variance-summary dd{margin:6px 0 0;color:#4d617e;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ai-platform .ai-variance-summary dd>span{margin-left:4px;font-size:11px;font-weight:400}
+.ai-platform .ai-variance-equation{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;margin:20px 0}
+.ai-platform .ai-variance-equation>div{min-width:0;padding:15px 16px;border:1px solid #e5eaf3;border-radius:10px;background:var(--variance-soft)}
+.ai-platform .ai-variance-equation small{display:block;color:#6a7c96;font-size:12px}
+.ai-platform .ai-variance-equation strong{display:block;margin-top:5px;color:var(--variance-color);font-size:21px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.4px}
+.ai-platform .ai-variance-equation strong>span{margin-left:4px;font-size:11px;font-weight:400}
+.ai-platform .ai-variance-equation>b{color:#97a8bf;font-size:20px;font-weight:400}
+.ai-platform .ai-variance-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:18px}
+.ai-platform .ai-variance-groups>section{min-width:0;padding:19px;border:1px solid #e1e8f3;border-radius:12px;background:#fff}
+.ai-platform .ai-variance-groups header{display:flex;align-items:center;gap:11px;margin-bottom:19px}
+.ai-platform .ai-variance-group-icon{width:34px;height:34px;border-radius:9px;background:var(--variance-soft);color:var(--variance-color)}
+.ai-platform .ai-variance-group-icon svg{width:20px;height:20px}
+.ai-platform #aiEvidence .ai-variance-groups h3{margin:0;color:var(--variance-color);font-size:15px;font-weight:650;line-height:1.6}
+.ai-platform #aiEvidence .ai-variance-groups header p{margin:4px 0 0;color:#7b8ca6;font-size:11px;line-height:1.8}
+.ai-platform .ai-variance-groups ol{display:grid;gap:17px;margin:0;padding:0;list-style:none}
+.ai-platform .ai-variance-row-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:10px;margin-bottom:8px}
+.ai-platform .ai-variance-row-head>span{color:#526a8c;font-size:13px;line-height:1.7;overflow-wrap:anywhere}
+.ai-platform .ai-variance-row-head strong{color:var(--variance-color);font-size:16px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.5}
+.ai-platform .ai-variance-row-head strong small{margin-left:4px;font-size:10px;font-weight:400}
+.ai-platform .ai-variance-track{height:5px;overflow:hidden;border-radius:3px;background:#f0f3f8}
+.ai-platform .ai-variance-track i{display:block;height:100%;border-radius:3px;background:var(--variance-fill)}
+.ai-platform .ai-variance-empty{color:#8a99af;font-size:12px}
+.ai-platform #aiEvidence .ai-variance-footnote{margin:18px 0 0;color:#7487a3;font-size:12px;line-height:1.9}
+
 @media(max-width:1100px){
   .ai-platform .hmw-topbar{padding-inline:20px}
   .ai-platform #hmwMain{padding:26px 24px 20px}
@@ -626,6 +667,12 @@
   .ai-platform .ai-summary-metrics strong{font-size:25px}
   .ai-platform [data-page=tracking] .ai-insight-grid{grid-template-columns:minmax(0,1fr)}
   .ai-platform .hmw-plan-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ai-platform .ai-variance-summary{grid-template-columns:minmax(0,1fr);gap:16px}
+  .ai-platform .ai-variance-summary dl{padding-left:0;padding-top:14px;border-left:0;border-top:1px solid #e8cdd7}
+  .ai-platform .ai-variance-groups{grid-template-columns:minmax(0,1fr)}
+  .ai-platform .ai-variance-equation{gap:8px}
+  .ai-platform .ai-variance-equation>div{padding:13px 10px}
+  .ai-platform .ai-variance-equation strong{font-size:18px}
 }
 @media(max-width:760px){
   .ai-platform .hmw-shell,.ai-platform.sidebar-collapsed .hmw-shell{grid-template-columns:minmax(0,1fr)}
@@ -724,6 +771,21 @@
   .ai-platform .ai-process-flow li+li::before{content:'↓';top:-23px;left:calc(50% - 8px)}
   .ai-platform .ai-process-flow strong span{display:inline;margin-left:6px}
   .ai-platform .ai-progress-grid{gap:12px}
+  .ai-platform .ai-variance-summary{padding:17px;gap:15px}
+  .ai-platform .ai-variance-outcome{gap:11px}
+  .ai-platform .ai-variance-icon{width:36px;height:36px;border-radius:10px}
+  .ai-platform .ai-variance-icon svg{width:22px;height:22px}
+  .ai-platform .ai-variance-outcome strong{font-size:clamp(23px,7vw,29px)}
+  .ai-platform .ai-variance-summary dl{grid-template-columns:minmax(0,1fr);gap:9px}
+  .ai-platform .ai-variance-summary dl>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .ai-platform .ai-variance-summary dd{margin:0}
+  .ai-platform .ai-variance-summary dd{font-size:15px}
+  .ai-platform .ai-variance-equation{grid-template-columns:minmax(0,1fr);gap:5px}
+  .ai-platform .ai-variance-equation>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px}
+  .ai-platform .ai-variance-equation strong{margin:0;font-size:21px}
+  .ai-platform .ai-variance-equation>b{text-align:center;font-size:17px;line-height:1.1}
+  .ai-platform .ai-variance-groups{gap:13px}
+  .ai-platform .ai-variance-groups>section{padding:16px}
   .ai-platform .ai-artifact-head{align-items:flex-start;flex-wrap:wrap}
   .ai-platform .ai-strategy-footer .hmw-button{white-space:normal}
 }
@@ -1606,7 +1668,7 @@ function actionDriverDetails(action){
 }
 function renderTracking(){
   const t=M.tracking,s=t.summary,p=s.plan,a=s.actual;
-  return `<div class="hmw-grid wide"><div>${panel('本周利润偏差',`<div class="hmw-panel-body">${trackingBridge()}<p class="hmw-note">收入与成本按同周期、同门店对照；各项带符号影响相加，等于实际利润与周计划的差额。</p></div>`,`<span class="hmw-tag">金额 / 万元</span>`)}</div><div>${panel('重点门店 · 偏差与行动',`<div class="hmw-panel-body"><div class="hmw-action-list">${t.stores.filter(r=>r.actions?.length).map(r=>`<article class="hmw-action"><h3><button class="hmw-link" data-store="${key(r)}" data-context="tracking">${key(r)} · ${storeName(r)} →</button></h3><p>利润偏差 ${signed(r.actual.profit-r.plan.profit)}万 · 营收偏差 ${signed(r.actual.revenue-r.plan.revenue)}万</p><p>${esc(r.scenario||r.status||'待核查')}</p><div class="hmw-action-meta"><span class="hmw-tag warn">${r.actions.every(actionAdjusted)?'动作已调整 · 效果待复核':'执行偏差待整改'}</span></div></article>`).join('')}</div></div>`)}</div></div>`+
+  return `<div class="hmw-grid wide"><div>${panel('本周利润差额与原因',`<div class="hmw-panel-body">${trackingBridge()}</div>`,`<span class="hmw-tag">金额 / 元</span>`,'11月1日—7日 · 同一120家门店 · 对照冻结周计划')}</div><div>${panel('重点门店 · 偏差与行动',`<div class="hmw-panel-body"><div class="hmw-action-list">${t.stores.filter(r=>r.actions?.length).map(r=>`<article class="hmw-action"><h3><button class="hmw-link" data-store="${key(r)}" data-context="tracking">${key(r)} · ${storeName(r)} →</button></h3><p>利润偏差 ${signed(r.actual.profit-r.plan.profit)}万 · 营收偏差 ${signed(r.actual.revenue-r.plan.revenue)}万</p><p>${esc(r.scenario||r.status||'待核查')}</p><div class="hmw-action-meta"><span class="hmw-tag warn">${r.actions.every(actionAdjusted)?'动作已调整 · 效果待复核':'执行偏差待整改'}</span></div></article>`).join('')}</div></div>`)}</div></div>`+
     panel('集团周计划与实际',pnlTable([{label:'周计划',row:p,rate:true},{label:'本周实际',row:a,rate:true}]),`<span class="hmw-tag">11月1日—7日</span>`)+
     panel('逐店执行对照',`<div class="hmw-panel-body"><div class="hmw-top-actions"><input class="hmw-search" data-search="tracking" aria-label="搜索执行门店" placeholder="搜索门店名称、编号或区域" value="${esc(state.search)}"><select id="trackingFilter" aria-label="执行门店筛选"><option value="all" ${state.trackingFilter==='all'?'selected':''}>全部120家门店</option><option value="abnormal" ${state.trackingFilter==='abnormal'?'selected':''}>只看重点异常门店</option></select></div></div><div id="trackingStores">${trackingStoreTable(state.search)}</div>`,`<span class="hmw-tag">点击门店查看偏差归因</span>`)+
     panel('整改与下一次复核',`<div class="hmw-panel-body"><div class="hmw-action-list">${t.actions.map(action=>actionCard(action,true)).join('')}</div><p class="hmw-note">登记动作后，本期实际利润保持不变。下一次复盘核对采购结算、实际耗用、工时费用及服务表现，再确认收益。</p></div>`,`<span class="hmw-tag blue">行动执行 → 效果验证</span>`);
@@ -1616,10 +1678,18 @@ function trackingStoreTable(query=''){
   return `<div class="hmw-table-wrap store-scroll"><table class="hmw-table"><thead><tr><th>门店</th><th class="numeric">计划营业额</th><th class="numeric">实际营业额</th><th class="numeric">计划利润</th><th class="numeric">实际利润</th><th class="numeric">利润偏差 / 万元</th><th>执行状态</th></tr></thead><tbody>${rows.map(r=>`<tr><td><button class="hmw-link" data-store="${key(r)}" data-context="tracking">${key(r)} · ${storeName(r)}</button><small>${r.region}</small></td><td class="numeric">${num(r.plan.revenue)}</td><td class="numeric">${num(r.actual.revenue)}</td><td class="numeric">${num(r.plan.profit)}</td><td class="numeric">${num(r.actual.profit)}</td><td class="numeric ${badClass(r.actual.profit-r.plan.profit)}">${signed(r.actual.profit-r.plan.profit)}</td><td><span class="hmw-tag ${r.actions?.length?'warn':'good'}">${r.actions?.length?(r.actions.every(actionAdjusted)?'效果待复核':'待整改'):'按计划执行'}</span></td></tr>`).join('')||'<tr><td colspan="7" class="hmw-empty">没有匹配门店</td></tr>'}</tbody></table></div>`;
 }
 function trackingBridge(){
-  const t=M.tracking,s=t.summary;
-  const factors=s.attributions.filter(r=>Math.abs(r.impact)>.000001).map(r=>({...r,shortName:({revenue:'营业额',food:'食材',labor:'人工',rent:'租金物业',utilities:'能耗',tableware:'餐具',consumables:'物耗',maintenance:'维修',marketing:'市场推广',otherStoreExpense:'其他费用'})[r.key]}));
-  const max=Math.max(...factors.map(r=>Math.abs(r.impact))),height=factors.length*30+42;
-  return `<div class="hmw-chart-wrap"><svg class="hmw-chart" viewBox="0 0 820 ${height}" role="img" aria-label="本周各损益项目利润偏差，合计${signed(s.actual.profit-s.plan.profit,4)}万元"><text x="160" y="18">减少利润 ←</text><text x="615" y="18">→ 增加利润</text><path d="M420 27V${height-15}" stroke="#d9e2f1"/>${factors.map((r,i)=>{const y=32+i*30,w=Math.abs(r.impact)/max*250;return `<text x="20" y="${y+15}">${r.shortName}</text><rect x="${r.impact<0?420-w:420}" y="${y+2}" width="${w}" height="18" rx="2" fill="${r.impact<0?'#df5d73':'#10a184'}"/><text x="${r.impact<0?410-w:430+w}" y="${y+15}" text-anchor="${r.impact<0?'end':'start'}" style="fill:${r.impact<0?'#be3453':'#087760'}">${signed(r.impact,4)}万</text>`;}).join('')}</svg></div><div class="hmw-equation"><div><small>周计划利润</small><strong>${num(s.plan.profit)}万</strong></div><b>＋</b><div><small>各项有符号偏差合计</small><strong class="${badClass(s.actual.profit-s.plan.profit)}">${signed(s.actual.profit-s.plan.profit,4)}万</strong></div><b>＝</b><div><small>实际利润</small><strong>${num(s.actual.profit)}万</strong></div></div>`;
+  const s=M.tracking.summary,net=(Math.round(s.actual.profit*1000000)-Math.round(s.plan.profit*1000000))/1000000;
+  const factors=s.attributions.filter(r=>r.impact!==0);
+  const losses=factors.filter(r=>r.impact<0).sort((a,b)=>a.impact-b.impact),gains=factors.filter(r=>r.impact>0).sort((a,b)=>b.impact-a.impact);
+  const loss=-losses.reduce((sum,r)=>sum+Math.round(r.impact*1000000),0)/1000000,gain=gains.reduce((sum,r)=>sum+Math.round(r.impact*1000000),0)/1000000,max=Math.max(0,...factors.map(r=>Math.abs(r.impact)));
+  const isLoss=net<0,tone=net<0?'loss':net>0?'gain':'flat',money=value=>num(value*10000);
+  const trendMark=up=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${up?'M4 17l6-6 4 4 6-8M14 7h6v6':'M4 7l6 6 4-4 6 8M14 17h6v-6'}"/></svg>`;
+  const rows=items=>items.map(r=>{
+    const label=r.key==='revenue'?`营业额${r.impact<0?'低于':'高于'}计划`:`${r.name}${['tableware','consumables'].includes(r.key)?'费用':''}${r.impact<0?'超出':'低于'}计划`;
+    return `<li data-variance-key="${r.key}" data-impact="${r.impact}"><div class="ai-variance-row-head"><span>${esc(label)}</span><strong>${signed(r.impact*10000)}<small>元</small></strong></div><div class="ai-variance-track" aria-hidden="true"><i style="width:${max?Math.abs(r.impact)/max*100:0}%"></i></div></li>`;
+  }).join('');
+  const unchanged=s.attributions.filter(r=>r.impact===0).map(r=>r.name);
+  return `<section class="ai-week-variance" aria-label="本周利润差额与原因"><div class="ai-variance-summary" data-direction="${tone}"><div class="ai-variance-outcome"><span class="ai-variance-icon">${net===0?'<span aria-hidden="true">＝</span>':trendMark(net>0)}</span><div><small>${net===0?'本周利润与计划持平':`本周比计划${isLoss?'少赚':'多赚'}`}</small><strong data-net-yuan="${net*10000}">${money(Math.abs(net))}<span>元</span></strong></div></div><dl><div><dt>周计划利润</dt><dd>${money(s.plan.profit)}<span>元</span></dd></div><div><dt>本周实际利润</dt><dd>${money(s.actual.profit)}<span>元</span></dd></div></dl></div><div class="ai-variance-equation" aria-label="增利与减利相抵后的净差额"><div class="${isLoss?'is-loss':'is-gain'}"><small>${isLoss?'减利合计':'增利合计'}</small><strong>${money(isLoss?loss:gain)}<span>元</span></strong></div><b aria-hidden="true">−</b><div class="${isLoss?'is-gain':'is-loss'}"><small>${isLoss?'增利抵消':'减利抵消'}</small><strong>${money(isLoss?gain:loss)}<span>元</span></strong></div><b aria-hidden="true">＝</b><div class="is-${tone}"><small>${net===0?'净变化':isLoss?'净少赚':'净多赚'}</small><strong>${money(Math.abs(net))}<span>元</span></strong></div></div><div class="ai-variance-groups"><section class="is-loss"><header><span class="ai-variance-group-icon">${trendMark(false)}</span><div><h3>哪些项目拉低利润</h3><p>${losses.length}项 · 减利${money(loss)}元</p></div></header><ol>${rows(losses)||'<li class="ai-variance-empty">没有减利项目</li>'}</ol></section><section class="is-gain"><header><span class="ai-variance-group-icon">${trendMark(true)}</span><div><h3>${isLoss?'哪些项目抵消了下降':'哪些项目增加利润'}</h3><p>${gains.length}项 · 增利${money(gain)}元</p></div></header><ol>${rows(gains)||'<li class="ai-variance-empty">没有增利项目</li>'}</ol></section></div><p class="ai-variance-footnote">两组条形共用金额尺度，按利润影响大小排序。费用低于计划不自动认定为整改收益。${unchanged.length?`${esc(unchanged.join('、'))}与计划一致，利润影响0元。`:''}</p></section>`;
 }
 function forecastAssumptions(f){
   const overloaded=f.byStore.filter(r=>r.capacityUse>100);
