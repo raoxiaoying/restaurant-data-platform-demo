@@ -39,8 +39,6 @@
 @media(min-width:1000px) and (max-height:850px){.meeting-mode main{padding:18px 28px}.meeting-mode .meeting-board{gap:12px}.meeting-mode .board-heading h1{font-size:27px}.meeting-mode .board-heading p{margin-top:2px;font-size:11px}.meeting-mode .board-eyebrow{font-size:10px;margin-bottom:0}.meeting-mode .pl-panel>header{padding:13px 21px}.meeting-mode .pl-panel h2{font-size:16px}.meeting-mode .pl-table{font-size:14px}.meeting-mode .pl-table thead th{font-size:11px;padding:11px 16px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table tbody td{padding:5px 16px}}
 @media(max-width:1200px){.pl-table{font-size:12px}.pl-table thead th{font-size:10px;padding:13px 10px}.pl-table tbody th,.pl-table tbody td{padding:14px 10px}.pl-table tbody th,.pl-table thead th:first-child{padding-left:16px}}
 @media(max-width:700px){.meeting-board{gap:13px}.board-heading h1{font-size:23px}.board-heading p{font-size:11px}.board-eyebrow{font-size:10px}.board-meeting-button{font-size:10px;padding:6px 9px}.pl-panel>header{padding:14px}.pl-panel h2{font-size:14px}.pl-panel>header>span{font-size:10px}.pl-table{min-width:740px}.meeting-mode main{padding:18px 15px}.meeting-mode .board-heading h1{font-size:23px}.meeting-mode .pl-panel>header{padding:14px}.meeting-mode .pl-panel h2{font-size:14px}.meeting-mode .pl-table{font-size:12px}.meeting-mode .pl-table thead th{font-size:10px}.meeting-mode .pl-table tbody th,.meeting-mode .pl-table tbody td{padding:14px 10px}}
-
-.pl-table .pl-memo th,.pl-table .pl-memo td{color:#8c9aad;font-weight:400}
 </style>
   <style>/* Distinct product shells for the report system and Dolink platform. */
 .main-shell{padding-bottom:0}
@@ -124,7 +122,6 @@
 .legacy-system .pl-table .pl-result th{color:#31547e}
 .legacy-system .pl-table .pl-result td:nth-child(3){color:#335a8e}
 .legacy-system .pl-table .pl-result td:nth-child(4),.legacy-system .pl-table .pl-result td:nth-child(5){color:#d54e55}
-.legacy-system .pl-table .pl-memo th,.legacy-system .pl-table .pl-memo td{color:#a0a9b6;font-weight:400}
 .legacy-system .pl-table tbody tr:hover>*{background:#eef5ff!important}
 .legacy-system.meeting-mode .shell{padding-top:0}
 .legacy-system.meeting-mode .main-shell{margin-left:0}
@@ -164,10 +161,10 @@
   // `other` 始终包含租金；utilities 已含在 otherExRent 中，单列时须从其他费用扣除，不能重复相加。
   const profit = row => round(row.revenue - row.food - row.labor - row.other);
   const actuals = {
-    september: { revenue: 4000, food: 1400, labor: 1000, rent: 600, utilities: 120, tableware: 32, consumables: 48, maintenance: 40, marketing: 100, otherStoreExpense: 260, vat: null, otherExRent: 600, other: 1200, profit: 400, orders: 200000, grossSales: 4200, discount: 200 },
-    october: { revenue: 4800, food: 1962, labor: 1320, rent: 600, utilities: 174, tableware: 38.4, consumables: 67.2, maintenance: 48, marketing: 153.6, otherStoreExpense: 316.8, vat: null, otherExRent: 798, other: 1398, profit: 120, orders: 260000, grossSales: 5460, discount: 660 }
+    september: { revenue: 4000, food: 1400, labor: 1000, rent: 600, utilities: 120, tableware: 32, consumables: 48, maintenance: 40, marketing: 100, otherStoreExpense: 260, otherExRent: 600, other: 1200, profit: 400, orders: 200000, grossSales: 4200, discount: 200 },
+    october: { revenue: 4800, food: 1962, labor: 1320, rent: 600, utilities: 174, tableware: 38.4, consumables: 67.2, maintenance: 48, marketing: 153.6, otherStoreExpense: 316.8, otherExRent: 798, other: 1398, profit: 120, orders: 260000, grossSales: 5460, discount: 660 }
   };
-  // 细分金额为管理展示分配；增值税暂无税额明细，不从不含税收入重复扣减。
+  // 细分金额为管理展示分配。
   function managementStatement() {
     const lines = [
       ['grossSales', '折前营业额', 'income'],
@@ -175,7 +172,6 @@
       ['revenue', '折后营业额', 'subtotal'],
       ['food', '食材成本', 'expense'],
       ['grossProfit', '销售毛利', 'subtotal'],
-      ['vat', '税金（增值税）', 'memo'],
       ['labor', '人工费用', 'expense'],
       ['rent', '租金及物业费', 'expense'],
       ['utilities', '能耗费用', 'expense'],
@@ -434,7 +430,7 @@ function renderOverview(){
     <section class="pl-panel"><header><h2>管理利润表大项目对比</h2><span>金额单位：万元</span></header>
       <div class="pl-table-wrap"><table class="pl-table"><colgroup><col class="pl-name-col"><col><col class="pl-current-col"><col><col><col><col></colgroup><thead><tr><th scope="col">项目</th><th scope="col">9月金额</th><th scope="col">10月金额</th><th scope="col">增减额</th><th scope="col">环比变化</th><th scope="col">9月收入占比</th><th scope="col">10月收入占比</th></tr></thead><tbody>${rows.map(row=>{
         const filled=row.previous!=null&&row.current!=null;
-        return `<tr class="pl-${row.kind}" data-pl-id="${row.id}" ${row.kind==='memo'?'title="营业额为不含税口径，增值税仅作备查，税额尚未填报"':''}><th scope="row">${row.label}</th><td>${amount(row.previous)}</td><td>${amount(row.current)}</td><td>${filled?signed(row.current-row.previous,2):'—'}</td><td>${filled?signed((row.current/row.previous-1)*100,1)+'%':'—'}</td><td>${row.previous!=null?money(row.previous/previous.revenue*100,1)+'%':'—'}</td><td>${row.current!=null?money(row.current/current.revenue*100,1)+'%':'—'}</td></tr>`;
+        return `<tr class="pl-${row.kind}" data-pl-id="${row.id}"><th scope="row">${row.label}</th><td>${amount(row.previous)}</td><td>${amount(row.current)}</td><td>${filled?signed(row.current-row.previous,2):'—'}</td><td>${filled?signed((row.current/row.previous-1)*100,1)+'%':'—'}</td><td>${row.previous!=null?money(row.previous/previous.revenue*100,1)+'%':'—'}</td><td>${row.current!=null?money(row.current/current.revenue*100,1)+'%':'—'}</td></tr>`;
       }).join('')}</tbody></table></div>
     </section>
   </section>`;
@@ -518,7 +514,7 @@ function toast(message){$('#toast').textContent=message;$('#toast').classList.ad
 function dialog(title,html,eyebrow='数据口径'){$('#dialogTitle').textContent=title;$('#dialogEyebrow').textContent=eyebrow;$('#dialogContent').innerHTML=html;$('#detailDialog').showModal();}
 function statement(){
  const rows=M.managementStatement();
- dialog('9—10月管理利润表',`<table><thead><tr><th>项目 / 万元</th><th>9月</th><th>10月</th><th>变化</th></tr></thead><tbody>${rows.map(row=>`<tr><td>${row.label}</td><td>${row.previous==null?'—':money(row.previous,2)}</td><td>${row.current==null?'—':money(row.current,2)}</td><td>${row.previous==null||row.current==null?'—':signed(row.current-row.previous,2)}</td></tr>`).join('')}</tbody></table><p>折后营业额为不含税口径，收入占比以折后营业额为分母。增值税仅作备查，暂无税额明细，不重复扣减。门店经营利润不含总部费用分摊、利息及所得税。</p>`);
+ dialog('9—10月管理利润表',`<table><thead><tr><th>项目 / 万元</th><th>9月</th><th>10月</th><th>变化</th></tr></thead><tbody>${rows.map(row=>`<tr><td>${row.label}</td><td>${row.previous==null?'—':money(row.previous,2)}</td><td>${row.current==null?'—':money(row.current,2)}</td><td>${row.previous==null||row.current==null?'—':signed(row.current-row.previous,2)}</td></tr>`).join('')}</tbody></table><p>折后营业额为不含税口径，收入占比以折后营业额为分母。门店经营利润不含总部费用分摊、利息及所得税。</p>`);
 }
 function method(){
  if(isLegacy){statement();return;}
