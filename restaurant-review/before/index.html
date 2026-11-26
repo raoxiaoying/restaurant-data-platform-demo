@@ -146,20 +146,20 @@
 .legacy-system.report-dashboard .report-month-select{min-height:31px;max-width:100%;padding:4px 28px 4px 10px;border:1px solid #dce2eb;border-radius:4px;background:#fff;color:#43536b;font:inherit;font-size:12px}
 .legacy-system.report-dashboard .report-month{display:flex;align-items:center;gap:10px;color:#8b94a3;font-size:12px}
 .legacy-system.report-dashboard .report-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;min-width:0}
-.legacy-system.report-dashboard .report-card{display:flex;flex-direction:column;min-width:0;min-height:239px;width:100%;padding:17px 18px 13px;border:1px solid #e4e8ef;border-radius:7px;background:#fff;color:#344258;text-align:left;font:inherit;cursor:pointer;box-shadow:0 1px 3px #18325c03;transition:border-color .15s,box-shadow .15s,background .15s}
+.legacy-system.report-dashboard .report-card{display:flex;flex-direction:column;min-width:0;min-height:184px;width:100%;padding:14px 16px 11px;border:1px solid #e4e8ef;border-radius:7px;background:#fff;color:#344258;text-align:left;font:inherit;cursor:pointer;box-shadow:0 1px 3px #18325c03;transition:border-color .15s,box-shadow .15s,background .15s}
 .legacy-system.report-dashboard .report-card:hover{border-color:#b6caf2;box-shadow:0 3px 12px #245bdb08}
-.legacy-system.report-dashboard .report-card.active{border-color:#8aafff;background:#f4f8ff;box-shadow:inset 0 3px 0 #2f6bff}
+.legacy-system.report-dashboard .report-card.active{border-color:#8aafff;background:#f4f8ff;box-shadow:inset 3px 0 0 #2f6bff}
 .legacy-system.report-dashboard .report-card:focus-visible,.legacy-system.report-dashboard .report-month-select:focus-visible{outline:3px solid #9bb9ff;outline-offset:3px}
-.legacy-system.report-dashboard .report-card-head{display:flex;align-items:center;gap:9px;min-height:28px;min-width:0}
+.legacy-system.report-dashboard .report-card-head{display:flex;align-items:center;gap:9px;min-height:26px;min-width:0}
 .legacy-system.report-dashboard .report-card-icon{display:grid;flex:none;place-items:center;width:26px;height:26px;border-radius:6px;background:#edf3ff;color:#5f85d9;font-size:14px}
 .legacy-system.report-dashboard .report-card-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7}
 .legacy-system.report-dashboard .report-card-title{min-width:0;color:#3e4c62;font-size:14px;font-weight:550;line-height:1.4}
 .legacy-system.report-dashboard .report-card-period{flex:none;margin-left:auto;color:#9aa5b5;font-size:11px;white-space:nowrap}
-.legacy-system.report-dashboard .report-card-number{display:flex;align-items:baseline;gap:6px;margin:12px 0 15px;min-width:0;font-variant-numeric:tabular-nums}
+.legacy-system.report-dashboard .report-card-number{display:flex;align-items:baseline;gap:6px;margin:10px 0 11px;min-width:0;font-variant-numeric:tabular-nums}
 .legacy-system.report-dashboard .report-card-number strong{color:#233b5b;font-size:31px;line-height:1.2;font-weight:650;letter-spacing:-.6px;white-space:nowrap}
 .legacy-system.report-dashboard .report-card.active .report-card-number strong{color:#2e62b8}
 .legacy-system.report-dashboard .report-card-number small{color:#95a1b3;font-size:11px;white-space:nowrap}
-.legacy-system.report-dashboard .report-card-comparisons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding:11px 0 10px;border:1px solid #f0f2f6;border-radius:5px;background:#f8f9fb}
+.legacy-system.report-dashboard .report-card-comparisons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding:9px 0;border:1px solid #f0f2f6;border-radius:5px;background:#f8f9fb}
 .legacy-system.report-dashboard .report-card.active .report-card-comparisons{border-color:#e5edfc;background:#eaf1ff}
 .legacy-system.report-dashboard .report-card-comparisons>:is(div,span){min-width:0;padding:0 5px;text-align:center}
 .legacy-system.report-dashboard .report-card-comparisons>:is(div,span)+:is(div,span){border-left:1px solid #e5eaf1}
@@ -169,9 +169,6 @@
 .legacy-system.report-dashboard .report-card-comparisons .rise{color:#149577}
 .legacy-system.report-dashboard .report-card-comparisons .fall{color:#d54e5b}
 .legacy-system.report-dashboard .report-card-comparisons .neutral{color:#43546f}
-.legacy-system.report-dashboard .report-sparkline{display:block;height:36px;margin-top:13px;min-width:0;color:#7299ec}
-.legacy-system.report-dashboard .report-sparkline svg{display:block;width:100%;height:36px;overflow:visible}
-.legacy-system.report-dashboard .report-card.active .report-sparkline{color:#2f6bff}
 .legacy-system.report-dashboard .report-card-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:7px;color:#a0aabc;font-size:10px;line-height:1.4}
 .legacy-system.report-dashboard .report-card-foot>span:last-child{color:#7290bd;white-space:nowrap}
 .legacy-system.report-dashboard .report-card.active .report-card-foot>span:last-child{color:#2f6bff}
@@ -187,7 +184,7 @@
 .legacy-system.report-dashboard .report-trend-legend{display:flex;align-items:center;gap:20px;flex-wrap:wrap;color:#8090a7;font-size:12px}
 .legacy-system.report-dashboard .report-trend-legend span{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
 .legacy-system.report-dashboard .report-trend-legend i{display:inline-block;width:21px;height:0;border-top:2px solid #2f6bff}
-.legacy-system.report-dashboard .report-trend-legend .dashed i,.legacy-system.report-dashboard .report-trend-legend i.dashed{border-top-style:dashed;border-color:#9fbaf3}
+.legacy-system.report-dashboard .report-trend-legend .dashed i,.legacy-system.report-dashboard .report-trend-legend i.dashed{border-top-style:dashed;border-color:#9baed3}
 .legacy-system.report-dashboard .report-trend-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:18px 21px 4px;padding:14px 16px;border-radius:5px;background:#f8faff;gap:16px}
 .legacy-system.report-dashboard .report-trend-summary>div{min-width:0}
 .legacy-system.report-dashboard .report-trend-summary>div+div{padding-left:22px;border-left:1px solid #e4ebf6}
@@ -196,9 +193,6 @@
 .legacy-system.report-dashboard .report-chart-wrap{position:relative;width:100%;max-width:100%;overflow-x:auto;padding:10px 18px 13px;overscroll-behavior-x:contain}
 .legacy-system.report-dashboard .report-month-chart{display:block;width:100%;min-width:720px;height:320px;overflow:visible}
 .legacy-system.report-dashboard .report-month-chart text{font-family:inherit;font-size:12px;fill:#8b99ac}
-.legacy-system.report-dashboard .report-month-chart [data-chart-month]{cursor:pointer}
-.legacy-system.report-dashboard .report-month-chart [data-chart-month]:focus{outline:none}
-.legacy-system.report-dashboard .report-month-chart [data-chart-month]:focus-visible{stroke:#244ac2;stroke-width:3}
 .legacy-system.report-dashboard .report-trend-table{padding:0 21px 18px;color:#7387a5;font-size:12px}
 .legacy-system.report-dashboard .report-trend-table summary{cursor:pointer;padding:12px 0;color:#6d88b2}
 .legacy-system.report-dashboard .report-trend-table[open] summary{margin-bottom:8px}
@@ -212,21 +206,19 @@
 .legacy-system.report-dashboard .report-history-table button{padding:0;border:0;background:none;color:#4c76b5;font:inherit}
 .legacy-system.report-dashboard .report-history-table tr.selected>*{background:#f0f5ff;color:#3a65a6}
 .legacy-system.report-dashboard .report-trend-summary strong small{display:inline;margin-left:5px}
-.legacy-system.report-dashboard .report-month-chart g[data-report-month]{cursor:pointer}
-.legacy-system.report-dashboard .report-month-chart g[data-report-month]:focus-visible{outline:2px solid #2f6bff;outline-offset:2px}
+.legacy-system.report-dashboard .report-month-chart g[data-trend-month]{cursor:pointer}
+.legacy-system.report-dashboard .report-month-chart g[data-trend-month]:focus-visible{outline:2px solid #2f6bff;outline-offset:2px}
 .legacy-system.report-dashboard .report-trend-panel{scroll-margin-top:68px}
 .legacy-system.report-dashboard .report-chart-tooltip{position:absolute;z-index:2;padding:10px 13px;border:1px solid #dce6f6;border-radius:5px;background:#fff;color:#52729e;box-shadow:0 4px 18px #18325c14;font-size:12px;pointer-events:none}
-.legacy-system.report-dashboard.meeting-mode .report-card{min-height:218px;padding:14px 16px 11px}
-.legacy-system.report-dashboard.meeting-mode .report-card-number{margin:10px 0 12px}
+.legacy-system.report-dashboard.meeting-mode .report-card{min-height:174px;padding:12px 16px 10px}
+.legacy-system.report-dashboard.meeting-mode .report-card-number{margin:8px 0 10px}
 .legacy-system.report-dashboard.meeting-mode .report-card-number strong{font-size:30px}
 .legacy-system.report-dashboard.meeting-mode .report-card-comparisons{padding:9px 0}
-.legacy-system.report-dashboard.meeting-mode .report-sparkline{height:30px;margin-top:10px}
-.legacy-system.report-dashboard.meeting-mode .report-sparkline svg{height:30px}
-@media(min-width:1700px){.legacy-system.report-dashboard .report-card{padding:20px 22px 15px;min-height:250px}.legacy-system.report-dashboard .report-card-title{font-size:15px}.legacy-system.report-dashboard .report-card-number strong{font-size:35px}.legacy-system.report-dashboard .report-card-comparisons strong{font-size:17px}.legacy-system.report-dashboard.meeting-mode .report-card-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(min-width:1700px){.legacy-system.report-dashboard .report-card{padding:16px 20px 12px;min-height:194px}.legacy-system.report-dashboard .report-card-title{font-size:15px}.legacy-system.report-dashboard .report-card-number strong{font-size:35px}.legacy-system.report-dashboard .report-card-comparisons strong{font-size:17px}.legacy-system.report-dashboard.meeting-mode .report-card-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 @media(max-width:1320px){.legacy-system.report-dashboard .report-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.legacy-system.report-dashboard .report-card-number strong{font-size:30px}}
 @media(max-width:1000px){.legacy-system.report-dashboard .report-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.legacy-system.report-dashboard .board-heading h1{font-size:21px}.legacy-system.report-dashboard .report-trend-panel>header{padding:16px 18px}}
 @media(min-width:1001px) and (max-width:1150px){.legacy-system.report-dashboard .report-card-comparisons strong{font-size:13px}.legacy-system.report-dashboard .report-card-comparisons>:is(div,span){padding-inline:3px}}
-@media(max-width:620px){.legacy-system.report-dashboard .report-board{gap:13px}.legacy-system.report-dashboard .board-heading{align-items:flex-start;gap:12px}.legacy-system.report-dashboard .board-heading h1{font-size:20px}.legacy-system.report-dashboard .board-heading-tools{flex:none;padding-top:3px}.legacy-system.report-dashboard .qbi-report-toolbar{padding:11px 13px;gap:10px}.legacy-system.report-dashboard .qbi-report-filters{gap:9px;align-items:flex-start}.legacy-system.report-dashboard .report-month-select{min-height:30px;padding:4px 24px 4px 8px;font-size:11px}.legacy-system.report-dashboard .report-card-grid{grid-template-columns:minmax(0,1fr);gap:12px}.legacy-system.report-dashboard .report-card,.legacy-system.report-dashboard.meeting-mode .report-card{min-height:228px;padding:16px 18px 12px}.legacy-system.report-dashboard .report-card-head{gap:9px}.legacy-system.report-dashboard .report-card-number strong{font-size:32px}.legacy-system.report-dashboard .report-card-comparisons strong{font-size:16px}.legacy-system.report-dashboard .report-trend-panel>header{padding:15px}.legacy-system.report-dashboard .report-trend-panel h2{font-size:15px}.legacy-system.report-dashboard .report-trend-legend{gap:15px;font-size:11px}.legacy-system.report-dashboard .report-trend-summary{margin:15px 14px 3px;padding:12px;gap:9px}.legacy-system.report-dashboard .report-trend-summary>div+div{padding-left:11px}.legacy-system.report-dashboard .report-trend-summary strong{font-size:19px}.legacy-system.report-dashboard .report-trend-summary span,.legacy-system.report-dashboard .report-trend-summary small{font-size:10px}.legacy-system.report-dashboard .report-chart-wrap{padding:10px 10px 12px}.legacy-system.report-dashboard .report-trend-table{padding:0 14px 15px}}
+@media(max-width:620px){.legacy-system.report-dashboard .report-board{gap:13px}.legacy-system.report-dashboard .board-heading{align-items:flex-start;gap:12px}.legacy-system.report-dashboard .board-heading h1{font-size:20px}.legacy-system.report-dashboard .board-heading-tools{flex:none;padding-top:3px}.legacy-system.report-dashboard .qbi-report-toolbar{padding:11px 13px;gap:10px}.legacy-system.report-dashboard .qbi-report-filters{gap:9px;align-items:flex-start}.legacy-system.report-dashboard .report-month-select{min-height:30px;padding:4px 24px 4px 8px;font-size:11px}.legacy-system.report-dashboard .report-card-grid{grid-template-columns:minmax(0,1fr);gap:12px}.legacy-system.report-dashboard .report-card,.legacy-system.report-dashboard.meeting-mode .report-card{min-height:190px;padding:14px 18px 11px}.legacy-system.report-dashboard .report-card-head{gap:9px}.legacy-system.report-dashboard .report-card-number strong{font-size:32px}.legacy-system.report-dashboard .report-card-comparisons strong{font-size:16px}.legacy-system.report-dashboard .report-trend-panel>header{padding:15px}.legacy-system.report-dashboard .report-trend-panel h2{font-size:15px}.legacy-system.report-dashboard .report-trend-legend{gap:15px;font-size:11px}.legacy-system.report-dashboard .report-trend-summary{margin:15px 14px 3px;padding:12px;gap:9px}.legacy-system.report-dashboard .report-trend-summary>div+div{padding-left:11px}.legacy-system.report-dashboard .report-trend-summary strong{font-size:19px}.legacy-system.report-dashboard .report-trend-summary span,.legacy-system.report-dashboard .report-trend-summary small{font-size:10px}.legacy-system.report-dashboard .report-chart-wrap{padding:10px 10px 12px}.legacy-system.report-dashboard .report-trend-table{padding:0 14px 15px}}
 @media(prefers-reduced-motion:reduce){.legacy-system.report-dashboard .report-card{transition:none}}
 /* Linked brand, region, store and period controls. */
 .legacy-system.report-dashboard .qbi-report-toolbar{align-items:flex-end;gap:18px}
@@ -235,11 +227,30 @@
 .legacy-system.report-dashboard .report-filter-field>span{font-weight:400}
 .legacy-system.report-dashboard .report-filter-field select{display:block;width:100%;min-width:0;max-width:100%;min-height:34px;margin:0;padding:6px 28px 6px 10px;border:1px solid #dce2eb;border-radius:4px;background:#fff;color:#43536b;font:inherit;font-size:12px;line-height:1.5}
 .legacy-system.report-dashboard .report-filter-field select:focus-visible{border-color:#8dafff;outline:3px solid #d9e6ff;outline-offset:2px}
-.legacy-system.report-dashboard .report-filter-summary{display:grid;flex:none;gap:4px;align-self:end;padding-bottom:2px;color:#9aa6b7;text-align:right;font-size:10px;line-height:1.6;white-space:nowrap}
-.legacy-system.report-dashboard .report-filter-summary b{color:#75859c;font-size:11px;font-weight:400}
 @media(max-width:1100px){.legacy-system.report-dashboard .qbi-report-filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px}}
-@media(max-width:620px){.legacy-system.report-dashboard .qbi-report-toolbar{align-items:stretch;gap:11px}.legacy-system.report-dashboard .qbi-report-filters{flex-basis:100%;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px}.legacy-system.report-dashboard .report-filter-field{gap:5px;font-size:10px}.legacy-system.report-dashboard .report-filter-field select{min-height:34px;padding-inline:8px 22px;font-size:11px}.legacy-system.report-dashboard .report-filter-summary{display:flex;align-items:center;justify-content:space-between;width:100%;min-width:0;gap:12px;padding:0;text-align:left}.legacy-system.report-dashboard .report-filter-summary b{font-size:10px}}
+@media(max-width:620px){.legacy-system.report-dashboard .qbi-report-toolbar{align-items:stretch;gap:11px}.legacy-system.report-dashboard .qbi-report-filters{flex-basis:100%;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px}.legacy-system.report-dashboard .report-filter-field{gap:5px;font-size:10px}.legacy-system.report-dashboard .report-filter-field select{min-height:34px;padding-inline:8px 22px;font-size:11px}}
 @media(max-width:340px){.legacy-system.report-dashboard .qbi-report-filters{grid-template-columns:minmax(0,1fr)}}
+/* One shared year-to-date trend component follows the selected metric. */
+.legacy-system.report-dashboard .report-metric-picker{display:inline-flex;align-items:center;gap:9px;min-width:0;max-width:100%;color:#8592a5;font-size:11px;white-space:nowrap}
+.legacy-system.report-dashboard .report-metric-picker select{width:180px;max-width:100%;min-width:0;min-height:32px;padding:5px 29px 5px 10px;border:1px solid #dce3ed;border-radius:4px;background:#fff;color:#465d7c;font:inherit;font-size:12px}
+.legacy-system.report-dashboard .report-metric-picker select:focus-visible{outline:3px solid #d9e6ff;outline-offset:2px;border-color:#8dafff}
+.legacy-system.report-dashboard .report-legend-button{display:inline-flex;align-items:center;gap:7px;min-height:28px;padding:3px 0;border:0;background:transparent;color:#7386a3;font:inherit;font-size:12px;line-height:1.6;white-space:nowrap;cursor:pointer}
+.legacy-system.report-dashboard .report-legend-button:hover{color:#2f6bff}.legacy-system.report-dashboard .report-legend-button:focus-visible{outline:3px solid #d9e6ff;outline-offset:3px;border-radius:3px}
+.legacy-system.report-dashboard .report-legend-button:is(.muted,.dim){opacity:.42}.legacy-system.report-dashboard .report-legend-button:is(.muted,.dim) i{border-color:#aab5c5}
+.legacy-system.report-dashboard .report-year-range{color:#99a5b6;font-size:11px;font-weight:400}
+.legacy-system.report-dashboard .report-trend-tooltip{position:absolute;z-index:5;min-width:190px;max-width:280px;padding:12px 14px;border:1px solid #dfe6f0;border-radius:5px;background:#fff;color:#566a85;box-shadow:0 5px 20px #233b5b14;font-size:12px;line-height:1.7;pointer-events:none}
+.legacy-system.report-dashboard .report-trend-tooltip[hidden]{display:none}
+.legacy-system.report-dashboard .report-tooltip-title{margin-bottom:7px;color:#384e6c;font-size:12px;font-weight:550}
+.legacy-system.report-dashboard .report-tooltip-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0;color:#8491a5;font-size:11px}
+.legacy-system.report-dashboard .report-tooltip-row>span,.legacy-system.report-dashboard .report-tooltip-row>label{display:inline-flex;align-items:center;gap:6px;flex:1}
+.legacy-system.report-dashboard .report-tooltip-row b,.legacy-system.report-dashboard .report-tooltip-row strong{color:#405978;font-size:12px;font-weight:550;font-variant-numeric:tabular-nums;white-space:nowrap}
+.legacy-system.report-dashboard .report-tooltip-row i{display:inline-block;width:18px;height:0;border-top:2px solid #2f6bff;border-radius:0;background:transparent;flex:none}
+@media(max-width:620px){.legacy-system.report-dashboard .report-trend-tools{width:100%;gap:11px 15px}.legacy-system.report-dashboard .report-metric-picker{flex:1 1 100%;width:100%}.legacy-system.report-dashboard .report-metric-picker select{flex:1;width:auto}.legacy-system.report-dashboard .report-trend-tooltip{max-width:260px}.legacy-system.report-dashboard .report-legend-button{font-size:11px}}
+.legacy-system.report-dashboard .report-trend-panel>.report-trend-legend{padding:7px 21px 0}
+.legacy-system.report-dashboard .report-legend-button:disabled,.legacy-system.report-dashboard .report-legend-button:disabled:hover{opacity:1;color:#7386a3;cursor:default}
+.legacy-system.report-dashboard .report-tooltip-row i.dashed{border-top-style:dashed;border-color:#9baed3}
+.legacy-system.report-dashboard .report-tooltip-change{margin-top:8px;padding-top:7px;border-top:1px solid #edf1f6;color:#6e819d;font-size:12px;line-height:1.7}
+@media(max-width:620px){.legacy-system.report-dashboard .report-trend-panel>.report-trend-legend{padding:6px 14px 0}}
 </style>
 </head>
 <body class="legacy-system">
@@ -853,8 +864,8 @@ const signed = (value,decimals=1) => `${Number(Number(value).toFixed(decimals))>
 const reportLines = [
   ['grossSales','折前营业额','income'],['discount','销售折扣','expense'],['revenue','折后营业额','subtotal'],['food','食材成本','expense'],['grossProfit','销售毛利','subtotal'],['labor','人工费用','expense'],['rent','租金及物业费','expense'],['utilities','能耗费用','expense'],['tableware','餐具','expense'],['consumables','物耗','expense'],['maintenance','维修维护费','expense'],['marketing','市场推广费','expense'],['otherStoreExpense','其他费用','expense'],['profit','门店经营利润','result']
 ];
-const cardOrder=['revenue','food','grossProfit','profit','grossSales','discount','labor','rent','utilities','tableware','consumables','maintenance','marketing','otherStoreExpense'];
-const reportState={month:H.defaultMonth,metric:'revenue',trendMode:'amount',brand:'all',region:'all',store:'all'};
+const cardOrder=reportLines.map(([id])=>id);
+const reportState={month:H.defaultMonth,metric:'revenue',trendMode:'amount',brand:'all',region:'all',store:'all',showCurrent:true,showPrior:true};
 const value = (row,key) => key==='grossProfit'?row.revenue-row.food:row[key];
 const selectedMetric = () => reportLines.find(([id])=>id===reportState.metric);
 const changeText = rate => rate==null?'—':signed(rate,1)+'%';
@@ -864,31 +875,26 @@ function currentRows(){
   const previousId=month===1?`${year-1}-12`:`${year}-${String(month-1).padStart(2,'0')}`;
   return {current:S.getMonth(reportState.month,reportState),previous:S.getMonth(previousId,reportState),priorYear:S.getMonth(`${year-1}-${String(month).padStart(2,'0')}`,reportState)};
 }
+function trendMonths(){return H.availableMonths.filter(id=>id.slice(0,4)===reportState.month.slice(0,4)&&id<=reportState.month);}
 function trendRows(id=reportState.metric,mode=reportState.trendMode){
   const year=Number(reportState.month.slice(0,4));
   const amount=row=>mode==='share'?value(row.totals,id)/row.totals.revenue*100:value(row.totals,id);
-  return H.availableMonths.map(monthId=>{const current=S.getMonth(monthId,reportState),prior=S.getMonth(`${year-1}-${monthId.slice(5)}`,reportState);return {id:monthId,month:Number(monthId.slice(5)),current:amount(current),priorYear:amount(prior)};});
-}
-function sparkline(id){
-  const rows=trendRows(id,'amount'),values=rows.map(r=>r.current),lo=Math.min(...values),hi=Math.max(...values),range=hi-lo||1;
-  const x=i=>4+i*232/(rows.length-1),y=v=>32-(v-lo)/range*26;
-  const points=values.map((v,i)=>`${x(i)},${y(v)}`).join(' '),selected=rows.findIndex(r=>r.id===reportState.month);
-  return `<svg viewBox="0 0 240 38" role="img" aria-label="${reportLines.find(r=>r[0]===id)[1]}1至10月金额趋势"><polyline points="${points}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="${x(selected)}" cy="${y(values[selected])}" r="3" fill="currentColor" stroke="white" stroke-width="1.3"/></svg>`;
+  return trendMonths().map(monthId=>{const current=S.getMonth(monthId,reportState),prior=S.getMonth(`${year-1}-${monthId.slice(5)}`,reportState);return {id:monthId,month:Number(monthId.slice(5)),current:amount(current),priorYear:amount(prior)};});
 }
 function metricCard(id){
   const [,label]=reportLines.find(row=>row[0]===id),d=S.metrics(reportState.month,id,reportState),active=id===reportState.metric;
-  return `<button class="report-card ${active?'active':''}" data-metric="${id}" aria-pressed="${active}"><span class="report-card-head"><span class="report-card-icon" aria-hidden="true">${id==='profit'?'◈':id==='grossProfit'?'▥':id==='revenue'?'▤':'▦'}</span><span class="report-card-title">${label}</span><span class="report-card-period">${Number(reportState.month.slice(5))}月</span></span><span class="report-card-number"><strong>${money(d.current)}</strong><small>万元</small></span><span class="report-card-comparisons"><span><span>同比</span><strong class="${changeClass(id,d.yoy)}" title="去年同月 ${money(d.priorYear)}万元">${changeText(d.yoy)}</strong></span><span><span>环比</span><strong class="${changeClass(id,d.mom)}" title="上月 ${money(d.previous)}万元">${changeText(d.mom)}</strong></span><span><span>占折后营收</span><strong class="neutral" title="${label} ÷ 折后营业额">${money(d.share,1)}%</strong></span></span><span class="report-sparkline">${sparkline(id)}</span><span class="report-card-foot"><span>1—10月趋势</span><span>查看 ↗</span></span></button>`;
+  return `<button class="report-card ${active?'active':''}" data-metric="${id}" aria-pressed="${active}"><span class="report-card-head"><span class="report-card-icon" aria-hidden="true">${id==='profit'?'◈':id==='grossProfit'?'▥':id==='revenue'?'▤':'▦'}</span><span class="report-card-title">${label}</span><span class="report-card-period">${Number(reportState.month.slice(5))}月</span></span><span class="report-card-number"><strong>${money(d.current)}</strong><small>万元</small></span><span class="report-card-comparisons"><span><span>同比</span><strong class="${changeClass(id,d.yoy)}" title="去年同月 ${money(d.priorYear)}万元">${changeText(d.yoy)}</strong></span><span><span>环比</span><strong class="${changeClass(id,d.mom)}" title="上月 ${money(d.previous)}万元">${changeText(d.mom)}</strong></span><span><span>占折后营收</span><strong class="neutral" title="${label} ÷ 折后营业额">${money(d.share,1)}%</strong></span></span><span class="report-card-foot"><span class="report-card-selection">${active?'已选择':''}</span><span>查看趋势 →</span></span></button>`;
 }
 function scopeLabel(){
   const store=S.stores.find(s=>s.id===reportState.store);
   const brand=reportState.brand==='all'?'全部品牌':S.brands.find(b=>b.id===reportState.brand).name;
-  return `${brand} · ${reportState.region==='all'?'全部区域':reportState.region} · ${store?store.id+' '+store.name:S.storeOptions(reportState).length+'家直营门店'}`;
+  return `${brand} · ${reportState.region==='all'?'全部区域':reportState.region} · ${store?store.id+' '+store.name:'全部门店'}`;
 }
 function renderFilters(){
-  const stores=S.storeOptions(reportState),selected=S.getMonth(reportState.month,reportState);
+  const stores=S.storeOptions(reportState);
   const options=(rows,current)=>rows.map(([id,label])=>`<option value="${id}" ${id===current?'selected':''}>${label}</option>`).join('');
-  const fields=[['reportBrand','品牌',options([['all','全部品牌'],...S.brands.map(b=>[b.id,b.name])],reportState.brand)],['reportRegion','区域',options([['all','全部区域'],...S.regions.map(r=>[r,r])],reportState.region)],['reportStore','门店',options([['all',`全部门店（${stores.length}家）`],...stores.map(s=>[s.id,`${s.id} · ${s.name}`])],reportState.store)],['reportMonth','期间',options([...H.availableMonths].reverse().map(id=>[id,`${id.slice(0,4)}年${Number(id.slice(5))}月`]),reportState.month)]];
-  return `<section class="qbi-report-toolbar" aria-label="报表条件"><div class="qbi-report-filters">${fields.map(([id,label,choices])=>`<label class="report-filter-field" for="${id}"><span>${label}</span><select class="report-month-select" id="${id}">${choices}</select></label>`).join('')}</div><span class="report-filter-summary"><b>${selected.storeCount}家直营门店</b><span>单位：万元</span></span></section>`;
+  const fields=[['reportBrand','品牌',options([['all','全部品牌'],...S.brands.map(b=>[b.id,b.name])],reportState.brand)],['reportRegion','区域',options([['all','全部区域'],...S.regions.map(r=>[r,r])],reportState.region)],['reportStore','门店',options([['all','全部门店'],...stores.map(s=>[s.id,`${s.id} · ${s.name}`])],reportState.store)],['reportMonth','期间',options([...H.availableMonths].reverse().map(id=>[id,`${id.slice(0,4)}年${Number(id.slice(5))}月`]),reportState.month)]];
+  return `<section class="qbi-report-toolbar" aria-label="报表条件"><div class="qbi-report-filters">${fields.map(([id,label,choices])=>`<label class="report-filter-field" for="${id}"><span>${label}</span><select class="report-month-select" id="${id}">${choices}</select></label>`).join('')}</div></section>`;
 }
 function selectScope(field,value){
   const next={...reportState,[field]:value};
@@ -900,27 +906,50 @@ function selectScope(field,value){
 }
 function render(){
   const detailsOpen=$('.report-trend-table')?.open||false;
-  $('#main').innerHTML=`<section class="report-board" aria-label="集团经营分析看板"><header class="board-heading"><div><h1>${M.group.name}经营看板</h1></div><div class="board-heading-tools"><button class="button board-meeting-button" data-action="meeting">${document.body.classList.contains('meeting-mode')?'退出会议视图':'会议视图'}</button></div></header>${renderFilters()}<section class="report-card-grid" aria-label="管理利润表指标卡片">${cardOrder.map(metricCard).join('')}</section><section class="report-trend-panel" id="reportTrend" aria-label="月份趋势">${renderTrend()}</section></section>`;
+  $('#main').innerHTML=`<section class="report-board" aria-label="集团经营分析看板"><header class="board-heading"><div><h1>${M.group.name}经营看板</h1></div><div class="board-heading-tools"><button class="button board-meeting-button" data-action="meeting">${document.body.classList.contains('meeting-mode')?'退出会议视图':'会议视图'}</button></div></header>${renderFilters()}<section class="report-card-grid" aria-label="管理利润表指标卡片">${cardOrder.map(metricCard).join('')}</section><section class="report-trend-panel" id="reportTrend" aria-label="年初至今月度趋势">${renderTrend()}</section></section>`;
   $('.report-trend-table').open=detailsOpen;
 }
 function renderTrend(){
   const [,label]=selectedMetric(),rows=currentRows();
   const amount=row=>reportState.trendMode==='share'?value(row.totals,reportState.metric)/row.totals.revenue*100:value(row.totals,reportState.metric);
-  const unit=reportState.trendMode==='share'?'%':'万元',year=Number(reportState.month.slice(0,4));
-  return `<header><div><h2>${label} · 月份趋势</h2><p>${scopeLabel()} · ${year}年1—10月 / 当前选中${Number(reportState.month.slice(5))}月</p></div><div class="report-trend-tools"><div class="report-trend-legend"><span><i></i>${year}年</span><span><i class="dashed"></i>${year-1}年同期</span></div><div class="report-trend-switch" aria-label="趋势指标口径"><button data-trend-mode="amount" class="${reportState.trendMode==='amount'?'active':''}" aria-pressed="${reportState.trendMode==='amount'}">金额</button><button data-trend-mode="share" class="${reportState.trendMode==='share'?'active':''}" aria-pressed="${reportState.trendMode==='share'}">收入占比</button></div></div></header><div class="report-trend-summary">${[['当前月份',rows.current],['上月',rows.previous],['去年同月',rows.priorYear]].map(([name,row])=>`<div><span>${name} · ${row.label}</span><strong>${money(amount(row))}<small>${unit}</small></strong></div>`).join('')}</div><div class="report-chart-wrap">${trendSvg()}</div><details class="report-trend-table"><summary>查看月度数据明细</summary><div class="report-history-scroll"><table class="report-history-table"><thead><tr><th>月份</th><th>${year}年金额 / 万元</th><th>${year-1}年同期</th><th>同比</th><th>环比</th><th>占折后营收</th></tr></thead><tbody>${H.availableMonths.map(id=>{const d=S.metrics(id,reportState.metric,reportState);return `<tr class="${id===reportState.month?'selected':''}"><th><button data-report-month="${id}">${Number(id.slice(5))}月</button></th><td>${money(d.current)}</td><td>${money(d.priorYear)}</td><td>${changeText(d.yoy)}</td><td>${changeText(d.mom)}</td><td>${money(d.share,1)}%</td></tr>`;}).join('')}</tbody></table></div></details>`;
+  const unit=reportState.trendMode==='share'?'%':'万元',year=Number(reportState.month.slice(0,4)),endMonth=Number(reportState.month.slice(5));
+  const legend=(id,name,visible,other,dashed)=>`<button type="button" class="report-legend-button ${visible?'':'muted'}" data-series="${id}" aria-pressed="${visible}" ${!other&&visible?'disabled':''} title="${!other&&visible?'至少保留一条年度曲线':'显示或隐藏'+name}"><i class="${dashed?'dashed':''}"></i>${name}</button>`;
+  return `<header><div><h2>${label} · 年初至今趋势</h2><p>${scopeLabel()} · ${year}年1—${endMonth}月 · 按月实绩</p></div><div class="report-trend-tools"><label class="report-metric-picker" for="trendMetric"><span>指标</span><select id="trendMetric">${reportLines.map(([id,name])=>`<option value="${id}" ${id===reportState.metric?'selected':''}>${name}</option>`).join('')}</select></label><div class="report-trend-switch" aria-label="趋势指标口径"><button data-trend-mode="amount" class="${reportState.trendMode==='amount'?'active':''}" aria-pressed="${reportState.trendMode==='amount'}">金额</button><button data-trend-mode="share" class="${reportState.trendMode==='share'?'active':''}" aria-pressed="${reportState.trendMode==='share'}">收入占比</button></div></div></header><div class="report-trend-summary">${[['当前期间',rows.current],['上月',rows.previous],['去年同期',rows.priorYear]].map(([name,row])=>`<div><span>${name} · ${row.label}</span><strong>${money(amount(row))}<small>${unit}</small></strong></div>`).join('')}</div><div class="report-trend-legend">${legend('current',year+'年',reportState.showCurrent,reportState.showPrior,false)}${legend('prior',(year-1)+'年同期',reportState.showPrior,reportState.showCurrent,true)}</div><div class="report-chart-wrap">${trendSvg()}<div class="report-trend-tooltip" id="reportTrendTooltip" role="tooltip" hidden></div></div><details class="report-trend-table"><summary>查看月度数据明细</summary><div class="report-history-scroll"><table class="report-history-table"><thead><tr><th>月份</th><th>${year}年金额 / 万元</th><th>${year-1}年同期</th><th>同比</th><th>环比</th><th>占折后营收</th></tr></thead><tbody>${trendMonths().map(id=>{const d=S.metrics(id,reportState.metric,reportState);return `<tr class="${id===reportState.month?'selected':''}"><th>${Number(id.slice(5))}月</th><td>${money(d.current)}</td><td>${money(d.priorYear)}</td><td>${changeText(d.yoy)}</td><td>${changeText(d.mom)}</td><td>${money(d.share,1)}%</td></tr>`;}).join('')}</tbody></table></div></details>`;
 }
 function trendSvg(){
-  const rows=trendRows(),values=rows.flatMap(r=>[r.current,r.priorYear]),minimum=Math.min(...values),maximum=Math.max(...values);
-  const spread=maximum-minimum||Math.max(maximum*.1,1),lo=minimum>=0?Math.max(0,minimum-spread*.18):minimum-spread*.18,hi=maximum+spread*.25;
-  const left=72,right=944,top=38,bottom=276,x=i=>left+i*(right-left)/(rows.length-1),y=v=>bottom-(v-lo)/(hi-lo)*(bottom-top);
-  const current=rows.map((r,i)=>`${x(i)},${y(r.current)}`).join(' '),prior=rows.map((r,i)=>`${x(i)},${y(r.priorYear)}`).join(' '),selected=rows.findIndex(r=>r.id===reportState.month),unit=reportState.trendMode==='share'?'%':'万元';
-  const currentPoint=rows[selected];
-  return `<svg class="report-month-chart" viewBox="0 0 1000 325" role="img" aria-label="${selectedMetric()[1]}的2026年与2025年1至10月${reportState.trendMode==='share'?'收入占比':'金额'}趋势，当前选中${currentPoint.month}月"><defs><linearGradient id="reportTrendFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#2f6bff" stop-opacity=".12"/><stop offset="100%" stop-color="#2f6bff" stop-opacity="0"/></linearGradient></defs><text x="18" y="18" class="report-axis-label">${unit}</text>${Array.from({length:5},(_,i)=>{const amount=lo+(hi-lo)*i/4,position=y(amount);return `<path d="M${left} ${position}H${right}" stroke="#e9edf4" stroke-dasharray="3 4"/><text x="${left-12}" y="${position+4}" text-anchor="end" class="report-axis-label">${money(amount,reportState.trendMode==='share'?1:0)}${reportState.trendMode==='share'?'%':''}</text>`;}).join('')}<path d="M${left} ${bottom}L${current.replaceAll(' ',' L')}L${right} ${bottom}Z" fill="url(#reportTrendFill)"/><polyline points="${prior}" fill="none" stroke="#9baed3" stroke-width="2" stroke-dasharray="6 5" stroke-linejoin="round"/><polyline points="${current}" fill="none" stroke="#2f6bff" stroke-width="2.5" stroke-linejoin="round"/><path d="M${x(selected)} ${top}V${bottom}" stroke="#8baeff" stroke-dasharray="4 4"/>${rows.map((r,i)=>`<g data-report-month="${r.id}" tabindex="0" role="button" aria-label="选择${r.month}月，2026年${money(r.current)}${unit}，2025年同期${money(r.priorYear)}${unit}"><title>${r.month}月：2026年 ${money(r.current)}${unit}；2025年同期 ${money(r.priorYear)}${unit}</title><rect x="${x(i)-25}" y="${top}" width="50" height="${bottom-top+36}" fill="transparent"/><circle cx="${x(i)}" cy="${y(r.priorYear)}" r="4" fill="white" stroke="#9baed3" stroke-width="1.5"/><circle cx="${x(i)}" cy="${y(r.current)}" r="${i===selected?5.5:4}" fill="#2f6bff" stroke="white" stroke-width="1.5"/><text x="${x(i)}" y="303" text-anchor="middle" class="report-axis-label" style="fill:${i===selected?'#2f6bff':'#8a94a5'};font-weight:${i===selected?'600':'400'}">${r.month}月</text></g>`).join('')}<text x="${x(selected)}" y="${y(currentPoint.current)-15}" text-anchor="${selected===0?'start':selected===rows.length-1?'end':'middle'}" style="font-size:13px;font-weight:600;fill:#2f6bff">${money(currentPoint.current)}${unit}</text></svg>`;
+  const rows=trendRows(),values=rows.flatMap(r=>[...(reportState.showCurrent?[r.current]:[]),...(reportState.showPrior?[r.priorYear]:[])]),minimum=Math.min(...values),maximum=Math.max(...values);
+  const span=maximum-minimum||Math.max(Math.abs(maximum)*.1,1),rawStep=span/4,power=10**Math.floor(Math.log10(rawStep)),step=[1,2,5,10].find(n=>n*power>=rawStep)*power;
+  const lo=minimum>=0?Math.max(0,Math.floor((minimum-span*.1)/step)*step):Math.floor((minimum-span*.1)/step)*step,hi=Math.ceil((maximum+span*.15)/step)*step;
+  const decimals=Math.min(4,Math.max(0,-Math.floor(Math.log10(step))));
+  const left=76,right=944,top=35,bottom=276,x=i=>rows.length===1?(left+right)/2:left+i*(right-left)/(rows.length-1),y=v=>bottom-(v-lo)/(hi-lo)*(bottom-top);
+  const current=rows.map((r,i)=>`${x(i)},${y(r.current)}`).join(' '),prior=rows.map((r,i)=>`${x(i)},${y(r.priorYear)}`).join(' '),unit=reportState.trendMode==='share'?'%':'万元',year=Number(reportState.month.slice(0,4));
+  const ticks=Array.from({length:Math.round((hi-lo)/step)+1},(_,i)=>lo+step*i),last=rows.length-1,lastValue=reportState.showCurrent?rows[last].current:rows[last].priorYear;
+  return `<svg class="report-month-chart" viewBox="0 0 1000 325" role="img" aria-label="${selectedMetric()[1]}的${year}年1至${rows.at(-1).month}月按月实绩趋势"><text x="18" y="18" class="report-axis-label">${unit}</text>${ticks.map(amount=>`<path d="M${left} ${y(amount)}H${right}" stroke="#e9edf4" stroke-dasharray="3 4"/><text x="${left-12}" y="${y(amount)+4}" text-anchor="end" class="report-axis-label">${money(amount,reportState.trendMode==='share'?Math.max(1,decimals):decimals)}${reportState.trendMode==='share'?'%':''}</text>`).join('')}${reportState.showPrior?`<polyline data-chart-series="prior" points="${prior}" fill="none" stroke="#9baed3" stroke-width="2" stroke-dasharray="6 5" stroke-linejoin="round"/>`:''}${reportState.showCurrent?`<polyline data-chart-series="current" points="${current}" fill="none" stroke="#2f6bff" stroke-width="2.5" stroke-linejoin="round"/>`:''}<path id="reportCrosshair" d="M${x(last)} ${top}V${bottom}" stroke="#9db9ee" stroke-dasharray="4 4"/>${rows.map((r,i)=>{const hitLeft=i===0?left-15:(x(i-1)+x(i))/2,hitRight=i===last?right+15:(x(i)+x(i+1))/2;return `<g data-trend-month="${r.id}" data-chart-x="${x(i)}" tabindex="0" role="button" aria-describedby="reportTrendTooltip" aria-label="查看${r.month}月，${year}年${money(r.current)}${unit}，${year-1}年同期${money(r.priorYear)}${unit}"><rect x="${hitLeft}" y="${top}" width="${hitRight-hitLeft}" height="${bottom-top+32}" fill="transparent"/>${reportState.showPrior?`<circle cx="${x(i)}" cy="${y(r.priorYear)}" r="4" fill="white" stroke="#9baed3" stroke-width="1.5"/>`:''}${reportState.showCurrent?`<circle cx="${x(i)}" cy="${y(r.current)}" r="4" fill="#2f6bff" stroke="white" stroke-width="1.5"/>`:''}<text x="${x(i)}" y="303" text-anchor="middle" class="report-axis-label">${r.month}月</text></g>`;}).join('')}<text x="${x(last)}" y="${y(lastValue)-15}" text-anchor="${rows.length===1?'middle':'end'}" style="font-size:13px;font-weight:600;fill:${reportState.showCurrent?'#2f6bff':'#8198be'}">${money(lastValue)}${unit}</text></svg>`;
 }
+function refreshTrend(){
+  const open=$('.report-trend-table').open;$('#reportTrend').innerHTML=renderTrend();$('.report-trend-table').open=open;
+}
+function chooseMetric(id,scroll=false){
+  if(!cardOrder.includes(id))return;reportState.metric=id;
+  document.querySelectorAll('.report-card').forEach(card=>{const active=card.dataset.metric===id;card.classList.toggle('active',active);card.setAttribute('aria-pressed',String(active));card.querySelector('.report-card-selection').textContent=active?'已选择':'';});
+  refreshTrend();$('#trendMetric').focus({preventScroll:true});
+  if(scroll)$('#reportTrend').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+}
+function showTrendTooltip(point,event){
+  const row=trendRows().find(r=>r.id===point.dataset.trendMonth),year=Number(reportState.month.slice(0,4)),unit=reportState.trendMode==='share'?'%':'万元',tooltip=$('#reportTrendTooltip'),wrap=$('.report-chart-wrap');
+  const line=(name,v,dashed)=>`<div class="report-tooltip-row"><i class="${dashed?'dashed':''}"></i><span>${name}</span><strong>${money(v)}${unit}</strong></div>`;
+  tooltip.innerHTML=`<div class="report-tooltip-title">${row.month}月 · ${selectedMetric()[1]}</div>${reportState.showCurrent?line(year+'年',row.current,false):''}${reportState.showPrior?line((year-1)+'年同期',row.priorYear,true):''}${reportState.showCurrent&&reportState.showPrior?`<div class="report-tooltip-change">${reportState.trendMode==='share'?'同期差额 '+signed(row.current-row.priorYear,2)+'个百分点':'同比 '+changeText(row.priorYear>0?(row.current/row.priorYear-1)*100:null)}</div>`:''}`;
+  tooltip.hidden=false;const rect=wrap.getBoundingClientRect(),pointRect=point.getBoundingClientRect();
+  const px=event&&Number.isFinite(event.clientX)?event.clientX:pointRect.x+pointRect.width/2,py=event&&Number.isFinite(event.clientY)?event.clientY:pointRect.y+35;
+  tooltip.style.left=Math.max(wrap.scrollLeft+8,Math.min(px-rect.left+wrap.scrollLeft+14,wrap.scrollLeft+wrap.clientWidth-tooltip.offsetWidth-10))+'px';
+  tooltip.style.top=Math.max(8,Math.min(py-rect.top+12,wrap.clientHeight-tooltip.offsetHeight-8))+'px';
+  $('#reportCrosshair').setAttribute('d',`M${point.dataset.chartX} 35V276`);
+}
+function hideTrendTooltip(){const tooltip=$('#reportTrendTooltip');if(tooltip)tooltip.hidden=true;}
 function selectMonth(id){
   if(!H.availableMonths.includes(id))return;
   const active=document.activeElement;
-  const focusSelector=active.id==='reportMonth'?'#reportMonth':active.matches('g[data-report-month]')?`g[data-report-month="${id}"]`:active.matches('button[data-report-month]')?`button[data-report-month="${id}"]`:null;
+  const focusSelector=active.id==='reportMonth'?'#reportMonth':null;
   reportState.month=id;render();
   if(focusSelector)$(focusSelector)?.focus({preventScroll:true});
 }
@@ -938,13 +967,24 @@ $('#systemName').textContent='仪表板';$('#breadcrumb').textContent='经营看
 $('#navigation').innerHTML='<button class="active">▦ <span>经营看板</span></button>';
 document.body.classList.add('overview-page','report-dashboard');document.title='好美味餐饮集团经营看板 · 经营报表系统';
 document.addEventListener('click',event=>{
-  const card=event.target.closest('[data-metric]');if(card){reportState.metric=card.dataset.metric;render();$('#reportTrend').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});return;}
-  const month=event.target.closest('[data-report-month]');if(month){const top=scrollY;selectMonth(month.dataset.reportMonth);window.scrollTo(0,top);return;}
-  const mode=event.target.closest('[data-trend-mode]');if(mode){const open=$('.report-trend-table').open;reportState.trendMode=mode.dataset.trendMode;$('#reportTrend').innerHTML=renderTrend();$('.report-trend-table').open=open;return;}
+  const card=event.target.closest('[data-metric]');if(card){chooseMetric(card.dataset.metric,true);return;}
+  const point=event.target.closest('g[data-trend-month]');if(point){showTrendTooltip(point,event);return;}
+  const legend=event.target.closest('[data-series]');if(legend){const field=legend.dataset.series==='current'?'showCurrent':'showPrior';if(!reportState[field]||reportState[field==='showCurrent'?'showPrior':'showCurrent']){reportState[field]=!reportState[field];refreshTrend();document.querySelector(`[data-series="${legend.dataset.series}"]`).focus({preventScroll:true});}return;}
+  const mode=event.target.closest('[data-trend-mode]');if(mode){reportState.trendMode=mode.dataset.trendMode;refreshTrend();document.querySelector(`[data-trend-mode="${mode.dataset.trendMode}"]`).focus({preventScroll:true});return;}
+  hideTrendTooltip();
   if(event.target.closest('[data-action="meeting"]')){document.body.classList.toggle('meeting-mode');render();window.scrollTo(0,0);}
 });
-document.addEventListener('change',event=>{if(event.target.id==='reportMonth')selectMonth(event.target.value);const fields={reportBrand:'brand',reportRegion:'region',reportStore:'store'};if(fields[event.target.id])selectScope(fields[event.target.id],event.target.value);});
-document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!$('#detailDialog').open){document.body.classList.remove('meeting-mode');render();}if(['Enter',' '].includes(event.key)&&event.target.matches('g[data-report-month]')){event.preventDefault();const top=scrollY;selectMonth(event.target.dataset.reportMonth);window.scrollTo(0,top);}});
+document.addEventListener('change',event=>{if(event.target.id==='reportMonth')selectMonth(event.target.value);if(event.target.id==='trendMetric')chooseMetric(event.target.value);const fields={reportBrand:'brand',reportRegion:'region',reportStore:'store'};if(fields[event.target.id])selectScope(fields[event.target.id],event.target.value);});
+document.addEventListener('pointermove',event=>{const point=event.target.closest('g[data-trend-month]');if(point)showTrendTooltip(point,event);else hideTrendTooltip();});
+document.addEventListener('pointerout',event=>{const wrap=event.target.closest('.report-chart-wrap');if(wrap&&!wrap.contains(event.relatedTarget))hideTrendTooltip();});
+document.addEventListener('focusin',event=>{const point=event.target.closest('g[data-trend-month]');if(point)showTrendTooltip(point);});
+document.addEventListener('focusout',event=>{if(event.target.closest('g[data-trend-month]'))hideTrendTooltip();});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'){hideTrendTooltip();if(document.body.classList.contains('meeting-mode')&&!$('#detailDialog').open){document.body.classList.remove('meeting-mode');render();}}
+  const point=event.target.closest('g[data-trend-month]');if(!point)return;
+  if(['Enter',' '].includes(event.key)){event.preventDefault();showTrendTooltip(point);}
+  if(['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();const points=[...document.querySelectorAll('g[data-trend-month]')],index=points.indexOf(point)+(event.key==='ArrowLeft'?-1:1);points[Math.max(0,Math.min(points.length-1,index))].focus();}
+});
 $('#methodButton').textContent='查看利润表';$('#methodButton').setAttribute('aria-label','查看当前月份管理利润表');$('#methodButton').onclick=statement;
 $('#closeDialog').onclick=()=>$('#detailDialog').close();
 $('#fullscreenButton').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{}};
