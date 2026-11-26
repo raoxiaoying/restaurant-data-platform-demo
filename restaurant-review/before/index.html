@@ -1245,12 +1245,6 @@ function renderMetricDetail(){
   document.title=label+'明细 · 好美味餐饮集团经营报表系统';
   $('#main').innerHTML=`<section class="report-detail-page"><header class="report-detail-heading"><div><button type="button" class="report-detail-back" data-action="back-report">返回经营看板</button><h1 tabindex="-1">${label}明细</h1></div><span class="report-detail-unit">金额单位：万元</span></header>${renderFilters()}<section class="report-detail-panel"><header><h2>${detail.kind==='formula'?'计算科目明细':'细项目小类统计'}</h2><small>${H.getMonth(reportState.month).label} · ${scopeLabel()}</small></header><div class="report-detail-table-wrap"><table class="report-detail-table"><thead><tr><th scope="col">项目小类</th><th scope="col">目标</th><th scope="col">实际</th><th scope="col">同比</th><th scope="col">环比</th><th scope="col">目标占收比</th><th scope="col">实际占收比</th></tr></thead><tbody>${detail.rows.map(row=>`<tr data-detail-row="${row.id}"><th scope="row">${row.sign<0?'减：':''}${row.name}</th>${cells(row)}</tr>`).join('')}</tbody><tfoot><tr><th scope="row">${label}${detail.kind==='formula'?'':'合计'}</th>${cells(detail.total)}</tr></tfoot></table></div></section></section>`;
 }
-function statement(){
-  const rows=currentRows();
-  $('#dialogTitle').textContent=`${rows.current.label}管理利润表`;$('#dialogEyebrow').textContent=scopeLabel();
-  $('#dialogContent').innerHTML=`<div class="report-history-scroll"><table><thead><tr><th>项目 / 万元</th><th>当前月份</th><th>上月</th><th>去年同月</th><th>占折后营收</th></tr></thead><tbody>${reportLines.map(([key,label])=>{const d=S.metrics(reportState.month,key,reportState);return `<tr data-pl-id="${key}"><td>${label}</td><td>${money(d.current)}</td><td>${money(d.previous)}</td><td>${money(d.priorYear)}</td><td>${money(d.share,1)}%</td></tr>`;}).join('')}</tbody></table></div>`;
-  $('#detailDialog').showModal();
-}
 document.querySelector('.brand').innerHTML='<span class="legacy-mark">▦</span><span><b>经营报表</b></span>';
 document.querySelector('.brand').removeAttribute('data-step');document.querySelector('.brand').setAttribute('aria-label','经营报表系统首页');
 document.querySelector('.nav-label').textContent='报表目录';
@@ -1279,7 +1273,7 @@ document.addEventListener('keydown',event=>{
   if(['Enter',' '].includes(event.key)){event.preventDefault();showTrendTooltip(point);}
   if(['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();const points=[...document.querySelectorAll('g[data-trend-month]')],index=points.indexOf(point)+(event.key==='ArrowLeft'?-1:1);points[Math.max(0,Math.min(points.length-1,index))].focus();}
 });
-$('#methodButton').textContent='查看利润表';$('#methodButton').setAttribute('aria-label','查看当前月份管理利润表');$('#methodButton').onclick=statement;
+$('#methodButton').remove();
 $('#closeDialog').onclick=()=>$('#detailDialog').close();
 $('#fullscreenButton').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{}};
 window.addEventListener('hashchange',applyReportRoute);
