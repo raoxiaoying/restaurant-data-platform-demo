@@ -739,6 +739,31 @@
       perCapita: [81, 82, 81, 81, 81, 80, 79.5, 80], rent: 600
     }
   };
+  // 本版独立设定的月度目标预算，非真实企业下达；不从实际或11月预测反推。
+  const targetAssumptions = {
+    revenue: [4200, 3500, 4100, 4300, 4550, 4450, 4700, 4800, 4200, 5000],
+    discount: [240, 210, 230, 250, 300, 270, 310, 320, 240, 500],
+    labor: [1050, 900, 1025, 1075, 1135, 1110, 1175, 1200, 1050, 1200],
+    utilities: [126, 115, 123, 130, 145, 160, 175, 180, 130, 150],
+    marketing: [110, 105, 102.5, 107.5, 136.5, 111.25, 141, 144, 105, 150]
+  };
+  function makeTargets(month) {
+    const index = month - 1, revenue = targetAssumptions.revenue[index];
+    const inputs = { revenue, discount: targetAssumptions.discount[index], food: round(revenue * .35),
+      labor: targetAssumptions.labor[index], rent: 600, utilities: targetAssumptions.utilities[index],
+      tableware: round(revenue * .008), consumables: round(revenue * .012), maintenance: round(revenue * .01),
+      marketing: targetAssumptions.marketing[index], otherStoreExpense: round(revenue * .06) };
+    const salesWeights = M.stores.map((store, i) => store.demandWeight * (0.97 + ((i * 5 + month * 3) % 7) / 100));
+    const columns = Object.fromEntries(Object.entries(inputs).map(([key, total]) => {
+      const weights = key === 'rent' || key === 'maintenance' ? M.stores.map(store => store.weight) :
+        key === 'labor' ? M.stores.map(store => store.staffingWeight) :
+        key === 'discount' || key === 'marketing' ? M.stores.map(store => store.promoWeight) :
+        key === 'food' ? salesWeights.map((weight, i) => weight * (0.97 + ((i * 11 + month) % 7) / 100)) : salesWeights;
+      return [key, allocate(total, weights)];
+    }));
+    return M.stores.map((store, i) => ({ storeId: store.id,
+      ...Object.fromEntries(Object.entries(columns).map(([key, values]) => [key, values[i]])) }));
+  }
   const identity = store => ({ id: store.id, storeId: store.id, name: store.name, storeName: store.name, region: store.region, city: store.city });
   function makeMonth(year, month) {
     const id = `${year}-${String(month).padStart(2, '0')}`;
@@ -762,6 +787,7 @@
     return { id, year, month, label: `${year}年${month}月`, totals, byStore };
   }
   const months = [2025, 2026].flatMap(year => Array.from({ length: year === 2025 ? 12 : 10 }, (_, i) => makeMonth(year, i + 1)));
+  for (const month of months) if (month.year === 2026) month.targetByStore = makeTargets(month.month);
   const byId = new Map(months.map(month => [month.id, month]));
   const getMonth = id => byId.get(id) || null;
   function metrics(id, field) {
@@ -785,7 +811,7 @@
   }
   const model = { months, availableMonths: months.filter(row => row.year === 2026).map(row => row.id), defaultMonth: '2026-10', fields, getMonth, metrics, series,
     scope: { storeCount: 120, continuousStores: true, currentYear: 2026, priorYear: 2025, currency: '万元' },
-    definitions: { yoy: '同一月份与上年同月比较；基期金额大于0时按(本期/基期－1)×100计算。', mom: '本期与上月比较；1月对上年12月。基期金额大于0时计算。', share: '当前项目金额÷同月折后营业额×100；与其他月份的金额不混用。', provenance: '2026年9月、10月沿用主模型；其他月份为同一120家持续营业门店的合成历史。' } };
+    definitions: { yoy: '同一月份与上年同月比较；基期金额大于0时按(本期/基期－1)×100计算。', mom: '本期与上月比较；1月对上年12月。基期金额大于0时计算。', share: '当前项目金额÷同月折后营业额×100；与其他月份的金额不混用。', provenance: '2026年9月、10月沿用主模型；其他月份为同一120家持续营业门店的合成历史。', targets: '2026年1—10月目标为本版独立设定的预算，非真实企业下达。收入按需求权重、人工按编制权重、场租按门店权重分解；食材预算按计划组合权重分解。目标金额分配至人民币分，毛利及利润由预算科目派生；未从实际或11月预测反推。' } };
   root.ReportHistory = model;
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
