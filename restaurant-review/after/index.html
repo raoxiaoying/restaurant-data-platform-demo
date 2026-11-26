@@ -567,6 +567,54 @@
 .ai-platform .ai-execution-grid input[type=range]{accent-color:#188e84}
 .ai-platform .hmw-action{border-left:3px solid color-mix(in srgb,var(--task-accent,#3468ed) 55%,white)}
 
+/* Direct labels and shared scales keep the graphics readable without color. */
+.ai-platform .ai-data-figure{min-width:0;margin:25px 0;padding:21px 0;border-block:1px solid #e5ebf5}
+.ai-platform .ai-data-figure>header{display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 14px;margin-bottom:18px}
+.ai-platform .ai-data-figure>header>div{min-width:0;flex:1}
+.ai-platform .ai-data-figure h4{width:100%;margin:0;color:#314e76;font-size:16px;font-weight:650;line-height:1.6}
+.ai-platform .ai-summary .ai-data-figure>header p,.ai-platform .ai-data-description{flex:1;margin:0;color:#72849e;font-size:12px;line-height:1.85}
+.ai-platform .ai-data-unit{flex:none;color:#7a8ca5;font-size:11px}
+.ai-platform .ai-comparison{display:grid;gap:15px;margin:0;padding:0;list-style:none}
+.ai-platform .ai-comparison-row{display:grid;grid-template-columns:minmax(115px,1fr) minmax(0,2.1fr) 112px;align-items:center;gap:13px;min-width:0}
+.ai-platform .ai-comparison-label{color:#526b8e;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+.ai-platform .ai-comparison-track{position:relative;height:23px;background:repeating-linear-gradient(90deg,#eef2f8 0 1px,transparent 1px 25%);isolation:isolate}
+.ai-platform .ai-comparison-zero{position:absolute;top:-5px;bottom:-5px;width:1px;background:#97a9c4;z-index:1}
+.ai-platform .ai-comparison-fill{position:absolute;top:2px;height:19px;background:var(--metric-color,#255ac7);border-radius:3px}
+.ai-platform .ai-comparison-row[data-tone=positive]{--metric-color:#087760}
+.ai-platform .ai-comparison-row[data-tone=negative]{--metric-color:#be3453}
+.ai-platform .ai-comparison-row[data-tone=negative] .ai-comparison-fill{background:#df5d73}
+.ai-platform .ai-comparison-row[data-tone=reference] .ai-comparison-fill{background:#8460dc}
+.ai-platform .ai-comparison-row[data-tone=history] .ai-comparison-fill{background:#8199ba}
+.ai-platform .ai-comparison-row strong.ai-comparison-value{color:var(--metric-color,#255ac7);font-size:15px;font-weight:650;text-align:right;font-variant-numeric:tabular-nums;letter-spacing:-.3px;white-space:nowrap}
+.ai-platform .ai-comparison-value>span{margin-left:4px;font-size:11px;font-weight:400}
+.ai-platform .ai-comparison-scale{display:grid;grid-template-columns:minmax(115px,1fr) minmax(0,2.1fr) 112px;gap:13px;margin-bottom:7px}
+.ai-platform .ai-comparison-scale-track{position:relative;height:15px}
+.ai-platform .ai-comparison-origin{position:absolute;transform:translateX(-50%);color:#7b8ea9;font-size:10px;line-height:1.5}
+.ai-platform .ai-data-figure>figcaption{margin-top:17px;padding:12px 14px;border-left:3px solid #c5d6f3;border-radius:0 7px 7px 0;background:#f4f7fc;color:#657b9b;font-size:12px;line-height:1.85}
+.ai-platform .ai-process-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:0;padding:0;list-style:none}
+.ai-platform .ai-process-flow li{position:relative;min-width:0;padding:17px;border:1px solid #dfe7f4;border-radius:10px;background:#f6f9fe}
+.ai-platform .ai-process-flow li+li::before{content:'→';position:absolute;top:43%;left:-22px;color:#93a9cb;font-size:19px;line-height:1}
+.ai-platform .ai-process-flow li[data-tone]{border-color:color-mix(in srgb,var(--metric-color) 22%,white);background:var(--metric-soft)}
+.ai-platform .ai-process-flow small{display:block;margin-bottom:9px;color:#6c82a4;font-size:11px}
+.ai-platform .ai-process-flow strong{display:block;color:#365984;font-size:17px;line-height:1.6;font-weight:650;font-variant-numeric:tabular-nums}
+.ai-platform .ai-process-flow [data-tone] strong{color:var(--metric-color)}
+.ai-platform .ai-process-flow strong span{display:block;margin-top:1px;font-size:12px;font-weight:500}
+.ai-platform .ai-summary .ai-process-flow p{margin:8px 0 0;color:#6d82a2;font-size:12px;line-height:1.85}
+.ai-platform .ai-progress-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.ai-platform .ai-progress-grid>div{min-width:0;padding:16px;border:1px solid #e0e9f6;border-radius:11px;background:#f8fbff}
+.ai-platform .ai-progress-label{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;color:#547095;font-size:12px}
+.ai-platform .ai-progress-label strong{color:#117970;font-size:23px;line-height:1.4;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ai-platform .ai-progress-label strong small{color:#7c8faa;font-size:11px;font-weight:400}
+.ai-platform .ai-progress-grid>div:nth-child(2) .ai-progress-label strong{color:#255ac7}
+.ai-platform .ai-progress-grid progress{display:block;width:100%;height:10px;overflow:hidden;border:0;border-radius:5px;background:#e8edf6;accent-color:#188e84;appearance:none}
+.ai-platform .ai-progress-grid progress::-webkit-progress-bar{border-radius:5px;background:#e8edf6}
+.ai-platform .ai-progress-grid progress::-webkit-progress-value{border-radius:5px;background:#188e84}
+.ai-platform .ai-progress-grid progress::-moz-progress-bar{border-radius:5px;background:#188e84}
+.ai-platform .ai-progress-grid>div:nth-child(2) progress::-webkit-progress-value{background:#4a79df}
+.ai-platform .ai-progress-grid>div:nth-child(2) progress::-moz-progress-bar{background:#4a79df}
+.ai-platform .ai-summary .ai-progress-grid p{margin:10px 0 0;color:#7488a7;font-size:11px;line-height:1.8}
+.ai-platform .ai-result-block>.ai-data-figure{margin-block:22px}
+
 @media(max-width:1100px){
   .ai-platform .hmw-topbar{padding-inline:20px}
   .ai-platform #hmwMain{padding:26px 24px 20px}
@@ -663,6 +711,19 @@
   .ai-platform .hmw-action{padding:17px 15px}
   .ai-platform .hmw-action-meta>.hmw-link{margin-left:0}
   .ai-platform .hmw-dialog-body{padding:18px 16px}
+  .ai-platform .ai-data-figure{margin-block:22px;padding-block:18px}
+  .ai-platform .ai-comparison-row{grid-template-columns:minmax(0,1fr) auto;gap:7px 12px}
+  .ai-platform .ai-comparison-label{grid-column:1;grid-row:1;font-size:12px}
+  .ai-platform .ai-comparison-row strong.ai-comparison-value{grid-column:2;grid-row:1;font-size:14px}
+  .ai-platform .ai-comparison-track{grid-column:1/-1;grid-row:2}
+  .ai-platform .ai-comparison{gap:17px}
+  .ai-platform .ai-comparison-scale{grid-template-columns:minmax(0,1fr)}
+  .ai-platform .ai-comparison-scale>span{display:none}
+  .ai-platform .ai-process-flow,.ai-platform .ai-progress-grid{grid-template-columns:minmax(0,1fr)}
+  .ai-platform .ai-process-flow{gap:25px}
+  .ai-platform .ai-process-flow li+li::before{content:'↓';top:-23px;left:calc(50% - 8px)}
+  .ai-platform .ai-process-flow strong span{display:inline;margin-left:6px}
+  .ai-platform .ai-progress-grid{gap:12px}
   .ai-platform .ai-artifact-head{align-items:flex-start;flex-wrap:wrap}
   .ai-platform .ai-strategy-footer .hmw-button{white-space:normal}
 }
@@ -1377,6 +1438,47 @@
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
 </script>
+  <script>/* Shared, source-valued comparison graphics for the AI workspace. */
+(function () {
+  'use strict';
+  const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+  const tones = ['actual','reference','history','positive','negative'];
+  const format = value => (Number(value.toFixed(2)) || 0).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+  function comparison({ title, description = '', rows, unit = '万元', note = '' }) {
+    if (!rows.length) throw new RangeError('Comparison requires at least one row');
+    rows.forEach(row => {
+      if (!Number.isFinite(row.value)) throw new TypeError('Comparison values must be finite numbers');
+      if (!tones.includes(row.tone)) throw new TypeError('Unsupported comparison tone');
+    });
+    const lower = Math.min(0, ...rows.map(row => row.value));
+    const upper = Math.max(0, ...rows.map(row => row.value));
+    const range = upper - lower || 1;
+    const zero = -lower / range * 100;
+    const marks = rows.map(row => {
+      const left = (Math.min(0, row.value) - lower) / range * 100;
+      const width = Math.abs(row.value) / range * 100;
+      const sign = row.tone === 'positive' && Number(row.value.toFixed(2)) > 0 ? '+' : '';
+      return `<li class="ai-comparison-row" data-tone="${row.tone}" data-value="${row.value}">
+        <span class="ai-comparison-label">${escape(row.label)}</span>
+        <div class="ai-comparison-track" aria-hidden="true">
+          <i class="ai-comparison-zero" style="left:${zero}%"></i>
+          <span class="ai-comparison-fill" style="left:${left}%;width:${width}%"></span>
+        </div>
+        <strong class="ai-comparison-value">${sign}${format(row.value)}<span>${escape(unit)}</span></strong>
+      </li>`;
+    }).join('');
+    return `<figure class="ai-data-figure" aria-label="${escape(title)}">
+      <header><div><h4>${escape(title)}</h4>${description ? `<p class="ai-data-description">${escape(description)}</p>` : ''}</div><span class="ai-data-unit">${escape(unit)}</span></header>
+      <div class="ai-comparison-scale" aria-hidden="true"><span></span><div class="ai-comparison-scale-track"><span class="ai-comparison-origin" style="left:${zero}%">0</span></div><span></span></div>
+      <ol class="ai-comparison">${marks}</ol>
+      <figcaption class="ai-data-caption">${escape(note)}</figcaption>
+    </figure>`;
+  }
+
+  globalThis.AiVisuals = { comparison };
+})();
+</script>
   <script>const M = globalThis.HaomeiweiModel;
 const AI = globalThis.AiScenarioModel;
 const $ = selector => document.querySelector(selector);
@@ -1404,11 +1506,35 @@ function bridgeSvg(rows,start,end,startLabel='9月利润',endLabel='10月利润'
   const entries=[{name:startLabel,impact:start,total:true},...rows,{name:endLabel,impact:end,total:true}];
   let running=start;const points=entries.map(row=>{const from=row.total?0:running,to=row.total?row.impact:running+row.impact;if(!row.total)running=to;return {...row,from,to};});
   const lo=Math.min(0,...points.map(p=>Math.min(p.from,p.to))),hi=Math.max(...points.map(p=>Math.max(p.from,p.to)),1);const scale=165/(hi-lo);const y=v=>205-(v-lo)*scale;const step=760/entries.length;
-  return `<div class="hmw-chart-wrap"><svg class="hmw-chart" viewBox="0 0 820 265" role="img" aria-label="门店经营利润变化桥，期初${num(start)}万元，变化${signed(end-start)}万元，期末${num(end)}万元"><path d="M25 ${y(0)}H805" stroke="#dde4ef"/>${points.map((p,i)=>{const x=35+i*step,w=step*.55;return `<rect x="${x}" y="${Math.min(y(p.from),y(p.to))}" width="${w}" height="${Math.max(2,Math.abs(p.to-p.from)*scale)}" rx="3" fill="${p.checkpoint?'#8460dc':p.total?'#376cf2':p.impact>0?'#10a184':'#df5d73'}"/><text x="${x+w/2}" y="${Math.min(y(p.from),y(p.to))-11}" text-anchor="middle" style="fill:${p.checkpoint?'#7551c8':p.total?'#255ac7':p.impact<0?'#be3453':'#087760'};font-weight:600">${p.total?num(p.impact,1):signed(p.impact,1)}</text><text x="${x+w/2}" y="240" text-anchor="middle">${p.shortName||p.name}</text>${i<points.length-1?`<path d="M${x+w} ${y(p.to)}H${35+(i+1)*step}" stroke="#cbd5e5" stroke-dasharray="3 3"/>`:''}`;}).join('')}</svg></div>`;
+  return `<div class="hmw-chart-wrap"><svg class="hmw-chart" viewBox="0 0 820 265" role="img" aria-label="门店经营利润变化桥，期初${num(start)}万元，变化${signed(end-start)}万元，期末${num(end)}万元"><path d="M25 ${y(0)}H805" stroke="#dde4ef"/>${points.map((p,i)=>{const x=35+i*step,w=step*.55;return `<rect x="${x}" y="${Math.min(y(p.from),y(p.to))}" width="${w}" height="${Math.abs(p.to-p.from)*scale}" rx="3" fill="${p.total&&p.impact<0?'#df5d73':p.checkpoint?'#8460dc':p.total?'#376cf2':p.impact>0?'#10a184':'#df5d73'}"/><text x="${x+w/2}" y="${Math.min(y(p.from),y(p.to))-11}" text-anchor="middle" style="fill:${p.total&&p.impact<0?'#be3453':p.checkpoint?'#7551c8':p.total?'#255ac7':p.impact<0?'#be3453':'#087760'};font-weight:600">${p.total?num(p.impact,1):signed(p.impact,1)}</text><text x="${x+w/2}" y="240" text-anchor="middle">${p.shortName||p.name}</text>${i<points.length-1?`<path d="M${x+w} ${y(p.to)}H${35+(i+1)*step}" stroke="#cbd5e5" stroke-dasharray="3 3"/>`:''}`;}).join('')}</svg></div>`;
 }
 function attributionChartRows(){
   const names={volume:'业务量变化',pricing:'促销净价',food:'食材差异',labor:'人工差异',opex:'其他费用'};
   return M.causes.flatMap(c=>c.id==='volume'?[{...c,shortName:names[c.id]},{name:'10月基准',impact:M.attribution.baseline.profit,total:true,checkpoint:true}]:[{...c,shortName:names[c.id]}]);
+}
+function attributionImpactGraphic(){
+  return globalThis.AiVisuals.comparison({title:'各因素利润影响大小',description:'按影响绝对值排序；负值减少利润，正值增加利润。',rows:[...M.causes].sort((a,b)=>Math.abs(b.impact)-Math.abs(a.impact)).map(c=>({label:c.name,value:c.impact,tone:c.impact<0?'negative':'positive'})),note:`增利${num(M.group.positiveOffset)}万元与减利${num(M.group.negativeTotal)}万元相抵，利润净减少${num(M.group.profitDecline)}万元。条形表示金额，不表示贡献占比。`});
+}
+function attributionMethodGraphic(){
+  const t=M.attribution;
+  return `<figure class="ai-data-figure ai-process-figure"><header><h4>基准如何走到实际</h4></header><ol class="ai-process-flow"><li><small>01 · 逐店测算</small><strong>9月模式 × 10月业务量</strong><p>9月分渠道实收单价代入10月人次与订单，再按同店9月费用率计算。</p></li><li data-tone="reference"><small>02 · 形成检查点</small><strong>${num(t.baseline.profit)}<span>万元基准利润</span></strong><p>已包含10月业务量，后续不重复增加客流贡献。</p></li><li data-tone="actual"><small>03 · 替换当月参数</small><strong>${num(M.actuals.october.profit)}<span>万元实际利润</span></strong><p>依次替换净成交价、标准成本、人工和其他费用。</p></li></ol><figcaption>基准至实际缺口为${num(t.baselineGap)}万元；这是固定顺序的会计分解，措施效果仍需经营证据核验。</figcaption></figure>`;
+}
+function forecastPlanGraphic(){
+  const one=AI.base('steady'),two=AI.base('anniversary');
+  return globalThis.AiVisuals.comparison({title:'两套初始方案的利润预测',description:'11月30天 · 同一120家门店 · 情景测算值',rows:[{label:'现行营销 + 整改',value:one.totals.profit,tone:'actual'},{label:'周年庆 + 成本联动',value:two.totals.profit,tone:'reference'}],note:`两案相差${num(two.totals.profit-one.totals.profit)}万元，来自客流、折扣、预算和整改假设的共同变化，不能当作单项促销收益。`});
+}
+function forecastFormationGraphic(f){
+  const names={purchase:'采购',usage:'耗用',labor:'工时',utilities:'能耗',consumables:'物耗'};
+  const rows=f.actions.filter(a=>Math.abs(a.saving||0)>.000001).map(a=>({name:names[a.id]||a.title,impact:a.saving}));
+  return `<figure class="ai-data-figure"><header><h4>当前方案预计利润如何形成</h4><p>保持同一经营参数，按本次五项整改达成率计算；金额单位：万元。</p></header>${bridgeSvg(rows,f.baseline.profit,f.totals.profit,'未整改预测','整改后预测')}<figcaption>同参数未整改利润${num(f.baseline.profit)}万元，加上各项整改预计收益${num(f.savings)}万元，得到${num(f.totals.profit)}万元。均为本次情景预测，未当作已实现收益。</figcaption></figure>`;
+}
+function trackingProfitGraphic(){
+  const s=M.tracking.summary;
+  return globalThis.AiVisuals.comparison({title:'本周计划与实际利润',description:'11月1日—7日 · 同一120家门店 · 与冻结周计划对照',rows:[{label:'冻结周计划',value:s.plan.profit,tone:'reference'},{label:'本周实际',value:s.actual.profit,tone:'actual'}],note:`实际较计划${s.actual.profit<s.plan.profit?'少':'多'}${num(Math.abs(s.actual.profit-s.plan.profit))}万元。条形统一从0开始，详细偏差在周报告中逐项展开。`});
+}
+function trackingProgressGraphic(){
+  const s=M.tracking.summary,registered=M.tracking.actions.filter(actionAdjusted).length,total=M.tracking.actions.length;
+  return `<figure class="ai-data-figure"><header><h4>检查与整改登记进度</h4><p>两项进度使用各自分母，不代表收益兑现率。</p></header><div class="ai-progress-grid"><div><div class="ai-progress-label"><span>现场检查完成</span><strong>${s.executionCompletedCount}<small> / ${s.executionTotalCount}项</small></strong></div><progress value="${s.executionCompletedCount}" max="${s.executionTotalCount}" aria-label="现场检查完成${s.executionCompletedCount}项，共${s.executionTotalCount}项"></progress><p>${pct(s.executionCompletedCount,s.executionTotalCount)} · 来自本周现场检查记录</p></div><div><div class="ai-progress-label"><span>已登记调整 / 补签</span><strong>${registered}<small> / ${total}项</small></strong></div><progress value="${registered}" max="${total}" aria-label="已登记调整或补签${registered}项，共${total}项"></progress><p>${total-registered}项尚未登记；已登记动作仍待复核</p></div></div><figcaption>登记动作不改写本周实际利润；11月14日再核对结算、耗用、工时和服务表现，确认整改效果。</figcaption></figure>`;
 }
 function baselineTables(context=M.attribution){
   const channels=context.channels,base=context.baseline;
@@ -1458,7 +1584,7 @@ function forecastResult(f,reference){
   const t=f.totals,r=reference.totals,delta=t.profit-r.profit;
   const userMessage=scenario.revision?`<div class="ai-changes-summary"><span class="ai-result-version">你的调整 · V${scenario.revision}</span><p>${scenario.lastChanges.length?scenario.lastChanges.map(c=>esc(c)).join('；'):'沿用当前参数重新核算'}</p></div>`:'';
   return userMessage+`<div class="ai-thread-head"><span class="ai-avatar">✦</span><div><h2>${scenario.revision?'AI 已完成重新测算':'AI 初始测算结果'}</h2><small>${f.plan==='anniversary'?'周年庆策略':'现行营销策略'} · ${scenario.revision?'人工测算 V'+scenario.revision:'AI原方案'} · 120家门店</small></div><span class="hmw-tag ${scenario.revision?'blue':''}">${scenario.revision?'已更新集团与门店':'待你调整策略'}</span></div><div class="hmw-kpis">${kpi('预计折后营业额',num(t.revenue,2),'万元',`AI同策略初始预测 ${num(r.revenue,2)}万`)}${kpi('预计门店经营利润',num(t.profit,2),'万元',`较AI同策略初始预测 ${signed(delta,2)}万`,t.profit<0?'bad':'')}${kpi('预计门店经营利润率',pct(t.profit,t.revenue),'',`就餐 ${num(t.guests,0)}人次 · 折后人均 ${num(t.perCapita,2)}元`,t.profit<0?'bad':'')}</div><div class="ai-message-context" id="aiAppliedContext">本结果为当前已应用参数。${scenario.dirty?'有草稿修改尚未进入结果。':''}营销预算按填写总额计入，折扣已从营业额扣减。</div>`+
-    panel('人工方案与AI原方案对照',pnlTable([{label:'AI同策略原方案',row:r,rate:true},{label:scenario.revision?'人工方案 V'+scenario.revision:'当前预测',row:t,rate:true}]),`<span class="hmw-tag">金额 / 万元</span>`,'比较同一策略基准；更改策略后按对应AI原方案重新比较')+
+    forecastFormationGraphic(f)+panel('人工方案与AI原方案对照',pnlTable([{label:'AI同策略原方案',row:r,rate:true},{label:scenario.revision?'人工方案 V'+scenario.revision:'当前预测',row:t,rate:true}]),`<span class="hmw-tag">金额 / 万元</span>`,'比较同一策略基准；更改策略后按对应AI原方案重新比较')+
     `<div class="hmw-grid wide"><div>${panel('AI 测算结论与执行条件',`<div class="hmw-panel-body">${forecastAssumptions(f)}<div class="hmw-equation"><div><small>同参数未整改利润</small><strong>${num(f.baseline.profit)}万</strong></div><b>＋</b><div><small>各项整改预计收益</small><strong>${num(f.savings)}万</strong></div><b>＝</b><div><small>当前预计利润</small><strong>${num(t.profit)}万</strong></div></div></div>`)}</div><div>${panel('相对AI原方案，利润如何变化',scenarioChanges(f,reference))}</div></div>`+
     panel('AI 更新的经营行动',`<div class="hmw-panel-body"><div class="hmw-action-list">${f.actions.map(a=>actionCard(a)).join('')}</div></div>`,`<span class="hmw-tag blue">与本次测算同步</span>`)+
     panel('120家门店 · 当前方案预测',`<div class="hmw-panel-body"><input class="hmw-search" data-search="forecast" aria-label="搜索预测门店" placeholder="搜索门店名称、编号或区域" value="${esc(state.search)}"></div><div id="forecastStores">${forecastStoreTable(f,state.search)}</div>`,`<button class="hmw-button" data-nav="tracking">查看锁定版本执行 →</button>`,'逐店金额加总到当前集团预测；点击门店查看采购量价、费用和行动条件');
@@ -1493,7 +1619,7 @@ function trackingBridge(){
   const t=M.tracking,s=t.summary;
   const factors=s.attributions.filter(r=>Math.abs(r.impact)>.000001).map(r=>({...r,shortName:({revenue:'营业额',food:'食材',labor:'人工',rent:'租金物业',utilities:'能耗',tableware:'餐具',consumables:'物耗',maintenance:'维修',marketing:'市场推广',otherStoreExpense:'其他费用'})[r.key]}));
   const max=Math.max(...factors.map(r=>Math.abs(r.impact))),height=factors.length*30+42;
-  return `<div class="hmw-chart-wrap"><svg class="hmw-chart" viewBox="0 0 820 ${height}" role="img" aria-label="本周各损益项目利润偏差，合计${signed(s.actual.profit-s.plan.profit,4)}万元"><text x="160" y="18">减少利润 ←</text><text x="615" y="18">→ 增加利润</text><path d="M420 27V${height-15}" stroke="#d9e2f1"/>${factors.map((r,i)=>{const y=32+i*30,w=Math.abs(r.impact)/max*250;return `<text x="20" y="${y+15}">${r.shortName}</text><rect x="${r.impact<0?420-w:420}" y="${y+2}" width="${Math.max(2,w)}" height="18" rx="2" fill="${r.impact<0?'#df5d73':'#10a184'}"/><text x="${r.impact<0?410-w:430+w}" y="${y+15}" text-anchor="${r.impact<0?'end':'start'}" style="fill:${r.impact<0?'#be3453':'#087760'}">${signed(r.impact,4)}万</text>`;}).join('')}</svg></div><div class="hmw-equation"><div><small>周计划利润</small><strong>${num(s.plan.profit)}万</strong></div><b>＋</b><div><small>各项有符号偏差合计</small><strong class="${badClass(s.actual.profit-s.plan.profit)}">${signed(s.actual.profit-s.plan.profit,4)}万</strong></div><b>＝</b><div><small>实际利润</small><strong>${num(s.actual.profit)}万</strong></div></div>`;
+  return `<div class="hmw-chart-wrap"><svg class="hmw-chart" viewBox="0 0 820 ${height}" role="img" aria-label="本周各损益项目利润偏差，合计${signed(s.actual.profit-s.plan.profit,4)}万元"><text x="160" y="18">减少利润 ←</text><text x="615" y="18">→ 增加利润</text><path d="M420 27V${height-15}" stroke="#d9e2f1"/>${factors.map((r,i)=>{const y=32+i*30,w=Math.abs(r.impact)/max*250;return `<text x="20" y="${y+15}">${r.shortName}</text><rect x="${r.impact<0?420-w:420}" y="${y+2}" width="${w}" height="18" rx="2" fill="${r.impact<0?'#df5d73':'#10a184'}"/><text x="${r.impact<0?410-w:430+w}" y="${y+15}" text-anchor="${r.impact<0?'end':'start'}" style="fill:${r.impact<0?'#be3453':'#087760'}">${signed(r.impact,4)}万</text>`;}).join('')}</svg></div><div class="hmw-equation"><div><small>周计划利润</small><strong>${num(s.plan.profit)}万</strong></div><b>＋</b><div><small>各项有符号偏差合计</small><strong class="${badClass(s.actual.profit-s.plan.profit)}">${signed(s.actual.profit-s.plan.profit,4)}万</strong></div><b>＝</b><div><small>实际利润</small><strong>${num(s.actual.profit)}万</strong></div></div>`;
 }
 function forecastAssumptions(f){
   const overloaded=f.byStore.filter(r=>r.capacityUse>100);
@@ -1583,19 +1709,19 @@ function aiAttributionBrief(){
   const volume=M.getCauseDetail('volume'),pricing=M.getCauseDetail('pricing'),food=M.getCauseDetail('food'),labor=M.getCauseDetail('labor'),opex=M.getCauseDetail('opex');
   const positive=M.group.positiveOffset,negative=M.group.negativeTotal,rent=M.getCauseDetail('opex-rent');
   return `<div class="ai-attribution-brief"><section class="ai-brief-intro"><h2>整体归因总结</h2><p>以<strong>9月实际经营模式</strong>为基准：将9月堂食人均与外卖单均代入10月实际业务量，再按9月各项成本费用率计算，10月基准利润为<strong class="ai-value-reference">${num(t.baseline.profit)}万元</strong>；实际利润<strong class="ai-value-actual">${num(b.profit)}万元</strong>，较基准少<strong class="ai-value-negative">${num(t.baselineGap)}万元</strong>。与9月实际${num(a.profit,0)}万元相比，利润净减少${num(decline,0)}万元。</p><div class="ai-summary-metrics"><div data-tone="history"><small>9月实际利润</small><strong>${num(a.profit,0)}<span>万元</span></strong></div><div data-tone="reference"><small>9月模式下10月基准</small><strong>${num(t.baseline.profit)}<span>万元</span></strong><em>已计入10月实际业务量</em></div><div data-tone="actual"><small>10月实际利润</small><strong>${num(b.profit,0)}<span>万元</span></strong><em class="ai-value-negative">较基准少${num(t.baselineGap)}万元</em></div></div></section>
-    <section class="ai-brief-section"><header><h3>一、利润变化全景</h3><p>从9月实绩出发，先形成10月基准，再解释实际与基准之间的差异。</p></header><figure class="ai-brief-figure"><div class="ai-brief-chart-meta"><span>金额单位：万元</span><div class="ai-brief-legend"><span><i class="total"></i>实绩</span><span><i class="reference"></i>基准检查点</span><span><i class="positive"></i>增加利润</span><span><i class="negative"></i>减少利润</span></div></div>${bridgeSvg(attributionChartRows(),a.profit,b.profit)}<figcaption class="ai-brief-caption"><strong>简报解读</strong><p>业务量变化在9月费率口径下增加利润<strong class="${badClass(volume.impact)}">${num(volume.impact)}万元</strong>，形成<strong class="ai-value-reference">${num(t.baseline.profit)}万元</strong>基准。随后促销净价<strong class="${badClass(pricing.impact)}">${signed(pricing.impact)}万元</strong>、食材<strong class="${badClass(food.impact)}">${signed(food.impact)}万元</strong>、人工<strong class="${badClass(labor.impact)}">${signed(labor.impact)}万元</strong>、其他费用<strong class="${badClass(opex.impact)}">${signed(opex.impact)}万元</strong>，衔接到实际${num(b.profit)}万元。其他费用中租金<strong class="${badClass(rent.impact)}">${signed(rent.impact)}万元</strong>属于固定成本摊薄，实际租金未减少。</p></figcaption></figure>
+    <section class="ai-brief-section"><header><h3>一、利润变化全景</h3><p>从9月实绩出发，先形成10月基准，再解释实际与基准之间的差异。</p></header><figure class="ai-brief-figure"><div class="ai-brief-chart-meta"><span>金额单位：万元</span><div class="ai-brief-legend"><span><i class="total"></i>实绩</span><span><i class="reference"></i>基准检查点</span><span><i class="positive"></i>增加利润</span><span><i class="negative"></i>减少利润</span></div></div>${bridgeSvg(attributionChartRows(),a.profit,b.profit)}<figcaption class="ai-brief-caption"><strong>简报解读</strong><p>业务量变化在9月费率口径下增加利润<strong class="${badClass(volume.impact)}">${num(volume.impact)}万元</strong>，形成<strong class="ai-value-reference">${num(t.baseline.profit)}万元</strong>基准。随后促销净价<strong class="${badClass(pricing.impact)}">${signed(pricing.impact)}万元</strong>、食材<strong class="${badClass(food.impact)}">${signed(food.impact)}万元</strong>、人工<strong class="${badClass(labor.impact)}">${signed(labor.impact)}万元</strong>、其他费用<strong class="${badClass(opex.impact)}">${signed(opex.impact)}万元</strong>，衔接到实际${num(b.profit)}万元。其他费用中租金<strong class="${badClass(rent.impact)}">${signed(rent.impact)}万元</strong>属于固定成本摊薄，实际租金未减少。</p></figcaption></figure>${attributionImpactGraphic()}
     <div class="hmw-table-wrap ai-brief-table-wrap"><table class="hmw-table ai-brief-table"><caption>各因素对环比净下降${num(decline,0)}万元的贡献</caption><thead><tr><th>经营因素</th><th class="numeric">利润影响 / 万元</th><th class="numeric">对利润净下降的贡献</th></tr></thead><tbody>${M.causes.map(c=>`<tr data-brief-cause="${c.id}"><td><button class="hmw-link" data-cause="${c.id}">${esc(c.name)}</button></td><td class="numeric ${badClass(c.impact)}">${signed(c.impact)}</td><td class="numeric ${badClass(c.impact)}">${signed(c.netDeclineShare,1)}%</td></tr>`).join('')}<tr class="total" data-brief-total><td>利润净变化</td><td class="numeric bad">${signed(-decline)}</td><td class="numeric">100.0%</td></tr></tbody></table></div><p class="ai-brief-method"><strong>占比口径：</strong>本表贡献＝−单项利润影响 ÷ 环比净下降${num(decline,0)}万元，原始贡献合计100%；分项显示可能因四舍五入与合计略有差异。增利因素抵减降幅，记负贡献；减利因素记正贡献，可超过100%。顶层增利合计${num(positive)}万元、减利合计${num(negative)}万元；${num(t.baseline.profit)}万元基准是检查点，不作为额外贡献相加。</p></section>
-    <section class="ai-brief-section"><header><h3>二、9月模式下的10月基准如何形成</h3></header><p>堂食以9月折后人均${num(t.channels.september.dineIn.unitPrice)}元，测算10月${num(t.channels.october.dineIn.guests,0)}就餐人次；外卖以9月折后单均${num(t.channels.september.delivery.unitPrice)}元，测算10月${num(t.channels.october.delivery.orders,0)}个有效订单。逐店基准收入合计${num(t.baseline.revenue)}万元，扣减9月费率参考成本费用${num(t.baseline.expenses)}万元，得到基准利润${num(t.baseline.profit)}万元。</p><div class="ai-message-actions"><button class="hmw-button" data-action="baseline">查看渠道与费用测算</button><button class="hmw-button" data-action="substitution">逐步核对连环替代</button></div><p class="ai-brief-method">固定替换顺序：业务量 → 净成交价 → 标准成本衔接 → 菜品组合 → 采购价格 → 耗用 → 人工 → 其他费用。基准与实际的缺口为${num(t.baselineGap)}万元，和环比下降${num(decline)}万元分别计算。</p></section>
+    <section class="ai-brief-section"><header><h3>二、9月模式下的10月基准如何形成</h3></header>${attributionMethodGraphic()}<p>堂食以9月折后人均${num(t.channels.september.dineIn.unitPrice)}元，测算10月${num(t.channels.october.dineIn.guests,0)}就餐人次；外卖以9月折后单均${num(t.channels.september.delivery.unitPrice)}元，测算10月${num(t.channels.october.delivery.orders,0)}个有效订单。逐店基准收入合计${num(t.baseline.revenue)}万元，扣减9月费率参考成本费用${num(t.baseline.expenses)}万元，得到基准利润${num(t.baseline.profit)}万元。</p><div class="ai-message-actions"><button class="hmw-button" data-action="baseline">查看渠道与费用测算</button><button class="hmw-button" data-action="substitution">逐步核对连环替代</button></div><p class="ai-brief-method">固定替换顺序：业务量 → 净成交价 → 标准成本衔接 → 菜品组合 → 采购价格 → 耗用 → 人工 → 其他费用。基准与实际的缺口为${num(t.baselineGap)}万元，和环比下降${num(decline)}万元分别计算。</p></section>
     <section class="ai-brief-section"><header><h3>三、标准成本明细与优先核查事项</h3></header><ol class="ai-brief-priorities"><li data-category="pricing"><strong>促销与净成交价：<span class="${badClass(pricing.impact)}">${signed(pricing.impact)}万元</span>。</strong><p>在同一10月业务量下比较渠道净价。销售优惠只冲减一次收入；量价分解不能证明促销造成客流增长。</p><button class="hmw-link" data-cause="pricing">查看渠道净价与促销明细</button></li><li data-category="food"><strong>食材标准成本差异：<span class="${badClass(food.impact)}">${signed(food.impact)}万元</span>。</strong><p>标准成本先与费率基准衔接，再分开核对菜品组合${num(t.foodStandard.mixCost)}万元、采购价差${num(t.foodStandard.priceCost)}万元和超耗报损${num(t.foodStandard.excessCost)}万元。基准衔接${signed(t.foodStandard.alignmentImpact,4)}万元单列，不重复分配到采购或耗用。</p><button class="hmw-link" data-cause="food">查看标准成本及8项原料</button></li><li data-category="labor"><strong>人工净影响：<span class="${badClass(labor.impact)}">${signed(labor.impact)}万元</span>。</strong><p>费率基准到固定人工与弹性工时标准，结构摊薄${signed(t.laborStandard.structureImpact)}万元；高峰、低峰合计超标准工时影响${signed(t.laborStandard.executionImpact)}万元。两部分合并解释，不把摊薄当作整改收益。</p><button class="hmw-link" data-cause="labor">查看人工结构与工时</button></li><li data-category="opex"><strong>其他费用净影响：<span class="${badClass(opex.impact)}">${signed(opex.impact)}万元</span>。</strong><p>租金及其他费用逐科目列示正负影响。租金实际仍为${num(b.rent)}万元，费率摊薄带来的正向差异与真实费用压降分别解释。</p><button class="hmw-link" data-cause="opex">查看各科目费用差异</button></li></ol></section><div class="ai-message-context">方法版本 ${t.version} · 同一组120家门店 · 9月模式基准＋连环替代＋标准成本下钻。<button class="hmw-link" data-action="methodology">查看数据与方法口径</button>。业务原因和措施收益仍需经营证据核验。</div></div>`;
 }
 function aiSummary(page){
   if(page==='attribution')return aiAttributionBrief()+`<div class="ai-message-actions"><button class="hmw-button primary" data-action="show-evidence">查看完整归因</button><button class="hmw-button" data-cause="procurement">穿透70万采购价差</button><button class="hmw-button" data-nav="forecast">推演11月方案</button></div>`;
   if(page==='forecast'){
     const one=AI.base('steady'),two=AI.base('anniversary');
-    return `<div class="ai-decision-summary"><section class="ai-decision-intro"><h2>当前假设下，周年庆方案预计利润更高。</h2><p>保留现行营销并整改，预计利润<strong class="ai-value-actual">${num(one.totals.profit,1)}万元</strong>；周年庆与目标成本联动，预计利润<strong class="ai-value-reference">${num(two.totals.profit,1)}万元</strong>。你可以从任一方案出发，调整策略后重新测算。</p><div class="ai-summary-metrics"><div data-tone="actual"><small>现行营销 + 整改</small><strong>${num(one.totals.profit,1)}<span>万元利润</span></strong><em>${num(one.totals.revenue,0)}万元营业额</em></div><div data-tone="reference"><small>周年庆 + 成本联动</small><strong>${num(two.totals.profit,1)}<span>万元利润</span></strong><em>${num(two.totals.revenue,0)}万元营业额</em></div><div data-tone="reference"><small>两案预计利润差</small><strong>${num(two.totals.profit-one.totals.profit,1)}<span>万元</span></strong><em>不同经营策略的预测差额</em></div></div></section><section><h3 class="ai-insight-heading">策略判断与落地条件</h3><div class="ai-insight-grid"><article class="ai-insight-card"><h4>看清整套策略的差异</h4><p>两案销量、折扣和营销费不同；利润差来自整套经营假设，不能直接当作单项促销收益。</p></article><article class="ai-insight-card"><h4>先确认采购与承接能力</h4><p>采购价格与门店产能仍须逐项确认。客流、优惠、预算和整改达成率都可以调整后再测算。</p></article></div></section><div class="ai-next-step"><strong>下一步</strong><p>确认采购与产能条件，选择经营方案，再调整参数核对集团与逐店预测。</p></div><div class="ai-message-actions"><button class="hmw-button primary" data-action="edit-strategy">调整策略并重新测算</button><button class="hmw-button" data-select-plan="steady">从现行营销开始</button><button class="hmw-button" data-select-plan="anniversary">从周年庆开始</button></div><div class="ai-message-context">依据：10月归因发现的问题、11月30天需求假设、采购量价与逐店费用预算。</div></div>`;
+    return `<div class="ai-decision-summary"><section class="ai-decision-intro"><h2>当前假设下，周年庆方案预计利润更高。</h2><p>保留现行营销并整改，预计利润<strong class="ai-value-actual">${num(one.totals.profit,1)}万元</strong>；周年庆与目标成本联动，预计利润<strong class="ai-value-reference">${num(two.totals.profit,1)}万元</strong>。你可以从任一方案出发，调整策略后重新测算。</p><div class="ai-summary-metrics"><div data-tone="actual"><small>现行营销 + 整改</small><strong>${num(one.totals.profit,1)}<span>万元利润</span></strong><em>${num(one.totals.revenue,0)}万元营业额</em></div><div data-tone="reference"><small>周年庆 + 成本联动</small><strong>${num(two.totals.profit,1)}<span>万元利润</span></strong><em>${num(two.totals.revenue,0)}万元营业额</em></div><div data-tone="reference"><small>两案预计利润差</small><strong>${num(two.totals.profit-one.totals.profit,1)}<span>万元</span></strong><em>不同经营策略的预测差额</em></div></div></section>${forecastPlanGraphic()}<section><h3 class="ai-insight-heading">策略判断与落地条件</h3><div class="ai-insight-grid"><article class="ai-insight-card"><h4>看清整套策略的差异</h4><p>两案销量、折扣和营销费不同；利润差来自整套经营假设，不能直接当作单项促销收益。</p></article><article class="ai-insight-card"><h4>先确认采购与承接能力</h4><p>采购价格与门店产能仍须逐项确认。客流、优惠、预算和整改达成率都可以调整后再测算。</p></article></div></section><div class="ai-next-step"><strong>下一步</strong><p>确认采购与产能条件，选择经营方案，再调整参数核对集团与逐店预测。</p></div><div class="ai-message-actions"><button class="hmw-button primary" data-action="edit-strategy">调整策略并重新测算</button><button class="hmw-button" data-select-plan="steady">从现行营销开始</button><button class="hmw-button" data-select-plan="anniversary">从周年庆开始</button></div><div class="ai-message-context">依据：10月归因发现的问题、11月30天需求假设、采购量价与逐店费用预算。</div></div>`;
   }
   const t=M.tracking,s=t.summary;
-  return `<div class="ai-decision-summary"><section class="ai-decision-intro"><h2>本周利润未达周计划，优先复核3家重点门店。</h2><p>已核对120家门店，实际经营利润<strong class="ai-value-actual">${num(s.actual.profit,2)}万元</strong>，较周计划少<strong class="ai-value-negative">${num(s.plan.profit-s.actual.profit,2)}万元</strong>。重点门店的动作完成后，仍需继续核对实际效果。</p><div class="ai-summary-metrics"><div data-tone="actual"><small>本周实际门店利润</small><strong>${num(s.actual.profit,2)}<span>万元</span></strong><em>周计划 ${num(s.plan.profit,2)}万元</em></div><div data-tone="warning"><small>待复核重点门店</small><strong>3<span>家</span></strong><em>动作完成后仍核对实际效果</em></div><div data-tone="reference"><small>下一次复核</small><strong class="ai-date">11月14日</strong><em>费用、出餐与客诉一起看</em></div></div></section><section><h3 class="ai-insight-heading">三家门店，分别核查</h3><div class="ai-insight-grid"><article class="ai-insight-card"><h4>上海06店 · 客流与工时</h4><p>客流与工时未联动，核对排班调整和实际工时费用。</p></article><article class="ai-insight-card"><h4>北京07店 · 临采价差</h4><p>核对临时采购价格与结算凭据，跟进采购执行偏差。</p></article><article class="ai-insight-card"><h4>深圳02店 · 报损与能耗</h4><p>核对报损记录与设备能耗，确认调整后的实际表现。</p></article></div></section><div class="ai-next-step"><strong>下一步 · 11月14日复核</strong><p>核对采购结算、实际耗用和工时费用，同时观察出餐与客诉，再确认整改收益。</p></div><div class="ai-message-actions"><button class="hmw-button primary" data-action="focus-abnormal">查看3家重点门店</button><button class="hmw-button" data-store="HMW-006" data-context="tracking">核查上海06店工时</button><button class="hmw-button" data-action="show-evidence">查看周计划与实际</button></div><div class="ai-message-context">执行依据：10月31日锁定的周年庆 V1，11月1—7日独立周计划。人工预测试算不改写本周计划或实际。</div></div>`;
+  return `<div class="ai-decision-summary"><section class="ai-decision-intro"><h2>本周利润未达周计划，优先复核3家重点门店。</h2><p>已核对120家门店，实际经营利润<strong class="ai-value-actual">${num(s.actual.profit,2)}万元</strong>，较周计划少<strong class="ai-value-negative">${num(s.plan.profit-s.actual.profit,2)}万元</strong>。重点门店的动作完成后，仍需继续核对实际效果。</p><div class="ai-summary-metrics"><div data-tone="actual"><small>本周实际门店利润</small><strong>${num(s.actual.profit,2)}<span>万元</span></strong><em>周计划 ${num(s.plan.profit,2)}万元</em></div><div data-tone="warning"><small>待复核重点门店</small><strong>3<span>家</span></strong><em>动作完成后仍核对实际效果</em></div><div data-tone="reference"><small>下一次复核</small><strong class="ai-date">11月14日</strong><em>费用、出餐与客诉一起看</em></div></div></section>${trackingProfitGraphic()}${trackingProgressGraphic()}<section><h3 class="ai-insight-heading">三家门店，分别核查</h3><div class="ai-insight-grid"><article class="ai-insight-card"><h4>上海06店 · 客流与工时</h4><p>客流与工时未联动，核对排班调整和实际工时费用。</p></article><article class="ai-insight-card"><h4>北京07店 · 临采价差</h4><p>核对临时采购价格与结算凭据，跟进采购执行偏差。</p></article><article class="ai-insight-card"><h4>深圳02店 · 报损与能耗</h4><p>核对报损记录与设备能耗，确认调整后的实际表现。</p></article></div></section><div class="ai-next-step"><strong>下一步 · 11月14日复核</strong><p>核对采购结算、实际耗用和工时费用，同时观察出餐与客诉，再确认整改收益。</p></div><div class="ai-message-actions"><button class="hmw-button primary" data-action="focus-abnormal">查看3家重点门店</button><button class="hmw-button" data-store="HMW-006" data-context="tracking">核查上海06店工时</button><button class="hmw-button" data-action="show-evidence">查看周计划与实际</button></div><div class="ai-message-context">执行依据：10月31日锁定的周年庆 V1，11月1—7日独立周计划。人工预测试算不改写本周计划或实际。</div></div>`;
 }
 function workspaceView(page,content){
   if(globalThis.AiPlatform)return globalThis.AiPlatform.threadView(page,content);
