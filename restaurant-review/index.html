@@ -65,11 +65,11 @@
   'use strict';
   const round = value => Math.round((value + Number.EPSILON) * 1e6) / 1e6;
   const sum = values => round(values.reduce((total, value) => total + value, 0));
-  // `other` 始终包含租金；rent / otherExRent 仅用于穿透，不可再次相加。
+  // `other` 始终包含租金；utilities 已含在 otherExRent 中，单列时须从其他费用扣除，不能重复相加。
   const profit = row => round(row.revenue - row.food - row.labor - row.other);
   const actuals = {
-    september: { revenue: 4000, food: 1400, labor: 1000, rent: 600, otherExRent: 600, other: 1200, profit: 400, orders: 200000, grossSales: 4200, discount: 200 },
-    october: { revenue: 4800, food: 1962, labor: 1320, rent: 600, otherExRent: 798, other: 1398, profit: 120, orders: 260000, grossSales: 5460, discount: 660 }
+    september: { revenue: 4000, food: 1400, labor: 1000, rent: 600, utilities: 120, otherExRent: 600, other: 1200, profit: 400, orders: 200000, grossSales: 4200, discount: 200 },
+    october: { revenue: 4800, food: 1962, labor: 1320, rent: 600, utilities: 174, otherExRent: 798, other: 1398, profit: 120, orders: 260000, grossSales: 5460, discount: 660 }
   };
   const bridge = [
     { id: 'volume', label: '销量增长贡献', value: 380, owner: '财务 / 运营', detail: '交易订单量增长30%；按9月商品结构、折扣及标准资源消耗测算，增量收入1200，增量食材420、人工250、其他150。', formula: '1200 − 420 − 250 − 150 = +380' },
@@ -312,7 +312,8 @@ function renderOverview(){
     {label:'毛利',previous:previous.revenue-previous.food,current:current.revenue-current.food,kind:'subtotal'},
     {label:'人工费用',previous:previous.labor,current:current.labor},
     {label:'租金及物业费',previous:previous.rent,current:current.rent},
-    {label:'其他经营费用',previous:previous.otherExRent,current:current.otherExRent},
+    {label:'水电燃气费',previous:previous.utilities,current:current.utilities},
+    {label:'其他经营费用',previous:previous.otherExRent-previous.utilities,current:current.otherExRent-current.utilities},
     {label:'经营费用合计',previous:previous.labor+previous.other,current:current.labor+current.other,kind:'subtotal'},
     {label:'经营利润',previous:previous.profit,current:current.profit,kind:'result'}
   ];
