@@ -1114,8 +1114,6 @@
 @media(max-width:1100px){.aw-core-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.aw-core-card>strong{font-size:22px}}
 @media(max-width:760px){.aw-core-metrics{gap:10px}.aw-core-card{padding:13px 10px}.aw-core-card>small{font-size:11px}.aw-core-card>strong{font-size:20px;margin:7px 0}.aw-core-card>em{font-size:10px}.aw-core-card>strong>span{font-size:10px}.aw-core-expenses,.campaign-expense-details{padding:12px}}
 @media(max-width:359px){.aw-core-metrics{grid-template-columns:minmax(0,1fr)}.aw-core-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;align-items:center}.aw-core-card>strong{grid-column:2;grid-row:span 2;margin:0}.aw-core-card>em{grid-column:1}}
-.aw-manager-entry{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 16px 16px;padding:12px 10px;border:1px solid #dce6f5;border-radius:8px;color:#42699d;text-decoration:none;font-size:13px}
-.aw-manager-entry>span{font-size:11px;color:#7f94b1}
 .aw-distribution{margin:25px 0;padding:20px;border:1px solid #cdddf5;border-radius:11px;background:#f7faff}
 .aw-distribution>header{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}
 .aw-distribution h3{margin:0}
@@ -1148,7 +1146,6 @@
       </div>
       <div class="platform-sidebar-label"><span>经营任务</span></div>
       <nav class="hmw-nav" id="hmwNav" aria-label="经营决策导航"></nav>
-      <a class="aw-manager-entry" href="#manager">门店店长工作台 <span>独立入口 →</span></a>
       <div class="platform-sidebar-label platform-history-label"><span>我的任务</span><span id="platformHistoryCount">0</span></div>
       <nav id="platformHistory" aria-label="我的任务"></nav>
       <div class="platform-sidebar-bottom"><button class="platform-profile" data-platform-action="workspace"><span class="platform-profile-avatar">好</span><span><b>好美味餐饮集团</b><small>集团经营工作空间</small></span><span data-platform-icon="chevrons"></span></button></div>
@@ -3869,7 +3866,7 @@ render();
   function distributionPanel(){
     const sig=P.signature(scenario.applied),same=publication?.signature===sig;
     const confirmed=publication?Object.values(flow.approvals).filter(a=>a.proposal.signature===publication.signature).length:0;
-    return `<section class="aw-distribution"><header><div><h3>下发与门店确认进度</h3><p>${publication?`${esc(publication.versionLabel)} · ${esc(planNames[publication.forecast.plan])} · ${esc(new Date(publication.publishedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}`:'尚未下发经营方案'}</p></div><span class="hmw-tag ${publication?'blue':''}" id="awPublishedCount">已下发版确认 ${confirmed} / ${M.stores.length} 店</span></header>${publication?`<p>已下发版集团预计营业额${amt(publication.forecast.totals.revenue)}万元，经营利润${amt(publication.forecast.totals.profit)}万元。${same?'当前测算与已下发版一致。':'当前测算尚未替代已下发版本。'}</p>`:''}<div class="aw-week-actions"><button class="hmw-button primary" id="awPublish" data-aw-action="publish" ${scenario.dirty||same?'disabled':''}>${same?'当前测算已下发':'下发当前测算至店长工作台'}</button><a class="hmw-button" href="${managerUrl()}">进入独立店长工作台 →</a></div><p class="aw-note">调整方案并重新测算后，可再次下发。各店确认后分别生效；集团下发不会直接替换门店已生效方案。演示进度保存在当前浏览器中。</p></section>`;
+    return `<section class="aw-distribution"><header><div><h3>下发与门店确认进度</h3><p>${publication?`${esc(publication.versionLabel)} · ${esc(planNames[publication.forecast.plan])} · ${esc(new Date(publication.publishedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}`:'尚未下发经营方案'}</p></div><span class="hmw-tag ${publication?'blue':''}" id="awPublishedCount">已下发版确认 ${confirmed} / ${M.stores.length} 店</span></header>${publication?`<p>已下发版集团预计营业额${amt(publication.forecast.totals.revenue)}万元，经营利润${amt(publication.forecast.totals.profit)}万元。${same?'当前测算与已下发版一致。':'当前测算尚未替代已下发版本。'}</p>`:''}<div class="aw-week-actions"><button class="hmw-button primary" id="awPublish" data-aw-action="publish" ${scenario.dirty||same?'disabled':''}>${same?'当前测算已下发':'下发当前测算至店长工作台'}</button></div><p class="aw-note">调整方案并重新测算后，可再次下发。各店确认后分别生效；集团下发不会直接替换门店已生效方案。演示进度保存在当前浏览器中。</p></section>`;
   }
   function renderWorkspace(){
     const d=P.describe(scenario.applied,M);
