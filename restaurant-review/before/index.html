@@ -294,7 +294,7 @@
   'use strict';
 
   const SCALE = 1000000; // 万元保留至分，所有加总在金额最小单位上分配。
-  const DATA_VERSION = 'DEMO-COST-FOCUS-V1';
+  const DATA_VERSION = 'DEMO-COST-FOCUS-V2';
   const FORECAST_VERSION = 'NOV-COST-FOCUS-V1';
   const money = n => Math.round(n * SCALE) / SCALE;
   const sum = values => money(values.reduce((a, b) => a + b, 0));
@@ -358,11 +358,11 @@
     { id: 'chicken', name: '鸡肉', dish: '招牌香煎鸡腿', kg: 100000, basePrice: 18, actualPrice: 20, reason: '原料市场价上行；月度到货价较9月基准上涨2.00元/公斤。', evidence: '10月验收入库100,000公斤，采购发票加权价20.00元/公斤；9月同等级同规格18.00元/公斤。' },
     { id: 'beef', name: '牛肉', dish: '黑椒牛肉粒', kg: 50000, basePrice: 60, actualPrice: 66, reason: '同等级冷鲜牛肉到货价上升，既有月度合约未覆盖全部需求。', evidence: '10月同规格验收50,000公斤，实际66.00元/公斤，对比9月60.00元/公斤。' },
     { id: 'pork', name: '五花肉', dish: '砂锅红烧肉', kg: 50000, basePrice: 28, actualPrice: 30, reason: '同部位规格采购价上涨2.00元/公斤。', evidence: '10月验收50,000公斤，实际30.00元/公斤，对比9月28.00元/公斤。' },
-    { id: 'cheese', name: '芝士', dish: '芝士焗鸡肉饭', forecastServings: 50000, standardKg: 0.1, basePrice: 40, spotPrice: 56, netSellingPrice: 32, standardDishCost: 12, replacedDishCost: 10.4, reason: '新品预估5万份，仅锁定5,000公斤试销配额；实际10万份，追加5,000公斤按现货价采购。', minimumCommitmentKg: 10000, quoteDeadline: '10月05日' },
-    { id: 'hairtail', name: '带鱼', dish: '香酥带鱼', forecastServings: 40000, standardKg: 0.25, basePrice: 24, spotPrice: 30, netSellingPrice: 48, standardDishCost: 12, replacedDishCost: 10.5, reason: '新品预估4万份，锁定10,000公斤试销配额；实际8万份，超量现货采购10,000公斤。', minimumCommitmentKg: 20000, quoteDeadline: '10月05日' },
-    { id: 'crab', name: '螃蟹', dish: '蟹肉豆腐煲', forecastServings: 25000, standardKg: 0.2, basePrice: 45, spotPrice: 55, netSellingPrice: 58, standardDishCost: 15, replacedDishCost: 13, reason: '新品预估2.5万份，锁定5,000公斤试销配额；实际5万份，追加5,000公斤未签整月合约。', minimumCommitmentKg: 10000, quoteDeadline: '10月05日' },
-    { id: 'pigeon', name: '鸽子', dish: '脆皮乳鸽拼盘', forecastServings: 20000, standardKg: 0.25, basePrice: 40, spotPrice: 48, netSellingPrice: 48, standardDishCost: 15, replacedDishCost: 13, reason: '新品预估2万份，锁定5,000公斤试销配额；实际4万份，追加5,000公斤按临采价结算。', minimumCommitmentKg: 10000, quoteDeadline: '10月05日' },
-    { id: 'fishball', name: '鱼丸', dish: '鲜汤鱼丸煲', forecastServings: 50000, standardKg: 0.2, basePrice: 16, spotPrice: 18, netSellingPrice: 28, standardDishCost: 8, replacedDishCost: 7.4, reason: '新品预估5万份，锁定10,000公斤试销配额；实际10万份，新增10,000公斤未进入首单配额。', minimumCommitmentKg: 20000, quoteDeadline: '10月05日' }
+    { id: 'cheese', name: '芝士', dish: '芝士焗鸡肉饭', forecastServings: 50000, standardKg: 0.1, basePrice: 40, spotPrice: 56, netSellingPrice: 32, reason: '新品预估5万份，仅锁定5,000公斤试销配额；实际10万份，追加5,000公斤按现货价采购。', minimumCommitmentKg: 10000, quoteDeadline: '10月05日' },
+    { id: 'hairtail', name: '带鱼', dish: '香酥带鱼', forecastServings: 40000, standardKg: 0.25, basePrice: 24, spotPrice: 30, netSellingPrice: 48, reason: '新品预估4万份，锁定10,000公斤试销配额；实际8万份，超量现货采购10,000公斤。', minimumCommitmentKg: 20000, quoteDeadline: '10月05日' },
+    { id: 'crab', name: '螃蟹', dish: '蟹肉豆腐煲', forecastServings: 25000, standardKg: 0.2, basePrice: 45, spotPrice: 55, netSellingPrice: 58, reason: '新品预估2.5万份，锁定5,000公斤试销配额；实际5万份，追加5,000公斤未签整月合约。', minimumCommitmentKg: 10000, quoteDeadline: '10月05日' },
+    { id: 'pigeon', name: '鸽子', dish: '脆皮乳鸽拼盘', forecastServings: 20000, standardKg: 0.25, basePrice: 40, spotPrice: 48, netSellingPrice: 48, reason: '新品预估2万份，锁定5,000公斤试销配额；实际4万份，追加5,000公斤按临采价结算。', minimumCommitmentKg: 10000, quoteDeadline: '10月05日' },
+    { id: 'fishball', name: '鱼丸', dish: '鲜汤鱼丸煲', forecastServings: 50000, standardKg: 0.2, basePrice: 16, spotPrice: 18, netSellingPrice: 28, reason: '新品预估5万份，锁定10,000公斤试销配额；实际10万份，新增10,000公斤未进入首单配额。', minimumCommitmentKg: 20000, quoteDeadline: '10月05日' }
   ];
   const materials = materialSpecs.map((spec, materialIndex) => {
     const newProduct = Boolean(spec.forecastServings);
@@ -376,34 +376,31 @@
       const spotKg = newProduct ? purchaseKg - lockedKg : 0;
       const actualPrice = newProduct ? (spec.basePrice + spec.spotPrice) / 2 : spec.actualPrice;
       const priceImpact = money(-(newProduct ? spotKg * (spec.spotPrice - spec.basePrice) : purchaseKg * (actualPrice - spec.basePrice)) / 10000);
-      const mixImpact = newProduct ? money(-actualServings * (spec.standardDishCost - spec.replacedDishCost) / 10000) : 0;
-      return { storeId: store.id, storeName: store.name, region: store.region, forecastServings, actualServings, replacementServings: actualServings, purchaseKg: money(purchaseKg), standardKg: spec.standardKg || null,
-        lockedKg: money(lockedKg), spotKg: money(spotKg), basePrice: spec.basePrice, actualPrice, impact: priceImpact, priceImpact, mixImpact,
+      return { storeId: store.id, storeName: store.name, region: store.region, forecastServings, actualServings, purchaseKg: money(purchaseKg), standardKg: spec.standardKg || null,
+        lockedKg: money(lockedKg), spotKg: money(spotKg), basePrice: spec.basePrice, actualPrice, impact: priceImpact, priceImpact,
         actualPurchaseAmount: money(purchaseKg * actualPrice / 10000), referencePurchaseAmount: money(purchaseKg * spec.basePrice / 10000) };
     });
     const forecastServings = newProduct ? spec.forecastServings : 0;
     const actualServings = forecastServings * 2;
     const purchaseKg = newProduct ? actualServings * spec.standardKg : spec.kg;
     const actualPrice = newProduct ? (spec.basePrice + spec.spotPrice) / 2 : spec.actualPrice;
-    return { ...spec, newProduct, unit: '公斤', quantity: purchaseKg, quantityKg: purchaseKg, purchaseKg, forecastServings, actualServings, replacementServings: actualServings, forecastQuantity: forecastServings, actualQuantity: actualServings, standardUsageKg: purchaseKg, baselinePrice: spec.basePrice, scene: spec.reason,
+    return { ...spec, newProduct, unit: '公斤', quantity: purchaseKg, quantityKg: purchaseKg, purchaseKg, forecastServings, actualServings, forecastQuantity: forecastServings, actualQuantity: actualServings, standardUsageKg: purchaseKg, baselinePrice: spec.basePrice, scene: spec.reason,
       lockedKg: newProduct ? purchaseKg / 2 : 0, spotKg: newProduct ? purchaseKg / 2 : 0, actualPrice,
-      impact: sum(storeRows.map(row => row.priceImpact)), priceImpact: sum(storeRows.map(row => row.priceImpact)), mixImpact: sum(storeRows.map(row => row.mixImpact)),
+      impact: sum(storeRows.map(row => row.priceImpact)), priceImpact: sum(storeRows.map(row => row.priceImpact)),
       actualPurchaseAmount: sum(storeRows.map(row => row.actualPurchaseAmount)), referencePurchaseAmount: sum(storeRows.map(row => row.referencePurchaseAmount)),
       evidence: spec.evidence || `首单试销配额${purchaseKg / 2}公斤，实际标准用量${purchaseKg}公斤；首单配额结算价${spec.basePrice}元/公斤（与9月该原料同规格发票基准价相同），超量现货价${spec.spotPrice}元/公斤，加权价${actualPrice}元/公斤。`,
       formula: newProduct ? '超出锁价量的采购公斤 ×（现货结算价－原锁量价）÷10,000' : '同规格实际采购公斤 ×（10月加权价－9月基准价）÷10,000',
-      mixFormula: newProduct ? '全部新品替代老菜份数 ×（新品标准食材成本－被替代菜标准食材成本）÷10,000；均按同规格9月参考采购价。超预测份数仅解释追加采购，不是组合归因的计量基数。' : null,
       procurementNote: newProduct ? `首单${purchaseKg / 2}公斤为供应商限量试销配额，沿用9月同规格结算价，并非正式整月批量合约。正式整月采购需在${spec.quoteDeadline}前承诺${spec.minimumCommitmentKg}公斤；原预估不足以承诺，该门槛未落实，追加部分按现货价结算。归因只计已结算价差，不叠加未签意向报价。` : '只比较同品级同规格实际发票价，不把不同等级混在价格差中。',
       storeRows };
   });
   const procurementByStore = storeBases.map((_, i) => sum(materials.map(m => m.storeRows[i].priceImpact)));
-  const mixByStore = storeBases.map((_, i) => sum(materials.map(m => m.storeRows[i].mixImpact)));
   const stores = storeBases.map((base, i) => {
     const september = complete(Object.fromEntries(Object.entries(septemberColumns).map(([k, values]) => [k, values[i]])));
     september.discount = money(september.grossSales - september.revenue);
     const octoberRow = { ...september };
     for (const [key, values] of Object.entries(volumeColumns)) octoberRow[key] = money(octoberRow[key] + values[i]);
     octoberRow.revenue = money(octoberRow.revenue - priceDiscount[i]);
-    octoberRow.food = money(octoberRow.food - procurementByStore[i] - mixByStore[i] + usageExcess[i]);
+    octoberRow.food = money(octoberRow.food - procurementByStore[i] + usageExcess[i]);
     octoberRow.labor = money(octoberRow.labor + laborExcess[i]);
     for (const [key, values] of Object.entries(opexExcessColumns)) octoberRow[key] = money(octoberRow[key] + values[i]);
     octoberRow.discount = money(octoberRow.grossSales - octoberRow.revenue);
@@ -433,7 +430,7 @@
     channels.baseline = { dineIn: { ...channels.october.dineIn, revenue: dineRevenue, unitPrice: channels.september.dineIn.unitPrice },
       delivery: { ...channels.october.delivery, revenue: deliveryRevenue, unitPrice: channels.september.delivery.unitPrice } };
     const foodStandard = { rateReferenceCost: baseline.food, standardCost: money(a.food + volumeColumns.food[i]),
-      mixCost: -mixByStore[i], priceCost: -procurementByStore[i], excessCost: usageExcess[i], actualCost: b.food };
+      priceCost: -procurementByStore[i], excessCost: usageExcess[i], actualCost: b.food };
     foodStandard.alignmentImpact = money(foodStandard.rateReferenceCost - foodStandard.standardCost);
     const standardLaborCost = money(a.labor + volumeColumns.labor[i]);
     const laborStandard = { rateReferenceCost: baseline.labor, fixedCost: fixedLabor[i], standardCost: standardLaborCost, actualCost: b.labor,
@@ -441,7 +438,7 @@
       actualHours: (b.labor - fixedLabor[i]) * 10000 / 30,
       structureImpact: money(baseline.labor - standardLaborCost), executionImpact: money(standardLaborCost - b.labor) };
     const factors = { volume: money(baseline.profit - a.profit), pricing: money(b.revenue - baseline.revenue),
-      food: money(baseline.food - b.food), mix: mixByStore[i], procurement: procurementByStore[i], usage: -usageExcess[i],
+      food: money(baseline.food - b.food), procurement: procurementByStore[i], usage: -usageExcess[i],
       'food-standard': foodStandard.alignmentImpact, labor: money(baseline.labor - b.labor),
       opex: sum(opexKeys.map(k => money(baseline[k] - b[k]))) };
     store.causes = factors;
@@ -454,7 +451,6 @@
     }
     replace('pricing', '替换净成交价与销售优惠', { revenue: b.revenue, grossSales: b.grossSales, discount: b.discount });
     replace('food-standard', '衔接实际销量的标准食材成本', { food: foodStandard.standardCost });
-    replace('mix', '替换菜品组合标准配方成本', { food: money(row.food - factors.mix) });
     replace('procurement', '替换同规格原料采购价格', { food: money(row.food - factors.procurement) });
     replace('usage', '替换实际耗用与报损', { food: b.food });
     replace('labor', '替换人工结构与实际工时', { labor: b.labor });
@@ -472,16 +468,16 @@
     return { dineIn, delivery };
   }
   const baselineTotals = aggregate(attributionByStore.map(r => r.baseline));
-  const attribution = { version: 'SEP-MODE-V2', baseline: baselineTotals, baselineGap: money(baselineTotals.profit - actuals.october.profit),
+  const attribution = { version: 'SEP-MODE-V3', baseline: baselineTotals, baselineGap: money(baselineTotals.profit - actuals.october.profit),
     channels: Object.fromEntries(['september', 'october', 'baseline'].map(p => [p, aggregateChannels(p)])), byStore: attributionByStore,
     methodSteps: ['以同一120家门店的9月分渠道实收单价、成本费用率为经营模式基准。',
       '将10月堂食就餐人次、外卖有效订单代入9月单价，逐店计算基准收入，再按9月各项费用率计算基准利润。',
-      '固定按业务量、净成交价、标准成本衔接、菜品组合、采购价格、耗用、人工、其他费用顺序连环替代。',
+      '固定按业务量、净成交价、标准成本衔接、采购价格、耗用、人工、其他费用顺序连环替代。',
       '固定及半固定成本的费率摊薄作为结构差异解释，不称为实际节约或整改收益；本分解不证明促销导致客流增长。'],
     sourceNote: '渠道拆分为本产品内置演示数据：9月及10月营收按堂食80%、外卖20%拆分，外卖有效订单分别为12万和12.6万；假设每外卖单计1份综合就餐人次。未接入真实POS或外卖平台。',
     expenseRows: expenseKeys.map(k => ({ key: k, name: labels[k], septemberRate: actuals.september[k] / actuals.september.revenue * 100,
       baseline: baselineTotals[k], actual: actuals.october[k], impact: money(baselineTotals[k] - actuals.october[k]) })),
-    foodStandard: Object.fromEntries(['rateReferenceCost', 'standardCost', 'mixCost', 'priceCost', 'excessCost', 'actualCost', 'alignmentImpact'].map(k => [k, sum(attributionByStore.map(r => r.foodStandard[k]))])),
+    foodStandard: Object.fromEntries(['rateReferenceCost', 'standardCost', 'priceCost', 'excessCost', 'actualCost', 'alignmentImpact'].map(k => [k, sum(attributionByStore.map(r => r.foodStandard[k]))])),
     laborStandard: { ...Object.fromEntries(['rateReferenceCost', 'fixedCost', 'standardCost', 'actualCost', 'structureImpact', 'executionImpact'].map(k => [k, sum(attributionByStore.map(r => r.laborStandard[k]))])),
       hourlyCost: 30, standardHours: attributionByStore.reduce((s, r) => s + r.laborStandard.standardHours, 0), actualHours: attributionByStore.reduce((s, r) => s + r.laborStandard.actualHours, 0) },
     steps: attributionByStore[0].steps.map((step, i) => ({ id: step.id, label: step.label,
@@ -498,20 +494,18 @@
       reason, description: reason, evidence, details: evidence, children, storeRows: storeRowsFor(values), ...extras };
   }
   const procurementChildren = materials.map(m => cause(`procurement-${m.id}`, `${m.name}采购价差`, m.storeRows.map(r => r.priceImpact), m.reason, m.evidence, [], { materialId: m.id, material: m, formula: m.formula }));
-  const mixChildren = materials.filter(m => m.newProduct).map(m => cause(`mix-${m.id}`, `${m.dish}组合变化`, m.storeRows.map(r => r.mixImpact), '同一实际销量内，按9月参考采购价比较新品和被替代老菜的标准配方成本。', `${m.replacementServings}份替代量 × ${money(m.standardDishCost - m.replacedDishCost)}元标准成本差；不含采购涨价和超耗。`, [], { materialId: m.id, material: m, formula: m.mixFormula }));
   const usagePrep = allocate(14, usageExcess);
   const usageChildren = [
     cause('usage-prep', '备料及出成率偏差', usagePrep.map(n => -n), '实际销量的标准应耗与盘点实耗比较，额外耗用按实际采购成本计量。', '备料及出成率偏差14万元。'),
     cause('usage-waste', '报损及余料损耗', usageExcess.map((n, i) => money(-n + usagePrep[i])), '剔除已记入标准销量的材料耗用后，核对报损及余料。', '报损及余料9万元；与备料14万元合计23万元，不再向采购价差项重复分配。')
   ];
   const procurement = cause('procurement', '同规格采购价格差异', procurementByStore, '同等级同规格原料与9月参考采购价比较，采购价差85万元。', '鸡肉、牛肉、五花肉60万元，五类新品25万元；按标准数量计算，超耗另列。', procurementChildren, { formula: '标准应耗数量 ×（9月参考价－实际采购价）÷10,000' });
-  const mix = cause('mix', '菜品组合标准成本差异', mixByStore, '实际销量保持不变，替换菜品组合后的标准配方成本增加52万元。', '先替换净成交价，再比较基准采购价下标准配方；不把新增销量当成组合损失。', mixChildren, { formula: '实际替代份数 ×（老菜标准成本－新品标准成本）÷10,000' });
   const usage = cause('usage', '超标准耗用及报损', usageExcess.map(n => -n), '实际销量的标准耗用之外，额外耗用与报损23万元。', '按实际价计量超耗，采购价差只对标准数量计量，避免重复计算。', usageChildren);
-  const foodAlignment = cause('food-standard', '费率基准与标准成本衔接', attributionByStore.map(r => r.foodStandard.alignmentImpact), '将9月费率参考成本衔接到实际销量的标准配方成本。', '费率参考按渠道营收测算，标准配方成本按销量及食材结构测算；两种驱动口径的衔接与分币舍入单列，不归入采购或报损。');
+  const foodAlignment = cause('food-standard', '费率基准与标准成本衔接', attributionByStore.map(r => r.foodStandard.alignmentImpact), '将9月费率参考成本衔接到实际销量的标准配方成本。', '费率参考按渠道基准收入测算，标准应耗成本按实际销量及既定用量标准测算；两种计量基数与逐店舍入的衔接单列，不归入采购或报损。');
   const couponDiscount = allocate(30, priceDiscount);
   const pricingChildren = [
     cause('pricing-coupon', '通用券及折扣加深', couponDiscount.map(n => -n), '同一10月业务量下的净成交价变化，只在收入端扣减。', '通用券及折扣差异30万元，不重复列入营销费用。'),
-    cause('pricing-new', '新品促销净价变化', stores.map((s, i) => money(s.causes.pricing + couponDiscount[i])), '同一业务量下，新品套餐及渠道净成交价变化。', '10月实际分渠道收入与9月模式基准收入的差额，扣除通用券差异；菜品配方成本在组合项另列。')
+    cause('pricing-new', '新品促销净价变化', stores.map((s, i) => money(s.causes.pricing + couponDiscount[i])), '同一业务量下，新品套餐及渠道净成交价变化。', '10月实际分渠道收入与9月模式基准收入的差额，扣除通用券差异；本项不含食材采购及超标准耗用成本。')
   ];
   const peakLabor = allocate(70, laborExcess);
   const laborChildren = [
@@ -526,11 +520,11 @@
   const volumeChildren = [cause('volume-dine-in', '堂食就餐人次变化', volumeDine, '保持9月堂食人均及各项费用率，替换为10月实际堂食就餐人次。', '堂食按人均元/人乘就餐人次，原有桌单仅用于核对，不与外卖订单混用。'),
     cause('volume-delivery', '外卖有效订单变化', stores.map((s, i) => money(s.causes.volume - volumeDine[i])), '保持9月外卖单均及各项费用率，替换为10月有效完成订单。', '外卖按元/单乘有效订单，渠道输入为独立演示假设；本项包含分币衔接。')];
   const causes = [
-    cause('volume', '堂食人次与外卖订单变化', stores.map(s => s.causes.volume), '以9月分渠道单价和全费用率代入10月实际业务量，形成约520万元基准利润。', '9月利润400万元到10月基准约520万元，业务量影响约120万元；基准之后不重复加量。', volumeChildren),
-    cause('pricing', '促销及净成交价变化', stores.map(s => s.causes.pricing), '固定10月业务量，比较9月渠道单价与10月实际净成交价。', '两渠道实际实收减基准收入约-400万元。账面分解不证明促销导致了客流增长。', pricingChildren),
-    cause('food', '食材标准成本差异', stores.map(s => s.causes.food), '依次衔接标准成本、菜品组合、采购价格及超标准耗用。', '组合52万、采购85万、超耗23万；费率基准与标准配方的衔接另列，逐店及集团保持闭合。', [foodAlignment, mix, procurement, usage]),
-    cause('labor', '人工结构与工时差异', stores.map(s => s.causes.labor), '先区分全费率基准与固定/弹性工时标准，再比较实际工时。', '约+20万元结构摊薄，减去高峰70万及低峰50万超标准工时，净影响约-100万元。', laborChildren),
-    cause('opex', '其他经营费用净影响', stores.map(s => s.causes.opex), '逐科目比较9月模式费率参考与10月实际，包含固定成本摊薄和执行差异。', '净影响约+10万元；其中租金约+30万元为规模摊薄，其余费用单项偏差不超过7万元，实际租金仍为600万元，不作为整改收益。', opexChildren)
+    cause('volume', '业务量变化', stores.map(s => s.causes.volume), `以9月分渠道单价和全费用率代入10月实际业务量，形成${baselineTotals.profit.toFixed(2)}万元基准利润。`, `9月利润${actuals.september.profit.toFixed(2)}万元到10月基准${baselineTotals.profit.toFixed(2)}万元，业务量影响${money(baselineTotals.profit-actuals.september.profit).toFixed(2)}万元；基准之后不重复加量。`, volumeChildren),
+    cause('pricing', '净成交价变化', stores.map(s => s.causes.pricing), '固定10月业务量，比较9月渠道单价与10月实际净成交价。', `两渠道实际实收减基准收入${money(actuals.october.revenue-baselineTotals.revenue).toFixed(2)}万元。账面分解不证明促销导致了客流增长。`, pricingChildren),
+    cause('food', '食材成本差异', stores.map(s => s.causes.food), '以实际销量的标准食材成本为基底，分开核对同规格采购价格与超标准耗用。', '采购价格差异85万、超标准耗用与报损23万；费率基准与标准应耗成本的衔接另列，逐店及集团保持闭合。', [foodAlignment, procurement, usage]),
+    cause('labor', '人工成本差异', stores.map(s => s.causes.labor), '先区分全费率基准与固定/弹性工时标准，再比较实际工时。', '约+20万元结构摊薄，减去高峰70万及低峰50万超标准工时，净影响约-100万元。', laborChildren),
+    cause('opex', '其他经营费用', stores.map(s => s.causes.opex), '逐科目比较9月模式费率参考与10月实际，包含固定成本摊薄和执行差异。', '净影响约+10万元；其中租金约+30万元为规模摊薄，其余费用单项偏差不超过7万元，实际租金仍为600万元，不作为整改收益。', opexChildren)
   ];
   const causeIndex = new Map();
   function indexCauses(items, parent = null) {
@@ -547,7 +541,7 @@
       raw: { food: 1716, labor: 1250, rent: 600, utilities: 135, tableware: 35.2, consumables: 55, maintenance: 42, marketing: 115, otherStoreExpense: 275 },
       fixed: { food: 0, labor: 900, rent: 600, utilities: 50, tableware: 0, consumables: 0, maintenance: 42, marketing: 100, otherStoreExpense: 160 },
       savings: { food: 87, labor: 80, utilities: 2, consumables: 1 }, purchaseSaving: 67, usageSaving: 20,
-      demandAssumption: '不调整现有优惠规则。11月30天、无国庆高峰，就餐人次55万；按客群及菜品组合恢复，人均折后80元。',
+      demandAssumption: '不调整现有优惠规则。11月30天、无国庆高峰，就餐人次55万；按客群恢复假设，人均折后80元。',
       conditions: ['120家门店按30个营业日编制预算，月客流55万人次。', '新品需求按周滚动汇总，采购锁量与补货计划同步。', '按分时客流调整临时工时，高峰服务人数不削减。'] },
     anniversary: { id: 'anniversary', label: '方案二｜周年庆＋目标成本落地', guests: 650000, perCapita: 80, grossPerCapita: 96,
       raw: { food: 2030, labor: 1400, rent: 600, utilities: 147, tableware: 41.6, consumables: 65, maintenance: 44, marketing: 140, otherStoreExpense: 300 },
@@ -763,14 +757,14 @@
       attributionMethod: attribution.methodSteps.join(' '),
       negativeTotal: NEGATIVE_TOTAL, profitDecline: money(actuals.september.profit - actuals.october.profit), positiveOffset: sum(causes.filter(c => c.impact > 0).map(c => c.impact)), forecastVersion: FORECAST_VERSION },
     labels, expenseKeys, actuals, stores, materials, causes, attribution,
-    flatFactors: ['volume', 'pricing', 'food-standard', 'mix', 'procurement', 'usage', 'labor', 'opex'].map(id => causeIndex.get(id)),
+    flatFactors: ['volume', 'pricing', 'food-standard', 'procurement', 'usage', 'labor', 'opex'].map(id => causeIndex.get(id)),
     getCauseDetail: id => causeIndex.get(id) || null,
     forecast, forecastSpecs, tracking,
     definitions: { negativeShare: `顶层单项负向影响绝对值÷顶层全部负向影响${NEGATIVE_TOTAL.toFixed(2)}万元；只在相同层级加总。`,
-      netDeclineShare: '单项对净下降的贡献＝－单项有符号影响÷净下降280万元；正向客流抵减为负占比，全部顶层贡献合计100%。',
+      netDeclineShare: `单项对净下降的贡献＝－单项有符号影响÷净下降${money(actuals.september.profit-actuals.october.profit).toFixed(2)}万元；正向客流抵减为负占比，全部顶层贡献合计100%。`,
       parentShare: '子项有符号影响÷父项净影响；正负混合时可为负或超过100%，父项为零不显示。',
       materialScope: '材料表仅列8个重点原料，其价格影响合计85万元；不是全部食材采购清单。材料用量为标准应耗对应的合格入库领用量，超标耗用另列23万元并含其实际采购成本。',
-      noDoubleCount: '新品超预计销售可带来正向销量贡献；只将同一总销量内替代老菜的标准成本差记组合52万，标准用量采购实际价差记85万，超耗记23万；新品25万采购差已包含在85万内。优惠券在折后收入中扣除，不再当市场费用。' }
+      noDoubleCount: '标准数量的采购价差记85万元，超标准耗用按实际采购成本记23万元，二者不重复计量；新品追加现货采购价差25万元已包含在85万元内。销售优惠已从折后收入扣除，不重复列入市场费用。' }
   };
   root.HaomeiweiModel = model;
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
