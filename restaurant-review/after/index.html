@@ -2218,6 +2218,11 @@
     requireValue(Array.isArray(plan.blockers) && plan.blockers.length === 0, '7天计划仍有资源缺口，请先处理后确认');
   }
 
+  function verifyDate(plan, nowISO) {
+    const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(nowISO));
+    requireValue(plan.startDate >= today, '执行开始日期已过去，请更新为接下来7天的清单');
+  }
+
   function approveStore(state, proposal, checks, nowISO) {
     requireValue(proposal?.storeId && proposal.signature, '缺少门店或经营方案版本');
     requireValue(Array.isArray(proposal.checks) && proposal.checks.every(item => checks?.[item.id] === true),
@@ -2247,6 +2252,7 @@
     const weekly = currentWeekly(state, storeId, weeklyKey);
     verifyReady(weekly.plan);
     requireValue(nowISO, '缺少执行计划确认时间');
+    verifyDate(weekly.plan, nowISO);
     const next = clone(state);
     if (!next.weekly[storeId].confirmedAt) next.weekly[storeId].confirmedAt = nowISO;
     return next;
@@ -2256,6 +2262,7 @@
     requireValue(weekly.confirmedAt, '请先由店长确认本店7天执行计划');
     verifyReady(plan);
     requireValue(nowISO && plan.startDate && plan.endDate, '缺少创建时间或执行计划日期');
+    verifyDate(plan, nowISO);
     const existing = state.dispatches.find(receipt => receipt.storeId === storeId && receipt.key === weeklyKey);
     if (existing) return { state: clone(state), receipt: clone(existing), reused: true };
     requireValue(Array.isArray(plan.materials) && plan.materials.every(item => Number.isFinite(item.purchaseKg) && item.purchaseKg >= 0),
@@ -2903,6 +2910,7 @@ render();
   const list=items=>`<ul>${items.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`;
   const approval=()=>flow.approvals[view.storeId];
   const weekly=()=>flow.weekly[view.storeId];
+  const weekExpired=()=>Boolean(weekly()?.plan.startDate<today());
   const isCurrent=proposal=>approval()?.proposal.signature===proposal.signature;
   function validWeekly(){const a=approval(),w=weekly();return Boolean(a&&w&&w.plan.storeId===view.storeId&&w.plan.sourceSignature===a.proposal.signature&&w.plan.sourceVersion===a.versionLabel);}
   function save(next){
@@ -2924,8 +2932,8 @@ render();
     if(monthButton)monthButton.disabled=scenario.dirty||isCurrent(proposal)||!proposal.checks.every(c=>view.checks[c.id]);
     if($('#awDraftNotice'))$('#awDraftNotice').hidden=!scenario.dirty;
     if($('#awWeekDraftNotice'))$('#awWeekDraftNotice').hidden=!view.weekDirty;
-    if($('#awConfirmWeek'))$('#awConfirmWeek').disabled=!valid||view.weekDirty||!view.weekAck||Boolean(w?.plan.blockers.length)||Boolean(w?.confirmedAt);
-    if($('#awCreateDocuments'))$('#awCreateDocuments').disabled=!a||!valid||view.weekDirty||!w?.confirmedAt||Boolean(w.plan.blockers.length)||Boolean(receipt());
+    if($('#awConfirmWeek'))$('#awConfirmWeek').disabled=!valid||weekExpired()||view.weekDirty||!view.weekAck||Boolean(w?.plan.blockers.length)||Boolean(w?.confirmedAt);
+    if($('#awCreateDocuments'))$('#awCreateDocuments').disabled=!a||!valid||weekExpired()||view.weekDirty||!w?.confirmedAt||Boolean(w.plan.blockers.length)||Boolean(receipt());
   }
   function planCard(id){
     const f=initial[id],d=P.describe(f,M),active=scenario.draft.plan===id;
@@ -2958,7 +2966,7 @@ render();
   function weekPanel(){
     const a=approval(),w=weekly(),p=w?.plan,valid=validWeekly(),r=receipt();
     if(!a)return `<div class="aw-empty"><h3>先确认本店经营方案</h3><p>${esc(getStore(view.storeId).name)}尚无店长确认的生效方案。确认后，系统才会据此生成7天物料与人员计划。</p><button class="hmw-button" data-aw-scroll="awStorePanel">前往本店方案确认</button></div>`;
-    return `<div class="aw-week-source"><strong>${esc(a.proposal.storeName)} · ${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])}</span><p>仅使用本店已确认的方案。物料和人员清单确认后，再创建对应单据。</p></div><div class="aw-week-controls"><label><span>执行开始日期</span><input id="awStartDate" type="date" min="${today()}" value="${esc(view.startDate)}"></label><label><span>额外可用支援人数</span><input id="awExtraStaff" type="number" min="0" max="50" step="1" value="${view.extraStaff}"></label><button class="hmw-button primary" data-aw-action="generate-week">${p?'更新7天执行清单':'生成本店7天执行清单'}</button></div>${!p?'<p class="aw-note">将按该店已生效方案生成物料需求、库存扣减和早晚班安排，跨月日期会明确提示。</p>':`<div class="aw-week-plan" data-week-key="${esc(p.key)}"><header><h3>${esc(p.startDate)}—${esc(p.endDate)} · 7天计划</h3><span class="hmw-tag ${!valid?'warn':w.confirmedAt?'good':''}">${!valid?'来源已变更，须重新生成':w.confirmedAt?'店长已确认':'待店长确认清单'}</span></header>${!valid?'<p class="aw-warning">本店已确认新的月度方案，旧清单不可继续确认或创建单据，请先更新。</p>':''}${p.warnings.length?`<details class="aw-secondary-detail" ${p.crossMonth?'open':''}><summary>计划依据与执行提示（${p.warnings.length}项）</summary>${list(p.warnings)}</details>`:''}${p.blockers.length?`<div class="aw-blockers"><strong>以下问题解决后才能确认</strong>${list(p.blockers)}</div>`:''}<h4>物料清单</h4><p>${esc(p.sourceNote)}</p>${materialsTable(p)}<h4>人员排班清单</h4>${staffingTable(p)}<p class="aw-warning" id="awWeekDraftNotice" ${view.weekDirty?'':'hidden'}>日期、库存或支援人数已有修改，请更新清单后重新确认。</p><label class="aw-week-ack"><input type="checkbox" id="awWeekAck" ${view.weekAck||w.confirmedAt?'checked':''} ${w.confirmedAt?'disabled':''}><span>本店店长已核对物料需求、现存与在途、人员可用性及日期安排${p.crossMonth?'，并确认跨月计划口径':''}。</span></label><div class="aw-week-actions"><button class="hmw-button" id="awConfirmWeek" data-aw-action="confirm-week" ${!valid||view.weekDirty||!view.weekAck||p.blockers.length||w.confirmedAt?'disabled':''}>${w.confirmedAt?'本店7天清单已确认':'确认本店物料与排班清单'}</button><button class="hmw-button primary" id="awCreateDocuments" data-aw-action="create-documents" ${!valid||view.weekDirty||!w.confirmedAt||p.blockers.length||r?'disabled':''}>${r?'本批次已创建演示单据':'一键创建补货申请与排班单'}</button></div><p class="aw-note">演示对接：当前未连接外部系统。确认后将生成两类示例单据及回执，不执行真实采购或人员变更。</p>${r?receiptPanel(r):''}</div>`}`;
+    return `<div class="aw-week-source"><strong>${esc(a.proposal.storeName)} · ${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])}</span><p>仅使用本店已确认的方案。物料和人员清单确认后，再创建对应单据。</p></div><div class="aw-week-controls"><label><span>执行开始日期</span><input id="awStartDate" type="date" min="${today()}" value="${esc(view.startDate)}"></label><label><span>额外可用支援人数</span><input id="awExtraStaff" type="number" min="0" max="50" step="1" value="${view.extraStaff}"></label><button class="hmw-button primary" data-aw-action="generate-week">${p?'更新7天执行清单':'生成本店7天执行清单'}</button></div>${!p?'<p class="aw-note">将按该店已生效方案生成物料需求、库存扣减和早晚班安排，跨月日期会明确提示。</p>':`<div class="aw-week-plan" data-week-key="${esc(p.key)}"><header><h3>${esc(p.startDate)}—${esc(p.endDate)} · 7天计划</h3><span class="hmw-tag ${!valid?'warn':w.confirmedAt?'good':''}">${!valid?'来源已变更，须重新生成':w.confirmedAt?'店长已确认':'待店长确认清单'}</span></header>${!valid?'<p class="aw-warning">本店已确认新的月度方案，旧清单不可继续确认或创建单据，请先更新。</p>':''}${weekExpired()?'<p class="aw-warning">执行开始日期已早于今天，请更新日期并重新生成接下来7天的清单。历史单据回执仍可查看。</p>':''}${p.warnings.length?`<details class="aw-secondary-detail" ${p.crossMonth?'open':''}><summary>计划依据与执行提示（${p.warnings.length}项）</summary>${list(p.warnings)}</details>`:''}${p.blockers.length?`<div class="aw-blockers"><strong>以下问题解决后才能确认</strong>${list(p.blockers)}</div>`:''}<h4>物料清单</h4><p>${esc(p.sourceNote)}</p>${materialsTable(p)}<h4>人员排班清单</h4>${staffingTable(p)}<p class="aw-warning" id="awWeekDraftNotice" ${view.weekDirty?'':'hidden'}>日期、库存或支援人数已有修改，请更新清单后重新确认。</p><label class="aw-week-ack"><input type="checkbox" id="awWeekAck" ${view.weekAck||w.confirmedAt?'checked':''} ${w.confirmedAt?'disabled':''}><span>本店店长已核对物料需求、现存与在途、人员可用性及日期安排${p.crossMonth?'，并确认跨月计划口径':''}。</span></label><div class="aw-week-actions"><button class="hmw-button" id="awConfirmWeek" data-aw-action="confirm-week" ${!valid||weekExpired()||view.weekDirty||!view.weekAck||p.blockers.length||w.confirmedAt?'disabled':''}>${w.confirmedAt?'本店7天清单已确认':'确认本店物料与排班清单'}</button><button class="hmw-button primary" id="awCreateDocuments" data-aw-action="create-documents" ${!valid||weekExpired()||view.weekDirty||!w.confirmedAt||p.blockers.length||r?'disabled':''}>${r?'本批次已创建演示单据':'一键创建补货申请与排班单'}</button></div><p class="aw-note">演示对接：当前未连接外部系统。确认后将生成两类示例单据及回执，不执行真实采购或人员变更。</p>${r?receiptPanel(r):''}</div>`}`;
   }
   function renderWorkspace(){
     const proposal=P.build(scenario.applied,M,view.storeId),d=P.describe(scenario.applied,M),sig=P.signature(scenario.applied);
@@ -2987,10 +2995,12 @@ render();
         const o=options(),p=W.build(a,o);if(save(F.setWeekly(flow,p,o))){view.weekDirty=false;view.weekAck=false;render();$('#awWeeklySection').scrollIntoView({block:'start',behavior:'instant'});toast('已生成本店7天清单，请店长核对后确认。');}
       }
       if(action==='confirm-week'){
+        if(weekExpired())throw new Error('执行开始日期已过去，请更新为接下来7天的清单。');
         if(view.weekDirty)throw new Error('清单参数已修改，请先更新。');
         if(save(F.confirmWeekly(flow,view.storeId,weekly()?.plan.key,view.weekAck,now))){render();toast('本店店长已确认物料与排班清单。');}
       }
       if(action==='create-documents'){
+        if(weekExpired())throw new Error('执行开始日期已过去，请更新为接下来7天的清单。');
         if(view.weekDirty)throw new Error('清单参数已修改，请先更新并重新确认。');
         const result=F.createDocuments(flow,view.storeId,weekly()?.plan.key,now);
         if(save(result.state)){render();$('.aw-receipts')?.scrollIntoView({block:'start',behavior:'instant'});toast(result.reused?'已复用本批次演示单据，没有重复创建。':'演示单据与排班已创建，请查看回执。');}
