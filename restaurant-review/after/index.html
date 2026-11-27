@@ -337,6 +337,37 @@
 .ai-platform .ai-remediation-pending{margin:20px 0;padding:14px 16px;border:1px solid #e1e8f3;border-radius:8px;background:#f7f9fc}
 .ai-platform .ai-remediation-pending>strong{color:#405c7d;font-size:14px}
 .ai-platform .ai-remediation-pending>p{margin:6px 0 0}
+.ai-platform .ai-procurement-summary{padding:20px;border:1px solid #dce6f8;border-radius:12px;background:#f5f8ff}
+.ai-platform .ai-procurement-summary>span{color:#647c9f;font-size:13px}
+.ai-platform .ai-procurement-summary h3{margin:8px 0 0}
+.ai-platform .ai-procurement-totals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0}
+.ai-platform .ai-procurement-totals small{display:block;color:#647c9f}
+.ai-platform .ai-procurement-totals strong{display:block;margin-top:5px;color:#2557e6;font-size:25px;font-variant-numeric:tabular-nums}
+.ai-platform .ai-procurement-totals strong>span{margin-left:5px;font-size:12px;font-weight:400}
+.ai-platform .ai-procurement-item{margin:22px 0;padding:20px;border:1px solid #dce6f3;border-radius:12px;background:#fff}
+.ai-platform .ai-procurement-item>header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.ai-platform .ai-procurement-item h4{margin:0;color:#253f65;font-size:18px}
+.ai-platform .ai-procurement-item>header p{margin:4px 0 0;font-size:13px}
+.ai-platform .ai-procurement-item .ai-procurement-decision{margin:18px 0;color:#354f74;font-size:15px}
+.ai-platform .ai-procurement-decision strong{color:#2557e6;font-weight:600}
+.ai-platform .ai-procurement-numbers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:16px 0;padding:16px 0;border-block:1px solid #e8edf5}
+.ai-platform .ai-procurement-numbers dt{color:#647c9f;font-size:12px}
+.ai-platform .ai-procurement-numbers dd{margin:6px 0 0;color:#304c74;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+.ai-platform .ai-procurement-numbers dd small{display:block;margin-top:3px;font-size:12px;font-weight:400}
+.ai-platform .ai-procurement-numbers .is-target dd{color:#2557e6}
+.ai-platform .ai-procurement-calculation{padding:10px 13px;border-radius:7px;background:#f5f8fd}
+.ai-platform .ai-procurement-suppliers{min-width:760px;font-size:13px}
+.ai-platform .ai-procurement-suppliers th,.ai-platform .ai-procurement-suppliers td{padding:12px}
+.ai-platform .ai-procurement-suppliers td small{display:block;margin-top:4px;color:#7387a5;font-size:11px}
+.ai-platform .ai-procurement-schedule,.ai-platform .ai-procurement-history{margin:18px 0;color:#456184;font-size:14px}
+.ai-platform .ai-procurement-schedule>summary,.ai-platform .ai-procurement-history>summary{cursor:pointer;color:#2557e6;line-height:1.8}
+.ai-platform .ai-procurement-batches{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.ai-platform .ai-procurement-batches>div{padding:12px;border:1px solid #e1e8f3;border-radius:8px;background:#f8faff}
+.ai-platform .ai-procurement-batches small{display:block;color:#647c9f}
+.ai-platform .ai-procurement-batches strong{display:block;margin-top:5px;color:#304c74;font-variant-numeric:tabular-nums}
+.ai-platform .ai-procurement-batches strong span{margin-left:4px;font-size:12px;font-weight:400}
+.ai-platform .ai-procurement-schedule blockquote{margin:16px 0;padding:13px 16px;border-left:3px solid #a5bffc;background:#f5f8ff;color:#405d84;line-height:1.9}
+@media(max-width:760px){.ai-platform .ai-procurement-summary,.ai-platform .ai-procurement-item{padding:16px}.ai-platform .ai-procurement-item>header{flex-direction:column;gap:8px}.ai-platform .ai-procurement-numbers{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.ai-platform .ai-procurement-totals{grid-template-columns:minmax(0,1fr);gap:12px}.ai-platform .ai-procurement-totals>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px}.ai-platform .ai-procurement-totals strong{margin:0;font-size:22px;white-space:nowrap}.ai-platform .ai-procurement-batches{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:1100px){.ai-platform .ai-remediation-items>li{align-items:flex-start;flex-direction:column;gap:12px}.ai-platform .ai-remediation-items .hmw-button{max-width:100%;white-space:normal;text-align:left}}
 @media(max-width:760px){.ai-platform .ai-remediation-impact{flex-direction:column;align-items:flex-end;gap:2px}}
 @media(max-width:760px){.ai-platform .ai-brief-figure{padding:13px}.ai-platform .ai-brief-chart-meta{font-size:12px}.ai-platform .ai-brief-legend{gap:9px}.ai-platform .ai-brief-caption{padding:12px}.ai-platform .ai-brief-section h3{font-size:18px}}
@@ -1685,6 +1716,88 @@
   globalThis.AiVisuals = { comparison, donut };
 })();
 </script>
+  <script>/* 采购执行建议：沿用当前测算量价，示例供应商不代表真实报价或供货承诺。 */
+(function (root) {
+  'use strict';
+  const round = n => Math.round(n * 1000000) / 1000000;
+  const sum = values => round(values.reduce((a, b) => a + b, 0));
+  const regularIds = ['beef', 'chicken', 'pork'];
+  const newIds = ['cheese', 'hairtail', 'crab', 'pigeon', 'fishball'];
+  const profiles = {
+    beef: { specification: '同10月验收等级、部位与净重规格的冷鲜牛肉', margin: .6, capacityKg: 90000, primary: '禾牧肉类供应（示例）', backup: '汇鲜冷链供应（示例）' },
+    chicken: { specification: '同10月验收等级、部位与净重规格的鸡肉', margin: .3, capacityKg: 180000, primary: '丰羽禽业供应（示例）', backup: '益鲜禽肉供应（示例）' },
+    pork: { specification: '同10月验收部位、切割与净重规格的五花肉', margin: .2, capacityKg: 90000, primary: '鲜达肉品供应（示例）', backup: '康禾肉类供应（示例）' },
+    cheese: { specification: '同新品配方成分、包装与净重规格的芝士', margin: .5, capacityKg: 25000, primary: '醇源乳品供应（示例）', backup: '优焙乳品供应（示例）' },
+    hairtail: { specification: '同10月采购等级、规格与净重口径的带鱼', margin: .3, capacityKg: 50000, primary: '海禾水产供应（示例）', backup: '鲜洋水产供应（示例）' },
+    crab: { specification: '同10月采购品种、规格与净重口径的螃蟹', margin: .6, capacityKg: 18000, primary: '澄鲜水产供应（示例）', backup: '丰海水产供应（示例）' },
+    pigeon: { specification: '同10月采购品级、规格与净重口径的鸽子', margin: .5, capacityKg: 18000, primary: '禾羽禽品供应（示例）', backup: '鲜羽禽业供应（示例）' },
+    fishball: { specification: '同新品配方成分、包装与净重规格的鱼丸', margin: .2, capacityKg: 35000, primary: '鲜味食品供应（示例）', backup: '禾味食品供应（示例）' }
+  };
+  const sourceNote = '供应商名称、参考报价及月供能力来自演示参考资料，不是真实供应商档案、市场行情或供货承诺。目标价和采购量沿用当前11月测算，须议价与签约确认。';
+  const deliveryNote = '建议锁定月度量价，按门店日需求分日配送；四段数量用于确认交付计划，不要求集中入库或月末补足库存。';
+  function batches(quantityKg) {
+    const labels = ['11月1—7日', '11月8—14日', '11月15—21日', '11月22—30日'];
+    let allocated = 0;
+    return labels.map((label, i) => {
+      const quantity = i === 3 ? quantityKg - allocated : Math.floor(quantityKg * 7 / 30);
+      allocated += quantity;
+      return { label, quantityKg: quantity, deliveryNote: '本段计划量，按门店日需求分日配送，避免一次性备货。' };
+    });
+  }
+  function supplier(p, profile, backup, quotationMinKg, quotationMaxKg) {
+    return {
+      id: `example-${p.materialId}-${backup ? 'backup' : 'primary'}`,
+      name: backup ? profile.backup : profile.primary,
+      referenceQuote: round(p.targetPrice + profile.margin + (backup ? .4 : 0)),
+      capacityKg: backup ? Math.floor(profile.capacityKg * .8) : profile.capacityKg,
+      capacityNote: '演示参考月供能力，需核实，非真实供货承诺。',
+      recommendedQuantityKg: backup ? 0 : p.quantityKg,
+      paymentTerms: '建议验收后月结30天，须双方确认。',
+      deliveryTerms: backup ? '仅预留备供资格；启用前确认实际接替量、线路与到货日期。' : '建议按门店日需求分日配送，先确认配送线路、时段与冷链验收条件。',
+      quotationCondition: backup ? '本次不分配采购量。参考报价仅用于全量替代比较；启用前按实际接替量独立询价，不能套用主供的月度承诺条件。' : `以整月${quotationMinKg}—${quotationMaxKg}公斤为示例量阶条件；同品级、同规格、含税到货，目标价和月度承诺均待确认。`,
+      quoteStatus: '未签参考报价（示例）',
+      signed: false,
+      sourceNote: '演示供应商参考资料，不是企业供应商档案或已取得的真实报价。'
+    };
+  }
+  function build(forecast, kind = 'regular') {
+    if (kind !== 'regular' && kind !== 'new') throw new Error('未知采购方案类型');
+    const ids = kind === 'regular' ? regularIds : newIds;
+    const items = ids.map(id => {
+      const p = forecast.priceTargets.find(p => p.materialId === id), profile = profiles[id];
+      const quotationMinKg = p.minimumCommitmentKg, quotationMaxKg = Math.round(quotationMinKg / .8 * 1.1);
+      const primarySupplier = supplier(p, profile, false, quotationMinKg, quotationMaxKg);
+      const backupSupplier = supplier(p, profile, true, quotationMinKg, quotationMaxKg);
+      return {
+        materialId: p.materialId, name: p.name, specification: profile.specification,
+        currentPrice: p.currentPrice, targetPrice: p.targetPrice, quantityKg: p.quantityKg,
+        minimumCommitmentKg: p.minimumCommitmentKg, quotationMinKg, quotationMaxKg,
+        requiresRequote: Boolean(p.requiresRequote) || p.quantityKg < quotationMinKg || p.quantityKg > quotationMaxKg,
+        capacityExceeded: p.quantityKg > primarySupplier.capacityKg,
+        potentialSaving: p.potentialSaving, saving: p.saving,
+        monthlyTargetCost: round(p.quantityKg * p.targetPrice / 10000),
+        monthlyExpectedCost: round(p.quantityKg * p.currentPrice / 10000 - p.saving),
+        primarySupplier, backupSupplier, batches: batches(p.quantityKg),
+        quoteStatus: '目标价待议价确认', signed: false
+      };
+    });
+    return {
+      period: '2026年11月', label: forecast.label, plan: forecast.plan, kind, sourceNote, deliveryNote,
+      purchaseExecution: forecast.inputs.purchaseExecution,
+      quantityTotal: sum(items.map(p => p.quantityKg)),
+      potentialSavingTotal: sum(items.map(p => p.potentialSaving)),
+      savingTotal: sum(items.map(p => p.saving)),
+      monthlyTargetCostTotal: sum(items.map(p => p.monthlyTargetCost)),
+      monthlyExpectedCostTotal: sum(items.map(p => p.monthlyExpectedCost)),
+      savingsNote: '采购价差收益已计入当前11月测算，本页只展开量价依据，不再追加利润；未签目标价不代表已实现节约。',
+      items
+    };
+  }
+  const model = { build };
+  root.ProcurementPlans = model;
+  if (typeof module !== 'undefined' && module.exports) module.exports = model;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
   <script>const M = globalThis.HaomeiweiModel;
 const AI = globalThis.AiScenarioModel;
 const $ = selector => document.querySelector(selector);
@@ -1950,8 +2063,8 @@ function pushTasks(){
 function remediationPlans(){
   const regular=M.materials.filter(m=>!m.newProduct).sort((a,b)=>a.priceImpact-b.priceImpact),fresh=M.materials.filter(m=>m.newProduct).sort((a,b)=>a.priceImpact-b.priceImpact);
   const plans=[
-    {id:'supplier-negotiation',category:'food',causeId:'procurement',title:`对${regular.map(m=>m.name).join('、')}逐项开展供应商议价。`,summary:'结合历史采购价、采购量及待核实的市场行情，整理谈价依据、价格比较和协商步骤。',name:'供应商谈价方案',evidence:`上述物料10月采购价差合计增加成本${amt(-regular.reduce((s,m)=>s+m.priceImpact,0))}万元，优先处理价差影响较大的物料。`,steps:['采购负责人向现有及备选供应商索取同品级、同规格的含税到货报价，记录报价日期、有效期、配送与账期。','逐项对比9月成交价、10月实际到货价及同口径市场行情，区分市场普涨与供应商报价差异，核实后确定建议谈价区间。','按下一采购周期需求协商阶梯报价、分批到货和价格有效期；确认品质、供货量与履约条件后再确定采购安排。'],verification:'用后续实际采购量和结算到货价复核价差，同时检查验收质量与供货及时性；历史价差不作为承诺节约额。',missing:'市场行情、供应商名称及最新报价尚未提供。需补充来源、日期、规格、税费与运费口径后，才能确定建议谈价区间。'},
-    {id:'new-purchase',category:'food',causeId:'procurement',title:`根据新品销量预测，落实${fresh.map(m=>m.name).join('、')}的采购量与价格。`,summary:'对照新品预估与实际用量，明确批量锁价门槛、采购承诺及分批到货安排。',name:'新品采购方案',evidence:`新品追加现货采购价差合计增加成本${amt(-fresh.reduce((s,m)=>s+m.priceImpact,0))}万元；历史试销配额与整月批量合约需分别核对。`,steps:['产品与采购负责人按门店销量、单份标准用量和可用库存，滚动更新下一采购周期需求。','逐项向供应商确认最新最低承诺量、报价有效期和锁价条件；需求未达到门槛时比较分批报价或替代供货安排，避免为锁价盲目超量采购。','在活动开始前确认采购数量、价格、交付批次及追加采购规则；销量偏离预测时及时调整后续批次。'],verification:'核对预测用量与实际用量、锁价采购覆盖及临采量，并检查库存周转与报损是否恶化。',missing:'下期销量预测、可用库存及供应商最新合约条件待补充；下表为10月历史记录，不直接作为下期采购承诺。'},
+    {id:'supplier-negotiation',category:'food',causeId:'procurement',title:`对${regular.map(m=>m.name).join('、')}逐项开展供应商议价。`,summary:'逐项明确主谈供应商、参考报价、目标价、月度承诺量及分批交付安排。',name:'供应商谈价方案',evidence:`上述物料10月采购价差合计增加成本${amt(-regular.reduce((s,m)=>s+m.priceImpact,0))}万元，优先处理价差影响较大的物料。`,steps:['采购负责人按下列供应商与目标价发起谈判，逐项确认同品级、同规格、含税到仓及账期口径。','以本方案的月度建议量谈锁价条件，确认最低承诺量、供货上限与分批交付安排；不足承诺下限或超出报价区间时重新询价。','谈价未达目标时对比备选报价与预计成本，经确认后再签约；将成交价、承诺量及交付计划逐项写入采购协议。'],verification:'用后续实际采购量和结算到货价复核价差，同时检查验收质量与供货及时性；历史价差不作为承诺节约额。',missing:'供应商及参考报价为示例档案；目标价取当前11月预算，尚未签约。真实执行前需核实市场行情、供应商资质、实时报价及同规格验收要求。'},
+    {id:'new-purchase',category:'food',causeId:'procurement',title:`根据新品销量预测，落实${fresh.map(m=>m.name).join('、')}的采购量与价格。`,summary:'逐项明确新品供货商、目标价、采购承诺量与四段交付排期，减少临时高价补货。',name:'新品采购方案',evidence:`新品追加现货采购价差合计增加成本${amt(-fresh.reduce((s,m)=>s+m.priceImpact,0))}万元；历史试销配额与整月批量合约需分别核对。`,steps:['产品与采购负责人按下列物料、供应商与月度采购建议量，核对门店销量预测、单份标准用量和可用库存。','按目标价与月度最低承诺量逐项议价；需求未达到门槛时重新询价，避免为锁价盲目超量采购。','按四段交付排期落实分日配送，确认采购价格、合同承诺及追加采购规则；销量偏离预测时调整后续批次。'],verification:'核对预测用量与实际用量、锁价采购覆盖及临采量，并检查库存周转与报损是否恶化。',missing:'供应商与参考报价为示例档案，11月目标价尚未签约；门店库存、最新需求与合约条件待核实。历史试销门槛与本轮预算承诺量分别列示，不能混用。'},
     {id:'prep',category:'food',causeId:'usage-prep',title:'对备料超耗较高的门店，按销量分批备料并核对出成率。',summary:'按门店与物料定位超耗，列出标准用量核查、备料批次调整和复盘方法。',name:'备料优化方案',steps:['区域运营负责人优先复核下列门店，厨务逐项核对实际销量、标准配方用量与盘点实耗。','对超耗物料检查切配出成率、称量及备料批次，按预计销量安排首批备料和后续补料。','记录每批投入、成品产出和剩余量，按同类经营日复核偏差，再调整备料量。'],verification:'按实际销量重新计算标准应耗，比较单位销量超耗及备料超耗成本，同时检查缺货和出餐是否受影响。',missing:'门店分时销量、备料批次与出成率实测记录待核实后，才能确定具体备料数量。'},
     {id:'waste',category:'food',causeId:'usage-waste',title:'对报损较高的门店，逐项核查报损物料与余料去向。',summary:'形成优先核查清单，分别制定收货、储存及余料处理措施。',name:'报损整改方案',steps:['店长与厨务负责人按物料核对报损数量、金额、原因及余料记录，优先检查报损影响较大的门店。','现场核查收货品质、保质期、温控及先进先出执行情况；根据查明原因调整收货与储存方式。','对照销售与备料记录确认余料来源，依照食品安全要求调整备料和处理流程，保留每日复核记录。'],verification:'按同类经营日比较报损量、单位销量报损成本与余料量，同时核对盘点差异，避免仅靠少报报损形成改善。',missing:'具体报损原因、保质期及现场检查记录待补充，尚不能认定为某一种操作问题。'},
     {id:'peak-staffing',category:'labor',causeId:'labor-peak',title:'对高峰加班及临时支援较多的门店，调整班次衔接与支援安排。',summary:'结合高峰客流、在岗人数及超标准工时，制定高峰用工调整步骤。',name:'高峰用工调整方案',steps:['区域运营与店长核对高峰分时客流、排班、考勤及加班审批，确认支援是否与实际需求匹配。','优先调整班次重叠、岗位分工和跨店支援安排，再评估可以减少的加班，保留高峰必要岗位。','选取同类经营日复核调整前后工时和服务表现，发现排队或出餐恶化时及时回调。'],verification:'比较相近客流下的高峰加班、支援工时与人工费用，同时核对高峰出餐时长和百客有效客诉。',missing:'分时客流、岗位排班与考勤明细待补充；现有归因金额不能直接换算为可削减人员数。'},
@@ -1983,8 +2096,18 @@ function remediationPlanEvidence(plan){
   }
   return '';
 }
+function procurementPlanBody(plan){
+  const f=scenario.applied,p=globalThis.ProcurementPlans.build(f,plan.id==='supplier-negotiation'?'regular':'new');
+  const supplierRow=(s,role)=>`<tr><td><strong>${esc(s.name)}</strong><small>${role} · 参考报价待确认</small></td><td class="numeric">${amt(s.referenceQuote)}</td><td class="numeric">${amt(s.recommendedQuantityKg,0)}</td><td class="numeric">${amt(s.capacityKg,0)}</td><td>${esc(s.paymentTerms)}</td></tr>`;
+  const items=p.items.map(item=>{
+    const s=item.primarySupplier,b=item.backupSupplier;
+    return `<article class="ai-procurement-item" data-purchase-material="${item.materialId}"><header><div><h4>${esc(item.name)}</h4><p>${esc(item.specification)}</p></div><span class="hmw-tag ${item.requiresRequote?'warn':'blue'}">${item.requiresRequote?'采购量变动 · 需重新询价':'目标价待议价确认'}</span></header><p class="ai-procurement-decision">建议与<strong>${esc(s.name)}</strong>谈至<strong>${amt(item.targetPrice)}元/公斤</strong>，按<strong>${amt(item.quantityKg,0)}公斤</strong>落实11月采购与分批交付。</p><dl class="ai-procurement-numbers"><div><dt>10月参考价</dt><dd>${amt(item.currentPrice)}<small>元/公斤</small></dd></div><div><dt>供应商参考报价</dt><dd>${amt(s.referenceQuote)}<small>元/公斤</small></dd></div><div class="is-target"><dt>建议谈价目标</dt><dd>${amt(item.targetPrice)}<small>元/公斤</small></dd></div><div><dt>月度建议采购量</dt><dd>${amt(item.quantityKg,0)}<small>公斤</small></dd></div><div><dt>月度锁价承诺下限</dt><dd>${amt(item.minimumCommitmentKg,0)}<small>公斤</small></dd></div></dl><p class="ai-procurement-calculation">目标全部达成的条件节约：${amt(item.quantityKg,0)}公斤 ×（${amt(item.currentPrice)} − ${amt(item.targetPrice)}）元/公斤 ÷ 10,000 ＝ <strong>${amt(item.potentialSaving)}万元</strong>。</p><div class="hmw-table-wrap"><table class="hmw-table ai-procurement-suppliers"><thead><tr><th>主谈与备选供应商</th><th class="numeric">参考报价 / 元·公斤</th><th class="numeric">建议分配量 / 公斤</th><th class="numeric">参考月供能力 / 公斤</th><th>建议账期</th></tr></thead><tbody>${supplierRow(s,'主谈')}${supplierRow(b,'备选')}</tbody></table></div><p class="hmw-note">报价适用月度量：${amt(item.quotationMinKg,0)}—${amt(item.quotationMaxKg,0)}公斤。备选供应商预留资格、分配量为0，启用时重新确认量价；${esc(s.deliveryTerms)}</p><details class="ai-procurement-schedule"><summary>查看分批交付与谈判要点</summary><div class="ai-procurement-batches">${item.batches.map(batch=>`<div><small>${esc(batch.label)}</small><strong>${amt(batch.quantityKg,0)}<span>公斤</span></strong></div>`).join('')}</div><p>按周锁定交付额度，再按门店日需求分日配送。四段合计${amt(item.quantityKg,0)}公斤，按滚动销量调整后续批次；月度承诺量与一次到货量分开确认。</p><blockquote>致${esc(s.name)}：我方11月拟采购${esc(item.name)}${amt(item.quantityKg,0)}公斤，按${esc(item.specification)}、含税到仓口径执行。贵方参考报价${amt(s.referenceQuote)}元/公斤，我方目标为${amt(item.targetPrice)}元/公斤，请按月度承诺及上述交付排期确认最终价格、账期和供货能力。</blockquote><p>若主谈未达目标：向${esc(b.name)}按全量${amt(item.quantityKg,0)}公斤重新询价。若按参考价${amt(b.referenceQuote)}元/公斤供货，月采购支出为${amt(item.quantityKg*b.referenceQuote/10000)}万元，比目标预算高${amt(item.quantityKg*b.referenceQuote/10000-item.monthlyTargetCost)}万元；由采购与财务确认后再启用，并相应复核11月预测。</p></details></article>`;
+  }).join('');
+  return `<div class="ai-remediation-plan ai-procurement-plan" data-remediation-detail="${plan.id}"><div class="ai-procurement-summary"><span>11月采购安排 · ${f.plan==='anniversary'?'周年庆方案':'现行营销方案'}</span><h3>供应商、目标价格与采购量建议</h3><p>示例供应商及参考报价，目标价待议价确认。</p><div class="ai-procurement-totals"><div><small>计划采购量</small><strong>${amt(p.quantityTotal,0)}<span>公斤</span></strong></div><div><small>目标全部达成可节约</small><strong>${amt(p.potentialSavingTotal)}<span>万元</span></strong></div></div><p>当前采购整改达成率${amt(p.purchaseExecution*100,0)}%，对应测算${amt(p.savingTotal)}万元；已包含在该方案的采购整改收益中，待实际结算确认。</p><button class="hmw-link" data-nav="forecast">前往11月预测调整方案</button></div>${items}<h3>执行步骤</h3><ol>${plan.steps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol><h3>效果核验</h3><p>${esc(plan.verification)}</p><details class="ai-procurement-history"><summary>查看10月问题与历史量价依据</summary><p>${esc(plan.evidence)}</p>${remediationPlanEvidence(plan)}</details><div class="ai-remediation-pending"><strong>签约前确认</strong><p>${esc(plan.missing)}</p></div><button class="hmw-button" data-cause="${plan.causeId}">查看相关归因及门店明细</button></div>`;
+}
 function showRemediationPlan(id){
   const p=remediationPlans().find(p=>p.id===id);if(!p)return;
+  if(['supplier-negotiation','new-purchase'].includes(id)){dialog(p.name,procurementPlanBody(p),'10月整改建议 · 11月采购安排',p.id);$('#hmwDialogBody').dataset.activeStore='';$('#hmwDialogBody').scrollTop=0;return;}
   const c=M.getCauseDetail(p.causeId),stores=c.storeRows.filter(r=>r.impact<0).sort((a,b)=>a.impact-b.impact).slice(0,5);
   const evidence=p.evidence||`${c.name}的10月利润影响为${signedAmt(c.impact)}万元。${c.description}`;
   const storeTable=['supplier-negotiation','new-purchase'].includes(id)?'':`<h3>优先核查门店</h3><p>按本项减利金额展示前${stores.length}家，具体执行安排需结合现场核查。</p><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>门店</th><th>区域</th><th class="numeric">本项利润影响 / 万元</th></tr></thead><tbody>${stores.map(s=>`<tr><td><button class="hmw-link" data-store="${s.storeId}" data-context="attribution" data-cause-context="${p.causeId}">${esc(s.storeId)} · ${esc(s.storeName)}</button></td><td>${esc(s.region)}</td><td class="numeric bad">${signedAmt(s.impact,4)}</td></tr>`).join('')}</tbody></table></div>`;
