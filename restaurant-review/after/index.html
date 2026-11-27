@@ -617,9 +617,12 @@
 .ai-platform .ai-contribution-composition{margin:27px 0 20px;padding-top:23px;border-top:1px solid #e5ebf5}
 .ai-platform .ai-contribution-composition>header h4{margin:0 0 6px;color:#304c75;font-size:17px;font-weight:650;line-height:1.6}
 .ai-platform .ai-summary .ai-contribution-composition>header p{margin:0 0 19px;color:#617590;font-size:13px;line-height:1.85}
-.ai-platform .ai-donut-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ai-platform .ai-donut-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 .ai-platform .ai-donut-card{min-width:0;margin:0;padding:20px 18px 16px;border:1px solid #e3e9f3;border-radius:13px;background:#fff;--donut-tone:#be3453}
 .ai-platform .ai-donut-card[data-kind=gain]{--donut-tone:#087760}
+.ai-platform .ai-donut-card[data-kind=mixed]{--donut-tone:#304c75}
+.ai-platform .ai-donut-card[data-kind=mixed] .ai-donut-content{display:grid;grid-template-columns:220px minmax(0,1fr);align-items:center;gap:28px}
+.ai-platform .ai-donut-card[data-kind=mixed] .ai-donut-plot{width:220px}
 .ai-platform .ai-donut-card>header h4{margin:0;color:var(--donut-tone);font-size:15px;font-weight:650;line-height:1.6}
 .ai-platform .ai-donut-content{display:flex;flex-direction:column;gap:14px}
 .ai-platform .ai-donut-plot{width:180px;max-width:100%;margin:10px auto 0}
@@ -634,6 +637,11 @@
 .ai-platform .ai-donut-legend button:hover{background:#f5f8fd;color:#2f5b9d}
 .ai-platform .ai-donut-dot{display:block;width:8px;height:8px;border-radius:50%}
 .ai-platform .ai-donut-label{min-width:0;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.ai-platform .ai-donut-direction{display:inline-block;margin-left:7px;padding:0 5px;border-radius:4px;font-size:10px;white-space:nowrap}
+.ai-platform .ai-donut-direction[data-direction=loss]{color:#be3453;background:#fff0f3}
+.ai-platform .ai-donut-direction[data-direction=gain]{color:#087760;background:#eaf7f1}
+.ai-platform .ai-donut-card[data-kind=mixed] [data-direction=loss] .ai-donut-value{color:#be3453}
+.ai-platform .ai-donut-card[data-kind=mixed] [data-direction=gain] .ai-donut-value{color:#087760}
 .ai-platform .ai-donut-value{color:#6c809e;font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .ai-platform .ai-donut-share{min-width:44px;color:#334f78;font-size:15px;font-weight:650;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .ai-platform .ai-donut-card>figcaption{margin-top:12px;padding-top:11px;border-top:1px solid #e9eef6;color:#617590;font-size:12px;line-height:1.85}
@@ -826,6 +834,7 @@
   .ai-platform .ai-variance-groups>section{padding:16px}
   .ai-platform .ai-donut-card{padding:18px 14px 14px}
   .ai-platform .ai-donut-content{display:flex;gap:10px}
+  .ai-platform .ai-donut-card[data-kind=mixed] .ai-donut-content{display:flex;gap:10px}
   .ai-platform .ai-donut-plot{width:170px;margin:9px auto 0}
   .ai-platform .ai-donut-legend{width:100%}
   .ai-platform .ai-donut-legend button{gap:8px}
@@ -1588,27 +1597,31 @@
   }
 
   function donut({ title, rows, kind = 'loss', note = '' }) {
-    if (!['loss','gain'].includes(kind)) throw new TypeError('Unsupported contribution group');
+    if (!['loss','gain','mixed'].includes(kind)) throw new TypeError('Unsupported contribution group');
     rows.forEach(row => {
-      if (!Number.isFinite(row.value) || row.value < 0) throw new TypeError('Donut values must be finite nonnegative numbers');
+      if (!Number.isFinite(row.value) || (kind !== 'mixed' && row.value < 0)) throw new TypeError('Donut values must be finite and nonnegative for a single direction');
       if (!/^#[0-9a-f]{6}$/i.test(row.color)) throw new TypeError('Donut colors must use #RRGGBB');
     });
-    const total = rows.reduce((sum, row) => sum + row.value, 0);
+    const total = rows.reduce((sum, row) => sum + Math.abs(row.value), 0);
     if (!Number.isFinite(total) || total <= 0) throw new RangeError('Donut requires a positive total');
-    const group = kind === 'loss' ? '减利合计' : '增利抵消合计';
+    const group = kind === 'mixed' ? '因素影响总量' : kind === 'loss' ? '减利合计' : '增利抵消合计';
     let offset = 0;
     const segments = rows.map(row => {
-      const share = row.value / total * 100;
-      const segment = row.value ? `<circle class="ai-donut-segment" cx="100" cy="100" r="70" fill="none" stroke="${row.color}" stroke-width="22" pathLength="100" stroke-dasharray="${share} ${100-share}" stroke-dashoffset="${-offset}" transform="rotate(-90 100 100)" data-value="${row.value}" data-share="${share}"/>` : '';
+      const share = Math.abs(row.value) / total * 100;
+      const segment = row.value ? `<circle class="ai-donut-segment" cx="100" cy="100" r="70" fill="none" stroke="${row.color}" stroke-width="22" pathLength="100" stroke-dasharray="${share} ${100-share}" stroke-dashoffset="${-offset}" transform="rotate(-90 100 100)" data-value="${Math.abs(row.value)}" data-share="${share}"/>` : '';
       offset += share;
       return segment;
     }).join('');
     const legend = rows.map(row => {
-      const share = row.value / total * 100;
+      const share = Math.abs(row.value) / total * 100;
       const percent = share.toLocaleString('zh-CN',{minimumFractionDigits:1,maximumFractionDigits:1});
-      return `<li><button type="button" data-cause="${escape(row.id)}" data-value="${row.value}" data-share="${share}"><i class="ai-donut-dot" style="background:${row.color}" aria-hidden="true"></i><span class="ai-donut-label">${escape(row.label)}</span><strong class="ai-donut-value">${format(row.value)}<small>万元</small></strong><span class="ai-donut-share">${percent}%</span></button></li>`;
+      const direction = row.value < 0 ? 'loss' : row.value > 0 ? 'gain' : 'flat';
+      const badge = kind === 'mixed' ? `<small class="ai-donut-direction" data-direction="${direction}">${direction === 'loss' ? '减利' : direction === 'gain' ? '增利' : '持平'}</small>` : '';
+      const amount = kind === 'mixed' && row.value > 0 ? '+' + format(row.value) : format(row.value);
+      return `<li><button type="button" data-cause="${escape(row.id)}" data-value="${Math.abs(row.value)}" data-share="${share}" data-direction="${direction}"><i class="ai-donut-dot" style="background:${row.color}" aria-hidden="true"></i><span class="ai-donut-label">${escape(row.label)}${badge}</span><strong class="ai-donut-value">${amount}<small>万元</small></strong><span class="ai-donut-share">${percent}%</span></button></li>`;
     }).join('');
-    const caption = `${note ? escape(note) + ' ' : ''}百分比以本组${group}${format(total)}万元为分母；占比显示因四舍五入可能略有差异。`;
+    const denominator = kind === 'mixed' ? `占比＝单项影响金额绝对值 ÷ 全部因素影响金额绝对值合计${format(total)}万元` : `百分比以本组${group}${format(total)}万元为分母`;
+    const caption = `${note ? escape(note) + ' ' : ''}${denominator}；占比显示因四舍五入可能略有差异。`;
     return `<figure class="ai-donut-card" data-total="${total}" data-kind="${kind}" aria-label="${escape(title)}"><header><h4>${escape(title)}</h4></header><div class="ai-donut-content"><div class="ai-donut-plot"><svg class="ai-donut-svg" viewBox="0 0 200 200" width="200" height="200" aria-hidden="true"><circle cx="100" cy="100" r="70" fill="none" stroke="#edf1f7" stroke-width="22"/>${segments}<text class="ai-donut-center-label" x="100" y="84" text-anchor="middle" font-size="12">${group}</text><text class="ai-donut-center-total" x="100" y="114" text-anchor="middle" font-size="26" font-weight="650">${format(total)}</text><text class="ai-donut-center-unit" x="100" y="135" text-anchor="middle" font-size="12">万元</text></svg></div><ul class="ai-donut-legend">${legend}</ul></div><figcaption class="ai-donut-caption">${caption}</figcaption></figure>`;
   }
 
@@ -1651,8 +1664,8 @@ function attributionChartRows(){
 function attributionImpactGraphic(){
   const colors={pricing:'#d87a45',food:'#8a65d1',labor:'#477ed0',volume:'#35a1ae',opex:'#249474'};
   const labels={pricing:'促销及净成交价',food:'食材标准成本',labor:'人工结构与工时',volume:'堂食人次与外卖订单',opex:'其他经营费用'};
-  const rows=direction=>M.causes.filter(c=>direction*c.impact>0).sort((a,b)=>Math.abs(b.impact)-Math.abs(a.impact)).map(c=>({id:c.id,label:labels[c.id],value:Math.abs(c.impact),color:colors[c.id]}));
-  return `<section class="ai-contribution-composition"><header><h4>减利与增利抵消的构成</h4><p>按顶层因素的净影响分组；每张图以本组总额为分母，均不使用净下降280万元作为分母。</p></header><div class="ai-donut-grid">${globalThis.AiVisuals.donut({title:'减利因素构成',rows:rows(-1),kind:'loss',note:'显示金额为各项减利影响的绝对值。'})}${globalThis.AiVisuals.donut({title:'增利抵消构成',rows:rows(1),kind:'gain',note:'其他经营费用包含规模摊薄，不等于已兑现整改收益。'})}</div><div class="ai-contribution-net" aria-label="减利与增利相抵后的利润净变化"><div class="is-loss"><small>减利影响</small><strong>−${num(M.group.negativeTotal)}<span>万元</span></strong></div><b aria-hidden="true">＋</b><div class="is-gain"><small>增利抵消</small><strong>${num(M.group.positiveOffset)}<span>万元</span></strong></div><b aria-hidden="true">＝</b><div class="is-loss"><small>环比净变化</small><strong>−${num(M.group.profitDecline)}<span>万元</span></strong></div></div></section>`;
+  const rows=[...M.causes].sort((a,b)=>Math.abs(b.impact)-Math.abs(a.impact)).map(c=>({id:c.id,label:labels[c.id],value:c.impact,color:colors[c.id]}));
+  return `<section class="ai-contribution-composition"><header><h4>利润变化的因素占比</h4><p>增利与减利因素合并比较，按影响金额的绝对值计算占比；金额正负号与标签表示影响方向。</p></header><div class="ai-donut-grid">${globalThis.AiVisuals.donut({title:'各因素影响大小与方向',rows,kind:'mixed',note:'其他经营费用包含规模摊薄，不等于已兑现整改收益。'})}</div><div class="ai-contribution-net" aria-label="减利与增利相抵后的利润净变化"><div class="is-loss"><small>减利影响</small><strong>−${num(M.group.negativeTotal)}<span>万元</span></strong></div><b aria-hidden="true">＋</b><div class="is-gain"><small>增利抵消</small><strong>${num(M.group.positiveOffset)}<span>万元</span></strong></div><b aria-hidden="true">＝</b><div class="is-loss"><small>环比净变化</small><strong>−${num(M.group.profitDecline)}<span>万元</span></strong></div></div></section>`;
 }
 function attributionMethodGraphic(){
   const t=M.attribution;
