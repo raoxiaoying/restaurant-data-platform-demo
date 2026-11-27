@@ -2068,7 +2068,7 @@ document.addEventListener('change',event=>{
   if(event.target.id==='trackingFilter'){state.trackingFilter=event.target.value;$('#trackingStores').innerHTML=trackingStoreTable(state.search);}
 });
 $('#hmwClose').onclick=()=>$('#hmwDialog').close();
-$('#hmwDialog').addEventListener('close',()=>{delete $('#hmwDialog').dataset.remediationOrigin;});
+$('#hmwDialog').addEventListener('close',()=>{const modal=$('#hmwDialog');if(!modal.open)delete modal.dataset.remediationOrigin;});
 $('#hmwDialog').addEventListener('click',event=>{if(event.target===$('#hmwDialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
 $('#hmwFullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{toast('请在独立浏览器中使用全屏');}};
 window.addEventListener('hashchange',()=>{state.search='';render();window.scrollTo(0,0);});
