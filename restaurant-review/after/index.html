@@ -1114,6 +1114,27 @@
 @media(max-width:1100px){.aw-core-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.aw-core-card>strong{font-size:22px}}
 @media(max-width:760px){.aw-core-metrics{gap:10px}.aw-core-card{padding:13px 10px}.aw-core-card>small{font-size:11px}.aw-core-card>strong{font-size:20px;margin:7px 0}.aw-core-card>em{font-size:10px}.aw-core-card>strong>span{font-size:10px}.aw-core-expenses,.campaign-expense-details{padding:12px}}
 @media(max-width:359px){.aw-core-metrics{grid-template-columns:minmax(0,1fr)}.aw-core-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;align-items:center}.aw-core-card>strong{grid-column:2;grid-row:span 2;margin:0}.aw-core-card>em{grid-column:1}}
+.aw-manager-entry{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 16px 16px;padding:12px 10px;border:1px solid #dce6f5;border-radius:8px;color:#42699d;text-decoration:none;font-size:13px}
+.aw-manager-entry>span{font-size:11px;color:#7f94b1}
+.aw-distribution{margin:25px 0;padding:20px;border:1px solid #cdddf5;border-radius:11px;background:#f7faff}
+.aw-distribution>header{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}
+.aw-distribution h3{margin:0}
+.aw-distribution header p{margin:7px 0}
+.aw-distribution .aw-week-actions{margin-top:16px}
+.aw-manager-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin:8px 0 0}
+.aw-manager-heading h1{margin:8px 0 10px;font-size:28px;color:#243e62}
+.aw-manager-heading p{margin:0;color:#7489a5;font-size:14px;line-height:1.8}
+.aw-manager-workspace{max-width:1440px;margin:auto}
+.aw-manager-workspace>.aw-section>.aw-store-selector{margin-top:0}
+.hmw-app.ai-workspace.ai-platform.manager-workspace{height:auto;min-height:100dvh;overflow:auto}
+.manager-workspace .hmw-shell{display:block;height:auto;min-height:100vh;overflow:visible}
+.manager-workspace .hmw-workspace{height:auto;min-height:100vh;overflow:visible}
+.manager-workspace .hmw-sidebar,.manager-workspace .platform-composer-wrap,.manager-workspace #platformSidebarToggle,.manager-workspace [data-platform-action=context],.manager-workspace .platform-mobile-backdrop,.manager-workspace .platform-context-drawer{display:none!important}
+.manager-workspace #hmwMain{width:100%;max-width:1536px;flex:none;overflow:visible;padding:30px 40px 50px}
+.manager-workspace .hmw-topbar{position:static}
+.manager-workspace .hmw-breadcrumb>span{font-size:0}
+.manager-workspace .hmw-breadcrumb>span::before{content:'门店工作空间';font-size:13px}
+@media(max-width:900px){.aw-distribution>header{flex-direction:column;gap:8px}.aw-manager-heading{flex-direction:column;gap:15px}.manager-workspace #hmwMain{padding:22px 16px 40px}.aw-manager-heading h1{font-size:24px}}
 </style>
 </head>
 <body class="hmw-app ai-workspace ai-platform">
@@ -1127,6 +1148,7 @@
       </div>
       <div class="platform-sidebar-label"><span>经营任务</span></div>
       <nav class="hmw-nav" id="hmwNav" aria-label="经营决策导航"></nav>
+      <a class="aw-manager-entry" href="#manager">门店店长工作台 <span>独立入口 →</span></a>
       <div class="platform-sidebar-label platform-history-label"><span>我的任务</span><span id="platformHistoryCount">0</span></div>
       <nav id="platformHistory" aria-label="我的任务"></nav>
       <div class="platform-sidebar-bottom"><button class="platform-profile" data-platform-action="workspace"><span class="platform-profile-avatar">好</span><span><b>好美味餐饮集团</b><small>集团经营工作空间</small></span><span data-platform-icon="chevrons"></span></button></div>
@@ -2954,6 +2976,83 @@
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
 </script>
+  <script>/* 集团显式下发的测算快照；不读写存储，不替店长确认，也不改写审批或执行状态。 */
+(function (root) {
+  'use strict';
+  const Proposal = root.StoreProposal || (typeof module !== 'undefined' && module.exports ? require('./store-proposal.js') : null);
+  const clone = value => JSON.parse(JSON.stringify(value));
+  const record = value => Boolean(value && typeof value === 'object' && !Array.isArray(value));
+  const requireValue = (condition, message) => { if (!condition) throw new Error(message); };
+  const near = (a, b) => Math.abs(a - b) <= .0000011;
+  const empty = () => null;
+
+  function validateForecast(forecast, M) {
+    requireValue(typeof M?.dataVersion === 'string' && M.dataVersion && Array.isArray(M.stores) && M.stores.length && Array.isArray(M.expenseKeys), '缺少有效的经营模型或门店资料');
+    requireValue(record(forecast) && ['steady', 'anniversary'].includes(forecast.plan) && record(forecast.inputs) && forecast.inputs.plan === forecast.plan, '请先完成合法经营方案的测算');
+    requireValue(forecast.dataVersion == null || forecast.dataVersion === M.dataVersion, '经营数据版本已变化，请重新测算后下发');
+    requireValue(forecast.validationIssues === undefined || (Array.isArray(forecast.validationIssues) && forecast.validationIssues.length === 0), '经营参数仍有无效项，请修正并重新测算');
+    requireValue(!forecast.activityBudget || (Array.isArray(forecast.activityBudget.issues) && forecast.activityBudget.issues.length === 0), '活动参数仍有无效项，请修正并重新测算');
+    const ids = new Set(M.stores.map(store => store.id));
+    requireValue(ids.size === M.stores.length && Array.isArray(forecast.byStore) && forecast.byStore.length === ids.size, '门店测算不完整，请重新测算');
+    const keys = ['guests', 'orders', 'grossSales', 'discount', 'revenue', ...M.expenseKeys, 'profit'];
+    const checked = new Set();
+    for (const row of forecast.byStore) {
+      requireValue(record(row) && ids.has(row.storeId) && !checked.has(row.storeId), '门店测算存在未知或重复门店');
+      checked.add(row.storeId);
+      requireValue(record(row.fixedCosts) && record(row.variableCosts) && record(row.foodBudget) && Number.isFinite(row.foodBudget.otherStandardFoodCost), '门店成本与物料依据不完整，请重新测算');
+      requireValue([...M.expenseKeys].every(key => Number.isFinite(row.fixedCosts[key]) && Number.isFinite(row.variableCosts[key])) &&
+        ['capacityGuests', 'capacityUse', 'dailyGuests', 'grossProfit', 'perCapita', 'margin', 'foodRate', 'laborRate'].every(key => Number.isFinite(row[key])), '门店资源或成本测算无效');
+    }
+    for (const row of [forecast.totals, ...forecast.byStore]) {
+      requireValue(record(row) && keys.every(key => Number.isFinite(row[key])), '经营测算金额不完整或包含无效数字');
+      requireValue(row.guests >= 0 && row.orders >= 0 && near(row.grossSales - row.discount, row.revenue) &&
+        near(row.revenue - M.expenseKeys.reduce((total, key) => total + row[key], 0), row.profit), '经营测算收支不闭合，请重新测算');
+    }
+    requireValue(keys.every(key => near(forecast.byStore.reduce((total, row) => total + row[key], 0), forecast.totals[key])), '集团与门店合计不一致，请重新测算');
+    requireValue(Array.isArray(forecast.capacityConstraints) && Number.isFinite(forecast.capacityReadyStoreCount) && Array.isArray(forecast.priceTargets), '缺少门店产能或采购测算依据');
+    const materialIds = new Set(forecast.priceTargets.map(material => material?.materialId));
+    requireValue(materialIds.size === forecast.priceTargets.length && (!Array.isArray(M.materials) || M.materials.every(material => materialIds.has(material.id))), '重点物料测算缺失或重复');
+    for (const material of forecast.priceTargets) {
+      requireValue(record(material) && material.materialId && material.name && ['quantityKg', 'currentPrice', 'targetPrice', 'minimumCommitmentKg', 'saving', 'potentialSaving'].every(key => Number.isFinite(material[key])) && Array.isArray(material.storeRows) && material.storeRows.length === ids.size, '物料测算依据不完整');
+      const materialStores = new Set();
+      for (const row of material.storeRows) {
+        requireValue(record(row) && ids.has(row.storeId) && !materialStores.has(row.storeId) && Number.isFinite(row.quantityKg) && row.quantityKg >= 0, '门店物料测算无效');
+        materialStores.add(row.storeId);
+      }
+    }
+  }
+  function signature(forecast, M) {
+    try { return Proposal.signature({ ...forecast, dataVersion: M.dataVersion }); }
+    catch { throw new Error('方案参数结构不完整，请重新测算'); }
+  }
+  const validTime = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value) && Number.isFinite(Date.parse(value));
+
+  function read(value, M) {
+    try {
+      const publication = typeof value === 'string' ? JSON.parse(value) : value;
+      if (!record(publication) || !Number.isSafeInteger(publication.versionNumber) || publication.versionNumber < 1 ||
+        publication.versionLabel !== '集团下发V' + publication.versionNumber || !validTime(publication.publishedAt)) return null;
+      validateForecast(publication.forecast, M);
+      if (publication.signature !== signature(publication.forecast, M)) return null;
+      return clone(publication);
+    } catch { return null; }
+  }
+  function publish(currentPublication, forecast, M, nowISO) {
+    validateForecast(forecast, M);
+    requireValue(validTime(nowISO), '缺少有效的集团下发时间');
+    const current = read(currentPublication, M), nextSignature = signature(forecast, M);
+    if (current?.signature === nextSignature) return current;
+    const versionNumber = (current?.versionNumber || 0) + 1;
+    requireValue(Number.isSafeInteger(versionNumber), '集团下发版本无效');
+    return { signature: nextSignature, versionNumber, versionLabel: '集团下发V' + versionNumber, publishedAt: nowISO,
+      forecast: { ...clone(forecast), dataVersion: M.dataVersion } };
+  }
+
+  const api = { empty, publish, read };
+  root.AdvicePublication = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
   <script>/* 周年庆活动配置：本期销售与核销口径的演示测算。 */
 (function(root){
   'use strict';
@@ -3454,6 +3553,13 @@ function recalculate(){
 }
 function navigate(page){if(!pages.some(([id])=>id===page))page='attribution';globalThis.AiPlatform?.openPage();if($('#hmwDialog').open)$('#hmwDialog').close();state.search='';location.hash=page;render();}
 function render(){
+  const manager=location.hash.split('?')[0]==='#manager';
+  document.body.classList.toggle('manager-workspace',manager);
+  if(manager){
+    state.page='manager';$('#hmwBreadcrumb').textContent='门店店长工作台';document.title='门店店长工作台 · 好美味';
+    $('#hmwMain').innerHTML=globalThis.AdviceWorkspace?.renderManager()||'';
+    return;
+  }
   state.page=pages.some(([id])=>id===location.hash.slice(1))?location.hash.slice(1):'attribution';
   if(globalThis.AiPlatform?.renderView())return;
   $('#hmwNav').innerHTML=pushTasks().map(t=>`<button data-nav="${t.id}" class="${state.page===t.id?'active':''}" ${state.page===t.id?'aria-current="page"':''}><span class="ai-task-icon">${icon(t.id)}</span><span class="ai-task-body"><b>${t.title}</b><small>${t.period}</small></span>${t.id==='tracking'?'<span class="ai-task-badge" aria-label="3家重点门店">3</span>':''}</button>`).join('');
@@ -3668,11 +3774,20 @@ render();
 </script>
   <script>(function(root){
   'use strict';
-  const P=root.StoreProposal,W=root.SevenDayPlan,F=root.AdviceFlowState;
+  const P=root.StoreProposal,W=root.SevenDayPlan,F=root.AdviceFlowState,D=root.AdvicePublication;
   const storageKey='haomeiwei-advice-flow-v1:'+M.dataVersion;
+  const publicationKey='haomeiwei-advice-publication-v1:'+M.dataVersion;
   const initial={steady:AI.calculate(AI.expenseDefaults()),anniversary:AI.calculate(AI.activityDefaults())};
-  let flow=F.empty();
-  try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved&&saved.approvals&&saved.weekly&&Array.isArray(saved.dispatches))flow=saved;}catch{}
+  let flow=F.empty(),publication=null;
+  function readShared(){
+    const saved=JSON.parse(localStorage.getItem(storageKey)||'null');
+    flow=saved&&saved.approvals&&saved.weekly&&Array.isArray(saved.dispatches)?saved:F.empty();
+    publication=D.read(localStorage.getItem(publicationKey),M);
+  }
+  try{readShared();}catch{}
+  if(publication){scenario.applied=JSON.parse(JSON.stringify(publication.forecast));scenario.draft=JSON.parse(JSON.stringify(publication.forecast.inputs));}
+  const managerView=()=>location.hash.split('?')[0]==='#manager';
+  const managerUrl=id=>'#manager'+(id?'?store='+encodeURIComponent(id):'');
   const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
   const nextDay=date=>{const d=new Date(date+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10);};
   const view={storeId:M.stores[0].id,query:'',candidateSignature:'',checks:{},startDate:nextDay(today()),inventory:{},extraStaff:0,weekDirty:false,weekAck:false};
@@ -3682,6 +3797,14 @@ render();
   const list=items=>`<ul>${items.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`;
   const approval=()=>flow.approvals[view.storeId];
   const weekly=()=>flow.weekly[view.storeId];
+  function syncShared(){
+    const oldKey=weekly()?.plan.key,oldVersion=approval()?.versionLabel;
+    readShared();
+    if(oldKey!==weekly()?.plan.key||oldVersion!==approval()?.versionLabel){
+      view.weekAck=false;
+      if(!view.weekDirty){const o=weekly()?.options;view.startDate=o?.startDate||nextDay(today());view.inventory=JSON.parse(JSON.stringify(o?.inventory||{}));view.extraStaff=o?.extraStaff||0;}
+    }
+  }
   const weekExpired=()=>Boolean(weekly()?.plan.startDate<today());
   const isCurrent=proposal=>approval()?.proposal.signature===proposal.signature;
   function validWeekly(){const a=approval(),w=weekly();return Boolean(a&&w&&w.plan.storeId===view.storeId&&w.plan.sourceSignature===a.proposal.signature&&w.plan.sourceVersion===a.versionLabel);}
@@ -3694,15 +3817,16 @@ render();
     view.storeId=id;view.checks={};view.candidateSignature='';view.weekAck=false;view.weekDirty=false;
     const options=flow.weekly[id]?.options;
     view.startDate=options?.startDate||nextDay(today());view.inventory=JSON.parse(JSON.stringify(options?.inventory||{}));view.extraStaff=options?.extraStaff||0;
+    if(managerView())history.replaceState(null,'',managerUrl(id));
     render();$('#awStorePanel')?.scrollIntoView({block:'start',behavior:'instant'});
   }
   function options(){return {startDate:view.startDate,inventory:JSON.parse(JSON.stringify(view.inventory)),extraStaff:Number(view.extraStaff)||0};}
   function receipt(){const w=weekly();return w?[...flow.dispatches].reverse().find(r=>r.storeId===view.storeId&&r.key===w.plan.key):null;}
   function refreshGates(){
-    const proposal=P.build(scenario.applied,M,view.storeId),a=approval(),w=weekly(),valid=validWeekly();
+    const proposal=publication?P.build(publication.forecast,M,view.storeId):null,a=approval(),w=weekly(),valid=validWeekly();
+    if($('#awPublish'))$('#awPublish').disabled=scenario.dirty||publication?.signature===P.signature(scenario.applied);
     const monthButton=$('#awConfirmMonthly');
-    if(monthButton)monthButton.disabled=scenario.dirty||Boolean(proposal.budgetBlockers?.length)||isCurrent(proposal)||!proposal.checks.every(c=>view.checks[c.id]);
-    if($('#awDraftNotice'))$('#awDraftNotice').hidden=!scenario.dirty;
+    if(monthButton)monthButton.disabled=!proposal||Boolean(proposal.budgetBlockers?.length)||isCurrent(proposal)||!proposal.checks.every(c=>view.checks[c.id]);
     if($('#awWeekDraftNotice'))$('#awWeekDraftNotice').hidden=!view.weekDirty;
     if($('#awConfirmWeek'))$('#awConfirmWeek').disabled=!valid||weekExpired()||view.weekDirty||!view.weekAck||Boolean(w?.plan.blockers.length)||Boolean(w?.confirmedAt);
     if($('#awCreateDocuments'))$('#awCreateDocuments').disabled=!a||!valid||weekExpired()||view.weekDirty||!w?.confirmedAt||Boolean(w.plan.blockers.length)||Boolean(receipt());
@@ -3712,10 +3836,10 @@ render();
     return `<article class="aw-plan-card ${active?'is-selected':''}" data-plan="${id}"><header><span class="hmw-tag ${id==='steady'?'blue':''}">默认${id==='steady'?'方案一':'方案二'}</span><h3>${esc(planNames[id])}</h3></header><div class="aw-plan-metrics"><div><small>预计营业额</small><strong>${amt(f.totals.revenue)}<span>万元</span></strong></div><div><small>预计经营利润</small><strong>${amt(f.totals.profit)}<span>万元</span></strong></div></div><h4>方案特点</h4>${list(d.features)}<h4>执行难点</h4>${list(d.difficulties)}<button class="hmw-button ${active?'primary':''}" data-select-plan="${id}">${active?'当前调整起点':'选择此方案并调整参数'}</button></article>`;
   }
   function storeRows(){
-    const signature=P.signature(scenario.applied),query=view.query.trim();
+    const signature=P.signature(scenario.applied),query=view.query.trim(),published=publication?.signature===signature;
     return scenario.applied.byStore.filter(s=>`${s.storeId} ${s.storeName} ${s.region}`.includes(query)).map(s=>{
       const a=flow.approvals[s.storeId],current=a?.proposal.signature===signature;
-      return `<tr><td><button class="hmw-link" data-aw-store="${s.storeId}">${esc(s.storeId)} · ${esc(s.storeName)}</button><small>${esc(s.region)}</small></td><td class="numeric">${amt(s.guests,0)}</td><td class="numeric">${amt(s.revenue)}</td><td class="numeric ${badClass(s.profit)}">${amt(s.profit)}</td><td class="numeric">${amt(s.capacityUse,1)}%</td><td><span class="hmw-tag ${current?'good':a?'warn':''}">${current?'本版已生效':a?'新测算待确认':'待店长确认'}</span></td></tr>`;
+      return `<tr><td><button class="hmw-link" data-store="${s.storeId}" data-context="forecast">${esc(s.storeId)} · ${esc(s.storeName)}</button><small>${esc(s.region)}</small></td><td class="numeric">${amt(s.guests,0)}</td><td class="numeric">${amt(s.revenue)}</td><td class="numeric ${badClass(s.profit)}">${amt(s.profit)}</td><td class="numeric">${amt(s.capacityUse,1)}%</td><td><span class="hmw-tag ${published&&current?'good':published&&a?'warn':''}">${!published?'测算未下发':current?'本版已生效':a?'新下发版待确认':'待店长确认'}</span></td></tr>`;
     }).join('')||'<tr><td colspan="6">没有匹配门店</td></tr>';
   }
   function storePanel(proposal){
@@ -3725,7 +3849,7 @@ render();
     const renderAttention=item=>`<div class="aw-attention-row" data-attention-item="${item.key}"><div><strong>${esc(item.label)}</strong><span class="${item.tone==='bad'?'bad':''}">${amt(item.value)}<small>万元</small></span></div><p>${esc(item.focus)}</p><small>核对：${esc(item.verification)}</small></div>`;
     const attention=coreKeys.map(key=>proposal.attention.find(item=>item.key===key)).filter(Boolean).map(item=>renderAttention({...item,label:coreLines.find(line=>line[0]===item.key)[1]})).join('');
     const extraAttention=proposal.attention.filter(item=>!coreKeys.includes(item.key)).map(renderAttention).join('');
-    return `<section class="aw-store-panel" id="awStorePanel"><header><div><span class="aw-eyebrow">门店测算与生效</span><h3>${esc(proposal.storeName)} <small>${esc(proposal.storeId)}</small></h3><p>本次演示店长：${esc(proposal.manager)} · ${esc(planNames[proposal.planId])}</p></div><span class="hmw-tag ${current?'good':'warn'}">${current?'店长已确认 · 本店生效':'本次测算待确认'}</span></header>${coreMetrics(proposal.finance,'store-result')}<p class="aw-note">预计就餐${amt(proposal.finance.guests,0)}人次 · 接待产能使用率${amt(proposal.storeResource.capacityUse,1)}%。经营利润已扣全部费用；餐具、物耗、维修、推广在费用明细中核对。</p>${proposal.budgetBlockers?.length?`<div class="aw-blockers"><strong>本店费用预算缺口待解决</strong>${list(proposal.budgetBlockers)}</div>`:''}${proposal.storeResource.capacityUse>100?`<p class="aw-warning">本店预计客流超过现有承接能力，确认前须落实增能或预约分流，并核对分时高峰。</p>`:''}${a?`<div class="aw-effective-version"><strong>当前生效：${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])} · 店长${esc(a.proposal.manager)} · 确认于${esc(new Date(a.confirmedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}</span>${!current?'<p>新参数尚未替代该版本。第二部分继续使用本店已确认版本，直到店长确认新方案。</p>':''}</div>`:'<p class="aw-note">测算结果尚未生效，店长完成以下核对并确认后，才能生成本店执行计划。</p>'}<details class="aw-attention"><summary>查看10项核心指标的店长关注提示</summary><div class="aw-attention-list">${attention}</div></details><details class="aw-core-expenses aw-extra-attention"><summary>餐具、物耗、维修、推广费用明细与关注提示</summary><div class="aw-attention-list">${extraAttention}</div></details><div class="aw-manager-checks">${proposal.checks.map(c=>`<label><input type="checkbox" data-aw-monthly-check="${c.id}" ${checks[c.id]?'checked':''} ${current?'disabled':''}><span><strong>${esc(c.label)}</strong><small>${esc(c.description)}</small></span></label>`).join('')}</div><p class="aw-warning" id="awDraftNotice" ${scenario.dirty?'':'hidden'}>经营参数已有修改，请先重新测算，再由店长确认。</p><button class="hmw-button primary" id="awConfirmMonthly" data-aw-action="confirm-monthly" ${scenario.dirty||current||proposal.budgetBlockers?.length||!proposal.checks.every(c=>view.checks[c.id])?'disabled':''}>${current?'本店方案已确认生效':'以本店店长身份确认方案生效'}</button></section>`;
+    return `<section class="aw-store-panel" id="awStorePanel"><header><div><span class="aw-eyebrow">门店测算与生效</span><h3>${esc(proposal.storeName)} <small>${esc(proposal.storeId)}</small></h3><p>本次演示店长：${esc(proposal.manager)} · ${esc(planNames[proposal.planId])}<br>方案来源：${esc(publication?.versionLabel||a?.proposal.publicationVersion||'历史生效版本')}</p></div><span class="hmw-tag ${current?'good':'warn'}">${current?'店长已确认 · 本店生效':'本次测算待确认'}</span></header>${coreMetrics(proposal.finance,'store-result')}<p class="aw-note">预计就餐${amt(proposal.finance.guests,0)}人次 · 接待产能使用率${amt(proposal.storeResource.capacityUse,1)}%。经营利润已扣全部费用；餐具、物耗、维修、推广在费用明细中核对。</p>${proposal.budgetBlockers?.length?`<div class="aw-blockers"><strong>本店费用预算缺口待解决</strong>${list(proposal.budgetBlockers)}</div>`:''}${proposal.storeResource.capacityUse>100?`<p class="aw-warning">本店预计客流超过现有承接能力，确认前须落实增能或预约分流，并核对分时高峰。</p>`:''}${a?`<div class="aw-effective-version"><strong>当前生效：${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])} · 店长${esc(a.proposal.manager)} · 确认于${esc(new Date(a.confirmedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}</span>${!current?'<p>新参数尚未替代该版本。第二部分继续使用本店已确认版本，直到店长确认新方案。</p>':''}</div>`:'<p class="aw-note">测算结果尚未生效，店长完成以下核对并确认后，才能生成本店执行计划。</p>'}<details class="aw-attention"><summary>查看10项核心指标的店长关注提示</summary><div class="aw-attention-list">${attention}</div></details><details class="aw-core-expenses aw-extra-attention"><summary>餐具、物耗、维修、推广费用明细与关注提示</summary><div class="aw-attention-list">${extraAttention}</div></details><div class="aw-manager-checks">${proposal.checks.map(c=>`<label><input type="checkbox" data-aw-monthly-check="${c.id}" ${checks[c.id]?'checked':''} ${current?'disabled':''}><span><strong>${esc(c.label)}</strong><small>${esc(c.description)}</small></span></label>`).join('')}</div><button class="hmw-button primary" id="awConfirmMonthly" data-aw-action="confirm-monthly" ${!publication||current||proposal.budgetBlockers?.length||!proposal.checks.every(c=>view.checks[c.id])?'disabled':''}>${current?'本店方案已确认生效':'确认本店经营方案生效'}</button></section>`;
   }
   function materialsTable(p){
     return `<div class="hmw-table-wrap"><table class="hmw-table aw-materials"><thead><tr><th>物料 / 供货参考</th><th class="numeric">7天需求 / 公斤</th><th>现存 / 公斤</th><th>在途 / 公斤</th><th>安全库存 / 公斤</th><th class="numeric">建议申请 / 公斤</th><th class="numeric">参考价 / 元·公斤</th></tr></thead><tbody>${p.materials.map(m=>`<tr data-week-material="${m.materialId}"><td><strong>${esc(m.name)}</strong><small>${esc(m.supplierName||'综合食材供应（示例）')}</small></td><td class="numeric">${amt(m.demandKg,3)}</td>${['onHandKg','inboundKg','safetyKg'].map(field=>`<td><input type="number" min="0" step="0.001" aria-label="${esc(m.name)}${field==='onHandKg'?'现存':field==='inboundKg'?'在途':'安全库存'}" data-aw-stock="${m.materialId}" data-field="${field}" value="${view.inventory[m.materialId]?.[field]??m[field]}"></td>`).join('')}<td class="numeric"><strong>${amt(m.purchaseKg,3)}</strong></td><td class="numeric">${amt(m.unitPrice)}</td></tr>`).join('')}</tbody></table></div><p class="aw-note">建议申请＝需求＋安全库存－现存－在途，最低为0，再按包装量取整。修改库存后请更新清单。</p><details class="aw-secondary-detail"><summary>查看7天逐日物料需求</summary><div class="hmw-table-wrap"><table class="hmw-table aw-daily-materials"><thead><tr><th>物料 / 公斤</th>${p.dates.map(d=>`<th class="numeric">${esc(d.slice(5))}</th>`).join('')}</tr></thead><tbody>${p.materials.map(m=>`<tr><td>${esc(m.name)}</td>${m.dailyDemand.map(q=>`<td class="numeric">${amt(q,3)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>`;
@@ -3742,10 +3866,23 @@ render();
     if(!a)return `<div class="aw-empty"><h3>先确认本店经营方案</h3><p>${esc(getStore(view.storeId).name)}尚无店长确认的生效方案。确认后，系统才会据此生成7天物料与人员计划。</p><button class="hmw-button" data-aw-scroll="awStorePanel">前往本店方案确认</button></div>`;
     return `<div class="aw-week-source"><strong>${esc(a.proposal.storeName)} · ${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])}</span><p>仅使用本店已确认的方案。物料和人员清单确认后，再创建对应单据。</p></div><div class="aw-week-controls"><label><span>执行开始日期</span><input id="awStartDate" type="date" min="${today()}" value="${esc(view.startDate)}"></label><label><span>额外可用支援人数</span><input id="awExtraStaff" type="number" min="0" max="50" step="1" value="${view.extraStaff}"></label><button class="hmw-button primary" data-aw-action="generate-week">${p?'更新7天执行清单':'生成本店7天执行清单'}</button></div>${!p?'<p class="aw-note">将按该店已生效方案生成物料需求、库存扣减和早晚班安排，跨月日期会明确提示。</p>':`<div class="aw-week-plan" data-week-key="${esc(p.key)}"><header><h3>${esc(p.startDate)}—${esc(p.endDate)} · 7天计划</h3><span class="hmw-tag ${!valid?'warn':w.confirmedAt?'good':''}">${!valid?'来源已变更，须重新生成':w.confirmedAt?'店长已确认':'待店长确认清单'}</span></header>${!valid?'<p class="aw-warning">本店已确认新的月度方案，旧清单不可继续确认或创建单据，请先更新。</p>':''}${weekExpired()?'<p class="aw-warning">执行开始日期已早于今天，请更新日期并重新生成接下来7天的清单。历史单据回执仍可查看。</p>':''}${p.warnings.length?`<details class="aw-secondary-detail" ${p.crossMonth?'open':''}><summary>计划依据与执行提示（${p.warnings.length}项）</summary>${list(p.warnings)}</details>`:''}${p.blockers.length?`<div class="aw-blockers"><strong>以下问题解决后才能确认</strong>${list(p.blockers)}</div>`:''}<h4>物料清单</h4><p>${esc(p.sourceNote)}</p>${materialsTable(p)}<h4>人员排班清单</h4>${staffingTable(p)}<p class="aw-warning" id="awWeekDraftNotice" ${view.weekDirty?'':'hidden'}>日期、库存或支援人数已有修改，请更新清单后重新确认。</p><label class="aw-week-ack"><input type="checkbox" id="awWeekAck" ${view.weekAck||w.confirmedAt?'checked':''} ${w.confirmedAt?'disabled':''}><span>本店店长已核对物料需求、现存与在途、人员可用性及日期安排${p.crossMonth?'，并确认跨月计划口径':''}。</span></label><div class="aw-week-actions"><button class="hmw-button" id="awConfirmWeek" data-aw-action="confirm-week" ${!valid||weekExpired()||view.weekDirty||!view.weekAck||p.blockers.length||w.confirmedAt?'disabled':''}>${w.confirmedAt?'本店7天清单已确认':'确认本店物料与排班清单'}</button><button class="hmw-button primary" id="awCreateDocuments" data-aw-action="create-documents" ${!valid||weekExpired()||view.weekDirty||!w.confirmedAt||p.blockers.length||r?'disabled':''}>${r?'本批次已创建演示单据':'一键创建补货申请与排班单'}</button></div><p class="aw-note">演示对接：当前未连接外部系统。确认后将生成两类示例单据及回执，不执行真实采购或人员变更。</p>${r?receiptPanel(r):''}</div>`}`;
   }
+  function distributionPanel(){
+    const sig=P.signature(scenario.applied),same=publication?.signature===sig;
+    const confirmed=publication?Object.values(flow.approvals).filter(a=>a.proposal.signature===publication.signature).length:0;
+    return `<section class="aw-distribution"><header><div><h3>下发与门店确认进度</h3><p>${publication?`${esc(publication.versionLabel)} · ${esc(planNames[publication.forecast.plan])} · ${esc(new Date(publication.publishedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}`:'尚未下发经营方案'}</p></div><span class="hmw-tag ${publication?'blue':''}" id="awPublishedCount">已下发版确认 ${confirmed} / ${M.stores.length} 店</span></header>${publication?`<p>已下发版集团预计营业额${amt(publication.forecast.totals.revenue)}万元，经营利润${amt(publication.forecast.totals.profit)}万元。${same?'当前测算与已下发版一致。':'当前测算尚未替代已下发版本。'}</p>`:''}<div class="aw-week-actions"><button class="hmw-button primary" id="awPublish" data-aw-action="publish" ${scenario.dirty||same?'disabled':''}>${same?'当前测算已下发':'下发当前测算至店长工作台'}</button><a class="hmw-button" href="${managerUrl()}">进入独立店长工作台 →</a></div><p class="aw-note">调整方案并重新测算后，可再次下发。各店确认后分别生效；集团下发不会直接替换门店已生效方案。演示进度保存在当前浏览器中。</p></section>`;
+  }
   function renderWorkspace(){
-    const proposal=P.build(scenario.applied,M,view.storeId),d=P.describe(scenario.applied,M),sig=P.signature(scenario.applied);
-    const confirmed=Object.values(flow.approvals).filter(a=>a.proposal.signature===sig).length;
-    return `<div class="aw-workspace" id="aiEvidence"><nav class="aw-flow-nav"><span>方案生成与测算</span><span>店长确认生效</span><span>7天计划与单据</span><button class="hmw-link" data-aw-scroll="awWeeklySection">前往7天执行</button></nav><section class="aw-section" id="awProposalSection"><header><span class="aw-eyebrow">第一部分</span><h2>经营方案与门店确认</h2><p>基于品牌特性与可用资源生成建议，调整参数后测算到门店，由各店店长确认后生效。</p></header><details class="aw-brand-basis" open><summary>品牌与资源依据</summary>${list(d.brandFacts)}</details><div class="aw-plan-options">${['steady','anniversary'].map(planCard).join('')}</div>${strategyEditor()}<section id="aiForecastResult" class="aw-current-result"><div><strong>当前测算：${esc(planNames[scenario.applied.plan])}</strong><p>预计营业额${amt(scenario.applied.totals.revenue)}万元，利润${amt(scenario.applied.totals.profit)}万元；测算不等于各店已确认生效。</p></div><span class="hmw-tag blue">本版已确认 ${confirmed} / ${M.stores.length} 店</span></section><section class="aw-core-summary"><h3>集团10项核心指标</h3>${coreMetrics(scenario.applied.totals,'group-result')}<p class="aw-note">经营利润已扣除全部费用；餐具、物耗、维修、推广见费用明细。“其他费用”保持独立科目。</p>${coreExpenseDetails(scenario.applied.totals)}</section><div class="aw-store-selector"><label><span>选择门店 / 店长视角</span><select id="awStoreSelect">${M.stores.map(s=>`<option value="${s.id}" ${s.id===view.storeId?'selected':''}>${esc(s.name)} · ${esc(s.region)} · ${esc(s.manager)}</option>`).join('')}</select></label></div><details class="aw-secondary-detail aw-all-stores"><summary>查看120家门店测算与确认状态</summary><input class="hmw-search" data-aw-store-search placeholder="搜索门店、编号或区域" aria-label="搜索门店测算" value="${esc(view.query)}"><div class="hmw-table-wrap store-scroll"><table class="hmw-table"><thead><tr><th>门店</th><th class="numeric">预计客流</th><th class="numeric">营业额 / 万元</th><th class="numeric">利润 / 万元</th><th class="numeric">产能使用率</th><th>店长确认</th></tr></thead><tbody id="awStoreRows">${storeRows()}</tbody></table></div></details>${storePanel(proposal)}<details class="aw-secondary-detail aw-model-evidence"><summary>查看完整财务测算与行动依据</summary>${forecastResult(scenario.applied,AI.base(scenario.applied.plan))}</details></section><section class="aw-section" id="awWeeklySection"><header><span class="aw-eyebrow">第二部分</span><h2>门店接下来7天的执行计划</h2><p>物料清单与人员排班使用该店已生效方案，经店长二次确认后，一键创建两类单据。</p></header>${weekPanel()}</section></div>`;
+    const d=P.describe(scenario.applied,M);
+    return `<div class="aw-workspace" id="aiEvidence"><nav class="aw-flow-nav"><span>集团方案生成</span><span>集团合计与逐店测算</span><span>下发至独立店长工作台</span></nav><section class="aw-section" id="awProposalSection"><header><span class="aw-eyebrow">集团经营管理</span><h2>经营方案与集团测算</h2><p>调整方案参数，核对集团合计与门店测算，再下发给各店店长。店长在独立工作台完成本店确认和执行。</p></header><details class="aw-brand-basis" open><summary>品牌与资源依据</summary>${list(d.brandFacts)}</details><div class="aw-plan-options">${['steady','anniversary'].map(planCard).join('')}</div>${strategyEditor()}<section id="aiForecastResult" class="aw-current-result"><div><strong>当前测算：${esc(planNames[scenario.applied.plan])}</strong><p>预计营业额${amt(scenario.applied.totals.revenue)}万元，利润${amt(scenario.applied.totals.profit)}万元；确认进度以下方已下发版本为准。</p></div><span class="hmw-tag">集团合计</span></section><section class="aw-core-summary"><h3>集团10项核心指标</h3>${coreMetrics(scenario.applied.totals,'group-result')}<p class="aw-note">经营利润已扣除全部费用；餐具、物耗、维修、推广见费用明细。“其他费用”保持独立科目。</p>${coreExpenseDetails(scenario.applied.totals)}</section>${distributionPanel()}<details class="aw-secondary-detail aw-all-stores" open><summary>查看120家门店测算与确认状态</summary><input class="hmw-search" data-aw-store-search placeholder="搜索门店、编号或区域" aria-label="搜索门店测算" value="${esc(view.query)}"><div class="hmw-table-wrap store-scroll"><table class="hmw-table"><thead><tr><th>门店</th><th class="numeric">预计客流</th><th class="numeric">营业额 / 万元</th><th class="numeric">利润 / 万元</th><th class="numeric">产能使用率</th><th>当前测算状态</th></tr></thead><tbody id="awStoreRows">${storeRows()}</tbody></table></div></details><details class="aw-secondary-detail aw-model-evidence"><summary>查看完整财务测算与行动依据</summary>${forecastResult(scenario.applied,AI.base(scenario.applied.plan))}</details></section></div>`;
+  }
+  function renderManager(){
+    const requested=new URLSearchParams(location.hash.split('?')[1]||'').get('store');
+    if(requested&&requested!==view.storeId&&M.stores.some(s=>s.id===requested)){
+      view.storeId=requested;view.checks={};view.candidateSignature='';view.weekAck=false;view.weekDirty=false;
+      const o=weekly()?.options;view.startDate=o?.startDate||nextDay(today());view.inventory=JSON.parse(JSON.stringify(o?.inventory||{}));view.extraStaff=o?.extraStaff||0;
+    }
+    const store=getStore(view.storeId),proposal=publication?P.build(publication.forecast,M,view.storeId):approval()?.proposal;
+    return `<div class="aw-workspace aw-manager-workspace"><header class="aw-manager-heading"><div><span class="aw-eyebrow">门店视角 · 独立工作台</span><h1>门店店长工作台</h1><p>接收集团方案，核对本店经营指标，再确认7天物料与排班。</p></div><a class="hmw-button" href="../">返回系统入口</a></header><nav class="aw-flow-nav"><a class="hmw-link" href="#manager" data-aw-scroll="awStorePanel">本店经营方案确认</a><span>7天物料与人员排班</span><button class="hmw-link" data-aw-scroll="awWeeklySection">前往执行清单 ↓</button></nav><section class="aw-section"><div class="aw-store-selector"><label><span>当前门店 / 店长（演示切换）</span><select id="awStoreSelect">${M.stores.map(s=>`<option value="${s.id}" ${s.id===view.storeId?'selected':''}>${esc(s.name)} · ${esc(s.region)} · ${esc(s.manager)}</option>`).join('')}</select></label><p class="aw-note">当前处理${esc(store.name)}的任务；实际应用按店长账号匹配所属门店。</p></div>${publication?`<div class="aw-week-source"><strong>已收到：${esc(publication.versionLabel)}</strong><span>${esc(planNames[publication.forecast.plan])}</span><p>下发时间：${esc(new Date(publication.publishedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}。以下指标与关注事项均为本店数据。</p></div>`:'<div class="aw-empty"><h3>等待集团下发经营方案</h3><p>集团完成方案测算并下发后，本店会收到待确认任务。</p></div>'}${proposal?storePanel(proposal):'<div id="awStorePanel"></div>'}</section><section class="aw-section" id="awWeeklySection"><header><span class="aw-eyebrow">本店执行</span><h2>接下来7天的物料与人员排班</h2><p>使用本店已确认方案生成清单，核对库存与人员可用性后确认，再创建演示单据。</p></header>${weekPanel()}</section></div>`;
   }
   function showDocument(type){
     const r=receipt();if(!r)return;const d=r[type];if(!d)return;
@@ -3755,25 +3892,38 @@ render();
   }
   document.addEventListener('click',event=>{
     const store=event.target.closest('[data-aw-store]');if(store){setStore(store.dataset.awStore);return;}
-    const scroll=event.target.closest('[data-aw-scroll]');if(scroll){$('#'+scroll.dataset.awScroll)?.scrollIntoView({block:'start',behavior:'instant'});return;}
+    const scroll=event.target.closest('[data-aw-scroll]');if(scroll){event.preventDefault();$('#'+scroll.dataset.awScroll)?.scrollIntoView({block:'start',behavior:'instant'});return;}
     const button=event.target.closest('[data-aw-action]');if(!button)return;
     try{
       const action=button.dataset.awAction,now=new Date().toISOString();
+      const displayedSignature=view.candidateSignature,displayedWeekKey=weekly()?.plan.key,displayedApproval=approval()?.versionLabel;
+      syncShared();
+      if(action==='publish'){
+        if(managerView())throw new Error('请从集团经营建议页下发方案。');
+        if(scenario.dirty)throw new Error('参数已有修改，请先重新测算再下发。');
+        const next=D.publish(publication,scenario.applied,M,now);
+        localStorage.setItem(publicationKey,JSON.stringify(next));publication=next;render();toast('经营方案已下发，请各店店长从独立工作台确认。');return;
+      }
+      if(!managerView())throw new Error('请从独立店长工作台处理本店确认与执行。');
       if(action==='confirm-monthly'){
-        if(scenario.dirty)throw new Error('请先重新测算，再确认本店方案。');
-        const p=P.build(scenario.applied,M,view.storeId);if(save(F.approveStore(flow,p,view.checks,now))){view.weekDirty=false;view.weekAck=false;render();toast('本店店长已确认，经营方案生效。');}
+        if(!publication||displayedSignature!==publication.signature){render();throw new Error('集团已下发新的方案，请重新核对本店指标后确认。');}
+        const p=P.build(publication.forecast,M,view.storeId);p.publicationVersion=publication.versionLabel;p.publishedAt=publication.publishedAt;
+        if(save(F.approveStore(flow,p,view.checks,now))){view.weekDirty=false;view.weekAck=false;render();toast('本店店长已确认，经营方案生效。');}
       }
       if(action==='generate-week'){
         const a=approval();if(!a)throw new Error('请先由店长确认本店经营方案。');
+        if(displayedApproval!==a.versionLabel){render();throw new Error('本店生效方案已更新，请核对后重新生成。');}
         const date=$('#awStartDate');if(!date.reportValidity())return;
         const o=options(),p=W.build(a,o);if(save(F.setWeekly(flow,p,o))){view.weekDirty=false;view.weekAck=false;render();$('#awWeeklySection').scrollIntoView({block:'start',behavior:'instant'});toast('已生成本店7天清单，请店长核对后确认。');}
       }
       if(action==='confirm-week'){
+        if(displayedWeekKey!==weekly()?.plan.key){render();throw new Error('本店执行清单已更新，请重新核对。');}
         if(weekExpired())throw new Error('执行开始日期已过去，请更新为接下来7天的清单。');
         if(view.weekDirty)throw new Error('清单参数已修改，请先更新。');
         if(save(F.confirmWeekly(flow,view.storeId,weekly()?.plan.key,view.weekAck,now))){render();toast('本店店长已确认物料与排班清单。');}
       }
       if(action==='create-documents'){
+        if(displayedWeekKey!==weekly()?.plan.key){render();throw new Error('本店执行清单已更新，请重新核对。');}
         if(weekExpired())throw new Error('执行开始日期已过去，请更新为接下来7天的清单。');
         if(view.weekDirty)throw new Error('清单参数已修改，请先更新并重新确认。');
         const result=F.createDocuments(flow,view.storeId,weekly()?.plan.key,now);
@@ -3788,7 +3938,7 @@ render();
     if(t.dataset.awStock){const id=t.dataset.awStock,field=t.dataset.field;view.inventory[id]={...(view.inventory[id]||{}),[field]:Number(t.value)};view.weekDirty=true;view.weekAck=false;}
     if(t.id==='awStartDate'){view.startDate=t.value;view.weekDirty=true;view.weekAck=false;}
     if(t.id==='awExtraStaff'){view.extraStaff=Number(t.value);view.weekDirty=true;view.weekAck=false;}
-    if(state.page==='forecast'&&(t.dataset.scenarioField||t.dataset.expenseRate||t.dataset.awStock||['awStartDate','awExtraStaff'].includes(t.id)))refreshGates();
+    if(['forecast','manager'].includes(state.page)&&(t.dataset.scenarioField||t.dataset.expenseRate||t.dataset.awStock||['awStartDate','awExtraStaff'].includes(t.id)))refreshGates();
   });
   document.addEventListener('change',event=>{
     const t=event.target;
@@ -3796,7 +3946,14 @@ render();
     if(t.dataset.awMonthlyCheck){view.checks[t.dataset.awMonthlyCheck]=t.checked;refreshGates();}
     if(t.id==='awWeekAck'){view.weekAck=t.checked;refreshGates();}
   });
-  root.AdviceWorkspace={render:renderWorkspace,refreshGates};
+  window.addEventListener('storage',event=>{
+    if(event.key!==storageKey&&event.key!==publicationKey&&event.key!==null)return;
+    try{
+      syncShared();
+      if(managerView()||state.page==='forecast')render();
+    }catch{toast('方案或确认进度未能刷新，请重新打开工作台。');}
+  });
+  root.AdviceWorkspace={render:renderWorkspace,renderManager,refreshGates};
   render();
 })(globalThis);
 </script>
