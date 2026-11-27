@@ -319,7 +319,7 @@
 .ai-platform .ai-brief-table caption{padding:14px 16px;background:#fafcff;color:#36557e;text-align:left;font-size:13px;font-weight:600}
 .ai-platform .ai-brief-table :is(th,td){padding:12px 15px}
 .ai-platform p.ai-brief-method{margin:12px 0 0;color:#8c909b;font-size:13px;line-height:1.85;white-space:normal}
-.ai-platform .ai-brief-priorities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:0;margin:18px 0 0;list-style:none;counter-reset:priority}
+.ai-platform .ai-brief-priorities{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0;margin:18px 0 0;list-style:none;counter-reset:priority}
 .ai-platform .ai-brief-priorities li::marker{color:#8c9099}
 .ai-platform .ai-brief-priorities li>strong{display:block;color:#334e76;font-size:14px}
 .ai-platform .ai-brief-priorities li{min-width:0;padding:18px;border:1px solid #e5ebf5;border-radius:11px;background:#fafcff;counter-increment:priority}
@@ -548,7 +548,7 @@
 .ai-platform .ai-brief-priorities [data-category=pricing]{--category-color:#995a0c;--category-soft:#fff7e9;--category-line:#e7b65c}
 .ai-platform .ai-brief-priorities [data-category=food]{--category-color:#8054b8;--category-soft:#f7f0ff;--category-line:#b08bdb}
 .ai-platform .ai-brief-priorities [data-category=labor]{--category-color:#3762ba;--category-soft:#eef5ff;--category-line:#79a1ee}
-.ai-platform .ai-brief-priorities [data-category=opex]{--category-color:#117970;--category-soft:#eefaf6;--category-line:#60b9a7}
+.ai-platform .ai-brief-priorities [data-category=opex]{--category-color:#a92370;--category-soft:#fff1f8;--category-line:#db2777}
 .ai-platform .ai-brief-priorities li[data-category]{border-color:color-mix(in srgb,var(--category-line) 35%,white);border-top:3px solid var(--category-line);background:var(--category-soft)}
 .ai-platform .ai-brief-priorities li[data-category]::before,.ai-platform .ai-brief-priorities li[data-category]>strong{color:var(--category-color)}
 .ai-platform .ai-brief-priorities strong .bad{color:#be3453}
@@ -897,8 +897,8 @@
   'use strict';
 
   const SCALE = 1000000; // 万元保留至分，所有加总在金额最小单位上分配。
-  const DATA_VERSION = 'DEMO-COST-FOCUS-V2';
-  const FORECAST_VERSION = 'NOV-COST-FOCUS-V1';
+  const DATA_VERSION = 'DEMO-COST-FOCUS-V3';
+  const FORECAST_VERSION = 'NOV-COST-FOCUS-V2';
   const money = n => Math.round(n * SCALE) / SCALE;
   const sum = values => money(values.reduce((a, b) => a + b, 0));
   const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
@@ -954,7 +954,7 @@
   const priceDiscount = distribute(50, 'promoWeight');
   const laborExcess = distribute(120, 'staffingWeight');
   const usageExcess = allocate(23, ingredientWeights(12));
-  const opexExcessTotals = { utilities: 4, tableware: 0, consumables: 2, maintenance: 2, marketing: 7, otherStoreExpense: 5 };
+  const opexExcessTotals = { utilities: 4, tableware: 0, consumables: 2, maintenance: 2, marketing: 7, otherStoreExpense: 25 };
   const opexExcessColumns = Object.fromEntries(Object.entries(opexExcessTotals).map(([k, total], i) => [k, allocate(total, ingredientWeights(i + 15))]));
 
   const materialSpecs = [
@@ -1127,7 +1127,7 @@
     cause('pricing', '净成交价变化', stores.map(s => s.causes.pricing), '固定10月业务量，比较9月渠道单价与10月实际净成交价。', `两渠道实际实收减基准收入${money(actuals.october.revenue-baselineTotals.revenue).toFixed(2)}万元。账面分解不证明促销导致了客流增长。`, pricingChildren),
     cause('food', '食材成本差异', stores.map(s => s.causes.food), '以实际销量的标准食材成本为基底，分开核对同规格采购价格与超标准耗用。', '采购价格差异85万、超标准耗用与报损23万；费率基准与标准应耗成本的衔接另列，逐店及集团保持闭合。', [foodAlignment, procurement, usage]),
     cause('labor', '人工成本差异', stores.map(s => s.causes.labor), '先区分全费率基准与固定/弹性工时标准，再比较实际工时。', '约+20万元结构摊薄，减去高峰70万及低峰50万超标准工时，净影响约-100万元。', laborChildren),
-    cause('opex', '其他经营费用', stores.map(s => s.causes.opex), '逐科目比较9月模式费率参考与10月实际，包含固定成本摊薄和执行差异。', '净影响约+10万元；其中租金约+30万元为规模摊薄，其余费用单项偏差不超过7万元，实际租金仍为600万元，不作为整改收益。', opexChildren)
+    cause('opex', '其他经营费用', stores.map(s => s.causes.opex), '逐科目比较9月模式费率参考与10月实际，包含固定成本摊薄和执行差异。', '净减利约10万元；其他费用超支约25万元，能耗、物耗、维修及市场费用合计超支约15万元，被租金费率摊薄约30万元部分抵消。实际租金仍为600万元，摊薄不作为整改收益。', opexChildren)
   ];
   const causeIndex = new Map();
   function indexCauses(items, parent = null) {
@@ -1141,17 +1141,17 @@
 
   const forecastSpecs = {
     steady: { id: 'steady', label: '方案一｜现有营销＋问题整改', guests: 550000, perCapita: 80, grossPerCapita: 91,
-      raw: { food: 1716, labor: 1250, rent: 600, utilities: 135, tableware: 35.2, consumables: 55, maintenance: 42, marketing: 115, otherStoreExpense: 275 },
-      fixed: { food: 0, labor: 900, rent: 600, utilities: 50, tableware: 0, consumables: 0, maintenance: 42, marketing: 100, otherStoreExpense: 160 },
+      raw: { food: 1716, labor: 1250, rent: 600, utilities: 135, tableware: 35.2, consumables: 55, maintenance: 42, marketing: 115, otherStoreExpense: 295 },
+      fixed: { food: 0, labor: 900, rent: 600, utilities: 50, tableware: 0, consumables: 0, maintenance: 42, marketing: 100, otherStoreExpense: 180 },
       savings: { food: 87, labor: 80, utilities: 2, consumables: 1 }, purchaseSaving: 67, usageSaving: 20,
       demandAssumption: '不调整现有优惠规则。11月30天、无国庆高峰，就餐人次55万；按客群恢复假设，人均折后80元。',
-      conditions: ['120家门店按30个营业日编制预算，月客流55万人次。', '新品需求按周滚动汇总，采购锁量与补货计划同步。', '按分时客流调整临时工时，高峰服务人数不削减。'] },
+      conditions: ['120家门店按30个营业日编制预算，月客流55万人次。', '其他费用增加20万元纳入月度固定预算，未提前计入未确认的节约。', '新品需求按周滚动汇总，采购锁量与补货计划同步。', '按分时客流调整临时工时，高峰服务人数不削减。'] },
     anniversary: { id: 'anniversary', label: '方案二｜周年庆＋目标成本落地', guests: 650000, perCapita: 80, grossPerCapita: 96,
-      raw: { food: 2030, labor: 1400, rent: 600, utilities: 147, tableware: 41.6, consumables: 65, maintenance: 44, marketing: 140, otherStoreExpense: 300 },
-      fixed: { food: 0, labor: 900, rent: 600, utilities: 50, tableware: 0, consumables: 0, maintenance: 44, marketing: 120, otherStoreExpense: 180 },
+      raw: { food: 2030, labor: 1400, rent: 600, utilities: 147, tableware: 41.6, consumables: 65, maintenance: 44, marketing: 140, otherStoreExpense: 320 },
+      fixed: { food: 0, labor: 900, rent: 600, utilities: 50, tableware: 0, consumables: 0, maintenance: 44, marketing: 120, otherStoreExpense: 200 },
       savings: { food: 124, labor: 100, utilities: 3, consumables: 2 }, purchaseSaving: 94, usageSaving: 30,
       demandAssumption: '周年庆套餐与会员券带动65万人次；折后人均80元，券折扣已在收入中扣除，市场费用另含投流与物料。',
-      conditions: ['65万人次为活动销量假设，需结合预约、核销和试销按周验证。', '锁量采购在承诺交付及同规格验收条件下执行，未签价格不视为已兑现。', '周年庆门店逐店确认后厨峰值产能、备料和服务班次。'] }
+      conditions: ['65万人次为活动销量假设，需结合预约、核销和试销按周验证。', '其他费用增加20万元纳入月度固定预算，未提前计入未确认的节约。', '锁量采购在承诺交付及同规格验收条件下执行，未签价格不视为已兑现。', '周年庆门店逐店确认后厨峰值产能、备料和服务班次。'] }
   };
   const actionTemplates = [
     { id: 'purchase', title: '按新品周需求锁量采购、落实同规格报价', owner: '采购总监 / 区域采购经理', deadline: '11月03日', metric: '已签锁量单覆盖率', target: '≥90%；报价、起订量和交付日期逐项确认', condition: '同规格、同税口径；鸡肉/牛肉/五花肉比价，新品五原料按周汇总并满足承诺量。', status: '待逐店执行复核' },
@@ -1338,7 +1338,7 @@
   const trackActualTotals = aggregate(trackingStores.map(s => s.actual));
   const trackVariance = Object.fromEntries(['revenue', ...expenseKeys, 'profit'].map(k => [k, money(trackActualTotals[k] - trackPlanTotals[k])]));
   const tracking = {
-    period: '11月01日—11月07日', nextReview: '11月14日', plan: 'anniversary', dataVersion: DATA_VERSION, planVersion: `${FORECAST_VERSION} / WEEK1-COST-FOCUS-V1`,
+    period: '11月01日—11月07日', nextReview: '11月14日', plan: 'anniversary', dataVersion: DATA_VERSION, planVersion: `${FORECAST_VERSION} / WEEK1-COST-FOCUS-V2`,
     summary: { plan: trackPlanTotals, actual: trackActualTotals, variance: trackVariance, profitGap: trackVariance.profit, revenueGap: trackVariance.revenue,
       achievement: trackActualTotals.revenue / trackPlanTotals.revenue * 100,
       executionRate: sum(trackingStores.map(s => s.verification.confirmedChecks)) / 600 * 100,
@@ -1883,12 +1883,13 @@ function aiAttributionBrief(){
   const recommendations={
     food:{direction:'重点物料按同等级同规格比价，促销新品按销量更新需求计划，提前落实批量报价与分批交付；备料按时段销量分批，核对出成率与报损。',verification:'分别核对实际到货价、锁量覆盖、标准应耗与盘点实耗、报损金额。',action:'查看采购与损耗明细'},
     labor:{direction:'按时段客流重排班次，高峰支援按标准工时控制，低峰减少闲置临时工时，并保留必要的高峰服务配置。',verification:'实际工时、工资费用与出餐时长、客诉一起复核；结构摊薄不作为人工整改收益。',action:'查看工时构成'},
-    pricing:{direction:'检查优惠券、套餐与渠道优惠的叠加规则，复核促销订单毛利，再调整优惠力度与适用范围。',verification:'观察核销后净成交价、订单毛利、原价消费替代和复购表现，客流变化单独核实。',action:'查看净成交价明细'}
+    pricing:{direction:'检查优惠券、套餐与渠道优惠的叠加规则，复核促销订单毛利，再调整优惠力度与适用范围。',verification:'观察核销后净成交价、订单毛利、原价消费替代和复购表现，客流变化单独核实。',action:'查看净成交价明细'},
+    opex:{direction:'优先核查其他费用的支出用途与结算凭据，明确费用上限和责任人；同步复核能耗、物耗、维修及市场推广支出的使用标准。',verification:'按科目和门店复核超支是否回落，核对实际用量及结算凭据；固定租金的规模摊薄不作为费用整改收益。',action:'查看其他经营费用明细'}
   };
   const priorities=M.causes.filter(c=>c.impact<0).sort((a,b)=>a.impact-b.impact).map(c=>{const r=recommendations[c.id];return `<li data-category="${c.id}"><strong>${esc(c.name)}：<span class="bad">${signed(c.impact)}万元</span></strong><p><strong>整改方向：</strong>${r.direction}</p><p><strong>验收重点：</strong>${r.verification}</p><button class="hmw-link" data-cause="${c.id}">${r.action}</button></li>`;}).join('');
   return `<div class="ai-attribution-brief"><section class="ai-brief-section"><header><h3>一、利润变化全景</h3></header><div class="ai-brief-intro"><p>以<strong>9月实际经营模式</strong>为基准：按照9月实际的成本费用率计算10月基准利润，得到<strong class="ai-value-reference">${num(t.baseline.profit)}万元</strong>；实际利润<strong class="ai-value-actual">${num(b.profit)}万元</strong>，较基准少<strong class="ai-value-negative">${num(t.baselineGap)}万元</strong>。与9月实际${num(a.profit,0)}万元相比，利润净减少${num(decline,0)}万元。</p><div class="ai-summary-metrics"><div data-tone="history"><small>9月实际利润</small><strong>${num(a.profit,0)}<span>万元</span></strong></div><div data-tone="reference"><small>9月模式下10月基准</small><strong>${num(t.baseline.profit)}<span>万元</span></strong><em>已计入10月实际业务量</em></div><div data-tone="actual"><small>10月实际利润</small><strong>${num(b.profit,0)}<span>万元</span></strong><em class="ai-value-negative">较基准少${num(t.baselineGap)}万元</em></div></div></div><figure class="ai-brief-figure"><div class="ai-brief-chart-meta"><span>金额单位：万元</span><div class="ai-brief-legend"><span><i class="total"></i>实绩</span><span><i class="reference"></i>基准检查点</span><span><i class="positive"></i>增加利润</span><span><i class="negative"></i>减少利润</span></div></div>${bridgeSvg(attributionChartRows(),a.profit,b.profit)}<figcaption class="ai-brief-caption"><strong>图表解读</strong><p>营收增长未能转化为利润，主要压力来自食材采购、超标损耗和排班用工执行。食材成本增加导致利润减少<strong class="bad">${num(-food.impact,0)}万元</strong>，人工成本增加导致利润减少<strong class="bad">${num(-labor.impact,0)}万元</strong>。</p></figcaption></figure></section>
     <section class="ai-brief-section"><header><h3>二、利润变化的因素占比</h3></header>${attributionImpactGraphic()}<div class="ai-brief-caption"><strong>图表解读</strong><p><strong>食材成本差异，分为采购价格变动与超标准损耗：</strong></p><p><strong>1. 采购价格变动，增加成本<span class="bad">${num(t.foodStandard.priceCost)}万元</span>。</strong>其中包括两类业务原因：</p><p class="ai-food-subcause"><strong>重点物料涨价：</strong>${regularMaterials.map(m=>`${esc(m.name)}增加成本${num(-m.priceImpact)}万元`).join('、')}，合计增加<strong class="bad">${num(regularPriceCost)}万元</strong>。</p><p class="ai-food-subcause"><strong>新品采购预估偏低，批量价格未落实：</strong>10月促销新品销售超预期，${newMaterials.map(m=>esc(m.name)).join('、')}等新品主食材的预估采购量未达到整月批量锁量的承诺条件，追加部分按现货价结算，增加成本<strong class="bad">${num(newProductPriceCost)}万元</strong>。</p><p><strong>2. 超标准损耗，增加成本<span class="bad">${num(t.foodStandard.excessCost)}万元</span>。</strong>${M.getCauseDetail('usage').children.map(c=>`${esc(c.name)}${num(-c.impact)}万元`).join('；')}。</p>${foodMaterialFocus()}<p><strong>人工成本差异：</strong>净减利<strong class="bad">${num(-labor.impact)}万元</strong>，其中超标准工时影响<strong class="bad">${num(-t.laborStandard.executionImpact)}万元</strong>，被<strong class="good">${num(t.laborStandard.structureImpact)}万元</strong>结构摊薄部分抵消。</p><p><strong>净成交价变化：</strong>${pricing.children.map(c=>`${esc(c.name)}影响${signed(c.impact)}万元`).join('；')}。</p><p><strong>其他经营费用：</strong>净影响<strong class="${badClass(opex.impact)}">${signed(opex.impact)}万元</strong>；租金项<strong class="${badClass(rent.impact)}">${signed(rent.impact)}万元</strong>来自规模摊薄，实际租金未减少。</p></div><details class="ai-contribution-detail"><summary>查看对净下降${num(decline,0)}万元的完整贡献表</summary><div class="hmw-table-wrap ai-brief-table-wrap"><table class="hmw-table ai-brief-table"><caption>各因素对环比净下降${num(decline,0)}万元的贡献</caption><thead><tr><th>经营因素</th><th class="numeric">利润影响 / 万元</th><th class="numeric">对利润净下降的贡献</th></tr></thead><tbody>${M.causes.map(c=>`<tr data-brief-cause="${c.id}"><td><button class="hmw-link" data-cause="${c.id}">${esc(c.name)}</button></td><td class="numeric ${badClass(c.impact)}">${signed(c.impact)}</td><td class="numeric ${badClass(c.impact)}">${signed(c.netDeclineShare,1)}%</td></tr>`).join('')}<tr class="total" data-brief-total><td>利润净变化</td><td class="numeric bad">${signed(-decline)}</td><td class="numeric">100.0%</td></tr></tbody></table></div><p class="ai-brief-method"><strong>占比口径：</strong>本表贡献＝−单项利润影响 ÷ 环比净下降${num(decline,0)}万元，原始贡献合计100%；分项显示可能因四舍五入与合计略有差异。增利因素抵减降幅，记负贡献；减利因素记正贡献，可超过100%。顶层增利合计${num(positive)}万元、减利合计${num(negative)}万元；${num(t.baseline.profit)}万元基准是检查点，不作为额外贡献相加。</p></details></section>
-    <section class="ai-brief-section"><header><h3>三、整改方向</h3><p>按三项一级减利因素的影响金额排序，分别明确整改方向和验收重点。</p></header><ol class="ai-brief-priorities">${priorities}</ol></section><div class="ai-message-context">方法版本 ${t.version} · 同一组120家门店。<button class="hmw-link" data-action="methodology">查看数据与方法口径</button>。整改收益以实际采购、耗用、工时及毛利表现复核确认。</div></div>`;
+    <section class="ai-brief-section"><header><h3>三、整改方向</h3><p>按一级减利因素的影响金额排序，分别明确整改方向和验收重点。</p></header><ol class="ai-brief-priorities">${priorities}</ol></section><div class="ai-message-context">方法版本 ${t.version} · 同一组120家门店。<button class="hmw-link" data-action="methodology">查看数据与方法口径</button>。整改收益以实际采购、耗用、工时及毛利表现复核确认。</div></div>`;
 }
 function aiSummary(page){
   if(page==='attribution')return aiAttributionBrief()+`<div class="ai-message-actions"><button class="hmw-button primary" data-action="show-evidence">查看完整归因</button><button class="hmw-button" data-cause="procurement">穿透${num(-M.getCauseDetail('procurement').impact,0)}万采购价差</button><button class="hmw-button" data-nav="forecast">推演11月方案</button></div>`;
@@ -2069,7 +2070,7 @@ render();
       const labor=M.getCauseDetail('labor'),structure=M.getCauseDetail('labor-structure'),peak=M.getCauseDetail('labor-peak'),low=M.getCauseDetail('labor-low'),standard=method.laborStandard;
       return {answer:`相对9月全费率基准，人工结构与工时的净影响为${signed(labor.impact)}万元。\n费率参考人工${num(standard.rateReferenceCost)}万元，固定人工与弹性工时标准${num(standard.standardCost)}万元，结构摊薄影响${signed(structure.impact)}万元；高峰加班及支援${signed(peak.impact)}万元、低峰未回调工时${signed(low.impact)}万元，最后衔接到实际人工${num(standard.actualCost)}万元。\n结构摊薄不代表工资实际下降或已实现整改收益。工时按${num(standard.hourlyCost,0)}元综合时薪核对，还需同时复核出餐效率与客诉。`,action:{type:'cause',id:'labor'}};
     }
-    if(/租金|摊薄|其他费用|费用率/.test(question)){
+    if(/租金|摊薄|其他经营费用|其他费用|费用率/.test(question)){
       const opex=M.getCauseDetail('opex'),rent=M.getCauseDetail('opex-rent');
       return {answer:`其他经营费用的净影响为${signed(opex.impact)}万元，已逐科目比较9月模式费率参考与10月实际。\n租金费率参考${num(method.baseline.rent)}万元，10月实际${num(b.rent)}万元，对利润影响${signed(rent.impact)}万元。实际租金金额没有下降，这部分是规模摊薄，不能当作已兑现整改收益。其余科目包含正负差异，需继续核对实际费用和业务执行证据。`,action:{type:'cause',id:'opex'}};
     }
