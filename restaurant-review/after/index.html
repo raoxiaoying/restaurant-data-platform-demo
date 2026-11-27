@@ -1124,20 +1124,38 @@
 .aw-manager-heading p{margin:0;color:#7489a5;font-size:14px;line-height:1.8}
 .aw-manager-workspace{max-width:1440px;margin:auto}
 .aw-manager-workspace>.aw-section>.aw-store-selector{margin-top:0}
-.hmw-app.ai-workspace.ai-platform.manager-workspace{height:auto;min-height:100dvh;overflow:auto}
-.manager-workspace .hmw-shell{display:block;height:auto;min-height:100vh;overflow:visible}
-.manager-workspace .hmw-workspace{height:auto;min-height:100vh;overflow:visible}
-.manager-workspace .hmw-sidebar,.manager-workspace .platform-composer-wrap,.manager-workspace #platformSidebarToggle,.manager-workspace [data-platform-action=context],.manager-workspace .platform-mobile-backdrop,.manager-workspace .platform-context-drawer{display:none!important}
-.manager-workspace #hmwMain{width:100%;max-width:1536px;flex:none;overflow:visible;padding:30px 40px 50px}
-.manager-workspace .hmw-topbar{position:static}
-.manager-workspace .hmw-breadcrumb>span{font-size:0}
-.manager-workspace .hmw-breadcrumb>span::before{content:'门店工作空间';font-size:13px}
+#awManagerSidebar{display:none}
+.manager-workspace #awManagerSidebar{display:flex}
+.manager-workspace.sidebar-collapsed #awManagerSidebar{display:none}
+.manager-workspace #groupSidebar,.manager-workspace .platform-composer-wrap,.manager-workspace [data-platform-action=context],.manager-workspace .platform-context-drawer{display:none!important}
+.manager-workspace #hmwMain{padding:30px 40px 50px}
+.ai-platform #awManagerNav{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;margin:0 0 26px;padding:0}
+.ai-platform #awManagerNav button{display:flex;align-items:center;justify-content:flex-start;gap:11px;width:100%;min-height:62px;padding:11px 12px;border:1px solid transparent;border-radius:9px;background:transparent;color:#405572;text-align:left;font-weight:400}
+.ai-platform #awManagerNav button:hover{background:#edf2fa;color:#244f91}
+.ai-platform #awManagerNav button.active,.ai-platform #awManagerNav button[aria-current=page]{border-color:#dce7ff;background:#eaf1ff;color:var(--dolink-blue-strong);box-shadow:inset 3px 0 var(--dolink-blue)}
+.ai-platform #awManagerNav .ai-task-icon{display:grid}
+.ai-platform #awManagerNav .ai-task-body{flex:1;min-width:0}
+.ai-platform #awManagerNav .ai-task-body small{display:block}
+.ai-platform #awManagerNav button.active .ai-task-body small,.ai-platform #awManagerNav button[aria-current=page] .ai-task-body small{color:#486897}
+.aw-manager-store{min-width:0;margin:0 0 24px;padding:14px 12px;border:1px solid #e0e8f5;border-radius:10px;background:#fff}
+.aw-manager-store:empty,.aw-manager-profile:empty{display:none}
+.aw-manager-store>label{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;margin-bottom:8px;color:#405c80;font-size:12px}
+.aw-manager-store>label small{flex-shrink:0;color:#8a9ab1;font-size:11px;font-weight:400}
+.aw-manager-store>select{display:block;width:100%;min-width:0;max-width:100%;height:40px;padding:8px 9px;border:1px solid #d3deef;border-radius:7px;background:#fff;color:#354f74;font-family:inherit;font-size:13px;line-height:1.4;overflow:hidden;text-overflow:ellipsis}
+.aw-manager-store>select+small{margin-top:8px}
+.aw-manager-store strong,.aw-manager-store b{display:block;color:#304d75;font-size:14px;font-weight:600;line-height:1.7;overflow-wrap:anywhere}
+.aw-manager-store>small,.aw-manager-store>span,.aw-manager-store>p{display:block;margin:5px 0 0;color:#7387a3;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.aw-manager-profile{margin-bottom:8px}
+.aw-manager-profile .platform-profile{cursor:default}
+.aw-manager-profile .platform-profile:hover{background:transparent}
+.ai-platform .aw-manager-back{text-decoration:none}
 @media(max-width:900px){.aw-distribution>header{flex-direction:column;gap:8px}.aw-manager-heading{flex-direction:column;gap:15px}.manager-workspace #hmwMain{padding:22px 16px 40px}.aw-manager-heading h1{font-size:24px}}
+@media(max-width:760px){.manager-workspace #awManagerSidebar,.manager-workspace.sidebar-collapsed #awManagerSidebar{display:none}.manager-workspace.sidebar-open #awManagerSidebar{display:flex}}
 </style>
 </head>
 <body class="hmw-app ai-workspace ai-platform">
   <div class="hmw-shell">
-    <aside class="hmw-sidebar">
+    <aside class="hmw-sidebar" id="groupSidebar">
       <a class="hmw-brand" href="#attribution"><span class="hmw-logo">好</span><span><b>好美味 AI</b><small>餐饮经营工作台</small></span></a>
       <div class="platform-sidebar-actions">
         <button class="platform-nav-button" data-platform-view="new"><span data-platform-icon="compose"></span><span>新任务</span><kbd>⌘ K</kbd></button>
@@ -1149,6 +1167,16 @@
       <div class="platform-sidebar-label platform-history-label"><span>我的任务</span><span id="platformHistoryCount">0</span></div>
       <nav id="platformHistory" aria-label="我的任务"></nav>
       <div class="platform-sidebar-bottom"><button class="platform-profile" data-platform-action="workspace"><span class="platform-profile-avatar">好</span><span><b>好美味餐饮集团</b><small>集团经营工作空间</small></span><span data-platform-icon="chevrons"></span></button></div>
+    </aside>
+    <aside id="awManagerSidebar" class="hmw-sidebar aw-manager-sidebar" aria-label="门店工作导航">
+      <a class="hmw-brand" href="#manager"><span class="hmw-logo">好</span><span><b>好美味 · 门店</b><small>店长工作台</small></span></a>
+      <div id="awManagerStore" class="aw-manager-store"></div>
+      <div class="platform-sidebar-label"><span>门店工作</span></div>
+      <nav id="awManagerNav" class="hmw-nav" aria-label="门店执行菜单"></nav>
+      <div class="platform-sidebar-bottom">
+        <div id="awManagerProfile" class="aw-manager-profile"></div>
+        <a class="platform-nav-button aw-manager-back" href="../"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>返回系统入口</span></a>
+      </div>
     </aside>
     <div class="hmw-workspace">
       <header class="hmw-topbar"><div class="platform-header-title"><button class="platform-icon-button" id="platformSidebarToggle" aria-label="切换侧边栏" aria-expanded="true"><span data-platform-icon="sidebar"></span></button><div class="hmw-breadcrumb"><span>经营工作空间</span><i>/</i><b id="hmwBreadcrumb">10月利润归因</b></div></div><div class="hmw-top-actions"><button class="platform-icon-button" data-platform-action="context" aria-label="查看任务上下文"><span data-platform-icon="panel"></span></button><button class="platform-icon-button" id="hmwFullscreen" aria-label="全屏"><span data-platform-icon="expand"></span></button></div></header>
@@ -3551,7 +3579,12 @@ function recalculate(){
 function navigate(page){if(!pages.some(([id])=>id===page))page='attribution';globalThis.AiPlatform?.openPage();if($('#hmwDialog').open)$('#hmwDialog').close();state.search='';location.hash=page;render();}
 function render(){
   const manager=location.hash.split('?')[0]==='#manager';
+  if(manager!==document.body.classList.contains('manager-workspace')){
+    document.body.classList.remove('sidebar-open','sidebar-collapsed');$('#platformMobileBackdrop').hidden=true;
+    $('#platformSidebarToggle').setAttribute('aria-expanded',String(innerWidth>760));
+  }
   document.body.classList.toggle('manager-workspace',manager);
+  $('#platformSidebarToggle').setAttribute('aria-controls',manager?'awManagerSidebar':'groupSidebar');
   if(manager){
     state.page='manager';$('#hmwBreadcrumb').textContent='门店店长工作台';document.title='门店店长工作台 · 好美味';
     $('#hmwMain').innerHTML=globalThis.AdviceWorkspace?.renderManager()||'';
@@ -3626,7 +3659,11 @@ render();
   const activeTask=()=>saved.tasks.find(t=>t.id===route());
   const persist=()=>{try{localStorage.setItem(storageKey,JSON.stringify(saved));}catch{toast('浏览器存储不可用，本次会话仍可继续');}};
   const appFor=page=>apps.find(a=>a.id===page)||apps[0];
-  function closeSidebar(){document.body.classList.remove('sidebar-open');$('#platformMobileBackdrop').hidden=true;$('#platformSidebarToggle').setAttribute('aria-expanded',String(innerWidth>760&&!document.body.classList.contains('sidebar-collapsed')));}
+  function closeSidebar(){
+    const returnFocus=location.hash.split('?')[0]==='#manager'&&document.body.classList.contains('sidebar-open')&&($('#awManagerSidebar')?.contains(document.activeElement)||document.activeElement===$('#platformMobileBackdrop'));
+    document.body.classList.remove('sidebar-open');$('#platformMobileBackdrop').hidden=true;$('#platformSidebarToggle').setAttribute('aria-expanded',String(innerWidth>760&&!document.body.classList.contains('sidebar-collapsed')));
+    if(returnFocus)$('#platformSidebarToggle').focus({preventScroll:true});
+  }
   function sidebar(){
     const task=activeTask();
     document.querySelectorAll('[data-platform-view]').forEach(b=>{const active=b.dataset.platformView===route();b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
@@ -3762,7 +3799,7 @@ render();
   $('#platformPrompt').addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();$('#platformComposer').requestSubmit();}});
   $('#platformSidebarToggle').onclick=()=>{if(innerWidth<=760){const open=document.body.classList.toggle('sidebar-open');$('#platformMobileBackdrop').hidden=!open;$('#platformSidebarToggle').setAttribute('aria-expanded',String(open));}else{const collapsed=document.body.classList.toggle('sidebar-collapsed');$('#platformSidebarToggle').setAttribute('aria-expanded',String(!collapsed));}};
   $('#platformMobileBackdrop').onclick=closeSidebar;
-  document.addEventListener('keydown',event=>{if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==='k'){event.preventDefault();location.hash='new';$('#platformPrompt').focus();}if(event.key==='Escape'){closeSidebar();$('#platformContext').hidden=true;}});
+  document.addEventListener('keydown',event=>{if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(location.hash.split('?')[0]==='#manager')return;location.hash='new';$('#platformPrompt').focus();}if(event.key==='Escape'){closeSidebar();$('#platformContext').hidden=true;}});
   window.addEventListener('hashchange',()=>{closeSidebar();$('#platformContext').hidden=true;$('#hmwMain').scrollTop=0;});
   window.addEventListener('resize',closeSidebar);
   globalThis.AiPlatform={renderView,threadView,afterRender,revealEvidence,openPage:closeSidebar};
@@ -3784,7 +3821,9 @@ render();
   try{readShared();}catch{}
   if(publication){scenario.applied=JSON.parse(JSON.stringify(publication.forecast));scenario.draft=JSON.parse(JSON.stringify(publication.forecast.inputs));}
   const managerView=()=>location.hash.split('?')[0]==='#manager';
-  const managerUrl=id=>'#manager'+(id?'?store='+encodeURIComponent(id):'');
+  const managerPages=[['proposal','经营方案确认','核对本店指标与执行条件'],['weekly','7天物料与排班','物料需求与人员安排'],['documents','单据记录','查看本店创建回执']];
+  const managerSection=()=>{const section=new URLSearchParams(location.hash.split('?')[1]||'').get('view');return managerPages.some(([id])=>id===section)?section:'proposal';};
+  const managerUrl=(id,section=managerSection())=>'#manager?store='+encodeURIComponent(id)+'&view='+section;
   const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
   const nextDay=date=>{const d=new Date(date+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10);};
   const view={storeId:M.stores[0].id,query:'',candidateSignature:'',checks:{},startDate:nextDay(today()),inventory:{},extraStaff:0,weekDirty:false,weekAck:false};
@@ -3817,6 +3856,11 @@ render();
     if(managerView())history.replaceState(null,'',managerUrl(id));
     render();$('#awStorePanel')?.scrollIntoView({block:'start',behavior:'instant'});
   }
+  function openManager(section){
+    if(!managerPages.some(([id])=>id===section))return;
+    location.hash=managerUrl(view.storeId,section);render();root.AiPlatform?.openPage();
+    $('#hmwMain').scrollTop=0;$('#hmwMain').focus({preventScroll:true});
+  }
   function options(){return {startDate:view.startDate,inventory:JSON.parse(JSON.stringify(view.inventory)),extraStaff:Number(view.extraStaff)||0};}
   function receipt(){const w=weekly();return w?[...flow.dispatches].reverse().find(r=>r.storeId===view.storeId&&r.key===w.plan.key):null;}
   function refreshGates(){
@@ -3846,7 +3890,7 @@ render();
     const renderAttention=item=>`<div class="aw-attention-row" data-attention-item="${item.key}"><div><strong>${esc(item.label)}</strong><span class="${item.tone==='bad'?'bad':''}">${amt(item.value)}<small>万元</small></span></div><p>${esc(item.focus)}</p><small>核对：${esc(item.verification)}</small></div>`;
     const attention=coreKeys.map(key=>proposal.attention.find(item=>item.key===key)).filter(Boolean).map(item=>renderAttention({...item,label:coreLines.find(line=>line[0]===item.key)[1]})).join('');
     const extraAttention=proposal.attention.filter(item=>!coreKeys.includes(item.key)).map(renderAttention).join('');
-    return `<section class="aw-store-panel" id="awStorePanel"><header><div><span class="aw-eyebrow">门店测算与生效</span><h3>${esc(proposal.storeName)} <small>${esc(proposal.storeId)}</small></h3><p>本次演示店长：${esc(proposal.manager)} · ${esc(planNames[proposal.planId])}<br>方案来源：${esc(publication?.versionLabel||a?.proposal.publicationVersion||'历史生效版本')}</p></div><span class="hmw-tag ${current?'good':'warn'}">${current?'店长已确认 · 本店生效':'本次测算待确认'}</span></header>${coreMetrics(proposal.finance,'store-result')}<p class="aw-note">预计就餐${amt(proposal.finance.guests,0)}人次 · 接待产能使用率${amt(proposal.storeResource.capacityUse,1)}%。经营利润已扣全部费用；餐具、物耗、维修、推广在费用明细中核对。</p>${proposal.budgetBlockers?.length?`<div class="aw-blockers"><strong>本店费用预算缺口待解决</strong>${list(proposal.budgetBlockers)}</div>`:''}${proposal.storeResource.capacityUse>100?`<p class="aw-warning">本店预计客流超过现有承接能力，确认前须落实增能或预约分流，并核对分时高峰。</p>`:''}${a?`<div class="aw-effective-version"><strong>当前生效：${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])} · 店长${esc(a.proposal.manager)} · 确认于${esc(new Date(a.confirmedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}</span>${!current?'<p>新参数尚未替代该版本。第二部分继续使用本店已确认版本，直到店长确认新方案。</p>':''}</div>`:'<p class="aw-note">测算结果尚未生效，店长完成以下核对并确认后，才能生成本店执行计划。</p>'}<details class="aw-attention"><summary>查看10项核心指标的店长关注提示</summary><div class="aw-attention-list">${attention}</div></details><details class="aw-core-expenses aw-extra-attention"><summary>餐具、物耗、维修、推广费用明细与关注提示</summary><div class="aw-attention-list">${extraAttention}</div></details><div class="aw-manager-checks">${proposal.checks.map(c=>`<label><input type="checkbox" data-aw-monthly-check="${c.id}" ${checks[c.id]?'checked':''} ${current?'disabled':''}><span><strong>${esc(c.label)}</strong><small>${esc(c.description)}</small></span></label>`).join('')}</div><button class="hmw-button primary" id="awConfirmMonthly" data-aw-action="confirm-monthly" ${!publication||current||proposal.budgetBlockers?.length||!proposal.checks.every(c=>view.checks[c.id])?'disabled':''}>${current?'本店方案已确认生效':'确认本店经营方案生效'}</button></section>`;
+    return `<section class="aw-store-panel" id="awStorePanel"><header><div><span class="aw-eyebrow">门店测算与生效</span><h3>${esc(proposal.storeName)} <small>${esc(proposal.storeId)}</small></h3><p>本次演示店长：${esc(proposal.manager)} · ${esc(planNames[proposal.planId])}<br>方案来源：${esc(publication?.versionLabel||a?.proposal.publicationVersion||'历史生效版本')}</p></div><span class="hmw-tag ${current?'good':'warn'}">${current?'店长已确认 · 本店生效':'本次测算待确认'}</span></header>${coreMetrics(proposal.finance,'store-result')}<p class="aw-note">预计就餐${amt(proposal.finance.guests,0)}人次 · 接待产能使用率${amt(proposal.storeResource.capacityUse,1)}%。经营利润已扣全部费用；餐具、物耗、维修、推广在费用明细中核对。</p>${proposal.budgetBlockers?.length?`<div class="aw-blockers"><strong>本店费用预算缺口待解决</strong>${list(proposal.budgetBlockers)}</div>`:''}${proposal.storeResource.capacityUse>100?`<p class="aw-warning">本店预计客流超过现有承接能力，确认前须落实增能或预约分流，并核对分时高峰。</p>`:''}${a?`<div class="aw-effective-version"><strong>当前生效：${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])} · 店长${esc(a.proposal.manager)} · 确认于${esc(new Date(a.confirmedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}</span>${!current?'<p>新参数尚未替代该版本。7天物料与排班继续使用本店已确认版本，直到店长确认新方案。</p>':''}</div>`:'<p class="aw-note">测算结果尚未生效，店长完成以下核对并确认后，才能生成本店执行计划。</p>'}<details class="aw-attention"><summary>查看10项核心指标的店长关注提示</summary><div class="aw-attention-list">${attention}</div></details><details class="aw-core-expenses aw-extra-attention"><summary>餐具、物耗、维修、推广费用明细与关注提示</summary><div class="aw-attention-list">${extraAttention}</div></details><div class="aw-manager-checks">${proposal.checks.map(c=>`<label><input type="checkbox" data-aw-monthly-check="${c.id}" ${checks[c.id]?'checked':''} ${current?'disabled':''}><span><strong>${esc(c.label)}</strong><small>${esc(c.description)}</small></span></label>`).join('')}</div><button class="hmw-button primary" id="awConfirmMonthly" data-aw-action="confirm-monthly" ${!publication||current||proposal.budgetBlockers?.length||!proposal.checks.every(c=>view.checks[c.id])?'disabled':''}>${current?'本店方案已确认生效':'确认本店经营方案生效'}</button></section>`;
   }
   function materialsTable(p){
     return `<div class="hmw-table-wrap"><table class="hmw-table aw-materials"><thead><tr><th>物料 / 供货参考</th><th class="numeric">7天需求 / 公斤</th><th>现存 / 公斤</th><th>在途 / 公斤</th><th>安全库存 / 公斤</th><th class="numeric">建议申请 / 公斤</th><th class="numeric">参考价 / 元·公斤</th></tr></thead><tbody>${p.materials.map(m=>`<tr data-week-material="${m.materialId}"><td><strong>${esc(m.name)}</strong><small>${esc(m.supplierName||'综合食材供应（示例）')}</small></td><td class="numeric">${amt(m.demandKg,3)}</td>${['onHandKg','inboundKg','safetyKg'].map(field=>`<td><input type="number" min="0" step="0.001" aria-label="${esc(m.name)}${field==='onHandKg'?'现存':field==='inboundKg'?'在途':'安全库存'}" data-aw-stock="${m.materialId}" data-field="${field}" value="${view.inventory[m.materialId]?.[field]??m[field]}"></td>`).join('')}<td class="numeric"><strong>${amt(m.purchaseKg,3)}</strong></td><td class="numeric">${amt(m.unitPrice)}</td></tr>`).join('')}</tbody></table></div><p class="aw-note">建议申请＝需求＋安全库存－现存－在途，最低为0，再按包装量取整。修改库存后请更新清单。</p><details class="aw-secondary-detail"><summary>查看7天逐日物料需求</summary><div class="hmw-table-wrap"><table class="hmw-table aw-daily-materials"><thead><tr><th>物料 / 公斤</th>${p.dates.map(d=>`<th class="numeric">${esc(d.slice(5))}</th>`).join('')}</tr></thead><tbody>${p.materials.map(m=>`<tr><td>${esc(m.name)}</td>${m.dailyDemand.map(q=>`<td class="numeric">${amt(q,3)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>`;
@@ -3856,7 +3900,7 @@ render();
     return `<div class="aw-week-metrics"><div><small>计划排班工时</small><strong>${amt(s.totalHours)}<span>小时</span></strong></div><div><small>排班折算费用</small><strong>${money(s.totalCostYuan)}</strong></div><div><small>本店7天人工预算</small><strong>${money(s.budgetYuan)}</strong></div></div><div class="hmw-table-wrap"><table class="hmw-table aw-daily-staff"><thead><tr><th>日期</th><th class="numeric">预计客流</th><th class="numeric">早班人数</th><th class="numeric">晚班人数</th><th class="numeric">工时</th><th class="numeric">折算费用 / 元</th></tr></thead><tbody>${s.daily.map(d=>`<tr><td>${esc(d.date)}</td><td class="numeric">${amt(d.guests,0)}</td><td class="numeric">${d.earlyCount}</td><td class="numeric">${d.lateCount}</td><td class="numeric">${amt(d.hours)}</td><td class="numeric">${amt(d.costYuan)}</td></tr>`).join('')}</tbody></table></div><details class="aw-secondary-detail"><summary>查看逐人排班与休息安排（${s.employees.length}名示例人员）</summary><div class="hmw-table-wrap"><table class="hmw-table aw-roster"><thead><tr><th>员工</th><th>岗位</th>${p.dates.map(d=>`<th>${esc(d.slice(5))}</th>`).join('')}<th class="numeric">7天工时</th></tr></thead><tbody>${s.employees.map(e=>`<tr><td>${esc(e.name)}</td><td>${esc(e.role)}</td>${e.days.map(day=>`<td>${esc(day)}</td>`).join('')}<td class="numeric">${amt(e.hours)}</td></tr>`).join('')}</tbody></table></div></details><p class="aw-note">${esc(s.sourceNote||'示例人员与可用性；早班10:00—16:00、晚班16:00—22:00，按每班6小时、综合30元/小时折算。请店长核对真实人员和可用时段。')}</p>`;
   }
   function receiptPanel(r){
-    return `<section class="aw-receipts"><header><h4>单据与排班创建回执</h4><span class="hmw-tag">演示回执</span></header><p>${esc(r.storeName)} · ${esc(r.sourceVersion)} · ${esc(r.startDate)}—${esc(r.endDate)}</p><div class="aw-receipt-grid">${[['supplyChain','供应链系统'],['humanResources','人事系统']].map(([id,name])=>{const d=r[id];return `<article><small>${name}</small><h4>${esc(d.type)}</h4><span class="hmw-tag ${d.status==='not_required'?'':'blue'}">${d.status==='not_required'?'库存充足，无需补货申请':'演示创建成功'}</span><p>${esc(d.id||'本次不创建空申请单')}</p><button class="hmw-link" data-aw-action="view-document" data-document="${id}">查看单据内容</button></article>`;}).join('')}</div><p class="aw-note">回执为本演示生成的示例记录，未写入真实供应链或人事系统；重复点击会复用同一批次。</p></section>`;
+    return `<section class="aw-receipts"><header><h4>单据与排班创建回执</h4><span class="hmw-tag">演示回执</span></header><p>${esc(r.storeName)} · ${esc(r.sourceVersion)} · ${esc(r.startDate)}—${esc(r.endDate)}</p><div class="aw-receipt-grid">${[['supplyChain','供应链系统'],['humanResources','人事系统']].map(([id,name])=>{const d=r[id];return `<article><small>${name}</small><h4>${esc(d.type)}</h4><span class="hmw-tag ${d.status==='not_required'?'':'blue'}">${d.status==='not_required'?'库存充足，无需补货申请':'演示创建成功'}</span><p>${esc(d.id||'本次不创建空申请单')}</p><button class="hmw-link" data-aw-action="view-document" data-document="${id}" data-receipt="${esc(r.batchId)}">查看单据内容</button></article>`;}).join('')}</div><p class="aw-note">回执为本演示生成的示例记录，未写入真实供应链或人事系统；重复点击会复用同一批次。</p></section>`;
   }
   function weekPanel(){
     const a=approval(),w=weekly(),p=w?.plan,valid=validWeekly(),r=receipt();
@@ -3872,24 +3916,43 @@ render();
     const d=P.describe(scenario.applied,M);
     return `<div class="aw-workspace" id="aiEvidence"><nav class="aw-flow-nav"><span>集团方案生成</span><span>集团合计与逐店测算</span><span>下发至独立店长工作台</span></nav><section class="aw-section" id="awProposalSection"><header><span class="aw-eyebrow">集团经营管理</span><h2>经营方案与集团测算</h2><p>调整方案参数，核对集团合计与门店测算，再下发给各店店长。店长在独立工作台完成本店确认和执行。</p></header><details class="aw-brand-basis" open><summary>品牌与资源依据</summary>${list(d.brandFacts)}</details><div class="aw-plan-options">${['steady','anniversary'].map(planCard).join('')}</div>${strategyEditor()}<section id="aiForecastResult" class="aw-current-result"><div><strong>当前测算：${esc(planNames[scenario.applied.plan])}</strong><p>预计营业额${amt(scenario.applied.totals.revenue)}万元，利润${amt(scenario.applied.totals.profit)}万元；确认进度以下方已下发版本为准。</p></div><span class="hmw-tag">集团合计</span></section><section class="aw-core-summary"><h3>集团10项核心指标</h3>${coreMetrics(scenario.applied.totals,'group-result')}<p class="aw-note">经营利润已扣除全部费用；餐具、物耗、维修、推广见费用明细。“其他费用”保持独立科目。</p>${coreExpenseDetails(scenario.applied.totals)}</section>${distributionPanel()}<details class="aw-secondary-detail aw-all-stores" open><summary>查看120家门店测算与确认状态</summary><input class="hmw-search" data-aw-store-search placeholder="搜索门店、编号或区域" aria-label="搜索门店测算" value="${esc(view.query)}"><div class="hmw-table-wrap store-scroll"><table class="hmw-table"><thead><tr><th>门店</th><th class="numeric">预计客流</th><th class="numeric">营业额 / 万元</th><th class="numeric">利润 / 万元</th><th class="numeric">产能使用率</th><th>当前测算状态</th></tr></thead><tbody id="awStoreRows">${storeRows()}</tbody></table></div></details><details class="aw-secondary-detail aw-model-evidence"><summary>查看完整财务测算与行动依据</summary>${forecastResult(scenario.applied,AI.base(scenario.applied.plan))}</details></section></div>`;
   }
+  function recordsPanel(){
+    const records=[...flow.dispatches].reverse().filter(r=>r.storeId===view.storeId);
+    return `<section class="aw-section" id="awDocumentsSection"><header><span class="aw-eyebrow">本店单据</span><h2>单据记录</h2><p>${esc(getStore(view.storeId).name)} · 共${records.length}个已创建批次，按创建时间由近到远展示。</p></header>${records.length?records.map(receiptPanel).join(''):'<div class="aw-empty"><h3>暂无单据记录</h3><p>确认本店7天物料与排班清单并创建单据后，可在这里查看回执。</p><button class="hmw-button" data-aw-view="weekly">前往7天物料与排班</button></div>'}</section>`;
+  }
   function renderManager(){
     const requested=new URLSearchParams(location.hash.split('?')[1]||'').get('store');
     if(requested&&requested!==view.storeId&&M.stores.some(s=>s.id===requested)){
       view.storeId=requested;view.checks={};view.candidateSignature='';view.weekAck=false;view.weekDirty=false;
       const o=weekly()?.options;view.startDate=o?.startDate||nextDay(today());view.inventory=JSON.parse(JSON.stringify(o?.inventory||{}));view.extraStaff=o?.extraStaff||0;
     }
-    const store=getStore(view.storeId),proposal=publication?P.build(publication.forecast,M,view.storeId):approval()?.proposal;
-    return `<div class="aw-workspace aw-manager-workspace"><header class="aw-manager-heading"><div><span class="aw-eyebrow">门店视角 · 独立工作台</span><h1>门店店长工作台</h1><p>接收集团方案，核对本店经营指标，再确认7天物料与排班。</p></div><a class="hmw-button" href="../">返回系统入口</a></header><nav class="aw-flow-nav"><a class="hmw-link" href="#manager" data-aw-scroll="awStorePanel">本店经营方案确认</a><span>7天物料与人员排班</span><button class="hmw-link" data-aw-scroll="awWeeklySection">前往执行清单 ↓</button></nav><section class="aw-section"><div class="aw-store-selector"><label><span>当前门店 / 店长（演示切换）</span><select id="awStoreSelect">${M.stores.map(s=>`<option value="${s.id}" ${s.id===view.storeId?'selected':''}>${esc(s.name)} · ${esc(s.region)} · ${esc(s.manager)}</option>`).join('')}</select></label><p class="aw-note">当前处理${esc(store.name)}的任务；实际应用按店长账号匹配所属门店。</p></div>${publication?`<div class="aw-week-source"><strong>已收到：${esc(publication.versionLabel)}</strong><span>${esc(planNames[publication.forecast.plan])}</span><p>下发时间：${esc(new Date(publication.publishedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}。以下指标与关注事项均为本店数据。</p></div>`:'<div class="aw-empty"><h3>等待集团下发经营方案</h3><p>集团完成方案测算并下发后，本店会收到待确认任务。</p></div>'}${proposal?storePanel(proposal):'<div id="awStorePanel"></div>'}</section><section class="aw-section" id="awWeeklySection"><header><span class="aw-eyebrow">本店执行</span><h2>接下来7天的物料与人员排班</h2><p>使用本店已确认方案生成清单，核对库存与人员可用性后确认，再创建演示单据。</p></header>${weekPanel()}</section></div>`;
+    const store=getStore(view.storeId),section=managerSection(),a=approval(),records=flow.dispatches.filter(r=>r.storeId===view.storeId);
+    const title=managerPages.find(([id])=>id===section)[1];
+    $('#hmwBreadcrumb').textContent='店长工作台 / '+title;document.title=title+' · 好美味店长工作台';
+    $('#awManagerSidebar .hmw-brand').setAttribute('href',managerUrl(view.storeId,'proposal'));
+    $('#awManagerStore').innerHTML=`<label for="awStoreSelect">当前门店 <small>演示切换</small></label><select id="awStoreSelect" aria-label="选择当前门店">${M.stores.map(s=>`<option value="${s.id}" ${s.id===view.storeId?'selected':''}>${esc(s.name)} · ${esc(s.region)}</option>`).join('')}</select><small>${esc(store.id)} · ${esc(store.region)}</small>`;
+    $('#awManagerNav').innerHTML=managerPages.map(([id,label,note])=>`<button data-aw-view="${id}" class="${id===section?'active':''}" ${id===section?'aria-current="page"':''}><span class="ai-task-icon">${icon(id==='proposal'?'forecast':id==='weekly'?'tracking':'attribution')}</span><span class="ai-task-body"><b>${label}</b><small>${id==='proposal'?(publication?(a?.proposal.signature===publication.signature?'本店方案已生效':'收到方案待确认'):'等待集团下发'):id==='documents'?records.length+'个已创建批次':note}</small></span></button>`).join('');
+    $('#awManagerProfile').innerHTML=`<div class="platform-profile"><span class="platform-profile-avatar">店</span><span><b>${esc(store.manager)}</b><small>${esc(store.name)} · 门店工作空间</small></span></div>`;
+    let content;
+    if(section==='weekly'){
+      content=`<section class="aw-section" id="awWeeklySection"><header><span class="aw-eyebrow">本店执行</span><h2>接下来7天的物料与人员排班</h2><p>使用本店已确认方案生成清单，核对库存与人员可用性后确认，再创建演示单据。</p></header>${weekPanel()}</section>`;
+    }else if(section==='documents')content=recordsPanel();
+    else{
+      const proposal=publication?P.build(publication.forecast,M,view.storeId):a?.proposal;
+      content=`<section class="aw-section"><header><span class="aw-eyebrow">本店经营</span><h2>经营方案确认</h2><p>核对本店经营指标、成本与资源条件，确认后本店方案生效。</p></header>${publication?`<div class="aw-week-source"><strong>已收到：${esc(publication.versionLabel)}</strong><span>${esc(planNames[publication.forecast.plan])}</span><p>下发时间：${esc(new Date(publication.publishedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}。以下指标与关注事项均为本店数据。</p></div>`:'<div class="aw-empty"><h3>等待集团下发经营方案</h3><p>集团完成方案测算并下发后，本店会收到待确认任务。</p></div>'}${proposal?storePanel(proposal):'<div id="awStorePanel"></div>'}${a?'<div class="aw-week-actions"><button class="hmw-button" data-aw-view="weekly">前往本店7天物料与排班 →</button></div>':''}</section>`;
+    }
+    return `<div class="aw-workspace aw-manager-workspace"><header class="aw-manager-heading"><div><span class="aw-eyebrow">${esc(store.name)} · ${esc(store.id)}</span><h1>${esc(title)}</h1><p>${esc(store.manager)}，请处理本店方案与执行事项。</p></div></header>${content}</div>`;
   }
-  function showDocument(type){
-    const r=receipt();if(!r)return;const d=r[type];if(!d)return;
+  function showDocument(type,batchId){
+    const r=batchId?flow.dispatches.find(r=>r.batchId===batchId&&r.storeId===view.storeId):receipt();if(!r)return;const d=r[type];if(!d)return;
     const payload=d.payload;
-    const body=type==='supplyChain'?`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>物料</th><th class="numeric">申请量 / 公斤</th><th class="numeric">参考价 / 元·公斤</th></tr></thead><tbody>${(payload.lines||[]).map(x=>`<tr><td>${esc(x.name)}</td><td class="numeric">${amt(x.quantityKg,3)}</td><td class="numeric">${amt(x.unitPrice)}</td></tr>`).join('')||'<tr><td colspan="3">库存充足，本批次无需补货申请。</td></tr>'}</tbody></table></div>`:`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>员工</th><th>岗位</th>${weekly().plan.dates.map(date=>`<th>${esc(date.slice(5))}</th>`).join('')}<th>工时</th></tr></thead><tbody>${payload.employees.map(e=>`<tr><td>${esc(e.name)}</td><td>${esc(e.role)}</td>${e.days.map(day=>`<td>${esc(day)}</td>`).join('')}<td>${amt(e.hours)}</td></tr>`).join('')}</tbody></table></div>`;
+    const body=type==='supplyChain'?`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>物料</th><th class="numeric">申请量 / 公斤</th><th class="numeric">参考价 / 元·公斤</th></tr></thead><tbody>${(payload.lines||[]).map(x=>`<tr><td>${esc(x.name)}</td><td class="numeric">${amt(x.quantityKg,3)}</td><td class="numeric">${amt(x.unitPrice)}</td></tr>`).join('')||'<tr><td colspan="3">库存充足，本批次无需补货申请。</td></tr>'}</tbody></table></div>`:`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>员工</th><th>岗位</th>${r.humanResources.payload.daily.map(day=>`<th>${esc(day.date.slice(5))}</th>`).join('')}<th>工时</th></tr></thead><tbody>${payload.employees.map(e=>`<tr><td>${esc(e.name)}</td><td>${esc(e.role)}</td>${e.days.map(day=>`<td>${esc(day)}</td>`).join('')}<td>${amt(e.hours)}</td></tr>`).join('')}</tbody></table></div>`;
     dialog(d.type,`<p>${esc(d.id||'无需创建')} · ${esc(r.storeName)} · ${esc(r.sourceVersion)} · ${esc(r.startDate)}—${esc(r.endDate)}</p>${body}<p>演示单据，未写入真实外部系统。</p>`,'店长已确认 · 演示创建回执');
   }
   document.addEventListener('click',event=>{
+    const menu=event.target.closest('[data-aw-view]');if(menu&&managerView()){openManager(menu.dataset.awView);return;}
     const store=event.target.closest('[data-aw-store]');if(store){setStore(store.dataset.awStore);return;}
-    const scroll=event.target.closest('[data-aw-scroll]');if(scroll){event.preventDefault();$('#'+scroll.dataset.awScroll)?.scrollIntoView({block:'start',behavior:'instant'});return;}
+    const scroll=event.target.closest('[data-aw-scroll]');if(scroll){event.preventDefault();const target=$('#'+scroll.dataset.awScroll);if(target)target.scrollIntoView({block:'start',behavior:'instant'});else if(managerView())openManager(scroll.dataset.awScroll==='awStorePanel'?'proposal':'weekly');return;}
     const button=event.target.closest('[data-aw-action]');if(!button)return;
     try{
       const action=button.dataset.awAction,now=new Date().toISOString();
@@ -3926,7 +3989,7 @@ render();
         const result=F.createDocuments(flow,view.storeId,weekly()?.plan.key,now);
         if(save(result.state)){render();$('.aw-receipts')?.scrollIntoView({block:'start',behavior:'instant'});toast(result.reused?'已复用本批次演示单据，没有重复创建。':'演示单据与排班已创建，请查看回执。');}
       }
-      if(action==='view-document')showDocument(button.dataset.document);
+      if(action==='view-document')showDocument(button.dataset.document,button.dataset.receipt);
     }catch(error){toast(error.message||'操作未完成，请检查当前方案与确认状态。');}
   });
   document.addEventListener('input',event=>{
