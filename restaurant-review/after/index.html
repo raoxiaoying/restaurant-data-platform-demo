@@ -624,7 +624,6 @@
 .ai-platform .ai-result-block>.ai-data-figure{margin-block:22px}
 
 .ai-platform .ai-contribution-composition{margin:0 0 20px}
-.ai-platform .ai-summary .ai-contribution-composition>header p{margin:0 0 19px;color:#617590;font-size:13px;line-height:1.85}
 .ai-platform .ai-donut-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 .ai-platform .ai-donut-card{min-width:0;margin:0;padding:20px 18px 16px;border:1px solid #e3e9f3;border-radius:13px;background:#fff;--donut-tone:#be3453}
 .ai-platform .ai-donut-card[data-kind=gain]{--donut-tone:#087760}
@@ -1703,7 +1702,7 @@ function attributionChartRows(){
 function attributionImpactGraphic(){
   const colors={pricing:'#d97706',food:'#7c3aed',labor:'#2563eb',volume:'#0891b2',opex:'#db2777'};
   const rows=[...M.causes].sort((a,b)=>Math.abs(b.impact)-Math.abs(a.impact)).map(c=>({id:c.id,label:c.name,value:c.impact,color:colors[c.id]}));
-  return `<section class="ai-contribution-composition"><header><p>与利润变化桥中的5个变动项一一对应，按影响金额大小排序；占比取金额绝对值，正负号与标签表示影响方向。</p></header><div class="ai-donut-grid">${globalThis.AiVisuals.donut({title:'各因素影响大小与方向',rows,kind:'mixed',note:'其他经营费用包含规模摊薄，不等于已兑现整改收益。'})}</div><div class="ai-contribution-net" aria-label="减利与增利相抵后的利润净变化"><div class="is-loss"><small>减利影响</small><strong>−${num(M.group.negativeTotal)}<span>万元</span></strong></div><b aria-hidden="true">＋</b><div class="is-gain"><small>增利抵消</small><strong>${num(M.group.positiveOffset)}<span>万元</span></strong></div><b aria-hidden="true">＝</b><div class="is-loss"><small>环比净变化</small><strong>−${num(M.group.profitDecline)}<span>万元</span></strong></div></div></section>`;
+  return `<section class="ai-contribution-composition"><div class="ai-donut-grid">${globalThis.AiVisuals.donut({title:'各因素影响大小与方向',rows,kind:'mixed',note:'其他经营费用包含规模摊薄，不等于已兑现整改收益。'})}</div><div class="ai-contribution-net" aria-label="减利与增利相抵后的利润净变化"><div class="is-loss"><small>减利影响</small><strong>−${num(M.group.negativeTotal)}<span>万元</span></strong></div><b aria-hidden="true">＋</b><div class="is-gain"><small>增利抵消</small><strong>${num(M.group.positiveOffset)}<span>万元</span></strong></div><b aria-hidden="true">＝</b><div class="is-loss"><small>环比净变化</small><strong>−${num(M.group.profitDecline)}<span>万元</span></strong></div></div></section>`;
 }
 function topFoodMaterials(field){
   return M.materials.filter(m=>m[field]<0).sort((a,b)=>Math.abs(b[field])-Math.abs(a[field])).slice(0,5);
