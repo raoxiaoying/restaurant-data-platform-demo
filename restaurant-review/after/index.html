@@ -310,9 +310,6 @@
 .ai-platform .ai-food-share{min-width:39px;color:#526e95;font-size:12px;line-height:1.8;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .ai-platform .ai-food-evidence{display:block;margin:4px 0 0 23px;color:#617590;font-size:11px;line-height:1.8;overflow-wrap:anywhere}
 .ai-platform .ai-food-grid .hmw-link{font-size:12px}
-.ai-platform .ai-food-gap{margin-top:12px;padding:12px 14px;border:1px solid #f0dfba;border-radius:9px;background:#fffbf2}
-.ai-platform .ai-food-gap>strong{color:#92702e;font-size:12px}
-.ai-platform .ai-food-gap>p{margin-top:5px;color:#8b7955;font-size:12px}
 @media(max-width:1100px){.ai-platform .ai-food-grid,.ai-platform .ai-brief-priorities{grid-template-columns:minmax(0,1fr)}}
 .ai-platform .ai-brief-table-wrap{border:1px solid #e1e9f5;border-radius:11px}
 .ai-platform .ai-brief-table{min-width:610px}
@@ -897,7 +894,7 @@
   'use strict';
 
   const SCALE = 1000000; // 万元保留至分，所有加总在金额最小单位上分配。
-  const DATA_VERSION = 'DEMO-COST-FOCUS-V3';
+  const DATA_VERSION = 'DEMO-COST-FOCUS-V4';
   const FORECAST_VERSION = 'NOV-COST-FOCUS-V2';
   const money = n => Math.round(n * SCALE) / SCALE;
   const sum = values => money(values.reduce((a, b) => a + b, 0));
@@ -1098,12 +1095,41 @@
   }
   const procurementChildren = materials.map(m => cause(`procurement-${m.id}`, `${m.name}采购价差`, m.storeRows.map(r => r.priceImpact), m.reason, m.evidence, [], { materialId: m.id, material: m, formula: m.formula }));
   const usagePrep = allocate(14, usageExcess);
+  // 合成穿透台账：先保留每店既有损耗金额，再分到物料；不改变财务实绩。
+  const usageMaterialSpecs = [
+    { materialId: 'chicken', prepWeight: 5, wasteWeight: 3 },
+    { materialId: 'beef', prepWeight: 4, wasteWeight: 2 },
+    { materialId: 'pork', prepWeight: 2.5, wasteWeight: 1.5 },
+    { materialId: 'cheese', prepWeight: 1.5, wasteWeight: 1.5 },
+    { materialId: 'hairtail', prepWeight: 1, wasteWeight: 1 }
+  ];
+  const usageMaterialColumns = stores.map((_, i) => ({
+    prep: allocate(usagePrep[i], usageMaterialSpecs.map(m => m.prepWeight)),
+    waste: allocate(money(usageExcess[i] - usagePrep[i]), usageMaterialSpecs.map(m => m.wasteWeight))
+  }));
+  const usageMaterials = usageMaterialSpecs.map((spec, materialIndex) => {
+    const material = materials.find(m => m.id === spec.materialId), unitCost = material.actualPrice;
+    const storeRows = stores.map((store, i) => {
+      const prepCost = usageMaterialColumns[i].prep[materialIndex], wasteCost = usageMaterialColumns[i].waste[materialIndex];
+      const standardKg = material.storeRows[i].purchaseKg;
+      const prepKg = prepCost * 10000 / unitCost, wasteKg = wasteCost * 10000 / unitCost;
+      return { storeId: store.id, storeName: store.name, region: store.region, unitCost,
+        standardKg, prepKg, wasteKg, actualKg: standardKg + prepKg + wasteKg,
+        prepCost, wasteCost, impact: money(-prepCost - wasteCost) };
+    });
+    const standardKg = sum(storeRows.map(r => r.standardKg));
+    const prepKg = storeRows.reduce((n, r) => n + r.prepKg, 0), wasteKg = storeRows.reduce((n, r) => n + r.wasteKg, 0);
+    return { materialId: material.id, name: material.name, unit: '公斤', unitCost,
+      standardKg, prepKg, wasteKg, actualKg: standardKg + prepKg + wasteKg,
+      prepCost: sum(storeRows.map(r => r.prepCost)), wasteCost: sum(storeRows.map(r => r.wasteCost)),
+      impact: sum(storeRows.map(r => r.impact)), storeRows };
+  });
   const usageChildren = [
-    cause('usage-prep', '备料及出成率偏差', usagePrep.map(n => -n), '实际销量的标准应耗与盘点实耗比较，额外耗用按实际采购成本计量。', '备料及出成率偏差14万元。'),
-    cause('usage-waste', '报损及余料损耗', usageExcess.map((n, i) => money(-n + usagePrep[i])), '剔除已记入标准销量的材料耗用后，核对报损及余料。', '报损及余料9万元；与备料14万元合计23万元，不再向采购价差项重复分配。')
+    cause('usage-prep', '备料及出成率偏差', usagePrep.map(n => -n), '实际销量的标准应耗与盘点实耗比较，额外耗用按实际采购成本计量。', '备料及出成率偏差14万元。', [], { usageMaterials }),
+    cause('usage-waste', '报损及余料损耗', usageExcess.map((n, i) => money(-n + usagePrep[i])), '剔除已记入标准销量的材料耗用后，核对报损及余料。', '报损及余料9万元；与备料14万元合计23万元，不再向采购价差项重复分配。', [], { usageMaterials })
   ];
   const procurement = cause('procurement', '同规格采购价格差异', procurementByStore, '同等级同规格原料与9月参考采购价比较，采购价差85万元。', '鸡肉、牛肉、五花肉60万元，五类新品25万元；按标准数量计算，超耗另列。', procurementChildren, { formula: '标准应耗数量 ×（9月参考价－实际采购价）÷10,000' });
-  const usage = cause('usage', '超标准耗用及报损', usageExcess.map(n => -n), '实际销量的标准耗用之外，额外耗用与报损23万元。', '按实际价计量超耗，采购价差只对标准数量计量，避免重复计算。', usageChildren);
+  const usage = cause('usage', '超标准耗用及报损', usageExcess.map(n => -n), '实际销量的标准耗用之外，额外耗用与报损23万元。', '按实际价计量超耗，采购价差只对标准数量计量，避免重复计算。', usageChildren, { usageMaterials });
   const foodAlignment = cause('food-standard', '费率基准与标准成本衔接', attributionByStore.map(r => r.foodStandard.alignmentImpact), '将9月费率参考成本衔接到实际销量的标准配方成本。', '费率参考按渠道基准收入测算，标准应耗成本按实际销量及既定用量标准测算；两种计量基数与逐店舍入的衔接单列，不归入采购或报损。');
   const couponDiscount = allocate(30, priceDiscount);
   const pricingChildren = [
@@ -1359,13 +1385,14 @@
       profitDefinition: '门店经营利润＝折后营业额－列示的门店食材和经营费用；未计总部费用、折旧摊销、利息与所得税。不列增值税项目。',
       attributionMethod: attribution.methodSteps.join(' '),
       negativeTotal: NEGATIVE_TOTAL, profitDecline: money(actuals.september.profit - actuals.october.profit), positiveOffset: sum(causes.filter(c => c.impact > 0).map(c => c.impact)), forecastVersion: FORECAST_VERSION },
-    labels, expenseKeys, actuals, stores, materials, causes, attribution,
+    labels, expenseKeys, actuals, stores, materials, usageMaterials, causes, attribution,
     flatFactors: ['volume', 'pricing', 'food-standard', 'procurement', 'usage', 'labor', 'opex'].map(id => causeIndex.get(id)),
     getCauseDetail: id => causeIndex.get(id) || null,
     forecast, forecastSpecs, tracking,
     definitions: { negativeShare: `顶层单项负向影响绝对值÷顶层全部负向影响${NEGATIVE_TOTAL.toFixed(2)}万元；只在相同层级加总。`,
       netDeclineShare: `单项对净下降的贡献＝－单项有符号影响÷净下降${money(actuals.september.profit-actuals.october.profit).toFixed(2)}万元；正向客流抵减为负占比，全部顶层贡献合计100%。`,
       parentShare: '子项有符号影响÷父项净影响；正负混合时可为负或超过100%，父项为零不显示。',
+      usageMaterials: '10月物料耗用穿透为合成演示台账：每店既有备料差异和报损金额按预设权重分到5种物料，数量按10月实际加权价反算；标准应耗复用既有物料用量，实际耗用＝标准应耗＋备料超耗＋报损。备料超耗与报损分别计量，均按实际价计量，不再叠加采购价差。保留未舍入数量用于勾稽，界面数量舍入可能产生显示尾差；不对应真实盘点或报损单。',
       materialScope: '材料表仅列8个重点原料，其价格影响合计85万元；不是全部食材采购清单。材料用量为标准应耗对应的合格入库领用量，超标耗用另列23万元并含其实际采购成本。',
       noDoubleCount: '标准数量的采购价差记85万元，超标准耗用按实际采购成本记23万元，二者不重复计量；新品追加现货采购价差25万元已包含在85万元内。销售优惠已从折后收入扣除，不重复列入市场费用。' }
   };
@@ -1681,6 +1708,18 @@ function attributionImpactGraphic(){
 function topFoodMaterials(field){
   return M.materials.filter(m=>m[field]<0).sort((a,b)=>Math.abs(b[field])-Math.abs(a[field])).slice(0,5);
 }
+function usageMaterialRows(causeId='usage',storeId=null){
+  return M.usageMaterials.map(m=>{
+    const r=storeId?m.storeRows.find(row=>row.storeId===storeId):m;
+    return {...r,materialId:m.materialId,name:m.name,impact:causeId==='usage-prep'?-r.prepCost:causeId==='usage-waste'?-r.wasteCost:r.impact};
+  }).sort((a,b)=>a.impact-b.impact);
+}
+function usageMaterialsTable(causeId,storeId=null){
+  const c=M.getCauseDetail(causeId),all=usageMaterialRows(causeId,storeId),rows=all.slice(0,5),impact=storeId?c.storeRows.find(r=>r.storeId===storeId).impact:c.impact;
+  const quantityFields=['standardKg','actualKg','prepKg','wasteKg'];
+  const totalRow=(label,items,kind)=>`<tr class="total" data-usage-total="${kind}"><td>${label}</td>${quantityFields.map(field=>`<td class="numeric">${num(items.reduce((sum,r)=>sum+r[field],0),3)}</td>`).join('')}<td class="numeric">—</td><td class="numeric bad">${signed(items.reduce((sum,r)=>sum+r.impact,0),4)}</td><td class="numeric">${pct(items.reduce((sum,r)=>sum+r.impact,0),impact)}</td></tr>`;
+  return `<h3>${storeId?'本店':'集团'}物料耗用 · TOP${rows.length}</h3><p class="hmw-note">实耗＝应耗＋备料超耗＋报损；占比以本项影响为分母。</p><div class="hmw-table-wrap"><table class="hmw-table" data-usage-ledger="${causeId}"${storeId?` data-usage-store="${storeId}"`:''}><thead><tr><th>物料</th><th class="numeric">标准应耗 / 公斤</th><th class="numeric">实际耗用 / 公斤</th><th class="numeric">备料超耗 / 公斤</th><th class="numeric">报损 / 公斤</th><th class="numeric">单价 / 元·公斤</th><th class="numeric">本项影响 / 万元</th><th class="numeric">本项占比</th></tr></thead><tbody>${rows.map(r=>`<tr data-usage-material="${r.materialId}" data-usage-impact="${r.impact}"><td>${esc(r.name)}</td>${quantityFields.map(field=>`<td class="numeric">${num(r[field],3)}</td>`).join('')}<td class="numeric">${num(r.unitCost)}</td><td class="numeric bad">${signed(r.impact,4)}</td><td class="numeric">${pct(r.impact,impact)}</td></tr>`).join('')}${rows.length<all.length?totalRow(`前${rows.length}项合计`,rows,'top'):''}${totalRow(`全部${all.length}项合计`,all,'all')}</tbody></table></div>`;
+}
 function foodMaterialFocus(){
   const purchase=M.getCauseDetail('procurement'),usage=M.getCauseDetail('usage'),rows=topFoodMaterials('priceImpact');
   const total=rows.reduce((sum,m)=>sum-m.priceImpact,0);
@@ -1689,7 +1728,7 @@ function foodMaterialFocus(){
     return `<li data-material="${m.id}" data-impact="${m.priceImpact}"><button type="button" data-cause="procurement-${m.id}"><span class="ai-food-rank">${i+1}</span><span class="ai-food-material">${esc(m.name)}</span><strong>${signed(m.priceImpact)}<small>万元</small></strong><span class="ai-food-share">${pct(-m.priceImpact,-purchase.impact)}</span></button><small class="ai-food-evidence">${evidence} ÷10,000</small></li>`;
   }).join('');
   const usageRows=usage.children.map((c,i)=>`<li data-usage-factor="${c.id}" data-impact="${c.impact}"><button type="button" data-cause="${c.id}"><span class="ai-food-rank">${i+1}</span><span class="ai-food-material">${esc(c.name)}</span><strong>${signed(c.impact)}<small>万元</small></strong><span class="ai-food-share">${pct(-c.impact,-usage.impact)}</span></button></li>`).join('');
-  return `<div class="ai-food-focus"><header><strong>食材成本差异：采购价格与超标准损耗</strong><small>10月累计 · 集团口径 · 占比以各自细项因素减利额为分母</small></header><div class="ai-food-grid"><section data-food-factor="procurement"><h4>采购价格差异 · 重点物料 TOP5</h4><p class="ai-food-coverage">前${rows.length}项减利<strong>${num(total)}万元</strong>，占本因素<strong>${pct(total,-purchase.impact)}</strong></p><ol>${materialRows}</ol><button class="hmw-link" data-cause="procurement">查看全部${M.materials.length}项及门店明细 →</button></section><section data-food-factor="usage"><h4>超标准损耗差异</h4><p class="ai-food-coverage">合计减利<strong>${num(-usage.impact)}万元</strong>，分项占比以损耗差异为分母</p><ol>${usageRows}</ol><div class="ai-food-gap"><strong>超标准损耗 ${num(-usage.impact)}万元 · 物料排名待补明细</strong><p>当前缺少物料级标准应耗、盘点实耗与报损记录，尚不能确定损耗影响最大的物料。</p></div><button class="hmw-link" data-cause="usage">查看损耗差异及门店明细 →</button></section></div></div>`;
+  return `<div class="ai-food-focus"><header><strong>食材成本差异：采购价格与超标准损耗</strong><small>10月累计 · 集团口径 · 占比以各自细项因素减利额为分母</small></header><div class="ai-food-grid"><section data-food-factor="procurement"><h4>采购价格差异 · 重点物料 TOP5</h4><p class="ai-food-coverage">前${rows.length}项减利<strong>${num(total)}万元</strong>，占本因素<strong>${pct(total,-purchase.impact)}</strong></p><ol>${materialRows}</ol><button class="hmw-link" data-cause="procurement">查看全部${M.materials.length}项及门店明细 →</button></section><section data-food-factor="usage"><h4>超标准损耗差异</h4><p class="ai-food-coverage">合计减利<strong>${num(-usage.impact)}万元</strong>，分项占比以损耗差异为分母</p><ol>${usageRows}</ol><button class="hmw-link" data-cause="usage">查看损耗差异及门店明细 →</button></section></div></div>`;
 }
 function forecastFormationGraphic(f){
   const names={purchase:'采购',usage:'耗用',labor:'工时',utilities:'能耗',consumables:'物耗'};
@@ -1812,6 +1851,7 @@ function showCause(id,tab='detail'){
     if(c.id==='food'){const f=M.attribution.foodStandard;body+=`<h3>实际销量的标准成本衔接</h3><div class="hmw-equation">标准食材成本 ${num(f.standardCost,4)} ＋ 采购价差 ${num(f.priceCost,4)} ＋ 超耗 ${num(f.excessCost,4)} ＝ 实际食材 ${num(f.actualCost,4)} 万元</div><p class="hmw-note">全费率参考与标准配方成本的差额${signed(f.alignmentImpact,4)}万元已单列衔接，不重分配到采购或报损。</p>`;}
     if(c.id==='labor'||c.id==='labor-structure'){const l=M.attribution.laborStandard;body+=`<h3>人工费率参考与工时标准</h3><div class="hmw-equation">费率参考 ${num(l.rateReferenceCost)}万元 → 固定人工及弹性工时标准 ${num(l.standardCost)}万元 → 实际 ${num(l.actualCost)}万元</div><p>基本人工${num(l.fixedCost)}万元；标准弹性工时${num(l.standardHours,2)}小时，实际${num(l.actualHours,2)}小时，按${num(l.hourlyCost,0)}元综合时薪核算。结构摊薄${signed(l.structureImpact)}万元、超标准工时${signed(l.executionImpact)}万元分别解释。</p>`;}
     if(c.id==='food'||c.id==='procurement')body+=materialsTable();
+    if(['usage','usage-prep','usage-waste'].includes(c.id))body+=usageMaterialsTable(c.id);
     if(c.material)body+=materialScene(c.material);
     if(c.id==='volume'){const t=M.attribution.channels;body+=`<h3>两类业务量独立计量</h3><p>堂食就餐人次：${num(t.september.dineIn.guests,0)} → ${num(t.october.dineIn.guests,0)}；外卖有效订单：${num(t.september.delivery.orders,0)} → ${num(t.october.delivery.orders,0)}。堂食桌单不用于外卖推导，客流与订单的影响只在形成基准时计算一次。</p><button class="hmw-button" data-action="baseline">查看完整基准测算</button>`;}
     body+=`<p><button class="hmw-button" data-cause-tab="${c.id}" data-tab="stores">查看本项在120家门店的分布 →</button></p>`;
@@ -1832,7 +1872,7 @@ function showStore(id,context='attribution',causeId=null){
   let body='';
   if(context==='attribution'){
     const currentCause=causeId?M.getCauseDetail(causeId):null;
-    if(currentCause){body+=`<p><button class="hmw-link" data-cause-tab="${causeId}" data-tab="stores">← 返回${currentCause.name}门店分布</button></p><h3>${currentCause.name} · 本店影响 ${signed(currentCause.storeRows.find(r=>r.storeId===id).impact,4)}万元</h3>`;if(currentCause.material)body+=materialScene(currentCause.material,id);else if(currentCause.id==='food'||currentCause.id==='procurement')body+=storeMaterialTable(id);if(currentCause.children.length)body+=storeCauseChildren(currentCause,id);}
+    if(currentCause){body+=`<p><button class="hmw-link" data-cause-tab="${causeId}" data-tab="stores">← 返回${currentCause.name}门店分布</button>${['usage','usage-prep','usage-waste'].includes(causeId)?`　<button class="hmw-link" data-cause="${causeId}">返回因素详情</button>`:''}</p><h3>${currentCause.name} · 本店影响 ${signed(currentCause.storeRows.find(r=>r.storeId===id).impact,4)}万元</h3>`;if(currentCause.material)body+=materialScene(currentCause.material,id);else if(currentCause.id==='food'||currentCause.id==='procurement')body+=storeMaterialTable(id);if(['usage','usage-prep','usage-waste'].includes(causeId))body+=usageMaterialsTable(causeId,id);if(currentCause.children.length)body+=storeCauseChildren(currentCause,id);}
     const contextRow=M.attribution.byStore.find(r=>r.storeId===id);
     const storeNegative=-M.causes.map(c=>s.causes[c.id]).filter(v=>v<0).reduce((sum,v)=>sum+v,0);
     body+=`<div class="hmw-mini-kpis"><div data-tone="history"><small>9月实际利润</small><strong class="${s.september.profit<0?'bad':''}">${num(s.september.profit)}<span>万</span></strong></div><div data-tone="reference"><small>9月模式下10月基准</small><strong class="${contextRow.baseline.profit<0?'bad':''}">${num(contextRow.baseline.profit)}<span>万</span></strong></div><div data-tone="actual"><small>10月实际利润</small><strong class="${s.october.profit<0?'bad':''}">${num(s.october.profit)}<span>万</span></strong></div></div><p>本店环比净变化${signed(s.profitChange,4)}万元；基准利润减实际利润为${num(contextRow.baselineGap,4)}万元，两个比较分开解释。</p><h3>本店利润归因</h3><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>因素</th><th class="numeric">利润影响 / 万元</th><th class="numeric">本店不利影响占比</th></tr></thead><tbody>${M.causes.map(c=>{const impact=s.causes[c.id];return `<tr><td><button class="hmw-link" data-store="${id}" data-context="attribution" data-cause-context="${c.id}">${c.name}</button></td><td class="numeric ${badClass(impact)}">${signed(impact,4)}</td><td class="numeric">${impact<0?pct(-impact,storeNegative):'—'}</td></tr>`;}).join('')}<tr class="total"><td>净变化</td><td class="numeric ${badClass(s.profitChange)}">${signed(s.profitChange,4)}</td><td>与本店利润表一致</td></tr></tbody></table></div><details class="hmw-detail"><summary>本店渠道量价与9月模式基准</summary>${baselineTables(contextRow)}</details><details class="hmw-detail"><summary>本店连环替代与标准成本</summary>${substitutionTable(contextRow)}${standardCostTable(contextRow)}</details>${!currentCause?storeMaterialTable(id):''}<h3>本店实际与基准管理利润表</h3>`+pnlTable([{label:'9月实际',row:s.september,rate:true},{label:'9月模式下10月基准',row:contextRow.baseline,rate:true},{label:'10月实际',row:s.october,rate:true}]);
@@ -1938,7 +1978,7 @@ document.addEventListener('click',event=>{
   const action=event.target.closest('[data-action]')?.dataset.action;
   if(action==='baseline')dialog('9月模式下的10月基准测算',baselineTables(),'渠道量价与成本费用参考');
   if(action==='substitution')dialog('固定顺序连环替代',substitutionTable(),'每一步利润变化均由模型重算');
-  if(action==='methodology')dialog('数据与方法口径',`<p>${esc(M.attribution.sourceNote)}</p><ol>${M.attribution.methodSteps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><p>月度目标不进入本归因桥。净下降贡献以环比差额为分母，基准缺口贡献以基准减实际为分母；各层级不可混用。数据均来自内置业务模型，未验证真实企业因果。</p>`,'9月模式 · '+M.attribution.version);
+  if(action==='methodology')dialog('数据与方法口径',`<p>${esc(M.attribution.sourceNote)}</p><p>${esc(M.definitions.usageMaterials)}</p><ol>${M.attribution.methodSteps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><p>月度目标不进入本归因桥。净下降贡献以环比差额为分母，基准缺口贡献以基准减实际为分母；各层级不可混用。数据均来自内置业务模型，未验证真实企业因果。</p>`,'9月模式 · '+M.attribution.version);
   if(action==='statement')dialog('9月与10月管理利润表',pnlTable([{label:'9月实际',row:M.actuals.september,rate:true},{label:'10月实际',row:M.actuals.october,rate:true}]));
   if(action==='show-evidence'){globalThis.AiPlatform?.revealEvidence();$('#aiEvidence').scrollIntoView({block:'start',behavior:'instant'});}
   if(action==='edit-strategy'){globalThis.AiPlatform?.revealEvidence();$('#aiStrategyForm').scrollIntoView({block:'start',behavior:'instant'});}
@@ -2060,11 +2100,16 @@ render();
       const sep=method.channels.september,oct=method.channels.october;
       return {answer:`本报告以9月经营模式为基准。\n堂食：9月人均${num(sep.dineIn.unitPrice)}元/人 × 10月${num(oct.dineIn.guests,0)}就餐人次；外卖：9月单均${num(sep.delivery.unitPrice)}元/单 × 10月${num(oct.delivery.orders,0)}有效订单。逐店按未舍入单价计算后汇总，基准营业额${num(method.baseline.revenue)}万元。\n再按各店9月成本费用率计算，得到基准利润${num(method.baseline.profit)}万元，较10月实际利润${num(b.profit)}万元高${num(method.baselineGap)}万元。10月目标用于目标完成情况，不进入本归因桥。基准已经包含10月业务量，之后不再重复计算客流贡献。\n${method.sourceNote}`,action:{type:'baseline'}};
     }
+    if(/损耗|耗用|备料|出成率|报损|余料/.test(question)){
+      const id=/备料|出成率/.test(question)?'usage-prep':/报损|余料/.test(question)?'usage-waste':'usage',cause=M.getCauseDetail(id);
+      const top=usageMaterialRows(id).slice(0,5).map(m=>`${m.name}${num(-m.impact)}万元`).join('、');
+      return {answer:`${cause.name}减利${num(-cause.impact)}万元。物料TOP5：${top}。\n打开明细可查看应耗、实耗、超耗、报损及门店台账。`,action:{type:'cause',id}};
+    }
     if(/采购|原料|食材|牛肉|新品/.test(question)){
       const food=M.getCauseDetail('food'),purchase=M.getCauseDetail('procurement'),usage=M.getCauseDetail('usage');
       const materialText=topFoodMaterials('priceImpact').map(m=>`${m.name}减利${num(-m.priceImpact)}万元（${pct(-m.priceImpact,-purchase.impact)}）`).join('、');
       const normalCost=-M.materials.filter(m=>!m.newProduct).reduce((sum,m)=>sum+m.priceImpact,0),newCost=-M.materials.filter(m=>m.newProduct).reduce((sum,m)=>sum+m.priceImpact,0);
-      return {answer:`10月食材成本差异净影响${signed(food.impact)}万元，分为采购价格变化与超标准损耗两类。\n采购价格变化${num(-purchase.impact)}万元：牛肉、鸡肉、五花肉等重点物料涨价增加${num(normalCost)}万元；促销新品销售超预期，芝士、带鱼、螃蟹、鸽子、鱼丸的采购预估不足以落实整月锁量条件，追加现货增加${num(newCost)}万元。影响最大的5种物料：${materialText}。\n超标准损耗${num(-usage.impact)}万元：${usage.children.map(c=>`${c.name}${num(-c.impact)}万元`).join('；')}。缺少物料级应耗、实耗和报损明细，暂不能列出损耗物料排名。`,action:{type:'cause',id:'food'}};
+      return {answer:`10月食材成本差异净影响${signed(food.impact)}万元，分为采购价格变化与超标准损耗两类。\n采购价格变化${num(-purchase.impact)}万元：牛肉、鸡肉、五花肉等重点物料涨价增加${num(normalCost)}万元；促销新品销售超预期，芝士、带鱼、螃蟹、鸽子、鱼丸的采购预估不足以落实整月锁量条件，追加现货增加${num(newCost)}万元。影响最大的5种物料：${materialText}。\n超标准损耗${num(-usage.impact)}万元：${usage.children.map(c=>`${c.name}${num(-c.impact)}万元`).join('；')}。损耗物料TOP5：${usageMaterialRows('usage').slice(0,5).map(m=>`${m.name}${num(-m.impact)}万元`).join('、')}。`,action:{type:'cause',id:'food'}};
     }
     if(/人工|工时|排班/.test(question)){
       const labor=M.getCauseDetail('labor'),structure=M.getCauseDetail('labor-structure'),peak=M.getCauseDetail('labor-peak'),low=M.getCauseDetail('labor-low'),standard=method.laborStandard;

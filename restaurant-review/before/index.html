@@ -294,7 +294,7 @@
   'use strict';
 
   const SCALE = 1000000; // 万元保留至分，所有加总在金额最小单位上分配。
-  const DATA_VERSION = 'DEMO-COST-FOCUS-V3';
+  const DATA_VERSION = 'DEMO-COST-FOCUS-V4';
   const FORECAST_VERSION = 'NOV-COST-FOCUS-V2';
   const money = n => Math.round(n * SCALE) / SCALE;
   const sum = values => money(values.reduce((a, b) => a + b, 0));
@@ -495,12 +495,41 @@
   }
   const procurementChildren = materials.map(m => cause(`procurement-${m.id}`, `${m.name}采购价差`, m.storeRows.map(r => r.priceImpact), m.reason, m.evidence, [], { materialId: m.id, material: m, formula: m.formula }));
   const usagePrep = allocate(14, usageExcess);
+  // 合成穿透台账：先保留每店既有损耗金额，再分到物料；不改变财务实绩。
+  const usageMaterialSpecs = [
+    { materialId: 'chicken', prepWeight: 5, wasteWeight: 3 },
+    { materialId: 'beef', prepWeight: 4, wasteWeight: 2 },
+    { materialId: 'pork', prepWeight: 2.5, wasteWeight: 1.5 },
+    { materialId: 'cheese', prepWeight: 1.5, wasteWeight: 1.5 },
+    { materialId: 'hairtail', prepWeight: 1, wasteWeight: 1 }
+  ];
+  const usageMaterialColumns = stores.map((_, i) => ({
+    prep: allocate(usagePrep[i], usageMaterialSpecs.map(m => m.prepWeight)),
+    waste: allocate(money(usageExcess[i] - usagePrep[i]), usageMaterialSpecs.map(m => m.wasteWeight))
+  }));
+  const usageMaterials = usageMaterialSpecs.map((spec, materialIndex) => {
+    const material = materials.find(m => m.id === spec.materialId), unitCost = material.actualPrice;
+    const storeRows = stores.map((store, i) => {
+      const prepCost = usageMaterialColumns[i].prep[materialIndex], wasteCost = usageMaterialColumns[i].waste[materialIndex];
+      const standardKg = material.storeRows[i].purchaseKg;
+      const prepKg = prepCost * 10000 / unitCost, wasteKg = wasteCost * 10000 / unitCost;
+      return { storeId: store.id, storeName: store.name, region: store.region, unitCost,
+        standardKg, prepKg, wasteKg, actualKg: standardKg + prepKg + wasteKg,
+        prepCost, wasteCost, impact: money(-prepCost - wasteCost) };
+    });
+    const standardKg = sum(storeRows.map(r => r.standardKg));
+    const prepKg = storeRows.reduce((n, r) => n + r.prepKg, 0), wasteKg = storeRows.reduce((n, r) => n + r.wasteKg, 0);
+    return { materialId: material.id, name: material.name, unit: '公斤', unitCost,
+      standardKg, prepKg, wasteKg, actualKg: standardKg + prepKg + wasteKg,
+      prepCost: sum(storeRows.map(r => r.prepCost)), wasteCost: sum(storeRows.map(r => r.wasteCost)),
+      impact: sum(storeRows.map(r => r.impact)), storeRows };
+  });
   const usageChildren = [
-    cause('usage-prep', '备料及出成率偏差', usagePrep.map(n => -n), '实际销量的标准应耗与盘点实耗比较，额外耗用按实际采购成本计量。', '备料及出成率偏差14万元。'),
-    cause('usage-waste', '报损及余料损耗', usageExcess.map((n, i) => money(-n + usagePrep[i])), '剔除已记入标准销量的材料耗用后，核对报损及余料。', '报损及余料9万元；与备料14万元合计23万元，不再向采购价差项重复分配。')
+    cause('usage-prep', '备料及出成率偏差', usagePrep.map(n => -n), '实际销量的标准应耗与盘点实耗比较，额外耗用按实际采购成本计量。', '备料及出成率偏差14万元。', [], { usageMaterials }),
+    cause('usage-waste', '报损及余料损耗', usageExcess.map((n, i) => money(-n + usagePrep[i])), '剔除已记入标准销量的材料耗用后，核对报损及余料。', '报损及余料9万元；与备料14万元合计23万元，不再向采购价差项重复分配。', [], { usageMaterials })
   ];
   const procurement = cause('procurement', '同规格采购价格差异', procurementByStore, '同等级同规格原料与9月参考采购价比较，采购价差85万元。', '鸡肉、牛肉、五花肉60万元，五类新品25万元；按标准数量计算，超耗另列。', procurementChildren, { formula: '标准应耗数量 ×（9月参考价－实际采购价）÷10,000' });
-  const usage = cause('usage', '超标准耗用及报损', usageExcess.map(n => -n), '实际销量的标准耗用之外，额外耗用与报损23万元。', '按实际价计量超耗，采购价差只对标准数量计量，避免重复计算。', usageChildren);
+  const usage = cause('usage', '超标准耗用及报损', usageExcess.map(n => -n), '实际销量的标准耗用之外，额外耗用与报损23万元。', '按实际价计量超耗，采购价差只对标准数量计量，避免重复计算。', usageChildren, { usageMaterials });
   const foodAlignment = cause('food-standard', '费率基准与标准成本衔接', attributionByStore.map(r => r.foodStandard.alignmentImpact), '将9月费率参考成本衔接到实际销量的标准配方成本。', '费率参考按渠道基准收入测算，标准应耗成本按实际销量及既定用量标准测算；两种计量基数与逐店舍入的衔接单列，不归入采购或报损。');
   const couponDiscount = allocate(30, priceDiscount);
   const pricingChildren = [
@@ -756,13 +785,14 @@
       profitDefinition: '门店经营利润＝折后营业额－列示的门店食材和经营费用；未计总部费用、折旧摊销、利息与所得税。不列增值税项目。',
       attributionMethod: attribution.methodSteps.join(' '),
       negativeTotal: NEGATIVE_TOTAL, profitDecline: money(actuals.september.profit - actuals.october.profit), positiveOffset: sum(causes.filter(c => c.impact > 0).map(c => c.impact)), forecastVersion: FORECAST_VERSION },
-    labels, expenseKeys, actuals, stores, materials, causes, attribution,
+    labels, expenseKeys, actuals, stores, materials, usageMaterials, causes, attribution,
     flatFactors: ['volume', 'pricing', 'food-standard', 'procurement', 'usage', 'labor', 'opex'].map(id => causeIndex.get(id)),
     getCauseDetail: id => causeIndex.get(id) || null,
     forecast, forecastSpecs, tracking,
     definitions: { negativeShare: `顶层单项负向影响绝对值÷顶层全部负向影响${NEGATIVE_TOTAL.toFixed(2)}万元；只在相同层级加总。`,
       netDeclineShare: `单项对净下降的贡献＝－单项有符号影响÷净下降${money(actuals.september.profit-actuals.october.profit).toFixed(2)}万元；正向客流抵减为负占比，全部顶层贡献合计100%。`,
       parentShare: '子项有符号影响÷父项净影响；正负混合时可为负或超过100%，父项为零不显示。',
+      usageMaterials: '10月物料耗用穿透为合成演示台账：每店既有备料差异和报损金额按预设权重分到5种物料，数量按10月实际加权价反算；标准应耗复用既有物料用量，实际耗用＝标准应耗＋备料超耗＋报损。备料超耗与报损分别计量，均按实际价计量，不再叠加采购价差。保留未舍入数量用于勾稽，界面数量舍入可能产生显示尾差；不对应真实盘点或报损单。',
       materialScope: '材料表仅列8个重点原料，其价格影响合计85万元；不是全部食材采购清单。材料用量为标准应耗对应的合格入库领用量，超标耗用另列23万元并含其实际采购成本。',
       noDoubleCount: '标准数量的采购价差记85万元，超标准耗用按实际采购成本记23万元，二者不重复计量；新品追加现货采购价差25万元已包含在85万元内。销售优惠已从折后收入扣除，不重复列入市场费用。' }
   };
