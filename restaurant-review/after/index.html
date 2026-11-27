@@ -1149,14 +1149,58 @@
 .aw-manager-profile .platform-profile{cursor:default}
 .aw-manager-profile .platform-profile:hover{background:transparent}
 .ai-platform .aw-manager-back{text-decoration:none}
+.aw-overview{gap:20px;padding-bottom:12px}
+.aw-overview>.aw-section{padding:22px 24px;border-radius:14px}
+.aw-overview .aw-overview-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
+.aw-overview .aw-overview-heading>div{min-width:0}
+.aw-overview .aw-overview-heading>.hmw-link{flex:none;margin-top:3px;font-size:12px}
+.aw-overview .aw-eyebrow{font-size:11px;letter-spacing:.4px}
+#aiEvidence.aw-overview .aw-overview-heading h2{margin:5px 0 4px;font-size:22px;line-height:1.45}
+#aiEvidence.aw-overview .aw-overview-heading p{margin:0;color:#788ba6;font-size:13px;line-height:1.7}
+.aw-overview .aw-plan-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0}
+.aw-overview .aw-plan-card{padding:17px 18px;border-radius:10px;background:#fcfdff}
+.aw-overview .aw-plan-card[data-plan=anniversary]{background:#fdfbff}
+#aiEvidence.aw-overview .aw-plan-card h3{margin:8px 0 0;font-size:16px;line-height:1.55}
+.aw-overview .aw-plan-card h4{margin:10px 0 5px}
+#aiEvidence.aw-overview .aw-plan-summary{margin:7px 0 12px;color:#7184a0;font-size:13px;line-height:1.75}
+.aw-overview .aw-plan-metrics{gap:12px;margin-top:auto;padding:11px 0;border-color:#e5ebf6}
+.aw-overview .aw-plan-metrics small{font-size:11px}
+.aw-overview .aw-plan-metrics strong{margin-top:4px;font-size:24px;line-height:1.35}
+.aw-overview .aw-plan-metrics strong>span{font-size:11px}
+.aw-overview .aw-plan-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px 16px;margin-top:13px}
+.aw-overview .aw-plan-actions .hmw-button{min-height:36px;padding:7px 12px;font-size:12px}
+.aw-overview .aw-plan-actions .hmw-link{font-size:12px}
+.aw-overview .aw-result-actions{display:flex;flex:none;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:10px}
+.aw-overview .aw-result-actions .hmw-button{white-space:nowrap}
+.aw-overview #awStrategyDraftStatus{max-width:100%;font-size:11px;line-height:1.6}
+.aw-overview .aw-core-metrics[data-core-scope=group-result]{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0}
+.aw-overview .aw-core-card{display:block;padding:12px 14px;border-color:#e0e8f4;background:#fbfcff}
+.aw-overview .aw-core-card>strong{margin:6px 0 4px;font-size:22px;line-height:1.35}
+.aw-overview .aw-core-card>small{font-size:12px}
+.aw-overview .aw-core-card>em{font-size:11px}
+.aw-overview .aw-core-card:is([data-core-key=revenue],[data-core-key=profit]){grid-column:span 2;padding:17px 20px;border-color:#cbdbf8;background:linear-gradient(125deg,#f6f9ff,#edf4ff)}
+.aw-overview .aw-core-card:is([data-core-key=revenue],[data-core-key=profit])>strong{margin:6px 0;font-size:36px;font-weight:650;line-height:1.25}
+.aw-overview .aw-core-card:is([data-core-key=revenue],[data-core-key=profit])>strong>span{font-size:12px}
+.aw-overview .aw-core-card[data-core-key=profit]>strong:not(.bad){color:var(--dolink-blue-strong)}
+.aw-overview .aw-detail-links{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:10px 20px;margin-top:14px;padding-top:12px;border-top:1px solid #e6edf7}
+.aw-overview .aw-detail-links .hmw-link{font-size:12px}
+.aw-overview .aw-progress-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+.aw-overview .aw-progress-summary>article{min-width:0;padding:12px 15px;border:1px solid #e2eaf6;border-radius:9px;background:#f8faff}
+.aw-overview .aw-progress-summary :is(label,small,span){display:block;color:#7b8da7;font-size:12px;line-height:1.7}
+.aw-overview .aw-progress-summary strong{display:block;margin-top:5px;color:#335784;font-size:23px;line-height:1.5;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.aw-overview .aw-progress-summary>article:last-child strong{font-size:16px;line-height:2.1}
+.aw-overview .aw-overview-distribution :is(progress,meter){display:block;width:100%;height:7px;margin:0 0 17px;overflow:hidden;border:0;border-radius:6px;background:#e9eff9;accent-color:var(--dolink-blue)}
+.aw-overview .aw-overview-distribution progress::-webkit-progress-bar{border-radius:6px;background:#e9eff9}
+.aw-overview .aw-overview-distribution progress::-webkit-progress-value{border-radius:6px;background:var(--dolink-blue)}
+.aw-overview .aw-overview-distribution progress::-moz-progress-bar{border-radius:6px;background:var(--dolink-blue)}
+.aw-overview .aw-distribution-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 18px}
+.aw-overview .aw-distribution-actions .hmw-link{font-size:12px}
+#aiEvidence.aw-overview .aw-overview-distribution>.aw-note{margin:12px 0 0;font-size:12px;line-height:1.8}
+@media(max-width:1000px){.aw-overview>.aw-section{padding:20px}.aw-overview .aw-overview-result>.aw-overview-heading{flex-direction:column;gap:12px}.aw-overview .aw-result-actions{justify-content:flex-start}}
+@media(max-width:760px){.aw-overview{gap:18px}.aw-overview>.aw-section{padding:18px 14px;border-radius:12px}.aw-overview .aw-overview-heading{gap:12px;margin-bottom:14px}#aiEvidence.aw-overview .aw-overview-heading h2{font-size:20px}#aiEvidence.aw-overview .aw-overview-heading p{font-size:12px}.aw-overview .aw-plan-options{gap:10px}.aw-overview .aw-plan-card{padding:13px 12px}#aiEvidence.aw-overview .aw-plan-card h3{font-size:14px}#aiEvidence.aw-overview .aw-plan-summary{margin:6px 0 10px;font-size:12px;line-height:1.65}.aw-overview .aw-plan-metrics{grid-template-columns:minmax(0,1fr);gap:8px;padding:10px 0}.aw-overview .aw-plan-metrics strong{font-size:22px}.aw-overview .aw-plan-actions{align-items:flex-start;gap:8px;margin-top:11px}.aw-overview .aw-plan-actions .hmw-button{width:100%;padding:7px 8px;white-space:normal}.aw-overview .aw-plan-actions .hmw-link{font-size:11px}.aw-overview .aw-result-actions{width:100%;gap:8px}.aw-overview .aw-result-actions .hmw-button{flex:1;min-width:120px;white-space:normal}.aw-overview .aw-core-metrics[data-core-scope=group-result]{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.aw-overview .aw-core-card{padding:11px 10px}.aw-overview .aw-core-card>small{font-size:11px}.aw-overview .aw-core-card>strong{font-size:20px}.aw-overview .aw-core-card>em{font-size:10px}.aw-overview .aw-core-card:is([data-core-key=revenue],[data-core-key=profit]){grid-column:span 1;padding:13px 11px}.aw-overview .aw-core-card:is([data-core-key=revenue],[data-core-key=profit])>strong{font-size:clamp(22px,6vw,28px)}.aw-overview .aw-core-card:is([data-core-key=revenue],[data-core-key=profit])>strong>span{font-size:10px}.aw-overview .aw-detail-links{justify-content:flex-start;gap:10px 16px}.aw-overview .aw-progress-summary{gap:8px;margin:14px 0}.aw-overview .aw-progress-summary>article{padding:10px 9px}.aw-overview .aw-progress-summary :is(label,small,span){font-size:11px}.aw-overview .aw-progress-summary strong{font-size:21px}.aw-overview .aw-progress-summary>article:last-child strong{font-size:13px;line-height:2.4}.aw-overview .aw-distribution-actions{gap:10px 14px}.aw-overview .aw-distribution-actions .hmw-button{width:100%}}
+@media(max-width:420px){.aw-overview .aw-core-card:is([data-core-key=revenue],[data-core-key=profit])>strong>span{display:block;margin:3px 0 0}}
 @media(max-width:900px){.aw-distribution>header{flex-direction:column;gap:8px}.aw-manager-heading{flex-direction:column;gap:15px}.manager-workspace #hmwMain{padding:22px 16px 40px}.aw-manager-heading h1{font-size:24px}}
 @media(max-width:760px){.manager-workspace #awManagerSidebar,.manager-workspace.sidebar-collapsed #awManagerSidebar{display:none}.manager-workspace.sidebar-open #awManagerSidebar{display:flex}}
-.aw-strategy-entry{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:24px 0;padding:18px 20px;border:1px solid #d9e5f8;border-radius:11px;background:#f7faff}
-.aw-strategy-entry>div{flex:1;min-width:0}
-.aw-strategy-entry h3{margin:0;color:#304e77;font-size:16px;font-weight:600;line-height:1.6}
-.aw-strategy-entry p{margin:6px 0 0;color:#7186a3;font-size:13px;line-height:1.8}
-.aw-strategy-entry>[data-action=edit-strategy]{flex:none;white-space:nowrap}
-.aw-strategy-entry #awStrategyDraftStatus{flex:none;max-width:100%;font-size:12px;line-height:1.6}
 #strategyDialog{width:min(1200px,calc(100vw - 48px));max-width:none;max-height:calc(100dvh - 48px);margin:auto;padding:0;overflow:hidden;border:1px solid #d8e2f2;border-radius:18px;background:#fff;color:#4f6687;box-shadow:0 24px 100px #10244830}
 #strategyDialog[open]{display:flex;flex-direction:column}
 #strategyDialog::backdrop{background:#14243d65;backdrop-filter:blur(5px)}
@@ -1171,9 +1215,12 @@
 #strategyDialog .ai-strategy-panel>header h2{display:none}
 #strategyDialog .ai-strategy-panel>header .ai-message-label{margin:0}
 #strategyDialog .ai-strategy-footer{position:sticky;bottom:0;z-index:3;margin:24px -26px 0;padding:16px 26px;border-top:1px solid #dce5f4;background:#fff;box-shadow:0 -6px 18px #284a7810}
-@media(max-width:760px){.aw-strategy-entry{align-items:stretch;flex-direction:column;gap:13px;padding:16px}.aw-strategy-entry>[data-action=edit-strategy]{width:100%;white-space:normal}.aw-strategy-entry #awStrategyDraftStatus{align-self:flex-start}#strategyDialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);border-radius:14px}#strategyDialog>header{gap:12px;padding:16px}#strategyDialogTitle{font-size:19px}#strategyDialogBody{padding:18px 16px 0}#strategyDialog .ai-strategy-panel>header{gap:10px;flex-wrap:wrap;margin-bottom:18px}#strategyDialog .ai-strategy-grid,#strategyDialog .campaign-fields{grid-template-columns:minmax(0,1fr)}#strategyDialog .ai-strategy-footer{margin:20px -16px 0;padding:14px 16px}#strategyDialog .ai-strategy-footer>div{width:100%}#strategyDialog .ai-strategy-footer .hmw-button{flex:1;min-width:0}}
+@media(max-width:760px){#strategyDialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);border-radius:14px}#strategyDialog>header{gap:12px;padding:16px}#strategyDialogTitle{font-size:19px}#strategyDialogBody{padding:18px 16px 0}#strategyDialog .ai-strategy-panel>header{gap:10px;flex-wrap:wrap;margin-bottom:18px}#strategyDialog .ai-strategy-grid,#strategyDialog .campaign-fields{grid-template-columns:minmax(0,1fr)}#strategyDialog .ai-strategy-footer{margin:20px -16px 0;padding:14px 16px}#strategyDialog .ai-strategy-footer>div{width:100%}#strategyDialog .ai-strategy-footer .hmw-button{flex:1;min-width:0}}
 
 .aw-strategy-error{margin:0 0 18px;padding:12px 15px;border:1px solid #efc8d0;border-radius:9px;background:#fff6f8;color:#a63b55;font-size:13px;line-height:1.8}
+
+.aw-overview #awPublishedCount{flex:none;white-space:nowrap}
+.aw-overview .aw-progress-summary strong>span{display:inline;margin-left:4px;font-size:11px}
 </style>
 </head>
 <body class="hmw-app ai-workspace ai-platform">
@@ -3280,7 +3327,7 @@ const coreLines=coreKeys.map(key=>[key,key==='rent'?'场租及物业费':key==='
 const otherExpenseLines=['marketing','tableware','consumables','maintenance','otherStoreExpense'].map(key=>[key,key==='otherStoreExpense'?'其余经营支出':lines.find(line=>line[0]===key)[1]]);
 function coreMetrics(row,scope){
   const ids=scope==='campaign-draft'?{revenue:'campaignRevenue',discount:'campaignDiscount',profit:'campaignProfit'}:scope==='steady-draft'?{revenue:'aiExpenseRevenue',profit:'aiExpenseProfit'}:{};
-  return `<div class="aw-core-metrics" data-core-scope="${esc(scope)}">${coreLines.map(([key,label])=>{const value=expenseGroups.value(row,key);return `<article class="aw-core-card" data-core-key="${key}" data-value="${value}"><small>${esc(label)}</small><strong ${ids[key]?`id="${ids[key]}"`:''} class="${value<0?'bad':''}">${amt(value)}<span>万元</span></strong><em>占折后营收 ${pct(value,row.revenue)}</em></article>`;}).join('')}</div>`;
+  return `<div class="aw-core-metrics" data-core-scope="${esc(scope)}">${(scope==='group-result'?[coreLines.find(([key])=>key==='revenue'),coreLines.find(([key])=>key==='profit'),...coreLines.filter(([key])=>!['revenue','profit'].includes(key))]:coreLines).map(([key,label])=>{const value=expenseGroups.value(row,key);return `<article class="aw-core-card" data-core-key="${key}" data-value="${value}"><small>${esc(label)}</small><strong ${ids[key]?`id="${ids[key]}"`:''} class="${value<0?'bad':''}">${amt(value)}<span>万元</span></strong><em>占折后营收 ${pct(value,row.revenue)}</em></article>`;}).join('')}</div>`;
 }
 function coreExpenseDetails(row){
   return `<details class="aw-core-expenses"><summary>查看其他费用构成</summary><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>费用项目</th><th class="numeric">预计金额 / 万元</th><th class="numeric">占折后营收</th></tr></thead><tbody>${otherExpenseLines.map(([key,label])=>`<tr data-core-extra="${key}"><td>${esc(label)}</td><td class="numeric">${amt(row[key])}</td><td class="numeric">${pct(row[key],row.revenue)}</td></tr>`).join('')}</tbody></table></div></details>`;
@@ -3428,10 +3475,11 @@ function refreshExpensePreview(){
   $('#aiExpenseFixedWarning').textContent=`${count}家门店预算低于原固定投入参考，须落实合同、人员或资源调整后再确认。`;
 }
 function strategyEntry(){
-  return `<section class="aw-strategy-entry"><div><h3>方案调整与测算</h3><p>在弹框中调整经营参数、费用占比或活动方案，完成测算后更新集团与门店结果。</p></div><span class="hmw-tag ${scenario.dirty?'warn':'blue'}" id="awStrategyDraftStatus">${scenario.dirty?'有调整 · 待测算':'当前参数已测算'}</span><button type="button" class="hmw-button primary" data-action="edit-strategy">${scenario.dirty?'继续调整并测算':'调整方案并测算'}</button></section>`;
+  return `<div class="aw-result-actions"><span class="hmw-tag ${scenario.dirty?'warn':'blue'}" id="awStrategyDraftStatus">${scenario.dirty?'有调整待测算':'参数已测算'}</span><button type="button" class="hmw-button primary" data-action="edit-strategy">${scenario.dirty?'继续调整':'调整并测算'}</button></div>`;
 }
 function updateStrategyEntry(){
-  const badge=$('#awStrategyDraftStatus');if(badge){badge.textContent=scenario.dirty?'有调整 · 待测算':'当前参数已测算';badge.className='hmw-tag '+(scenario.dirty?'warn':'blue');}
+  const badge=$('#awStrategyDraftStatus');if(badge){badge.textContent=scenario.dirty?'有调整待测算':'参数已测算';badge.className='hmw-tag '+(scenario.dirty?'warn':'blue');}
+  const button=$('.aw-result-actions [data-action="edit-strategy"]');if(button)button.textContent=scenario.dirty?'继续调整':'调整并测算';
 }
 function rememberStrategyReturn(){
   if($('#strategyDialog').open)return;
@@ -3457,7 +3505,7 @@ function refreshStrategyDialog(){
 function openStrategyDialog(){
   if(state.page==='manager')return;
   const modal=$('#strategyDialog');if(modal.open)return;
-  rememberStrategyReturn();$('#strategyDialogBody').innerHTML=strategyDialogContent();modal.showModal();$('#strategyDialogBody').scrollTop=0;$('#aiStrategySelect')?.focus({preventScroll:true});
+  rememberStrategyReturn();if($('#hmwDialog').open)$('#hmwDialog').close();$('#strategyDialogBody').innerHTML=strategyDialogContent();modal.showModal();$('#strategyDialogBody').scrollTop=0;$('#aiStrategySelect')?.focus({preventScroll:true});
 }
 function strategyError(message){
   strategyErrorMessage=message;
@@ -3552,7 +3600,7 @@ function materialScene(m,storeId=null){
   const priceImpact=r.priceImpact;
   return `<h3>${m.dish} · ${m.name}</h3><p>${esc(m.reason)}</p><div class="hmw-mini-kpis"><div><small>采购利润影响</small><strong>${signed(priceImpact,storeId?4:2)}<span>万</span></strong></div><div><small>基准采购价</small><strong>${num(m.basePrice)}<span>元/公斤</span></strong></div><div><small>实际加权采购价</small><strong>${num(m.actualPrice)}<span>元/公斤</span></strong></div></div>${m.newProduct?`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>原预计销量 / 份</th><th>实际销量 / 份</th><th>首批锁量 / 公斤</th><th>超量采购 / 公斤</th><th>超量现货价 / 元·公斤</th></tr></thead><tbody><tr><td>${num(r.forecastServings,0)}</td><td>${num(r.actualServings,0)}</td><td>${num(r.lockedKg,1)}</td><td>${num(r.spotKg,1)}</td><td>${num(m.spotPrice)}</td></tr></tbody></table></div><p>${esc(m.procurementNote)}</p><div class="hmw-equation">${num(r.spotKg,1)}公斤 ×（${num(m.spotPrice)} − ${num(m.basePrice)}）元/公斤 ÷10,000 = ${num(-priceImpact,storeId?4:2)}万元采购成本增加</div>`:`<div class="hmw-equation">${num(r.purchaseKg,0)}公斤 ×（${num(m.actualPrice)} − ${num(m.basePrice)}）元/公斤 ÷10,000 = ${num(-priceImpact,storeId?4:2)}万元采购成本增加</div><p>${esc(m.procurementNote)}</p>`}`;
 }
-function showStore(id,context='attribution',causeId=null){
+function showStore(id,context='attribution',causeId=null,forecastOverride=null,sourceLabel=''){
   const s=getStore(id);if(!s)return;
   let body='';
   if(context==='attribution'){
@@ -3562,8 +3610,8 @@ function showStore(id,context='attribution',causeId=null){
     const storeNegative=-M.causes.map(c=>s.causes[c.id]).filter(v=>v<0).reduce((sum,v)=>sum+v,0);
     body+=`<div class="hmw-mini-kpis"><div data-tone="history"><small>9月实际利润</small><strong class="${s.september.profit<0?'bad':''}">${num(s.september.profit)}<span>万</span></strong></div><div data-tone="reference"><small>9月模式下10月基准</small><strong class="${contextRow.baseline.profit<0?'bad':''}">${num(contextRow.baseline.profit)}<span>万</span></strong></div><div data-tone="actual"><small>10月实际利润</small><strong class="${s.october.profit<0?'bad':''}">${num(s.october.profit)}<span>万</span></strong></div></div><p>本店环比净变化${signed(s.profitChange,4)}万元；基准利润减实际利润为${num(contextRow.baselineGap,4)}万元，两个比较分开解释。</p><h3>本店利润归因</h3><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>因素</th><th class="numeric">利润影响 / 万元</th><th class="numeric">本店不利影响占比</th></tr></thead><tbody>${M.causes.map(c=>{const impact=s.causes[c.id];return `<tr><td><button class="hmw-link" data-store="${id}" data-context="attribution" data-cause-context="${c.id}">${c.name}</button></td><td class="numeric ${badClass(impact)}">${signed(impact,4)}</td><td class="numeric">${impact<0?pct(-impact,storeNegative):'—'}</td></tr>`;}).join('')}<tr class="total"><td>净变化</td><td class="numeric ${badClass(s.profitChange)}">${signed(s.profitChange,4)}</td><td>与本店利润表一致</td></tr></tbody></table></div><details class="hmw-detail"><summary>本店渠道量价与9月模式基准</summary>${baselineTables(contextRow)}</details><details class="hmw-detail"><summary>本店连环替代与标准成本</summary>${substitutionTable(contextRow)}${standardCostTable(contextRow)}</details>${!currentCause?storeMaterialTable(id):''}<h3>本店实际与基准管理利润表</h3>`+pnlTable([{label:'9月实际',row:s.september,rate:true},{label:'9月模式下10月基准',row:contextRow.baseline,rate:true},{label:'10月实际',row:s.october,rate:true}]);
   }else if(context==='forecast'){
-    const f=scenario.applied,reference=f.activityBudget?AI.activityBase():AI.base(f.plan),selected=f.byStore.find(r=>key(r)===id),original=reference.byStore.find(r=>key(r)===id);
-    body+=`${coreMetrics(selected,'store-dialog')}<p class="hmw-note">同方案初始利润${num(original.profit)}万元；当前产能使用率${num(selected.capacityUse,1)}%。经营利润已扣除全部费用，明细见下方利润表。</p>${selected.capacityUse>100?'<div class="hmw-insight">本店预计就餐人次超过现有产能。先确认分流、增能或下调销量，再锁定执行计划。</div>':''}<p>${esc(planNames[f.plan])}，预计就餐${num(selected.guests,0)}人次，折后人均${num(selected.perCapita,2)}元；日均${num(selected.dailyGuests,0)}人次，现有月承接能力${num(selected.capacityGuests,0)}人次。</p>`+pnlTable([{label:'10月实际',row:s.october},{label:'AI同策略原方案',row:original,rate:true},{label:scenario.revision?'人工方案 V'+scenario.revision:'当前预测',row:selected,rate:true}],false,false,true)+`<h3>本店 · 当前方案执行条件</h3><div class="hmw-action-list">${f.actions.map(action=>storeForecastAction(action,f,selected,s)).join('')}</div><p class="hmw-note">${f.activityBudget?'本店按常规订单和各活动预计核销测算收入、人次及食材；执行参考金额不另加利润。':f.expenseBudget?'本店最终费用按标准占收比和集团手改目标测算，原量价与整改仅作执行参考，不再二次增加利润。':`本店整改预计合计${num(selected.plannedSavings,4)}万元，已在食材、人工、能耗和物耗中扣减；采购、耗用、工时、能耗与物耗分别按所列达成率执行。`}${scenario.dirty?'草稿修改尚未进入本店结果。':''}</p>`;
+    const f=forecastOverride||scenario.applied,reference=f.activityBudget?AI.activityBase():AI.base(f.plan),selected=f.byStore.find(r=>key(r)===id),original=reference.byStore.find(r=>key(r)===id);
+    body+=`${coreMetrics(selected,'store-dialog')}<p class="hmw-note">同方案初始利润${num(original.profit)}万元；当前产能使用率${num(selected.capacityUse,1)}%。经营利润已扣除全部费用，明细见下方利润表。</p>${selected.capacityUse>100?'<div class="hmw-insight">本店预计就餐人次超过现有产能。先确认分流、增能或下调销量，再锁定执行计划。</div>':''}<p>${esc(planNames[f.plan])}，预计就餐${num(selected.guests,0)}人次，折后人均${num(selected.perCapita,2)}元；日均${num(selected.dailyGuests,0)}人次，现有月承接能力${num(selected.capacityGuests,0)}人次。</p>`+pnlTable([{label:'10月实际',row:s.october},{label:'AI同策略原方案',row:original,rate:true},{label:sourceLabel||(scenario.revision?'人工方案 V'+scenario.revision:'当前预测'),row:selected,rate:true}],false,false,true)+`<h3>本店 · 当前方案执行条件</h3><div class="hmw-action-list">${f.actions.map(action=>storeForecastAction(action,f,selected,s)).join('')}</div><p class="hmw-note">${f.activityBudget?'本店按常规订单和各活动预计核销测算收入、人次及食材；执行参考金额不另加利润。':f.expenseBudget?'本店最终费用按标准占收比和集团手改目标测算，原量价与整改仅作执行参考，不再二次增加利润。':`本店整改预计合计${num(selected.plannedSavings,4)}万元，已在食材、人工、能耗和物耗中扣减；采购、耗用、工时、能耗与物耗分别按所列达成率执行。`}${!forecastOverride&&scenario.dirty?'草稿修改尚未进入本店结果。':''}</p>`;
   }else {
     const r=M.tracking.stores.find(row=>key(row)===id);
     body+=`<div class="hmw-mini-kpis"><div><small>周计划利润</small><strong>${num(r.plan.profit)}<span>万</span></strong></div><div><small>本周实际利润</small><strong>${num(r.actual.profit)}<span>万</span></strong></div><div><small>利润偏差</small><strong>${signed(r.actual.profit-r.plan.profit)}<span>万</span></strong></div></div><h3>${r.abnormal?r.scenario:'本店执行对照'}</h3>`;
@@ -3571,7 +3619,7 @@ function showStore(id,context='attribution',causeId=null){
     body+=trackingEvidence(r);
     body+=`<h3>利润偏差勾稽</h3><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>项目</th><th class="numeric">周计划 / 万元</th><th class="numeric">实际 / 万元</th><th class="numeric">利润影响 / 万元</th></tr></thead><tbody>${r.attributions.map(c=>`<tr><td>${c.name}</td><td class="numeric">${num(r.plan[c.key],4)}</td><td class="numeric">${num(r.actual[c.key],4)}</td><td class="numeric ${badClass(c.impact)}">${signed(c.impact,4)}</td></tr>`).join('')}<tr class="total"><td>门店经营利润</td><td class="numeric">${num(r.plan.profit,4)}</td><td class="numeric">${num(r.actual.profit,4)}</td><td class="numeric">${signed(r.actual.profit-r.plan.profit,4)}</td></tr></tbody></table></div><h3>整改建议与复核</h3>${r.actions.length?`<div class="hmw-action-list">${r.actions.map(a=>actionCard(a,true)).join('')}</div>`:'<p>按既定节奏继续核对采购、实耗和排班，下一周期复核利润与服务表现。</p>'}<div class="hmw-mini-kpis"><div><small>高峰出餐P90</small><strong>${num(r.service.p90Minutes,0)}<span>分钟</span></strong></div><div><small>百客有效客诉</small><strong>${num(r.service.complaintPer100Guests,1)}<span>件</span></strong></div><div><small>下次复核</small><strong class="ai-date">11月14日</strong></div></div><p class="hmw-note">出餐P90为本店 ${num(r.service.completedDineInOrders,0)}笔完成堂食订单的第90百分位，目标≤20分钟；有效客诉 ${num(r.service.complaints,0)}件 / ${num(r.service.complaintGuests,0)}就餐人次，百客目标≤0.5件。动作状态变化不改写本周实际利润，收益待下一周期验证。</p>`;
   }
-  dialog(`${id} · ${s.name}`,body,`${s.region} / ${s.format} / ${context==='tracking'?'11月1—7日执行':context==='forecast'?'11月经营建议':'10月归因'}`);$('#hmwDialogBody').dataset.activeStore=id;
+  dialog(`${id} · ${s.name}`,body,`${s.region} / ${s.format} / ${context==='tracking'?'11月1—7日执行':context==='forecast'?'11月经营建议'+(sourceLabel?' / '+sourceLabel:''):'10月归因'}`);$('#hmwDialogBody').dataset.activeStore=id;
 }
 function storeMaterialTable(id){return `<h3>本店食材细项</h3><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>原料</th><th class="numeric">标准用量 / 公斤</th><th class="numeric">采购价差影响 / 万元</th></tr></thead><tbody>${M.materials.map(m=>{const r=m.storeRows.find(row=>row.storeId===id);return `<tr><td><button class="hmw-link" data-store="${id}" data-context="attribution" data-cause-context="procurement-${m.id}">${m.name} →</button></td><td class="numeric">${num(r.purchaseKg,1)}</td><td class="numeric">${signed(r.priceImpact,4)}</td></tr>`;}).join('')}</tbody></table></div>`;}
 function storeCauseChildren(c,id){
@@ -3757,7 +3805,7 @@ document.addEventListener('click',event=>{
   const remediation=event.target.closest('[data-remediation-plan]');if(remediation){showRemediationPlan(remediation.dataset.remediationPlan);return;}
   const cause=event.target.closest('[data-cause]');if(cause){showCause(cause.dataset.cause);return;}
   const causeTab=event.target.closest('[data-cause-tab]');if(causeTab){showCause(causeTab.dataset.causeTab,causeTab.dataset.tab);return;}
-  const store=event.target.closest('[data-store]');if(store){showStore(store.dataset.store,store.dataset.context,store.dataset.causeContext);return;}
+  const store=event.target.closest('[data-store]');if(store){if($('#hmwDialog').dataset.adviceView==='financial'&&globalThis.AdviceWorkspace)globalThis.AdviceWorkspace.openAdviceStore(store.dataset.store,'financial');else showStore(store.dataset.store,store.dataset.context,store.dataset.causeContext);return;}
   const plan=event.target.closest('[data-select-plan]');if(plan){if(plan.dataset.selectPlan===scenario.draft.plan)openStrategyDialog();else chooseStrategy(plan.dataset.selectPlan);return;}
   const adjustment=event.target.closest('[data-adjust]');if(adjustment){adjustments[adjustment.dataset.adjust]=true;try{localStorage.setItem(actionStorageKey,JSON.stringify(adjustments));}catch{}const dialogStore=$('#hmwDialogBody').dataset.activeStore;render();if($('#hmwDialog').open&&dialogStore)showStore(dialogStore,'tracking');toast('整改动作已登记，执行效果待下一周期复核');return;}
   const action=event.target.closest('[data-action]')?.dataset.action;
@@ -3874,7 +3922,7 @@ render();
   }
   function threadView(page,content){
     const task=pushTasks().find(t=>t.id===page),custom=activeTask(),app=appFor(page),messages=custom?custom.messages:saved.messages[page]||[];
-    if(page==='forecast'&&globalThis.AdviceWorkspace)return `<div class="platform-thread" data-page="forecast"><header class="platform-task-heading"><span class="platform-task-icon">${icon(page)}</span><div class="platform-task-copy"><span class="platform-eyebrow">经营建议 / 好美味餐饮集团</span><h1>${esc(custom?.title||task.title)}</h1><p>经营方案 · 店长确认 · 7天物料与人员计划</p></div></header>${content}<div id="platformConversation" aria-live="polite">${turns(messages)}</div></div>`;
+    if(page==='forecast'&&globalThis.AdviceWorkspace)return `<div class="platform-thread" data-page="forecast"><header class="platform-task-heading"><span class="platform-task-icon">${icon(page)}</span><div class="platform-task-copy"><span class="platform-eyebrow">经营建议 / 好美味餐饮集团</span><h1>${esc(custom?.title||task.title)}</h1><p>方案对比 · 测算决策 · 下发跟进</p></div></header>${content}<div id="platformConversation" aria-live="polite">${turns(messages)}</div></div>`;
     return `<div class="platform-thread" data-page="${page}"><header class="platform-task-heading"><span class="platform-task-icon">${icon(page)}</span><div class="platform-task-copy"><span class="platform-eyebrow">${app.tag} <span> / </span> 好美味餐饮集团</span><h1>${esc(custom?.title||task.title)}</h1><p>${task.period} · 120家直营门店 · ${custom?'我的任务':'经营助手主动推送'}</p></div></header>${custom?'':`<div class="platform-request"><div class="platform-user-message">${app.prompt}</div></div>`}<details class="platform-run"><summary>${svg('check')}<span>已完成经营分析</span><small>查看分析依据</small></summary><div class="platform-run-steps"><p>${svg('check')} 核对同一范围的120家门店与管理利润口径</p><p>${svg('check')} ${page==='attribution'?'以9月模式重算10月基准，逐项替代量价并核对标准成本':page==='forecast'?'比较两套策略，并保留人工测算与同策略基线':'对照冻结周计划，定位门店偏差与整改证据'}</p><p>${svg('check')} 生成可穿透的经营分析报告</p></div></details>${custom?'':`<section class="ai-message"><div class="ai-thread-head"><span class="ai-avatar">${svg('spark')}</span><div><h2>好美味经营助手</h2><small>${task.status}</small></div></div><div class="ai-summary">${aiSummary(page).replace('据此推演11月方案 →','推演11月方案')}</div></section>`}${page==='attribution'?'':`<button class="platform-artifact-button" data-action="show-evidence">${svg('file')}<div><b>${task.artifact}</b><small>${app.detail} · 120家门店</small></div><span>打开报告 <span aria-hidden="true">↗</span></span></button>`}<section class="ai-artifact" id="aiEvidence" ${opened.has(custom?.id||page)?'':'hidden'}><header class="ai-artifact-head"><div><span class="ai-message-label">任务成果</span><h2>${task.artifact}</h2></div><button class="hmw-button ghost" data-platform-action="hide-report">收起报告</button></header><div class="ai-work-area">${content}</div></section><div id="platformConversation" aria-live="polite">${turns(messages)}</div></div>`;
   }
   function afterRender(){
@@ -3973,7 +4021,8 @@ render();
   const storageKey='haomeiwei-advice-flow-v1:'+M.dataVersion;
   const publicationKey='haomeiwei-advice-publication-v1:'+M.dataVersion;
   const initial={steady:AI.calculate(AI.expenseDefaults()),anniversary:AI.calculate(AI.activityDefaults())};
-  let flow=F.empty(),publication=null;
+  let flow=F.empty(),publication=null,adviceDetail=null;
+  const adviceScroll={};
   function readShared(){
     const saved=JSON.parse(localStorage.getItem(storageKey)||'null');
     flow=saved&&saved.approvals&&saved.weekly&&Array.isArray(saved.dispatches)?saved:F.empty();
@@ -4036,14 +4085,15 @@ render();
     if($('#awCreateDocuments'))$('#awCreateDocuments').disabled=!a||!valid||weekExpired()||view.weekDirty||!w?.confirmedAt||Boolean(w.plan.blockers.length)||Boolean(receipt());
   }
   function planCard(id){
-    const f=initial[id],d=P.describe(f,M),active=scenario.draft.plan===id;
-    return `<article class="aw-plan-card ${active?'is-selected':''}" data-plan="${id}"><header><span class="hmw-tag ${id==='steady'?'blue':''}">默认${id==='steady'?'方案一':'方案二'}</span><h3>${esc(planNames[id])}</h3></header><div class="aw-plan-metrics"><div><small>预计营业额</small><strong>${amt(f.totals.revenue)}<span>万元</span></strong></div><div><small>预计经营利润</small><strong>${amt(f.totals.profit)}<span>万元</span></strong></div></div><h4>方案特点</h4>${list(d.features)}<h4>执行难点</h4>${list(d.difficulties)}<button class="hmw-button ${active?'primary':''}" data-select-plan="${id}">${active?'调整当前方案':'调整此方案并测算'}</button></article>`;
+    const f=initial[id],active=scenario.draft.plan===id;
+    return `<article class="aw-plan-card ${active?'is-selected':''}" data-plan="${id}"><header><span class="hmw-tag ${id==='steady'?'blue':''}">${id==='steady'?'方案一':'方案二'}</span><h3>${esc(planNames[id].replace(/^方案[一二]：/,''))}</h3></header><p class="aw-plan-summary">${id==='steady'?'延续现行营销，优先改善成本。':'以周年庆活动增收，联动采购与排班。'}</p><div class="aw-plan-metrics"><div><small>预计营业额</small><strong>${amt(f.totals.revenue)}<span>万元</span></strong></div><div><small>预计经营利润</small><strong>${amt(f.totals.profit)}<span>万元</span></strong></div></div><div class="aw-plan-actions"><button class="hmw-button ${active?'primary':''}" data-select-plan="${id}">调整并测算</button><button class="hmw-link" data-aw-detail="plan" data-plan="${id}">方案说明</button></div></article>`;
   }
   function storeRows(){
-    const signature=P.signature(scenario.applied),query=view.query.trim(),published=publication?.signature===signature;
-    return scenario.applied.byStore.filter(s=>`${s.storeId} ${s.storeName} ${s.region}`.includes(query)).map(s=>{
+    if(!publication)return '';
+    const signature=publication.signature,query=view.query.trim();
+    return publication.forecast.byStore.filter(s=>`${s.storeId} ${s.storeName} ${s.region}`.includes(query)).map(s=>{
       const a=flow.approvals[s.storeId],current=a?.proposal.signature===signature;
-      return `<tr><td><button class="hmw-link" data-store="${s.storeId}" data-context="forecast">${esc(s.storeId)} · ${esc(s.storeName)}</button><small>${esc(s.region)}</small></td><td class="numeric">${amt(s.guests,0)}</td><td class="numeric">${amt(s.revenue)}</td><td class="numeric ${badClass(s.profit)}">${amt(s.profit)}</td><td class="numeric">${amt(s.capacityUse,1)}%</td><td><span class="hmw-tag ${published&&current?'good':published&&a?'warn':''}">${!published?'测算未下发':current?'本版已生效':a?'新下发版待确认':'待店长确认'}</span></td></tr>`;
+      return `<tr><td><button class="hmw-link" data-aw-progress-store="${s.storeId}">${esc(s.storeId)} · ${esc(s.storeName)}</button><small>${esc(s.region)}</small></td><td class="numeric">${amt(s.guests,0)}</td><td class="numeric">${amt(s.revenue)}</td><td class="numeric ${badClass(s.profit)}">${amt(s.profit)}</td><td class="numeric">${amt(s.capacityUse,1)}%</td><td><span class="hmw-tag ${current?'good':a?'warn':''}">${current?'本版已生效':a?'新下发版待确认':'待店长确认'}</span></td></tr>`;
     }).join('')||'<tr><td colspan="6">没有匹配门店</td></tr>';
   }
   function storePanel(proposal){
@@ -4076,13 +4126,58 @@ render();
     return `<div class="aw-week-source"><strong>${esc(a.proposal.storeName)} · ${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])}</span><p>仅使用本店已确认的方案。物料和人员清单确认后，再创建对应单据。</p></div><div class="aw-week-controls"><label><span>执行开始日期</span><input id="awStartDate" type="date" min="${today()}" value="${esc(view.startDate)}"></label><label><span>额外可用支援人数</span><input id="awExtraStaff" type="number" min="0" max="50" step="1" value="${view.extraStaff}"></label><button class="hmw-button primary" data-aw-action="generate-week">${p?'更新7天执行清单':'生成本店7天执行清单'}</button></div>${!p?'<p class="aw-note">将按该店已生效方案生成物料需求、库存扣减和早晚班安排，跨月日期会明确提示。</p>':`<div class="aw-week-plan" data-week-key="${esc(p.key)}"><header><h3>${esc(p.startDate)}—${esc(p.endDate)} · 7天计划</h3><span class="hmw-tag ${!valid?'warn':w.confirmedAt?'good':''}">${!valid?'来源已变更，须重新生成':w.confirmedAt?'店长已确认':'待店长确认清单'}</span></header>${!valid?'<p class="aw-warning">本店已确认新的月度方案，旧清单不可继续确认或创建单据，请先更新。</p>':''}${weekExpired()?'<p class="aw-warning">执行开始日期已早于今天，请更新日期并重新生成接下来7天的清单。历史单据回执仍可查看。</p>':''}${p.warnings.length?`<details class="aw-secondary-detail" ${p.crossMonth?'open':''}><summary>计划依据与执行提示（${p.warnings.length}项）</summary>${list(p.warnings)}</details>`:''}${p.blockers.length?`<div class="aw-blockers"><strong>以下问题解决后才能确认</strong>${list(p.blockers)}</div>`:''}<h4>物料清单</h4><p>${esc(businessText(p.sourceNote))}</p>${materialsTable(p)}<h4>人员排班清单</h4>${staffingTable(p)}<p class="aw-warning" id="awWeekDraftNotice" ${view.weekDirty?'':'hidden'}>日期、库存或支援人数已有修改，请更新清单后重新确认。</p><label class="aw-week-ack"><input type="checkbox" id="awWeekAck" ${view.weekAck||w.confirmedAt?'checked':''} ${w.confirmedAt?'disabled':''}><span>本店店长已核对物料需求、现存与在途、人员可用性及日期安排${p.crossMonth?'，并确认跨月计划口径':''}。</span></label><div class="aw-week-actions"><button class="hmw-button" id="awConfirmWeek" data-aw-action="confirm-week" ${!valid||weekExpired()||view.weekDirty||!view.weekAck||p.blockers.length||w.confirmedAt?'disabled':''}>${w.confirmedAt?'本店7天清单已确认':'确认本店物料与排班清单'}</button><button class="hmw-button primary" id="awCreateDocuments" data-aw-action="create-documents" ${!valid||weekExpired()||view.weekDirty||!w.confirmedAt||p.blockers.length||r?'disabled':''}>${r?'本批次单据已创建':'一键创建补货申请与排班单'}</button></div><p class="aw-note">确认后，按本店补货需求创建供应链申请单，并创建人事排班单。</p>${r?receiptPanel(r):''}</div>`}`;
   }
   function distributionPanel(){
-    const sig=P.signature(scenario.applied),same=publication?.signature===sig;
-    const confirmed=publication?Object.values(flow.approvals).filter(a=>a.proposal.signature===publication.signature).length:0;
-    return `<section class="aw-distribution"><header><div><h3>下发与门店确认进度</h3><p>${publication?`${esc(publication.versionLabel)} · ${esc(planNames[publication.forecast.plan])} · ${esc(new Date(publication.publishedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}`:'尚未下发经营方案'}</p></div><span class="hmw-tag ${publication?'blue':''}" id="awPublishedCount">已下发版确认 ${confirmed} / ${M.stores.length} 店</span></header>${publication?`<p>已下发版集团预计营业额${amt(publication.forecast.totals.revenue)}万元，经营利润${amt(publication.forecast.totals.profit)}万元。${same?'当前测算与已下发版一致。':'当前测算尚未替代已下发版本。'}</p>`:''}<div class="aw-week-actions"><button class="hmw-button primary" id="awPublish" data-aw-action="publish" ${scenario.dirty||same?'disabled':''}>${same?'当前测算已下发':'下发当前测算至店长工作台'}</button></div><p class="aw-note">调整方案并重新测算后，可再次下发。各店确认后分别生效；集团下发不会直接替换门店已生效方案。</p></section>`;
+    const same=publication?.signature===P.signature(scenario.applied),confirmed=publication?Object.values(flow.approvals).filter(a=>a.proposal.signature===publication.signature).length:0;
+    return `<section class="aw-section aw-overview-distribution"><header class="aw-overview-heading"><div><span class="aw-eyebrow">03 · 下发与确认</span><h2>落实到门店</h2><p>${publication?`${esc(planNames[publication.forecast.plan])}`:'测算完成后下发，各店确认后生效。'}</p></div><span class="hmw-tag ${publication?'blue':''}" id="awPublishedCount">${publication?'已下发':'未下发'}</span></header><div class="aw-progress-summary"><article><small>已确认</small><strong id="awConfirmedStores">${publication?confirmed:'—'}<span>店</span></strong></article><article><small>待确认</small><strong id="awPendingStores">${publication?M.stores.length-confirmed:'—'}<span>店</span></strong></article><article><small>已下发版本</small><strong>${publication?'V'+publication.versionNumber:'未下发'}</strong></article></div><progress class="aw-confirmation-progress" max="${M.stores.length}" value="${confirmed}" aria-label="已下发方案门店确认进度"></progress><div class="aw-distribution-actions"><button class="hmw-button primary" id="awPublish" data-aw-action="publish" ${scenario.dirty||same?'disabled':''}>${same?'当前测算已下发':'下发当前方案'}</button><button class="hmw-link" data-aw-detail="progress">查看门店进度</button></div><p class="aw-note">${scenario.dirty?'有未测算修改，请先完成测算。':same?'各店确认后分别生效。':'当前测算尚未下发。'}</p></section>`;
   }
   function renderWorkspace(){
-    const d=P.describe(scenario.applied,M);
-    return `<div class="aw-workspace" id="aiEvidence"><nav class="aw-flow-nav"><span>集团方案生成</span><span>集团合计与逐店测算</span><span>下发至独立店长工作台</span></nav><section class="aw-section" id="awProposalSection"><header><span class="aw-eyebrow">集团经营管理</span><h2>经营方案与集团测算</h2><p>调整方案参数，核对集团合计与门店测算，再下发给各店店长。店长在独立工作台完成本店确认和执行。</p></header><details class="aw-brand-basis" open><summary>品牌与资源依据</summary>${list(d.brandFacts)}</details><div class="aw-plan-options">${['steady','anniversary'].map(planCard).join('')}</div>${strategyEntry()}<section id="aiForecastResult" class="aw-current-result"><div><strong>当前测算：${esc(planNames[scenario.applied.plan])}</strong><p>预计营业额${amt(scenario.applied.totals.revenue)}万元，利润${amt(scenario.applied.totals.profit)}万元；确认进度以下方已下发版本为准。</p></div><span class="hmw-tag">集团合计</span></section><section class="aw-core-summary"><h3>集团10项核心指标</h3>${coreMetrics(scenario.applied.totals,'group-result')}<p class="aw-note">经营利润已扣除全部费用；其他费用包含市场推广、餐具、物耗、维修及其余经营支出，构成明细用于核对，不重复计入利润。</p>${coreExpenseDetails(scenario.applied.totals)}</section>${distributionPanel()}<details class="aw-secondary-detail aw-all-stores" open><summary>查看120家门店测算与确认状态</summary><input class="hmw-search" data-aw-store-search placeholder="搜索门店、编号或区域" aria-label="搜索门店测算" value="${esc(view.query)}"><div class="hmw-table-wrap store-scroll"><table class="hmw-table"><thead><tr><th>门店</th><th class="numeric">预计客流</th><th class="numeric">营业额 / 万元</th><th class="numeric">利润 / 万元</th><th class="numeric">产能使用率</th><th>当前测算状态</th></tr></thead><tbody id="awStoreRows">${storeRows()}</tbody></table></div></details><details class="aw-secondary-detail aw-model-evidence"><summary>查看完整财务测算与行动依据</summary>${forecastResult(scenario.applied,AI.base(scenario.applied.plan))}</details></section></div>`;
+    const same=publication?.signature===P.signature(scenario.applied);
+    return `<div class="aw-workspace aw-overview" id="aiEvidence"><section class="aw-section aw-overview-plans"><header class="aw-overview-heading"><div><span class="aw-eyebrow">01 · 方案对比</span><h2>选择经营方案</h2><p>初始方案测算，调整后以当前结果为准。</p></div><button class="hmw-link" data-aw-detail="basis">方案依据</button></header><div class="aw-plan-options">${['steady','anniversary'].map(planCard).join('')}</div></section><section class="aw-section aw-overview-result" id="aiForecastResult"><header class="aw-overview-heading"><div><span class="aw-eyebrow">02 · 当前测算</span><h2>${esc(planNames[scenario.applied.plan])}</h2><p>${scenario.dirty?'保留上次测算结果，修改尚未应用。':same?'与已下发版本一致。':'尚未下发。'}</p></div>${strategyEntry()}</header>${coreMetrics(scenario.applied.totals,'group-result')}<div class="aw-detail-links"><button class="hmw-link" data-aw-detail="expenses">费用构成</button><button class="hmw-link" data-aw-detail="financial">完整测算</button></div></section>${distributionPanel()}</div>`;
+  }
+  function showAdviceDetails(type,plan){
+    if(managerView())return;
+    const returning=adviceDetail?.type===type+'-store'?adviceDetail.storeId:null;
+    const modal=$('#hmwDialog');if($('#strategyDialog').open)$('#strategyDialog').close();
+    let title,body,label='11月经营建议';
+    if(type==='plan'){
+      const id=initial[plan]?plan:'steady',f=initial[id],d=P.describe(f,M);plan=id;
+      title=planNames[id];label='初始方案说明';body=`<div class="aw-plan-explanation"><h3>方案特点</h3>${list(d.features)}<h3>执行难点</h3>${list(d.difficulties)}<div class="aw-plan-metrics"><div><small>预计营业额</small><strong>${amt(f.totals.revenue)}<span>万元</span></strong></div><div><small>预计经营利润</small><strong>${amt(f.totals.profit)}<span>万元</span></strong></div></div><p class="hmw-note">调整后以当前测算结果为准。</p><button class="hmw-button primary" data-select-plan="${id}">调整此方案</button></div>`;
+    }else if(type==='basis'){
+      title='品牌与资源依据';label='当前测算 · '+planNames[scenario.applied.plan];body=list(P.describe(scenario.applied,M).brandFacts);
+    }else if(type==='expenses'){
+      title='费用构成';label='当前测算 · '+planNames[scenario.applied.plan];body=`<p>费用归为食材、人工、场租物业、能耗和其他五类；构成明细不重复计费。</p>${coreExpenseDetails(scenario.applied.totals).replace('<details class="aw-core-expenses">','<details class="aw-core-expenses" open>')}`;
+    }else if(type==='financial'){
+      title='完整财务测算';label='当前测算 · '+planNames[scenario.applied.plan];body=forecastResult(scenario.applied,AI.base(scenario.applied.plan));
+    }else if(type==='progress'){
+      title='门店确认进度';label=publication?publication.versionLabel+' · '+planNames[publication.forecast.plan]:'11月经营建议';
+      body=publication?`<p>按已下发版本查看，店长确认后本店生效。</p><input class="hmw-search" id="awProgressSearch" data-aw-store-search placeholder="搜索门店、编号或区域" aria-label="搜索门店确认进度" value="${esc(view.query)}"><div class="hmw-table-wrap store-scroll"><table class="hmw-table"><thead><tr><th>门店</th><th class="numeric">预计客流</th><th class="numeric">营业额 / 万元</th><th class="numeric">利润 / 万元</th><th class="numeric">产能使用率</th><th>确认状态</th></tr></thead><tbody id="awStoreRows">${storeRows()}</tbody></table></div>`:'<div class="aw-empty"><h3>尚未下发方案</h3><p>完成测算并下发后，可查看逐店确认进度。</p></div>';
+    }else return;
+    delete modal.dataset.remediationOrigin;$('#hmwDialogBody').dataset.activeStore='';
+    adviceDetail={type,plan};dialog(title,`<div class="aw-overview-detail">${body}</div>`,label);modal.dataset.adviceView=type;
+    if(returning){
+      const target=type==='progress'?$('[data-aw-progress-store="'+returning+'"]'):$('#hmwDialogBody [data-store="'+returning+'"]');target?.focus({preventScroll:true});
+      $('#hmwDialogBody').scrollTop=adviceScroll[type]?.body||0;modal.scrollTop=adviceScroll[type]?.modal||0;
+      const table=modal.querySelector('.store-scroll'),saved=adviceScroll[type]?.table;if(table&&saved){table.scrollTop=saved.top;table.scrollLeft=saved.left;}
+    }
+  }
+  function openAdviceStore(id,type='financial'){
+    const forecast=type==='progress'?publication?.forecast:scenario.applied;if(!forecast)return;
+    const table=$('#hmwDialog .store-scroll');
+    adviceScroll[type]={body:$('#hmwDialogBody').scrollTop,modal:$('#hmwDialog').scrollTop,table:table?{top:table.scrollTop,left:table.scrollLeft}:null};
+    const source=type==='progress'?publication.versionLabel:'当前测算';
+    showStore(id,'forecast',null,forecast,source);
+    $('#hmwDialogBody').insertAdjacentHTML('afterbegin',`<p><button class="hmw-link" data-aw-detail="${type}">← 返回${type==='progress'?'门店确认进度':'完整测算'}</button></p>`);
+    adviceDetail={type:type+'-store',storeId:id};$('#hmwDialog').dataset.adviceView=type+'-store';
+  }
+  function refreshAdviceDetails(){
+    const modal=$('#hmwDialog');if(!modal.open||!adviceDetail||adviceDetail.type.endsWith('-store'))return;
+    const body=$('#hmwDialogBody'),scroll=body.scrollTop,modalScroll=modal.scrollTop,active=document.activeElement;
+    const table=modal.querySelector('.store-scroll'),tableScroll=table?{top:table.scrollTop,left:table.scrollLeft}:null;
+    const focusSelector=modal.contains(active)?active.id?'#'+CSS.escape(active.id):active.matches('[data-search="forecast"]')?'[data-search="forecast"]':active.dataset.awProgressStore?'[data-aw-progress-store="'+CSS.escape(active.dataset.awProgressStore)+'"]':active.dataset.store?'[data-store="'+CSS.escape(active.dataset.store)+'"]':null:null;
+    const selection=active.matches('input.hmw-search')?{start:active.selectionStart,end:active.selectionEnd}:null;
+    showAdviceDetails(adviceDetail.type,adviceDetail.plan);
+    const target=focusSelector?modal.querySelector(focusSelector):null;if(target){target.focus({preventScroll:true});if(selection)target.setSelectionRange(selection.start,selection.end);}
+    body.scrollTop=scroll;modal.scrollTop=modalScroll;
+    const nextTable=modal.querySelector('.store-scroll');if(nextTable&&tableScroll){nextTable.scrollTop=tableScroll.top;nextTable.scrollLeft=tableScroll.left;}
   }
   function recordsPanel(){
     const records=[...flow.dispatches].reverse().filter(r=>r.storeId===view.storeId);
@@ -4119,6 +4214,8 @@ render();
     dialog(d.type,`<p>${esc(documentNumber(d.id)||'无需生成')} · ${esc(r.storeName)} · ${esc(r.sourceVersion)} · ${esc(r.startDate)}—${esc(r.endDate)}</p>${body}<p>${notRequired?'库存充足，无需生成或提交补货申请。':receiptCreatedText[type]}</p>`,notRequired?'库存充足 · 无需补货申请':'店长已确认 · 单据已创建');
   }
   document.addEventListener('click',event=>{
+    const detail=event.target.closest('[data-aw-detail]');if(detail){showAdviceDetails(detail.dataset.awDetail,detail.dataset.plan);return;}
+    const progressStore=event.target.closest('[data-aw-progress-store]');if(progressStore){openAdviceStore(progressStore.dataset.awProgressStore,'progress');return;}
     const menu=event.target.closest('[data-aw-view]');if(menu&&managerView()){openManager(menu.dataset.awView);return;}
     const store=event.target.closest('[data-aw-store]');if(store){setStore(store.dataset.awStore);return;}
     const scroll=event.target.closest('[data-aw-scroll]');if(scroll){event.preventDefault();const target=$('#'+scroll.dataset.awScroll);if(target)target.scrollIntoView({block:'start',behavior:'instant'});else if(managerView())openManager(scroll.dataset.awScroll==='awStorePanel'?'proposal':'weekly');return;}
@@ -4163,7 +4260,7 @@ render();
   });
   document.addEventListener('input',event=>{
     const t=event.target;
-    if(t.dataset.awStoreSearch!==undefined){view.query=t.value;$('#awStoreRows').innerHTML=storeRows();}
+    if(t.dataset.awStoreSearch!==undefined){view.query=t.value;if($('#awStoreRows'))$('#awStoreRows').innerHTML=storeRows();}
     if(t.dataset.awStock){const id=t.dataset.awStock,field=t.dataset.field;view.inventory[id]={...(view.inventory[id]||{}),[field]:Number(t.value)};view.weekDirty=true;view.weekAck=false;}
     if(t.id==='awStartDate'){view.startDate=t.value;view.weekDirty=true;view.weekAck=false;}
     if(t.id==='awExtraStaff'){view.extraStaff=Number(t.value);view.weekDirty=true;view.weekAck=false;}
@@ -4180,9 +4277,17 @@ render();
     try{
       syncShared();
       if(managerView()||state.page==='forecast')render();
+      refreshAdviceDetails();
     }catch{toast('方案或确认进度未能刷新，请重新打开工作台。');}
   });
-  root.AdviceWorkspace={render:renderWorkspace,renderManager,refreshGates};
+  $('#hmwDialog').addEventListener('close',()=>{
+    if(!adviceDetail)return;
+    const source=adviceDetail.type.replace(/-store$/,''),plan=adviceDetail.plan;
+    adviceDetail=null;delete $('#hmwDialog').dataset.adviceView;
+    const selector=source==='plan'?'[data-aw-detail="plan"][data-plan="'+plan+'"]':'[data-aw-detail="'+source+'"]';
+    const target=$(selector);if(!$('#strategyDialog').open&&target?.getClientRects().length)target.focus({preventScroll:true});
+  });
+  root.AdviceWorkspace={render:renderWorkspace,renderManager,refreshGates,openAdviceStore};
   render();
 })(globalThis);
 </script>
