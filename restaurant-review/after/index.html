@@ -1151,6 +1151,29 @@
 .ai-platform .aw-manager-back{text-decoration:none}
 @media(max-width:900px){.aw-distribution>header{flex-direction:column;gap:8px}.aw-manager-heading{flex-direction:column;gap:15px}.manager-workspace #hmwMain{padding:22px 16px 40px}.aw-manager-heading h1{font-size:24px}}
 @media(max-width:760px){.manager-workspace #awManagerSidebar,.manager-workspace.sidebar-collapsed #awManagerSidebar{display:none}.manager-workspace.sidebar-open #awManagerSidebar{display:flex}}
+.aw-strategy-entry{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:24px 0;padding:18px 20px;border:1px solid #d9e5f8;border-radius:11px;background:#f7faff}
+.aw-strategy-entry>div{flex:1;min-width:0}
+.aw-strategy-entry h3{margin:0;color:#304e77;font-size:16px;font-weight:600;line-height:1.6}
+.aw-strategy-entry p{margin:6px 0 0;color:#7186a3;font-size:13px;line-height:1.8}
+.aw-strategy-entry>[data-action=edit-strategy]{flex:none;white-space:nowrap}
+.aw-strategy-entry #awStrategyDraftStatus{flex:none;max-width:100%;font-size:12px;line-height:1.6}
+#strategyDialog{width:min(1200px,calc(100vw - 48px));max-width:none;max-height:calc(100dvh - 48px);margin:auto;padding:0;overflow:hidden;border:1px solid #d8e2f2;border-radius:18px;background:#fff;color:#4f6687;box-shadow:0 24px 100px #10244830}
+#strategyDialog[open]{display:flex;flex-direction:column}
+#strategyDialog::backdrop{background:#14243d65;backdrop-filter:blur(5px)}
+#strategyDialog>header{position:relative;z-index:2;display:flex;flex:none;align-items:center;justify-content:space-between;gap:18px;padding:22px 26px;border-bottom:1px solid #e4ebf5;background:linear-gradient(120deg,#f9fbff,#f0f5ff)}
+#strategyDialog>header>div{min-width:0}
+#strategyDialog>header small{display:block;color:#7993b5;font-size:12px;letter-spacing:.3px}
+#strategyDialogTitle{margin:6px 0 0;color:#263f66;font-size:22px;line-height:1.5;letter-spacing:-.4px}
+#strategyDialogClose{flex:none;min-width:38px;min-height:38px}
+#strategyDialogBody{flex:1;min-width:0;min-height:0;padding:24px 26px 0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
+#strategyDialog .ai-strategy-panel{margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+#strategyDialog .ai-strategy-panel>header{margin:0 0 22px;padding:0 0 16px}
+#strategyDialog .ai-strategy-panel>header h2{display:none}
+#strategyDialog .ai-strategy-panel>header .ai-message-label{margin:0}
+#strategyDialog .ai-strategy-footer{position:sticky;bottom:0;z-index:3;margin:24px -26px 0;padding:16px 26px;border-top:1px solid #dce5f4;background:#fff;box-shadow:0 -6px 18px #284a7810}
+@media(max-width:760px){.aw-strategy-entry{align-items:stretch;flex-direction:column;gap:13px;padding:16px}.aw-strategy-entry>[data-action=edit-strategy]{width:100%;white-space:normal}.aw-strategy-entry #awStrategyDraftStatus{align-self:flex-start}#strategyDialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);border-radius:14px}#strategyDialog>header{gap:12px;padding:16px}#strategyDialogTitle{font-size:19px}#strategyDialogBody{padding:18px 16px 0}#strategyDialog .ai-strategy-panel>header{gap:10px;flex-wrap:wrap;margin-bottom:18px}#strategyDialog .ai-strategy-grid,#strategyDialog .campaign-fields{grid-template-columns:minmax(0,1fr)}#strategyDialog .ai-strategy-footer{margin:20px -16px 0;padding:14px 16px}#strategyDialog .ai-strategy-footer>div{width:100%}#strategyDialog .ai-strategy-footer .hmw-button{flex:1;min-width:0}}
+
+.aw-strategy-error{margin:0 0 18px;padding:12px 15px;border:1px solid #efc8d0;border-radius:9px;background:#fff6f8;color:#a63b55;font-size:13px;line-height:1.8}
 </style>
 </head>
 <body class="hmw-app ai-workspace ai-platform">
@@ -1187,6 +1210,7 @@
   <button class="platform-mobile-backdrop" id="platformMobileBackdrop" aria-label="关闭侧边栏" hidden></button>
   <aside class="platform-context-drawer" id="platformContext" aria-label="任务上下文" hidden></aside>
   <dialog id="hmwDialog"><header><div><small id="hmwDialogLabel"></small><h2 id="hmwDialogTitle"></h2></div><button class="hmw-button ghost" id="hmwClose" aria-label="关闭详情">✕</button></header><div class="hmw-dialog-body" id="hmwDialogBody"></div></dialog>
+  <dialog id="strategyDialog" class="aw-strategy-dialog" aria-labelledby="strategyDialogTitle"><header><div><small>11月经营建议</small><h2 id="strategyDialogTitle">方案调整与测算</h2></div><button id="strategyDialogClose" class="hmw-button ghost" type="button" aria-label="关闭方案调整">✕</button></header><div id="strategyDialogBody" class="hmw-dialog-body"></div></dialog>
   <div class="hmw-toast" id="hmwToast" role="status" hidden></div>
   <script>/* 好美味餐饮集团：用于产品演示的合成业务模型。金额：万元；采购价格：元/公斤。 */
 (function (root) {
@@ -3245,6 +3269,7 @@ const pages = [['attribution','10月利润归因'],['forecast','11月经营建�
 const planNames = {steady:'方案一：现行营销策略 + 成本项整改',anniversary:'方案二：周年庆活动+成本联动'};
 const state = {page:'attribution',search:'',trackingFilter:'all'};
 const scenario={draft:AI.activityDefaults(),applied:AI.calculate(AI.activityDefaults()),revision:0,dirty:false,lastChanges:[]};
+let strategyReturnSelector='[data-action="edit-strategy"]',strategyErrorMessage='';
 let adjustments={};
 const actionStorageKey='haomeiwei-actions-v1:'+M.dataVersion;
 try{adjustments=JSON.parse(localStorage.getItem(actionStorageKey)||'{}');}catch{}
@@ -3361,7 +3386,7 @@ function renderForecast(){
   if(globalThis.AdviceWorkspace)return globalThis.AdviceWorkspace.render();
   const chosen=scenario.applied,reference=AI.base(chosen.plan);
   return `<div class="hmw-plan-grid">${['steady','anniversary'].map(id=>aiPlanCard(id)).join('')}</div>`+
-    strategyEditor()+
+    strategyEntry()+
     `<section class="ai-result-block" id="aiForecastResult">${forecastResult(chosen,reference)}</section>`;
 }
 function aiPlanCard(id){
@@ -3401,6 +3426,42 @@ function refreshExpensePreview(){
   const count=new Set(budget.fixedGaps.map(gap=>gap.storeId)).size;
   $('#aiExpenseFixedWarning').hidden=!count;
   $('#aiExpenseFixedWarning').textContent=`${count}家门店预算低于原固定投入参考，须落实合同、人员或资源调整后再确认。`;
+}
+function strategyEntry(){
+  return `<section class="aw-strategy-entry"><div><h3>方案调整与测算</h3><p>在弹框中调整经营参数、费用占比或活动方案，完成测算后更新集团与门店结果。</p></div><span class="hmw-tag ${scenario.dirty?'warn':'blue'}" id="awStrategyDraftStatus">${scenario.dirty?'有调整 · 待测算':'当前参数已测算'}</span><button type="button" class="hmw-button primary" data-action="edit-strategy">${scenario.dirty?'继续调整并测算':'调整方案并测算'}</button></section>`;
+}
+function updateStrategyEntry(){
+  const badge=$('#awStrategyDraftStatus');if(badge){badge.textContent=scenario.dirty?'有调整 · 待测算':'当前参数已测算';badge.className='hmw-tag '+(scenario.dirty?'warn':'blue');}
+}
+function rememberStrategyReturn(){
+  if($('#strategyDialog').open)return;
+  const opener=document.activeElement?.closest('[data-select-plan],[data-action="edit-strategy"]');
+  if(!opener)return;
+  strategyReturnSelector=opener?.dataset.selectPlan?'[data-select-plan="'+opener.dataset.selectPlan+'"]':'[data-action="edit-strategy"]';
+}
+function strategyDialogContent(){return `<p class="aw-strategy-error" id="strategyDialogError" role="alert" ${strategyErrorMessage?'':'hidden'}>${esc(strategyErrorMessage)}</p>`+strategyEditor();}
+function refreshStrategyDialog(){
+  const modal=$('#strategyDialog');if(!modal?.open)return;
+  const body=$('#strategyDialogBody'),active=document.activeElement,scroll=body.scrollTop,wasInside=body.contains(active);
+  const selector=wasInside?active.id?'#'+CSS.escape(active.id):[...active.attributes].filter(a=>a.name.startsWith('data-')).map(a=>'['+a.name+'="'+CSS.escape(a.value)+'"]').join(''):'';
+  const selection=wasInside&&typeof active.selectionStart==='number'?[active.selectionStart,active.selectionEnd]:null;
+  const activeDetail=wasInside&&active.tagName==='SUMMARY'?active.parentElement:null,detailKey=activeDetail?(activeDetail.id||activeDetail.dataset.campaignCard||activeDetail.className):null;
+  const details=new Map([...body.querySelectorAll('details')].map(d=>[d.id||d.dataset.campaignCard||d.className,d.open]));
+  body.innerHTML=strategyDialogContent();
+  body.querySelectorAll('details').forEach(d=>{const key=d.id||d.dataset.campaignCard||d.className;if(details.has(key))d.open=details.get(key);});
+  const target=selector?body.querySelector(selector):detailKey?[...body.querySelectorAll('details')].find(d=>(d.id||d.dataset.campaignCard||d.className)===detailKey)?.querySelector('summary'):null;
+  if(target){target.focus({preventScroll:true});if(selection)target.setSelectionRange(...selection);}
+  else if(wasInside)($('#campaignAddType')||$('#aiStrategySelect'))?.focus({preventScroll:true});
+  body.scrollTop=scroll;
+}
+function openStrategyDialog(){
+  if(state.page==='manager')return;
+  const modal=$('#strategyDialog');if(modal.open)return;
+  rememberStrategyReturn();$('#strategyDialogBody').innerHTML=strategyDialogContent();modal.showModal();$('#strategyDialogBody').scrollTop=0;$('#aiStrategySelect')?.focus({preventScroll:true});
+}
+function strategyError(message){
+  strategyErrorMessage=message;
+  const error=$('#strategyDialogError');if($('#strategyDialog')?.open&&error){error.textContent=message;error.hidden=false;error.scrollIntoView({block:'nearest'});}else toast(message);
 }
 function strategyEditor(){
   const d=scenario.draft,marketingMinimum=AI.bounds(d.plan).marketingBudget.min,ratioMode=d.costMode==='store-standard-rates-v1',activityMode=d.activityMode==='campaign-ledger-v1';
@@ -3649,13 +3710,14 @@ function workspaceView(page,content){
 }
 function markDraft(){
   scenario.dirty=(scenario.draft.activityMode?AI.activityBudget(scenario.draft).issues.length>0:Object.keys(AI.defaults(scenario.draft.plan)).some(id=>scenario.draft[id]!==scenario.applied.inputs[id])||Object.values(scenario.draft.expenseRatios||{}).some(value=>value===''||!Number.isFinite(Number(value))||Number(value)<0||Number(value)>100))||JSON.stringify(AI.normalize(scenario.draft))!==JSON.stringify(AI.normalize(scenario.applied.inputs));
+  updateStrategyEntry();
   if($('#aiDraftBadge'))$('#aiDraftBadge').textContent=scenario.dirty?'有修改 · 待重新测算':'参数与已测算版本一致';
   if($('#aiAppliedContext'))$('#aiAppliedContext').textContent=scenario.dirty?'草稿已修改，此处仍为上次已测算结果；重新测算后更新。':(scenario.applied.expenseBudget?'本结果为当前测算参数，店长确认后生效。费用按占收比目标汇总，不重复计整改收益。':'本结果为当前测算参数，店长确认后生效。营销预算按填写总额计入，折扣已从营业额扣减。');
 }
-function chooseStrategy(plan){globalThis.AiPlatform?.revealEvidence();scenario.draft=plan==='steady'?AI.expenseDefaults():AI.activityDefaults();markDraft();render();$('#aiStrategyForm').scrollIntoView({block:'start',behavior:'instant'});}
+function chooseStrategy(plan){rememberStrategyReturn();globalThis.AiPlatform?.revealEvidence();scenario.draft=plan==='steady'?AI.expenseDefaults():AI.activityDefaults();strategyErrorMessage='';markDraft();render();openStrategyDialog();}
 function recalculate(){
-  if(scenario.draft.costMode&&Object.values(scenario.draft.expenseRatios||{}).some(value=>value===''||!Number.isFinite(Number(value))||Number(value)<0||Number(value)>100)){toast('请填写0—100之间的有效费用占比，再重新测算。');return;}
-  if(scenario.draft.activityMode&&AI.activityBudget(scenario.draft).issues.length){toast('请先修正活动配置中的问题，再重新测算。');return;}
+  if(scenario.draft.costMode&&Object.values(scenario.draft.expenseRatios||{}).some(value=>value===''||!Number.isFinite(Number(value))||Number(value)<0||Number(value)>100)){strategyError('请填写0—100之间的有效费用占比，再重新测算。');return;}
+  if(scenario.draft.activityMode&&AI.activityBudget(scenario.draft).issues.length){strategyError('请先修正活动配置中的问题，再重新测算。');return;}
   const previous=scenario.applied.inputs,next=AI.normalize(scenario.draft);
   scenario.lastChanges=[];
   if(previous.plan!==next.plan)scenario.lastChanges.push(`策略：${planNames[previous.plan]} → ${planNames[next.plan]}`);
@@ -3663,7 +3725,7 @@ function recalculate(){
   if(next.costMode){scenario.lastChanges.push('费用预算按五类费用汇总');expenseGroups.rows(AI.expenseBudget(next)).filter(row=>row.manual).forEach(row=>scenario.lastChanges.push(`${row.name}占收比人工调整为${amt(row.rate,6)}%`));}
   if(next.activityMode)scenario.lastChanges.push(`已按${next.activities.length}项活动的销量、价格与预计核销及常规订单重新测算`);
   scenario.applied=AI.calculate(next);scenario.draft=JSON.parse(JSON.stringify(next));scenario.revision++;scenario.dirty=false;state.search='';
-  render();$('#aiForecastResult').scrollIntoView({block:'start',behavior:'instant'});toast('已重新测算集团、120家门店及相应行动条件');
+  strategyErrorMessage='';if($('#strategyDialog').open)$('#strategyDialog').close();render();$('#aiForecastResult').scrollIntoView({block:'start',behavior:'instant'});toast('已重新测算集团、120家门店及相应行动条件');
 }
 function navigate(page){if(!pages.some(([id])=>id===page))page='attribution';globalThis.AiPlatform?.openPage();if($('#hmwDialog').open)$('#hmwDialog').close();state.search='';location.hash=page;render();}
 function render(){
@@ -3675,16 +3737,19 @@ function render(){
   document.body.classList.toggle('manager-workspace',manager);
   $('#platformSidebarToggle').setAttribute('aria-controls',manager?'awManagerSidebar':'groupSidebar');
   if(manager){
+    if($('#strategyDialog')?.open)$('#strategyDialog').close();
     state.page='manager';$('#hmwBreadcrumb').textContent='门店店长工作台';document.title='门店店长工作台 · 好美味';
     $('#hmwMain').innerHTML=globalThis.AdviceWorkspace?.renderManager()||'';
     return;
   }
   state.page=pages.some(([id])=>id===location.hash.slice(1))?location.hash.slice(1):'attribution';
-  if(globalThis.AiPlatform?.renderView())return;
+  if(globalThis.AiPlatform?.renderView()){if($('#strategyDialog')?.open)$('#strategyDialog').close();return;}
+  if(state.page!=='forecast'&&$('#strategyDialog')?.open)$('#strategyDialog').close();
   $('#hmwNav').innerHTML=pushTasks().map(t=>`<button data-nav="${t.id}" class="${state.page===t.id?'active':''}" ${state.page===t.id?'aria-current="page"':''}><span class="ai-task-icon">${icon(t.id)}</span><span class="ai-task-body"><b>${t.title}</b><small>${t.period}</small></span>${t.id==='tracking'?'<span class="ai-task-badge" aria-label="3家重点门店">3</span>':''}</button>`).join('');
   const title=pages.find(([id])=>id===state.page)[1];$('#hmwBreadcrumb').textContent=title;document.title=`${title} · 好美味 AI 应用平台`;
   $('#hmwMain').innerHTML=workspaceView(state.page,({attribution:renderAttribution,forecast:renderForecast,tracking:renderTracking})[state.page]());
   globalThis.AiPlatform?.afterRender();
+  refreshStrategyDialog();
 }
 document.addEventListener('click',event=>{
   const expenseReset=event.target.closest('[data-expense-reset]');if(expenseReset){scenario.draft=expenseGroups.reset(scenario.draft,expenseReset.dataset.expenseReset);markDraft();render();return;}
@@ -3693,7 +3758,7 @@ document.addEventListener('click',event=>{
   const cause=event.target.closest('[data-cause]');if(cause){showCause(cause.dataset.cause);return;}
   const causeTab=event.target.closest('[data-cause-tab]');if(causeTab){showCause(causeTab.dataset.causeTab,causeTab.dataset.tab);return;}
   const store=event.target.closest('[data-store]');if(store){showStore(store.dataset.store,store.dataset.context,store.dataset.causeContext);return;}
-  const plan=event.target.closest('[data-select-plan]');if(plan){chooseStrategy(plan.dataset.selectPlan);return;}
+  const plan=event.target.closest('[data-select-plan]');if(plan){if(plan.dataset.selectPlan===scenario.draft.plan)openStrategyDialog();else chooseStrategy(plan.dataset.selectPlan);return;}
   const adjustment=event.target.closest('[data-adjust]');if(adjustment){adjustments[adjustment.dataset.adjust]=true;try{localStorage.setItem(actionStorageKey,JSON.stringify(adjustments));}catch{}const dialogStore=$('#hmwDialogBody').dataset.activeStore;render();if($('#hmwDialog').open&&dialogStore)showStore(dialogStore,'tracking');toast('整改动作已登记，执行效果待下一周期复核');return;}
   const action=event.target.closest('[data-action]')?.dataset.action;
   if(action==='baseline')dialog('9月模式下的10月基准测算',baselineTables(),'渠道量价与成本费用参考');
@@ -3701,12 +3766,13 @@ document.addEventListener('click',event=>{
   if(action==='methodology')dialog('数据与方法口径',`<p>${esc(M.attribution.sourceNote)}</p><p>${esc(M.definitions.usageMaterials)}</p><ol>${M.attribution.methodSteps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><p>月度目标不进入本归因桥。净下降贡献以环比差额为分母，基准缺口贡献以基准减实际为分母；各层级不可混用。经营归因按上述口径分解，整改效果须结合后续实际执行核验。</p>`,'9月模式 · '+M.attribution.version);
   if(action==='statement')dialog('9月与10月管理利润表',pnlTable([{label:'9月实际',row:M.actuals.september,rate:true},{label:'10月实际',row:M.actuals.october,rate:true}]));
   if(action==='show-evidence'){globalThis.AiPlatform?.revealEvidence();$('#aiEvidence').scrollIntoView({block:'start',behavior:'instant'});}
-  if(action==='edit-strategy'){globalThis.AiPlatform?.revealEvidence();$('#aiStrategyForm').scrollIntoView({block:'start',behavior:'instant'});}
+  if(action==='edit-strategy'){globalThis.AiPlatform?.revealEvidence();openStrategyDialog();}
   if(action==='reset-draft')chooseStrategy(scenario.draft.plan);
   if(action==='focus-abnormal'){globalThis.AiPlatform?.revealEvidence();state.trackingFilter='abnormal';$('#trackingFilter').value='abnormal';$('#trackingStores').innerHTML=trackingStoreTable(state.search);$('#trackingStores').scrollIntoView({block:'start',behavior:'instant'});}
 });
 document.addEventListener('submit',event=>{if(event.target.id==='aiStrategyForm'){event.preventDefault();if(event.target.reportValidity())recalculate();}});
 document.addEventListener('input',event=>{
+  if(event.target.closest('#aiStrategyForm')){strategyErrorMessage='';const error=$('#strategyDialogError');if(error)error.hidden=true;}
   if(event.target.dataset.scenarioField){const id=event.target.dataset.scenarioField;scenario.draft[id]=event.target.value===''?'':Number(event.target.value)/Number(event.target.dataset.scenarioScale||1);markDraft();refreshExpensePreview();}
   if(event.target.dataset.expenseRate){scenario.draft=expenseGroups.apply(scenario.draft,event.target.dataset.expenseRate,event.target.value===''?'':Number(event.target.value),AI);markDraft();refreshExpensePreview();}
   if(event.target.dataset.search){state.search=event.target.value;const type=event.target.dataset.search;$('#'+type+'Stores').innerHTML=type==='attribution'?attributionStoreTable(state.search):type==='forecast'?forecastStoreTable(scenario.applied,state.search):trackingStoreTable(state.search);}
@@ -3715,6 +3781,12 @@ document.addEventListener('change',event=>{
   if(event.target.id==='aiStrategySelect')chooseStrategy(event.target.value);
   if(event.target.id==='trackingFilter'){state.trackingFilter=event.target.value;$('#trackingStores').innerHTML=trackingStoreTable(state.search);}
 });
+$('#strategyDialogClose').onclick=()=>$('#strategyDialog').close();
+$('#strategyDialog').addEventListener('close',()=>{
+  $('#strategyDialogBody').innerHTML='';updateStrategyEntry();
+  const target=$(strategyReturnSelector);if(target?.getClientRects().length)target.focus({preventScroll:true});else $('#hmwMain').focus({preventScroll:true});
+});
+$('#strategyDialog').addEventListener('click',event=>{if(event.target===$('#strategyDialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
 $('#hmwClose').onclick=()=>$('#hmwDialog').close();
 $('#hmwDialog').addEventListener('close',()=>{const modal=$('#hmwDialog');if(!modal.open)delete modal.dataset.remediationOrigin;});
 $('#hmwDialog').addEventListener('click',event=>{if(event.target===$('#hmwDialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
@@ -3965,7 +4037,7 @@ render();
   }
   function planCard(id){
     const f=initial[id],d=P.describe(f,M),active=scenario.draft.plan===id;
-    return `<article class="aw-plan-card ${active?'is-selected':''}" data-plan="${id}"><header><span class="hmw-tag ${id==='steady'?'blue':''}">默认${id==='steady'?'方案一':'方案二'}</span><h3>${esc(planNames[id])}</h3></header><div class="aw-plan-metrics"><div><small>预计营业额</small><strong>${amt(f.totals.revenue)}<span>万元</span></strong></div><div><small>预计经营利润</small><strong>${amt(f.totals.profit)}<span>万元</span></strong></div></div><h4>方案特点</h4>${list(d.features)}<h4>执行难点</h4>${list(d.difficulties)}<button class="hmw-button ${active?'primary':''}" data-select-plan="${id}">${active?'当前调整起点':'选择此方案并调整参数'}</button></article>`;
+    return `<article class="aw-plan-card ${active?'is-selected':''}" data-plan="${id}"><header><span class="hmw-tag ${id==='steady'?'blue':''}">默认${id==='steady'?'方案一':'方案二'}</span><h3>${esc(planNames[id])}</h3></header><div class="aw-plan-metrics"><div><small>预计营业额</small><strong>${amt(f.totals.revenue)}<span>万元</span></strong></div><div><small>预计经营利润</small><strong>${amt(f.totals.profit)}<span>万元</span></strong></div></div><h4>方案特点</h4>${list(d.features)}<h4>执行难点</h4>${list(d.difficulties)}<button class="hmw-button ${active?'primary':''}" data-select-plan="${id}">${active?'调整当前方案':'调整此方案并测算'}</button></article>`;
   }
   function storeRows(){
     const signature=P.signature(scenario.applied),query=view.query.trim(),published=publication?.signature===signature;
@@ -4010,7 +4082,7 @@ render();
   }
   function renderWorkspace(){
     const d=P.describe(scenario.applied,M);
-    return `<div class="aw-workspace" id="aiEvidence"><nav class="aw-flow-nav"><span>集团方案生成</span><span>集团合计与逐店测算</span><span>下发至独立店长工作台</span></nav><section class="aw-section" id="awProposalSection"><header><span class="aw-eyebrow">集团经营管理</span><h2>经营方案与集团测算</h2><p>调整方案参数，核对集团合计与门店测算，再下发给各店店长。店长在独立工作台完成本店确认和执行。</p></header><details class="aw-brand-basis" open><summary>品牌与资源依据</summary>${list(d.brandFacts)}</details><div class="aw-plan-options">${['steady','anniversary'].map(planCard).join('')}</div>${strategyEditor()}<section id="aiForecastResult" class="aw-current-result"><div><strong>当前测算：${esc(planNames[scenario.applied.plan])}</strong><p>预计营业额${amt(scenario.applied.totals.revenue)}万元，利润${amt(scenario.applied.totals.profit)}万元；确认进度以下方已下发版本为准。</p></div><span class="hmw-tag">集团合计</span></section><section class="aw-core-summary"><h3>集团10项核心指标</h3>${coreMetrics(scenario.applied.totals,'group-result')}<p class="aw-note">经营利润已扣除全部费用；其他费用包含市场推广、餐具、物耗、维修及其余经营支出，构成明细用于核对，不重复计入利润。</p>${coreExpenseDetails(scenario.applied.totals)}</section>${distributionPanel()}<details class="aw-secondary-detail aw-all-stores" open><summary>查看120家门店测算与确认状态</summary><input class="hmw-search" data-aw-store-search placeholder="搜索门店、编号或区域" aria-label="搜索门店测算" value="${esc(view.query)}"><div class="hmw-table-wrap store-scroll"><table class="hmw-table"><thead><tr><th>门店</th><th class="numeric">预计客流</th><th class="numeric">营业额 / 万元</th><th class="numeric">利润 / 万元</th><th class="numeric">产能使用率</th><th>当前测算状态</th></tr></thead><tbody id="awStoreRows">${storeRows()}</tbody></table></div></details><details class="aw-secondary-detail aw-model-evidence"><summary>查看完整财务测算与行动依据</summary>${forecastResult(scenario.applied,AI.base(scenario.applied.plan))}</details></section></div>`;
+    return `<div class="aw-workspace" id="aiEvidence"><nav class="aw-flow-nav"><span>集团方案生成</span><span>集团合计与逐店测算</span><span>下发至独立店长工作台</span></nav><section class="aw-section" id="awProposalSection"><header><span class="aw-eyebrow">集团经营管理</span><h2>经营方案与集团测算</h2><p>调整方案参数，核对集团合计与门店测算，再下发给各店店长。店长在独立工作台完成本店确认和执行。</p></header><details class="aw-brand-basis" open><summary>品牌与资源依据</summary>${list(d.brandFacts)}</details><div class="aw-plan-options">${['steady','anniversary'].map(planCard).join('')}</div>${strategyEntry()}<section id="aiForecastResult" class="aw-current-result"><div><strong>当前测算：${esc(planNames[scenario.applied.plan])}</strong><p>预计营业额${amt(scenario.applied.totals.revenue)}万元，利润${amt(scenario.applied.totals.profit)}万元；确认进度以下方已下发版本为准。</p></div><span class="hmw-tag">集团合计</span></section><section class="aw-core-summary"><h3>集团10项核心指标</h3>${coreMetrics(scenario.applied.totals,'group-result')}<p class="aw-note">经营利润已扣除全部费用；其他费用包含市场推广、餐具、物耗、维修及其余经营支出，构成明细用于核对，不重复计入利润。</p>${coreExpenseDetails(scenario.applied.totals)}</section>${distributionPanel()}<details class="aw-secondary-detail aw-all-stores" open><summary>查看120家门店测算与确认状态</summary><input class="hmw-search" data-aw-store-search placeholder="搜索门店、编号或区域" aria-label="搜索门店测算" value="${esc(view.query)}"><div class="hmw-table-wrap store-scroll"><table class="hmw-table"><thead><tr><th>门店</th><th class="numeric">预计客流</th><th class="numeric">营业额 / 万元</th><th class="numeric">利润 / 万元</th><th class="numeric">产能使用率</th><th>当前测算状态</th></tr></thead><tbody id="awStoreRows">${storeRows()}</tbody></table></div></details><details class="aw-secondary-detail aw-model-evidence"><summary>查看完整财务测算与行动依据</summary>${forecastResult(scenario.applied,AI.base(scenario.applied.plan))}</details></section></div>`;
   }
   function recordsPanel(){
     const records=[...flow.dispatches].reverse().filter(r=>r.storeId===view.storeId);
