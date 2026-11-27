@@ -294,6 +294,8 @@
   'use strict';
 
   const SCALE = 1000000; // 万元保留至分，所有加总在金额最小单位上分配。
+  const DATA_VERSION = 'DEMO-COST-FOCUS-V1';
+  const FORECAST_VERSION = 'NOV-COST-FOCUS-V1';
   const money = n => Math.round(n * SCALE) / SCALE;
   const sum = values => money(values.reduce((a, b) => a + b, 0));
   const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
@@ -345,16 +347,16 @@
   const distribute = (total, key = 'weight') => allocate(total, weights(key));
   const septemberInputs = { revenue: 4000, food: 1400, labor: 1000, rent: 600, utilities: 120, tableware: 32, consumables: 48, maintenance: 40, marketing: 100, otherStoreExpense: 260, grossSales: 4200, guests: 480000, orders: 200000 };
   const septemberColumns = Object.fromEntries(Object.entries(septemberInputs).map(([k, v]) => [k, allocate(v, weights('weight'), ['guests', 'orders'].includes(k) ? 1 : SCALE)]));
-  const volumeColumns = Object.fromEntries(Object.entries({ revenue: 1200, food: 420, labor: 200, utilities: 24, tableware: 6.4, consumables: 9.6, maintenance: 4, marketing: 20, otherStoreExpense: 16, grossSales: 1260, guests: 144000, orders: 60000 }).map(([k, v]) => [k, allocate(v, weights('demandWeight'), ['guests', 'orders'].includes(k) ? 1 : SCALE)]));
-  const priceDiscount = distribute(400, 'promoWeight');
+  const volumeColumns = Object.fromEntries(Object.entries({ revenue: 200, food: 70, labor: 30, utilities: 6, tableware: 1.6, consumables: 2.4, maintenance: 2, marketing: 5, otherStoreExpense: 13, grossSales: 210, guests: 24000, orders: 10000 }).map(([k, v]) => [k, allocate(v, weights('demandWeight'), ['guests', 'orders'].includes(k) ? 1 : SCALE)]));
+  const priceDiscount = distribute(50, 'promoWeight');
   const laborExcess = distribute(120, 'staffingWeight');
-  const usageExcess = allocate(20, ingredientWeights(12));
-  const opexExcessTotals = { utilities: 30, tableware: 0, consumables: 9.6, maintenance: 4, marketing: 33.6, otherStoreExpense: 40.8 };
+  const usageExcess = allocate(23, ingredientWeights(12));
+  const opexExcessTotals = { utilities: 4, tableware: 0, consumables: 2, maintenance: 2, marketing: 7, otherStoreExpense: 5 };
   const opexExcessColumns = Object.fromEntries(Object.entries(opexExcessTotals).map(([k, total], i) => [k, allocate(total, ingredientWeights(i + 15))]));
 
   const materialSpecs = [
-    { id: 'chicken', name: '鸡肉', dish: '招牌香煎鸡腿', kg: 100000, basePrice: 18, actualPrice: 19.5, reason: '原料市场价上行；月度到货价较9月基准上涨1.50元/公斤。', evidence: '10月验收入库100,000公斤，采购发票加权价19.50元/公斤；9月同等级同规格18.00元/公斤。' },
-    { id: 'beef', name: '牛肉', dish: '黑椒牛肉粒', kg: 50000, basePrice: 60, actualPrice: 64, reason: '同等级冷鲜牛肉到货价上升，既有月度合约未覆盖全部需求。', evidence: '10月同规格验收50,000公斤，实际64.00元/公斤，对比9月60.00元/公斤。' },
+    { id: 'chicken', name: '鸡肉', dish: '招牌香煎鸡腿', kg: 100000, basePrice: 18, actualPrice: 20, reason: '原料市场价上行；月度到货价较9月基准上涨2.00元/公斤。', evidence: '10月验收入库100,000公斤，采购发票加权价20.00元/公斤；9月同等级同规格18.00元/公斤。' },
+    { id: 'beef', name: '牛肉', dish: '黑椒牛肉粒', kg: 50000, basePrice: 60, actualPrice: 66, reason: '同等级冷鲜牛肉到货价上升，既有月度合约未覆盖全部需求。', evidence: '10月同规格验收50,000公斤，实际66.00元/公斤，对比9月60.00元/公斤。' },
     { id: 'pork', name: '五花肉', dish: '砂锅红烧肉', kg: 50000, basePrice: 28, actualPrice: 30, reason: '同部位规格采购价上涨2.00元/公斤。', evidence: '10月验收50,000公斤，实际30.00元/公斤，对比9月28.00元/公斤。' },
     { id: 'cheese', name: '芝士', dish: '芝士焗鸡肉饭', forecastServings: 50000, standardKg: 0.1, basePrice: 40, spotPrice: 56, netSellingPrice: 32, standardDishCost: 12, replacedDishCost: 10.4, reason: '新品预估5万份，仅锁定5,000公斤试销配额；实际10万份，追加5,000公斤按现货价采购。', minimumCommitmentKg: 10000, quoteDeadline: '10月05日' },
     { id: 'hairtail', name: '带鱼', dish: '香酥带鱼', forecastServings: 40000, standardKg: 0.25, basePrice: 24, spotPrice: 30, netSellingPrice: 48, standardDishCost: 12, replacedDishCost: 10.5, reason: '新品预估4万份，锁定10,000公斤试销配额；实际8万份，超量现货采购10,000公斤。', minimumCommitmentKg: 20000, quoteDeadline: '10月05日' },
@@ -411,7 +413,7 @@
   });
   const actuals = { september: aggregate(stores.map(s => s.september)), october: aggregate(stores.map(s => s.october)) };
   // 独立的演示渠道输入；不从既有堂食桌单 orders 反推外卖订单。
-  const deliveryCounts = { september: allocate(120000, weights('weight'), 1), october: allocate(156000, weights('demandWeight'), 1) };
+  const deliveryCounts = { september: allocate(120000, weights('weight'), 1), october: allocate(126000, weights('demandWeight'), 1) };
   const opexKeys = expenseKeys.filter(k => !['food', 'labor'].includes(k));
   const fixedLabor = allocate(900, weights('weight'));
   const attributionByStore = stores.map((store, i) => {
@@ -476,7 +478,7 @@
       '将10月堂食就餐人次、外卖有效订单代入9月单价，逐店计算基准收入，再按9月各项费用率计算基准利润。',
       '固定按业务量、净成交价、标准成本衔接、菜品组合、采购价格、耗用、人工、其他费用顺序连环替代。',
       '固定及半固定成本的费率摊薄作为结构差异解释，不称为实际节约或整改收益；本分解不证明促销导致客流增长。'],
-    sourceNote: '渠道拆分为本产品内置演示数据：9月及10月营收按堂食80%、外卖20%拆分，外卖有效订单分别为12万和15.6万；假设每外卖单计1份综合就餐人次。未接入真实POS或外卖平台。',
+    sourceNote: '渠道拆分为本产品内置演示数据：9月及10月营收按堂食80%、外卖20%拆分，外卖有效订单分别为12万和12.6万；假设每外卖单计1份综合就餐人次。未接入真实POS或外卖平台。',
     expenseRows: expenseKeys.map(k => ({ key: k, name: labels[k], septemberRate: actuals.september[k] / actuals.september.revenue * 100,
       baseline: baselineTotals[k], actual: actuals.october[k], impact: money(baselineTotals[k] - actuals.october[k]) })),
     foodStandard: Object.fromEntries(['rateReferenceCost', 'standardCost', 'mixCost', 'priceCost', 'excessCost', 'actualCost', 'alignmentImpact'].map(k => [k, sum(attributionByStore.map(r => r.foodStandard[k]))])),
@@ -497,23 +499,23 @@
   }
   const procurementChildren = materials.map(m => cause(`procurement-${m.id}`, `${m.name}采购价差`, m.storeRows.map(r => r.priceImpact), m.reason, m.evidence, [], { materialId: m.id, material: m, formula: m.formula }));
   const mixChildren = materials.filter(m => m.newProduct).map(m => cause(`mix-${m.id}`, `${m.dish}组合变化`, m.storeRows.map(r => r.mixImpact), '同一实际销量内，按9月参考采购价比较新品和被替代老菜的标准配方成本。', `${m.replacementServings}份替代量 × ${money(m.standardDishCost - m.replacedDishCost)}元标准成本差；不含采购涨价和超耗。`, [], { materialId: m.id, material: m, formula: m.mixFormula }));
-  const usagePrep = allocate(12, usageExcess);
+  const usagePrep = allocate(14, usageExcess);
   const usageChildren = [
-    cause('usage-prep', '备料及出成率偏差', usagePrep.map(n => -n), '实际销量的标准应耗与盘点实耗比较，额外耗用按实际采购成本计量。', '备料及出成率偏差12万元。'),
-    cause('usage-waste', '报损及余料损耗', usageExcess.map((n, i) => money(-n + usagePrep[i])), '剔除已记入标准销量的材料耗用后，核对报损及余料。', '报损及余料8万元；与备料12万元合计20万元，不再向采购价差项重复分配。')
+    cause('usage-prep', '备料及出成率偏差', usagePrep.map(n => -n), '实际销量的标准应耗与盘点实耗比较，额外耗用按实际采购成本计量。', '备料及出成率偏差14万元。'),
+    cause('usage-waste', '报损及余料损耗', usageExcess.map((n, i) => money(-n + usagePrep[i])), '剔除已记入标准销量的材料耗用后，核对报损及余料。', '报损及余料9万元；与备料14万元合计23万元，不再向采购价差项重复分配。')
   ];
-  const procurement = cause('procurement', '同规格采购价格差异', procurementByStore, '同等级同规格原料与9月参考采购价比较，采购价差70万元。', '鸡肉、牛肉、五花肉45万元，五类新品25万元；按标准数量计算，超耗另列。', procurementChildren, { formula: '标准应耗数量 ×（9月参考价－实际采购价）÷10,000' });
+  const procurement = cause('procurement', '同规格采购价格差异', procurementByStore, '同等级同规格原料与9月参考采购价比较，采购价差85万元。', '鸡肉、牛肉、五花肉60万元，五类新品25万元；按标准数量计算，超耗另列。', procurementChildren, { formula: '标准应耗数量 ×（9月参考价－实际采购价）÷10,000' });
   const mix = cause('mix', '菜品组合标准成本差异', mixByStore, '实际销量保持不变，替换菜品组合后的标准配方成本增加52万元。', '先替换净成交价，再比较基准采购价下标准配方；不把新增销量当成组合损失。', mixChildren, { formula: '实际替代份数 ×（老菜标准成本－新品标准成本）÷10,000' });
-  const usage = cause('usage', '超标准耗用及报损', usageExcess.map(n => -n), '实际销量的标准耗用之外，额外耗用与报损20万元。', '按实际价计量超耗，采购价差只对标准数量计量，避免重复计算。', usageChildren);
+  const usage = cause('usage', '超标准耗用及报损', usageExcess.map(n => -n), '实际销量的标准耗用之外，额外耗用与报损23万元。', '按实际价计量超耗，采购价差只对标准数量计量，避免重复计算。', usageChildren);
   const foodAlignment = cause('food-standard', '费率基准与标准成本衔接', attributionByStore.map(r => r.foodStandard.alignmentImpact), '将9月费率参考成本衔接到实际销量的标准配方成本。', '费率参考按渠道营收测算，标准配方成本按销量及食材结构测算；两种驱动口径的衔接与分币舍入单列，不归入采购或报损。');
-  const couponDiscount = allocate(240, priceDiscount);
+  const couponDiscount = allocate(30, priceDiscount);
   const pricingChildren = [
-    cause('pricing-coupon', '通用券及折扣加深', couponDiscount.map(n => -n), '同一10月业务量下的净成交价变化，只在收入端扣减。', '通用券及折扣差异240万元，不重复列入营销费用。'),
+    cause('pricing-coupon', '通用券及折扣加深', couponDiscount.map(n => -n), '同一10月业务量下的净成交价变化，只在收入端扣减。', '通用券及折扣差异30万元，不重复列入营销费用。'),
     cause('pricing-new', '新品促销净价变化', stores.map((s, i) => money(s.causes.pricing + couponDiscount[i])), '同一业务量下，新品套餐及渠道净成交价变化。', '10月实际分渠道收入与9月模式基准收入的差额，扣除通用券差异；菜品配方成本在组合项另列。')
   ];
   const peakLabor = allocate(70, laborExcess);
   const laborChildren = [
-    cause('labor-structure', '固定及半固定人工的费率摊薄', attributionByStore.map(r => r.laborStandard.structureImpact), '全费率参考人工与固定基本人工加弹性工时标准之间的结构差异。', '9月费率参考人工约1300万元，固定与弹性工时标准1200万元；约100万元差异为规模摊薄，不称为实际节约。'),
+    cause('labor-structure', '固定及半固定人工的费率摊薄', attributionByStore.map(r => r.laborStandard.structureImpact), '全费率参考人工与固定基本人工加弹性工时标准之间的结构差异。', '9月费率参考人工约1050万元，固定与弹性工时标准1030万元；约20万元差异为规模摊薄，不称为实际节约。'),
     cause('labor-peak', '高峰加班及临时支援超标准', peakLabor.map(n => -n), '按标准工时与实际工资核对高峰加班和临时支援。', '超标准70万元，按30元综合时薪折算约23333.33小时。'),
     cause('labor-low', '低峰临时工时未回调', laborExcess.map((n, i) => money(-n + peakLabor[i])), '低峰班次工时高于实际业务量对应的标准配置。', '超标准50万元，按30元综合时薪折算约16666.67小时。')
   ];
@@ -526,9 +528,9 @@
   const causes = [
     cause('volume', '堂食人次与外卖订单变化', stores.map(s => s.causes.volume), '以9月分渠道单价和全费用率代入10月实际业务量，形成约520万元基准利润。', '9月利润400万元到10月基准约520万元，业务量影响约120万元；基准之后不重复加量。', volumeChildren),
     cause('pricing', '促销及净成交价变化', stores.map(s => s.causes.pricing), '固定10月业务量，比较9月渠道单价与10月实际净成交价。', '两渠道实际实收减基准收入约-400万元。账面分解不证明促销导致了客流增长。', pricingChildren),
-    cause('food', '食材标准成本差异', stores.map(s => s.causes.food), '依次衔接标准成本、菜品组合、采购价格及超标准耗用。', '组合52万、采购70万、超耗20万；费率基准与标准配方的衔接另列，逐店及集团保持闭合。', [foodAlignment, mix, procurement, usage]),
-    cause('labor', '人工结构与工时差异', stores.map(s => s.causes.labor), '先区分全费率基准与固定/弹性工时标准，再比较实际工时。', '约+100万元结构摊薄，减去高峰70万及低峰50万超标准工时，净影响约-20万元。', laborChildren),
-    cause('opex', '其他经营费用净影响', stores.map(s => s.causes.opex), '逐科目比较9月模式费率参考与10月实际，包含固定成本摊薄和执行差异。', '净影响约+162万元；其中租金约+180万元为规模摊薄，实际租金仍为600万元，不作为整改收益。', opexChildren)
+    cause('food', '食材标准成本差异', stores.map(s => s.causes.food), '依次衔接标准成本、菜品组合、采购价格及超标准耗用。', '组合52万、采购85万、超耗23万；费率基准与标准配方的衔接另列，逐店及集团保持闭合。', [foodAlignment, mix, procurement, usage]),
+    cause('labor', '人工结构与工时差异', stores.map(s => s.causes.labor), '先区分全费率基准与固定/弹性工时标准，再比较实际工时。', '约+20万元结构摊薄，减去高峰70万及低峰50万超标准工时，净影响约-100万元。', laborChildren),
+    cause('opex', '其他经营费用净影响', stores.map(s => s.causes.opex), '逐科目比较9月模式费率参考与10月实际，包含固定成本摊薄和执行差异。', '净影响约+10万元；其中租金约+30万元为规模摊薄，其余费用单项偏差不超过7万元，实际租金仍为600万元，不作为整改收益。', opexChildren)
   ];
   const causeIndex = new Map();
   function indexCauses(items, parent = null) {
@@ -542,15 +544,15 @@
 
   const forecastSpecs = {
     steady: { id: 'steady', label: '方案一｜现有营销＋问题整改', guests: 550000, perCapita: 80, grossPerCapita: 91,
-      raw: { food: 1716, labor: 1250, rent: 600, utilities: 165, tableware: 35.2, consumables: 61.6, maintenance: 44, marketing: 140, otherStoreExpense: 260 },
-      fixed: { food: 0, labor: 900, rent: 600, utilities: 50, tableware: 0, consumables: 0, maintenance: 44, marketing: 100, otherStoreExpense: 160 },
-      savings: { food: 72, labor: 80, utilities: 12, consumables: 8.8 }, purchaseSaving: 52, usageSaving: 20,
+      raw: { food: 1716, labor: 1250, rent: 600, utilities: 135, tableware: 35.2, consumables: 55, maintenance: 42, marketing: 115, otherStoreExpense: 275 },
+      fixed: { food: 0, labor: 900, rent: 600, utilities: 50, tableware: 0, consumables: 0, maintenance: 42, marketing: 100, otherStoreExpense: 160 },
+      savings: { food: 87, labor: 80, utilities: 2, consumables: 1 }, purchaseSaving: 67, usageSaving: 20,
       demandAssumption: '不调整现有优惠规则。11月30天、无国庆高峰，就餐人次55万；按客群及菜品组合恢复，人均折后80元。',
       conditions: ['120家门店按30个营业日编制预算，月客流55万人次。', '新品需求按周滚动汇总，采购锁量与补货计划同步。', '按分时客流调整临时工时，高峰服务人数不削减。'] },
     anniversary: { id: 'anniversary', label: '方案二｜周年庆＋目标成本落地', guests: 650000, perCapita: 80, grossPerCapita: 96,
-      raw: { food: 2030, labor: 1400, rent: 600, utilities: 181.4, tableware: 41.6, consumables: 73.4, maintenance: 52, marketing: 260, otherStoreExpense: 312 },
-      fixed: { food: 0, labor: 900, rent: 600, utilities: 50, tableware: 0, consumables: 0, maintenance: 52, marketing: 200, otherStoreExpense: 180 },
-      savings: { food: 106, labor: 100, utilities: 15, consumables: 11 }, purchaseSaving: 76, usageSaving: 30,
+      raw: { food: 2030, labor: 1400, rent: 600, utilities: 147, tableware: 41.6, consumables: 65, maintenance: 44, marketing: 140, otherStoreExpense: 300 },
+      fixed: { food: 0, labor: 900, rent: 600, utilities: 50, tableware: 0, consumables: 0, maintenance: 44, marketing: 120, otherStoreExpense: 180 },
+      savings: { food: 124, labor: 100, utilities: 3, consumables: 2 }, purchaseSaving: 94, usageSaving: 30,
       demandAssumption: '周年庆套餐与会员券带动65万人次；折后人均80元，券折扣已在收入中扣除，市场费用另含投流与物料。',
       conditions: ['65万人次为活动销量假设，需结合预约、核销和试销按周验证。', '锁量采购在承诺交付及同规格验收条件下执行，未签价格不视为已兑现。', '周年庆门店逐店确认后厨峰值产能、备料和服务班次。'] }
   };
@@ -654,8 +656,8 @@
     const capacityConstraints = byStore.filter(s => s.capacityUse > 100).map(s => ({ storeId: s.storeId, storeName: s.storeName, capacityUse: s.capacityUse,
       dailyCapacity: s.capacityGuests / 30, requiredDailyGuests: s.dailyGuests, dailyGap: s.dailyGuests - s.capacityGuests / 30,
       condition: '先验证增加翻台/出餐能力或将预约分流到邻店；确认前该店销量为待满足条件的预算。' }));
-    if (plan === 'anniversary') actions.push({ id: 'campaign', title: '周年庆套餐、会员券与峰值产能联动', owner: '市场总监 / 运营总监', deadline: '11月01日', metric: '就餐人次、人均、核销与出餐', target: `65万人次、人均80元；高峰出餐P90≤20分钟；${capacityConstraints.length}家超产能门店先增能或分流`, condition: '折扣已扣减营业额；投流物料含在市场费用260万元预算，不重复扣券。活动客流需试销与预约数据验证；未确认门店不可当作已承接。', saving: 0, potentialSaving: 0, scopeStoreIds: stores.map(s => s.id), constraintStoreIds: capacityConstraints.map(s => s.storeId), capacityDetails: capacityConstraints, status: '销量与产能条件待验证' });
-    return { plan, label: spec.label, version: 'NOV-V1-1031', volumeFactor: v, executionRate: e, totals, group: totals, byStore,
+    if (plan === 'anniversary') actions.push({ id: 'campaign', title: '周年庆套餐、会员券与峰值产能联动', owner: '市场总监 / 运营总监', deadline: '11月01日', metric: '就餐人次、人均、核销与出餐', target: `65万人次、人均80元；高峰出餐P90≤20分钟；${capacityConstraints.length}家超产能门店先增能或分流`, condition: `折扣已扣减营业额；投流物料含在市场费用${spec.raw.marketing}万元预算，不重复扣券。活动客流需试销与预约数据验证；未确认门店不可当作已承接。`, saving: 0, potentialSaving: 0, scopeStoreIds: stores.map(s => s.id), constraintStoreIds: capacityConstraints.map(s => s.storeId), capacityDetails: capacityConstraints, status: '销量与产能条件待验证' });
+    return { plan, label: spec.label, version: FORECAST_VERSION, dataVersion: DATA_VERSION, volumeFactor: v, executionRate: e, totals, group: totals, byStore,
       assumptions: { days: 30, guests: spec.guests, perCapita: spec.perCapita, grossPerCapita: spec.grossPerCapita, demand: spec.demandAssumption, costEffectiveDate: '11月01日', readinessCutoff: '10月31日',
         readiness: '100%达成预算假设报价、配方、排班与设备动作在10月31日前备齐并自11月1日执行；11月3—5日为首次现场复核。未达条件时降低达成率或滚动修订计划，不提前确认收益。',
         note: '销量系数只调整客流与变动支出；租金、基本人工及已承诺营销费用保留。整改达成率只调整明确列出的成本动作收益。', conditions: spec.conditions },
@@ -697,28 +699,28 @@
     }
     let scenario = '', actions = [], findings = [], materialVariances = [], usageVariance = null;
     if (store.id === 'HMW-006') {
-      a.guests = Math.round(p.guests * 0.82); a.revenue = money(a.guests * 80 / 10000); a.grossSales = money(a.guests * 96 / 10000); a.discount = money(a.grossSales - a.revenue);
+      a.guests = Math.round(p.guests * 0.99); a.revenue = money(a.guests * 80 / 10000); a.grossSales = money(a.guests * 96 / 10000); a.discount = money(a.grossSales - a.revenue);
       const ratio = a.guests / p.guests;
       for (const key of expenseKeys) a[key] = money(entry.fixedCosts[key] + entry.variableCosts[key] * ratio);
-      a.labor = money(p.labor + 44 * 30 / 10000);
+      a.labor = money(p.labor + 120 * 30 / 10000);
       a.orders = Math.round(a.guests / 2.4);
-      scenario = '客流低于计划18%，低峰临时工时未同步回调';
-      findings = [{ title: '就餐人次', plan: p.guests, actual: a.guests, unit: '人次' }, { title: '低峰临时工时', plan: 120, actual: 164, unit: '小时', hourlyCost: 30, impact: -0.132 }, { title: '高峰出餐P90', plan: 20, actual: 19, unit: '分钟' }];
-      actions = [{ id: 'WK-LABOR-006', title: '核对低峰44小时额外临时班次，按分时客流重排', owner: `${store.name}店长 / 华东运营经理`, deadline: '11月10日', status: '排班计划已调整；执行效果待复核', saving: null, nextReview: '11月14日', metric: '低峰临时工时≤120小时/周；高峰出餐P90≤20分钟；百客有效客诉≤0.5件', condition: '保留高峰服务配置，实际工时与工资复核后再确认改善。' }];
+      scenario = '客流接近计划，低峰临时班次超标准120小时';
+      findings = [{ title: '就餐人次', plan: p.guests, actual: a.guests, unit: '人次' }, { title: '低峰临时工时', plan: 120, actual: 240, unit: '小时', hourlyCost: 30, impact: -0.36 }, { title: '高峰出餐P90', plan: 20, actual: 19, unit: '分钟' }];
+      actions = [{ id: 'WK-LABOR-006', title: '核对低峰120小时额外临时班次，按分时客流重排', owner: `${store.name}店长 / 华东运营经理`, deadline: '11月10日', status: '排班计划已调整；执行效果待复核', saving: null, nextReview: '11月14日', metric: '低峰临时工时≤120小时/周；高峰出餐P90≤20分钟；百客有效客诉≤0.5件', condition: '保留高峰服务配置，实际工时与工资复核后再确认改善。' }];
     } else if (store.id === 'HMW-047') {
-      materialVariances = [{ materialId: 'beef', name: '牛肉', quantityKg: 80, targetPrice: 61, actualPrice: 64, extraCost: 0.024 }, { materialId: 'crab', name: '螃蟹', quantityKg: 60, targetPrice: 46, actualPrice: 50, extraCost: 0.024 }];
+      materialVariances = [{ materialId: 'beef', name: '牛肉', quantityKg: 150, targetPrice: 61, actualPrice: 66, extraCost: 0.075 }, { materialId: 'crab', name: '螃蟹', quantityKg: 100, targetPrice: 46, actualPrice: 50, extraCost: 0.04 }];
       const extraPurchase = sum(materialVariances.map(m => m.extraCost));
       a.food = money(a.food + extraPurchase);
       scenario = '牛肉及新品螃蟹未按锁量单采购，临采价差超预算';
-      findings = [{ title: '按锁量单采购牛肉及螃蟹', plan: 140, actual: 0, unit: '公斤' }, { title: '临采超预算费用', plan: 0, actual: extraPurchase, unit: '万元' }, { title: '实际验收合格率', plan: 100, actual: 100, unit: '%' }];
-      actions = [{ id: 'WK-PURCHASE-047', title: '核验140公斤临采，补齐锁量订单与次周到货', owner: `${store.name}店长 / 华北采购经理`, deadline: '11月09日', status: '锁量订单已补签；到货价待验收复核', saving: null, nextReview: '11月14日', metric: '同规格锁价覆盖≥90%；发票单价不高于已签报价', condition: '牛肉80公斤×3元＋螃蟹60公斤×4元＝480元价差；按实际入库发票核对，不追认不存在的历史低价。' }];
+      findings = [{ title: '按锁量单采购牛肉及螃蟹', plan: 250, actual: 0, unit: '公斤' }, { title: '临采超预算费用', plan: 0, actual: extraPurchase, unit: '万元' }, { title: '实际验收合格率', plan: 100, actual: 100, unit: '%' }];
+      actions = [{ id: 'WK-PURCHASE-047', title: '核验250公斤临采，补齐锁量订单与次周到货', owner: `${store.name}店长 / 华北采购经理`, deadline: '11月09日', status: '锁量订单已补签；到货价待验收复核', saving: null, nextReview: '11月14日', metric: '同规格锁价覆盖≥90%；发票单价不高于已签报价', condition: '牛肉150公斤×5元＋螃蟹100公斤×4元＝1,150元价差；按实际入库发票核对，不追认不存在的历史低价。' }];
     } else if (store.id === 'HMW-092') {
       const standardUseCost = money(a.food / 1.01);
-      const extraWaste = money(standardUseCost * (0.036 - 0.01));
-      usageVariance = { basis: '本周标准应耗成本（按实际销售数量和实际采购价）', standardUseCost, allowedWasteRate: 1, actualWasteRate: 3.6, extraCost: extraWaste, formula: '标准应耗成本×（实际报损3.6%－标准允许报损1.0%）' };
-      a.food = money(a.food + extraWaste); a.utilities = money(a.utilities + 0.11); a.maintenance = money(a.maintenance + 0.08);
+      const extraWaste = money(standardUseCost * (0.05 - 0.01));
+      usageVariance = { basis: '本周标准应耗成本（按实际销售数量和实际采购价）', standardUseCost, allowedWasteRate: 1, actualWasteRate: 5, extraCost: extraWaste, formula: '标准应耗成本×（实际报损5.0%－标准允许报损1.0%）' };
+      a.food = money(a.food + extraWaste); a.utilities = money(a.utilities + 0.02); a.maintenance = money(a.maintenance + 0.01);
       scenario = '新品备料过量与冷藏设备温控异常，报损及能耗偏高';
-      findings = [{ title: '报损成本/标准应耗成本', plan: 1, actual: 3.6, unit: '%', basisAmount: standardUseCost, extraCost: extraWaste }, { title: '设备异常额外能耗费', plan: 0, actual: 0.11, unit: '万元' }, { title: '高峰出餐P90', plan: 20, actual: 21, unit: '分钟' }];
+      findings = [{ title: '报损成本/标准应耗成本', plan: 1, actual: 5, unit: '%', basisAmount: standardUseCost, extraCost: extraWaste }, { title: '设备异常额外能耗费', plan: 0, actual: 0.02, unit: '万元' }, { title: '高峰出餐P90', plan: 20, actual: 21, unit: '分钟' }];
       actions = [{ id: 'WK-USAGE-092', title: '按两小时销量分批备料并检修冷藏设备', owner: `${store.name}厨师长 / 华南工程经理`, deadline: '11月09日', status: '检修及备料措施执行中；效果待复核', saving: null, nextReview: '11月14日', metric: '报损成本/标准应耗成本≤1.0%；温度记录达标；高峰出餐P90≤20分钟', condition: '报损、盘点、分表读数与出餐时长共同验证，不以完成工单替代收益。' }];
     }
     a = complete(a);
@@ -739,7 +741,7 @@
   const trackActualTotals = aggregate(trackingStores.map(s => s.actual));
   const trackVariance = Object.fromEntries(['revenue', ...expenseKeys, 'profit'].map(k => [k, money(trackActualTotals[k] - trackPlanTotals[k])]));
   const tracking = {
-    period: '11月01日—11月07日', nextReview: '11月14日', plan: 'anniversary', planVersion: 'NOV-V1-1031 / WEEK1-1031',
+    period: '11月01日—11月07日', nextReview: '11月14日', plan: 'anniversary', dataVersion: DATA_VERSION, planVersion: `${FORECAST_VERSION} / WEEK1-COST-FOCUS-V1`,
     summary: { plan: trackPlanTotals, actual: trackActualTotals, variance: trackVariance, profitGap: trackVariance.profit, revenueGap: trackVariance.revenue,
       achievement: trackActualTotals.revenue / trackPlanTotals.revenue * 100,
       executionRate: sum(trackingStores.map(s => s.verification.confirmedChecks)) / 600 * 100,
@@ -753,12 +755,13 @@
   };
 
   const model = {
+    dataVersion: DATA_VERSION,
     group: { name: '好美味餐饮集团', platformName: '好美味餐饮集团智能决策平台', storeCount: 120, storeType: '直营正餐连锁', perCapita: 80, currency: '万元',
       guestDefinition: '综合就餐人次包含堂食及演示外卖就餐份数；归因中堂食人均按堂食人次，外卖单均按有效订单。旧orders为堂食桌单，不能当作外卖订单。',
       dataProvenance: '全部为演示场景合成数据，不对应任何真实企业记录。120家门店逐店生成，所有集团数由门店加总。',
       profitDefinition: '门店经营利润＝折后营业额－列示的门店食材和经营费用；未计总部费用、折旧摊销、利息与所得税。不列增值税项目。',
       attributionMethod: attribution.methodSteps.join(' '),
-      negativeTotal: NEGATIVE_TOTAL, profitDecline: money(actuals.september.profit - actuals.october.profit), positiveOffset: sum(causes.filter(c => c.impact > 0).map(c => c.impact)), forecastVersion: 'NOV-V1-1031' },
+      negativeTotal: NEGATIVE_TOTAL, profitDecline: money(actuals.september.profit - actuals.october.profit), positiveOffset: sum(causes.filter(c => c.impact > 0).map(c => c.impact)), forecastVersion: FORECAST_VERSION },
     labels, expenseKeys, actuals, stores, materials, causes, attribution,
     flatFactors: ['volume', 'pricing', 'food-standard', 'mix', 'procurement', 'usage', 'labor', 'opex'].map(id => causeIndex.get(id)),
     getCauseDetail: id => causeIndex.get(id) || null,
@@ -766,8 +769,8 @@
     definitions: { negativeShare: `顶层单项负向影响绝对值÷顶层全部负向影响${NEGATIVE_TOTAL.toFixed(2)}万元；只在相同层级加总。`,
       netDeclineShare: '单项对净下降的贡献＝－单项有符号影响÷净下降280万元；正向客流抵减为负占比，全部顶层贡献合计100%。',
       parentShare: '子项有符号影响÷父项净影响；正负混合时可为负或超过100%，父项为零不显示。',
-      materialScope: '材料表仅列8个重点原料，其价格影响合计70万元；不是全部食材采购清单。材料用量为标准应耗对应的合格入库领用量，超标耗用另列20万元并含其实际采购成本。',
-      noDoubleCount: '新品超预计销售可带来正向销量贡献；只将同一总销量内替代老菜的标准成本差记组合52万，标准用量采购实际价差记70万，超耗记20万；新品25万采购差已包含在70万内。优惠券在折后收入中扣除，不再当市场费用。' }
+      materialScope: '材料表仅列8个重点原料，其价格影响合计85万元；不是全部食材采购清单。材料用量为标准应耗对应的合格入库领用量，超标耗用另列23万元并含其实际采购成本。',
+      noDoubleCount: '新品超预计销售可带来正向销量贡献；只将同一总销量内替代老菜的标准成本差记组合52万，标准用量采购实际价差记85万，超耗记23万；新品25万采购差已包含在85万内。优惠券在折后收入中扣除，不再当市场费用。' }
   };
   root.HaomeiweiModel = model;
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
