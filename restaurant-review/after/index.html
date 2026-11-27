@@ -274,6 +274,8 @@
 .ai-platform .ai-attribution-brief{min-width:0}
 .ai-platform .ai-attribution-brief strong{color:#263f63;font-weight:600}
 .ai-platform .ai-attribution-brief .ai-summary-metrics .bad{color:#be3453}
+.ai-platform .ai-attribution-brief .ai-summary-metrics .good{color:#087760}
+.ai-platform .ai-attribution-brief .ai-summary-metrics em{font-style:normal}
 .ai-platform .ai-brief-section{margin-top:30px;padding-top:26px;border-top:1px solid #e6edf5}
 .ai-platform .ai-brief-section h3{margin:0 0 9px;color:#243d60;font-size:18px;font-weight:650;line-height:1.6}
 .ai-platform .ai-brief-section>header p{margin:0 0 19px;color:#7a8ca7;font-size:13px;line-height:1.85}
@@ -1574,6 +1576,146 @@
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
 </script>
+  <script>/* 好美味经营报表的合成月度历史：仅供产品演示，不连接真实业务。
+ * 2026年9月、10月逐店沿用主模型；其他月份以同一120店口径编制。
+ * 金额为万元，分配精度为人民币分；同比、环比、收入占比始终由金额计算。
+ */
+(function (root) {
+  'use strict';
+  const M = root.HaomeiweiModel || (typeof module !== 'undefined' && module.exports ? require('./haomeiwei-model.js') : null);
+  const expenseKeys = M.expenseKeys;
+  const scale = 1000000;
+  const round = n => Math.round(n * scale) / scale;
+  const sum = values => round(values.reduce((a, b) => a + b, 0));
+  const fields = ['grossSales', 'discount', 'revenue', 'food', 'grossProfit', 'labor', 'rent', 'utilities', 'tableware', 'consumables', 'maintenance', 'marketing', 'otherStoreExpense', 'profit'];
+  const amountKeys = ['grossSales', 'discount', 'revenue', ...expenseKeys, 'guests', 'orders'];
+  function allocate(total, weights, precision = scale) {
+    const totalUnits = Math.round(total * precision), denominator = weights.reduce((a, b) => a + b, 0);
+    const exact = weights.map(weight => totalUnits * weight / denominator);
+    const units = exact.map(Math.floor);
+    const remainder = totalUnits - units.reduce((a, b) => a + b, 0);
+    const ranked = exact.map((n, i) => ({ i, fraction: n - units[i] })).sort((a, b) => b.fraction - a.fraction || a.i - b.i);
+    for (let i = 0; i < remainder; i++) units[ranked[i].i]++;
+    return units.map(n => n / precision);
+  }
+  function complete(row) {
+    const result = { ...row };
+    result.grossSales = round(result.revenue + result.discount);
+    result.grossProfit = round(result.revenue - result.food);
+    result.expenses = sum(expenseKeys.map(key => result[key]));
+    result.operatingExpenses = round(result.expenses - result.food);
+    result.otherExRent = sum(['utilities', 'tableware', 'consumables', 'maintenance', 'marketing', 'otherStoreExpense'].map(key => result[key]));
+    result.other = round(result.rent + result.otherExRent);
+    result.profit = round(result.revenue - result.expenses);
+    result.margin = result.profit / result.revenue * 100;
+    result.foodRate = result.food / result.revenue * 100;
+    result.laborRate = result.labor / result.revenue * 100;
+    result.perCapita = result.revenue * 10000 / result.guests;
+    return result;
+  }
+  // 合成输入为各月收入、实际费用和就餐量假设，未预设展示用增长率。
+  // 2月营业天数少、商圈客流较弱；夏季能耗和国庆活动费用较高。
+  const assumptions = {
+    2025: {
+      revenue: [3700, 3100, 3650, 3820, 4050, 3980, 4250, 4320, 3800, 4500, 3900, 4200],
+      discount: [190, 180, 185, 200, 230, 220, 245, 250, 190, 300, 210, 240],
+      foodRate: [.353, .36, .352, .354, .355, .355, .357, .357, .354, .36, .356, .354],
+      labor: [990, 800, 985, 995, 1040, 1025, 1080, 1090, 990, 1125, 1000, 1060],
+      utilities: [110, 105, 110, 115, 125, 145, 160, 165, 125, 135, 110, 115],
+      maintenance: [36, 36, 36, 36, 40, 36, 40, 40, 36, 45, 36, 40],
+      marketing: [95, 110, 90, 95, 115, 100, 120, 115, 100, 135, 100, 115],
+      otherStoreExpense: [235, 220, 230, 240, 250, 250, 265, 270, 245, 330, 240, 260],
+      perCapita: [80, 81, 80, 81, 80, 79.5, 80, 79.5, 82, 80, 79.5, 81], rent: 570
+    },
+    2026: {
+      revenue: [4020, 3350, 3940, 4120, 4350, 4260, 4510, 4600],
+      discount: [220, 210, 215, 230, 260, 245, 270, 275],
+      foodRate: [.354, .36, .353, .355, .356, .357, .36, .361],
+      labor: [1040, 920, 1020, 1060, 1100, 1080, 1120, 1140],
+      utilities: [120, 110, 118, 125, 138, 158, 174, 178],
+      maintenance: [40, 40, 40, 40, 44, 40, 44, 44],
+      marketing: [100, 115, 95, 110, 125, 110, 130, 125],
+      otherStoreExpense: [255, 245, 245, 255, 270, 265, 280, 285],
+      perCapita: [81, 82, 81, 81, 81, 80, 79.5, 80], rent: 600
+    }
+  };
+  // 本版独立设定的月度目标预算，非真实企业下达；不从实际或11月预测反推。
+  const targetAssumptions = {
+    revenue: [4200, 3500, 4100, 4300, 4550, 4450, 4700, 4800, 4200, 5000],
+    discount: [240, 210, 230, 250, 300, 270, 310, 320, 240, 500],
+    labor: [1050, 900, 1025, 1075, 1135, 1110, 1175, 1200, 1050, 1200],
+    utilities: [126, 115, 123, 130, 145, 160, 175, 180, 130, 150],
+    marketing: [110, 105, 102.5, 107.5, 136.5, 111.25, 141, 144, 105, 150]
+  };
+  function makeTargets(month) {
+    const index = month - 1, revenue = targetAssumptions.revenue[index];
+    const inputs = { revenue, discount: targetAssumptions.discount[index], food: round(revenue * .35),
+      labor: targetAssumptions.labor[index], rent: 600, utilities: targetAssumptions.utilities[index],
+      tableware: round(revenue * .008), consumables: round(revenue * .012), maintenance: round(revenue * .01),
+      marketing: targetAssumptions.marketing[index], otherStoreExpense: round(revenue * .06) };
+    const salesWeights = M.stores.map((store, i) => store.demandWeight * (0.97 + ((i * 5 + month * 3) % 7) / 100));
+    const columns = Object.fromEntries(Object.entries(inputs).map(([key, total]) => {
+      const weights = key === 'rent' || key === 'maintenance' ? M.stores.map(store => store.weight) :
+        key === 'labor' ? M.stores.map(store => store.staffingWeight) :
+        key === 'discount' || key === 'marketing' ? M.stores.map(store => store.promoWeight) :
+        key === 'food' ? salesWeights.map((weight, i) => weight * (0.97 + ((i * 11 + month) % 7) / 100)) : salesWeights;
+      return [key, allocate(total, weights)];
+    }));
+    return M.stores.map((store, i) => ({ storeId: store.id,
+      ...Object.fromEntries(Object.entries(columns).map(([key, values]) => [key, values[i]])) }));
+  }
+  const identity = store => ({ id: store.id, storeId: store.id, name: store.name, storeName: store.name, region: store.region, city: store.city });
+  function makeMonth(year, month) {
+    const id = `${year}-${String(month).padStart(2, '0')}`;
+    const source = year === 2026 && month >= 9 ? (month === 9 ? 'september' : 'october') : null;
+    if (source) return { id, year, month, label: `${year}年${month}月`, totals: M.actuals[source], byStore: M.stores.map(store => ({ ...identity(store), ...store[source] })) };
+    const a = assumptions[year], index = month - 1, revenue = a.revenue[index];
+    const guests = Math.round(revenue * 10000 / a.perCapita[index]);
+    const totalsInput = {
+      revenue, discount: a.discount[index], food: round(revenue * a.foodRate[index]), labor: a.labor[index], rent: a.rent,
+      utilities: a.utilities[index], tableware: round(revenue * .008), consumables: round(revenue * .012),
+      maintenance: a.maintenance[index], marketing: a.marketing[index], otherStoreExpense: a.otherStoreExpense[index],
+      guests, orders: Math.round(guests / 2.4)
+    };
+    const salesWeights = M.stores.map((store, i) => store.weight * (0.96 + ((i * 7 + month * 3 + year) % 9) / 100));
+    const columns = Object.fromEntries(Object.entries(totalsInput).map(([key, total]) => {
+      const weights = key === 'rent' ? M.stores.map(store => store.weight) : key === 'labor' ? M.stores.map((store, i) => store.staffingWeight * (0.98 + ((i * 3 + month) % 5) / 100)) : salesWeights;
+      return [key, allocate(total, weights, key === 'guests' || key === 'orders' ? 1 : scale)];
+    }));
+    const byStore = M.stores.map((store, i) => ({ ...identity(store), ...complete(Object.fromEntries(Object.entries(columns).map(([key, values]) => [key, values[i]]))) }));
+    const totals = complete(Object.fromEntries(amountKeys.filter(key => key !== 'grossSales').map(key => [key, sum(byStore.map(row => row[key]))])));
+    return { id, year, month, label: `${year}年${month}月`, totals, byStore };
+  }
+  const months = [2025, 2026].flatMap(year => Array.from({ length: year === 2025 ? 12 : 10 }, (_, i) => makeMonth(year, i + 1)));
+  for (const month of months) if (month.year === 2026) month.targetByStore = makeTargets(month.month);
+  const byId = new Map(months.map(month => [month.id, month]));
+  const getMonth = id => byId.get(id) || null;
+  function metrics(id, field) {
+    const currentMonth = getMonth(id);
+    if (!currentMonth || !fields.includes(field)) return null;
+    const { year, month, totals } = currentMonth;
+    const previousMonth = getMonth(`${month === 1 ? year - 1 : year}-${String(month === 1 ? 12 : month - 1).padStart(2, '0')}`);
+    const previousYearMonth = getMonth(`${year - 1}-${String(month).padStart(2, '0')}`);
+    const current = totals[field], previous = previousMonth ? previousMonth.totals[field] : null, priorYear = previousYearMonth ? previousYearMonth.totals[field] : null;
+    return { current, previous, priorYear,
+      mom: previous !== null && previous > 0 ? (current / previous - 1) * 100 : null,
+      yoy: priorYear !== null && priorYear > 0 ? (current / priorYear - 1) * 100 : null,
+      share: totals.revenue > 0 ? current / totals.revenue * 100 : null };
+  }
+  function series(field, year = 2026, throughMonth = 10) {
+    if (!fields.includes(field)) return [];
+    return months.filter(row => row.year === year && row.month <= throughMonth).map(row => {
+      const previousId = `${year - 1}-${String(row.month).padStart(2, '0')}`, prior = getMonth(previousId);
+      return { month: row.month, label: `${row.month}月`, current: row.totals[field], previousYear: prior ? prior.totals[field] : null, currentId: row.id, previousId };
+    });
+  }
+  const model = { months, availableMonths: months.filter(row => row.year === 2026).map(row => row.id), defaultMonth: '2026-10', fields, getMonth, metrics, series,
+    scope: { storeCount: 120, continuousStores: true, currentYear: 2026, priorYear: 2025, currency: '万元' },
+    definitions: { yoy: '同一月份与上年同月比较；基期金额大于0时按(本期/基期－1)×100计算。', mom: '本期与上月比较；1月对上年12月。基期金额大于0时计算。', share: '当前项目金额÷同月折后营业额×100；与其他月份的金额不混用。', provenance: '2026年9月、10月沿用主模型；其他月份为同一120家持续营业门店的合成历史。', targets: '2026年1—10月目标为本版独立设定的预算，非真实企业下达。收入按需求权重、人工按编制权重、场租按门店权重分解；食材预算按计划组合权重分解。目标金额分配至人民币分，毛利及利润由预算科目派生；未从实际或11月预测反推。' } };
+  root.ReportHistory = model;
+  if (typeof module !== 'undefined' && module.exports) module.exports = model;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
   <script>/* 人工策略测算适配器：沿用演示业务模型，不修改历史、AI基准或已锁定执行计划。 */
 (function (root) {
   'use strict';
@@ -2647,13 +2789,17 @@ function showRemediationPlan(id){
 }
 function aiAttributionBrief(){
   const a=M.actuals.september,b=M.actuals.october,t=M.attribution,decline=a.profit-b.profit;
+  const monthChange=(period,field,previousMonth)=>{
+    const value=globalThis.ReportHistory.metrics(period,field).mom;
+    return `<em title="与${previousMonth}月实际相比">环比 <span class="${value<0?'bad':value>0?'good':''}">${value===null?'—':`${value>0?'↑':value<0?'↓':''}${amt(Math.abs(value),2)}%`}</span></em>`;
+  };
   const pricing=M.getCauseDetail('pricing'),food=M.getCauseDetail('food'),labor=M.getCauseDetail('labor'),opex=M.getCauseDetail('opex');
   const positive=M.group.positiveOffset,negative=M.group.negativeTotal,rent=M.getCauseDetail('opex-rent');
   const regularMaterials=M.materials.filter(m=>!m.newProduct).sort((a,b)=>a.priceImpact-b.priceImpact),newMaterials=M.materials.filter(m=>m.newProduct);
   const regularPriceCost=regularMaterials.reduce((sum,m)=>sum-m.priceImpact,0),newProductPriceCost=newMaterials.reduce((sum,m)=>sum-m.priceImpact,0);
   const recommendations=remediationPlans();
   const priorities=M.causes.filter(c=>c.impact<0).sort((a,b)=>a.impact-b.impact).map(c=>`<li data-category="${c.id}"><strong>${esc(c.name)}<span class="ai-remediation-impact"><small>10月利润影响</small><span class="bad">${signedAmt(c.impact,0)}万元</span></span></strong><ol class="ai-remediation-items">${recommendations.filter(p=>p.category===c.id).map(p=>`<li data-remediation-item="${p.id}"><div><h4>${recommendations.indexOf(p)+1}. ${esc(p.title)}</h4><p><strong>方案：</strong>${esc(p.summary)}</p></div><button type="button" class="hmw-button" data-remediation-plan="${p.id}">查看${esc(p.name)}</button></li>`).join('')}</ol></li>`).join('');
-  return `<div class="ai-attribution-brief"><section class="ai-brief-section"><header><h3>一、利润变化全景</h3></header><div class="ai-brief-intro"><p>以<strong>9月实际经营模式</strong>为基准：按照9月实际的成本费用率计算10月基准利润，得到<strong class="ai-value-reference">${amt(t.baseline.profit)}万元</strong>；实际利润<strong class="ai-value-actual">${amt(b.profit)}万元</strong>，较基准少<strong class="ai-value-negative">${amt(t.baselineGap)}万元</strong>。与9月实际${amt(a.profit,0)}万元相比，利润净减少${amt(decline,0)}万元。</p><div class="ai-summary-metrics"><div data-tone="history"><small>9月实际营收</small><strong>${amt(a.revenue,0)}<span>万元</span></strong></div><div data-tone="history"><small>9月实际利润</small><strong>${amt(a.profit,0)}<span>万元</span></strong></div><div data-tone="actual"><small>10月实际营收</small><strong>${amt(b.revenue,0)}<span>万元</span></strong></div><div data-tone="actual"><small>10月实际利润</small><strong>${amt(b.profit,0)}<span>万元</span></strong></div></div></div><figure class="ai-brief-figure"><div class="ai-brief-chart-meta"><span>金额单位：万元</span><div class="ai-brief-legend"><span><i class="total"></i>实绩</span><span><i class="reference"></i>基准检查点</span><span><i class="positive"></i>增加利润</span><span><i class="negative"></i>减少利润</span></div></div>${bridgeSvg(attributionChartRows(),a.profit,b.profit,'9月利润','10月利润',true)}<figcaption class="ai-brief-caption"><strong>图表解读</strong><p>营收增长未能转化为利润，主要压力来自食材采购、超标损耗和排班用工执行。食材成本增加导致利润减少<strong class="bad">${amt(-food.impact,0)}万元</strong>，人工成本增加导致利润减少<strong class="bad">${amt(-labor.impact,0)}万元</strong>。</p></figcaption></figure></section>
+  return `<div class="ai-attribution-brief"><section class="ai-brief-section"><header><h3>一、利润变化全景</h3></header><div class="ai-brief-intro"><p>以<strong>9月实际经营模式</strong>为基准：按照9月实际的成本费用率计算10月基准利润，得到<strong class="ai-value-reference">${amt(t.baseline.profit)}万元</strong>；实际利润<strong class="ai-value-actual">${amt(b.profit)}万元</strong>，较基准少<strong class="ai-value-negative">${amt(t.baselineGap)}万元</strong>。与9月实际${amt(a.profit,0)}万元相比，利润净减少${amt(decline,0)}万元。</p><div class="ai-summary-metrics"><div data-tone="history"><small>9月实际营收</small><strong>${amt(a.revenue,0)}<span>万元</span></strong>${monthChange('2026-09','revenue',8)}</div><div data-tone="history"><small>9月实际利润</small><strong>${amt(a.profit,0)}<span>万元</span></strong>${monthChange('2026-09','profit',8)}</div><div data-tone="actual"><small>10月实际营收</small><strong>${amt(b.revenue,0)}<span>万元</span></strong>${monthChange('2026-10','revenue',9)}</div><div data-tone="actual"><small>10月实际利润</small><strong>${amt(b.profit,0)}<span>万元</span></strong>${monthChange('2026-10','profit',9)}</div></div></div><figure class="ai-brief-figure"><div class="ai-brief-chart-meta"><span>金额单位：万元</span><div class="ai-brief-legend"><span><i class="total"></i>实绩</span><span><i class="reference"></i>基准检查点</span><span><i class="positive"></i>增加利润</span><span><i class="negative"></i>减少利润</span></div></div>${bridgeSvg(attributionChartRows(),a.profit,b.profit,'9月利润','10月利润',true)}<figcaption class="ai-brief-caption"><strong>图表解读</strong><p>营收增长未能转化为利润，主要压力来自食材采购、超标损耗和排班用工执行。食材成本增加导致利润减少<strong class="bad">${amt(-food.impact,0)}万元</strong>，人工成本增加导致利润减少<strong class="bad">${amt(-labor.impact,0)}万元</strong>。</p></figcaption></figure></section>
     <section class="ai-brief-section"><header><h3>二、利润变化的因素占比</h3></header>${attributionImpactGraphic()}<div class="ai-brief-caption"><strong>图表解读</strong><p><strong>食材成本差异，分为采购价格变动与超标准损耗：</strong></p><p><strong>1. 采购价格变动，增加成本<span class="bad">${amt(t.foodStandard.priceCost)}万元</span>。</strong>其中包括两类业务原因：</p><p class="ai-food-subcause"><strong>重点物料涨价：</strong>${regularMaterials.map(m=>`${esc(m.name)}增加成本${amt(-m.priceImpact)}万元`).join('、')}，合计增加<strong class="bad">${amt(regularPriceCost)}万元</strong>。</p><p class="ai-food-subcause">新品涉及的新食材未达到批量锁价的量，按市价采购，导致食材成本增加<strong class="bad">${amt(newProductPriceCost)}万元</strong>。</p><p><strong>2. 超标准损耗，增加成本<span class="bad">${amt(t.foodStandard.excessCost)}万元</span>。</strong>${M.getCauseDetail('usage').children.map(c=>`${esc(c.name)}${amt(-c.impact)}万元`).join('；')}。</p>${foodMaterialFocus()}<p><strong>人工成本差异：</strong>净减利<strong class="bad">${amt(-labor.impact)}万元</strong>，其中超标准工时影响<strong class="bad">${amt(-t.laborStandard.executionImpact)}万元</strong>，被<strong class="good">${amt(t.laborStandard.structureImpact)}万元</strong>结构摊薄部分抵消。</p><p><strong>净成交价变化：</strong>${pricing.children.map(c=>`${esc(c.name)}影响${signedAmt(c.impact)}万元`).join('；')}。</p><p><strong>其他经营费用：</strong>净影响<strong class="${badClass(opex.impact)}">${signedAmt(opex.impact)}万元</strong>；租金项<strong class="${badClass(rent.impact)}">${signedAmt(rent.impact)}万元</strong>来自规模摊薄，实际租金未减少。</p></div><details class="ai-contribution-detail"><summary>查看对净下降${amt(decline,0)}万元的完整贡献表</summary><div class="hmw-table-wrap ai-brief-table-wrap"><table class="hmw-table ai-brief-table"><caption>各因素对环比净下降${amt(decline,0)}万元的贡献</caption><thead><tr><th>经营因素</th><th class="numeric">利润影响 / 万元</th><th class="numeric">对利润净下降的贡献</th></tr></thead><tbody>${M.causes.map(c=>`<tr data-brief-cause="${c.id}"><td><button class="hmw-link" data-cause="${c.id}">${esc(c.name)}</button></td><td class="numeric ${badClass(c.impact)}">${signedAmt(c.impact)}</td><td class="numeric ${badClass(c.impact)}">${signed(c.netDeclineShare,1)}%</td></tr>`).join('')}<tr class="total" data-brief-total><td>利润净变化</td><td class="numeric bad">${signedAmt(-decline)}</td><td class="numeric">100.0%</td></tr></tbody></table></div><p class="ai-brief-method"><strong>占比口径：</strong>本表贡献＝−单项利润影响 ÷ 环比净下降${amt(decline,0)}万元，原始贡献合计100%；分项显示可能因四舍五入与合计略有差异。增利因素抵减降幅，记负贡献；减利因素记正贡献，可超过100%。顶层增利合计${amt(positive)}万元、减利合计${amt(negative)}万元；${amt(t.baseline.profit)}万元基准是检查点，不作为额外贡献相加。</p></details></section>
     <section class="ai-brief-section"><header><h3>三、整改建议</h3><p>按具体问题逐项整改，查看对应方案中的依据、执行步骤与核验方法。</p></header><ol class="ai-brief-priorities">${priorities}</ol></section><div class="ai-message-context">收益按实绩核验 · <button class="hmw-link" data-action="methodology">数据口径</button></div></div>`;
 }
