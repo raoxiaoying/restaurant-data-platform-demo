@@ -1376,7 +1376,7 @@
       '将10月堂食就餐人次、外卖有效订单代入9月单价，逐店计算基准收入，再按9月各项费用率计算基准利润。',
       '固定按业务量、净成交价、标准成本衔接、采购价格、耗用、人工、其他费用顺序连环替代。',
       '固定及半固定成本的费率摊薄作为结构差异解释，不称为实际节约或整改收益；本分解不证明促销导致客流增长。'],
-    sourceNote: '渠道拆分为本产品内置演示数据：9月及10月营收按堂食80%、外卖20%拆分，外卖有效订单分别为12万和12.6万；假设每外卖单计1份综合就餐人次。未接入真实POS或外卖平台。',
+    sourceNote: '渠道计算口径：9月及10月营收按堂食80%、外卖20%拆分，外卖有效订单分别按12万和12.6万计算；每有效外卖单折算1份综合就餐人次。渠道占比与订单量须结合门店经营记录核对。',
     expenseRows: expenseKeys.map(k => ({ key: k, name: labels[k], septemberRate: actuals.september[k] / actuals.september.revenue * 100,
       baseline: baselineTotals[k], actual: actuals.october[k], impact: money(baselineTotals[k] - actuals.october[k]) })),
     foodStandard: Object.fromEntries(['rateReferenceCost', 'standardCost', 'priceCost', 'excessCost', 'actualCost', 'alignmentImpact'].map(k => [k, sum(attributionByStore.map(r => r.foodStandard[k]))])),
@@ -1449,7 +1449,7 @@
     `9月费用率 × 10月基准收入，与10月实际${labels[k]}比较；先核验科目与业务量，再解释执行情况。`));
   const volumeDine = attributionByStore.map((r, i) => money((r.channels.baseline.dineIn.revenue - r.channels.september.dineIn.revenue) * stores[i].september.profit / stores[i].september.revenue));
   const volumeChildren = [cause('volume-dine-in', '堂食就餐人次变化', volumeDine, '保持9月堂食人均及各项费用率，替换为10月实际堂食就餐人次。', '堂食按人均元/人乘就餐人次，原有桌单仅用于核对，不与外卖订单混用。'),
-    cause('volume-delivery', '外卖有效订单变化', stores.map((s, i) => money(s.causes.volume - volumeDine[i])), '保持9月外卖单均及各项费用率，替换为10月有效完成订单。', '外卖按元/单乘有效订单，渠道输入为独立演示假设；本项包含分币衔接。')];
+    cause('volume-delivery', '外卖有效订单变化', stores.map((s, i) => money(s.causes.volume - volumeDine[i])), '保持9月外卖单均及各项费用率，替换为10月有效完成订单。', '外卖收入按单均金额乘有效订单计算，渠道订单量与堂食人次分别核对；本项包含分币衔接。')];
   const causes = [
     cause('volume', '业务量变化', stores.map(s => s.causes.volume), `以9月分渠道单价和全费用率代入10月实际业务量，形成${baselineTotals.profit.toFixed(2)}万元基准利润。`, `9月利润${actuals.september.profit.toFixed(2)}万元到10月基准${baselineTotals.profit.toFixed(2)}万元，业务量影响${money(baselineTotals.profit-actuals.september.profit).toFixed(2)}万元；基准之后不重复加量。`, volumeChildren),
     cause('pricing', '净成交价变化', stores.map(s => s.causes.pricing), '固定10月业务量，比较9月渠道单价与10月实际净成交价。', `两渠道实际实收减基准收入${money(actuals.october.revenue-baselineTotals.revenue).toFixed(2)}万元。账面分解不证明促销导致了客流增长。`, pricingChildren),
@@ -1658,7 +1658,7 @@
       verification: { totalChecks: 5, confirmedChecks, definition: '采购、耗用、人工、能耗、物耗五项现场检查；检查完成不等于成本收益已经达成。' },
       achievement: a.revenue / p.revenue * 100, abnormal: abnormalIds.includes(store.id), status: abnormalIds.includes(store.id) ? '需整改复核' : '正常跟进', scenario, findings, actions,
       service: { p90Minutes: store.id === 'HMW-092' ? 21 : store.id === 'HMW-006' ? 19 : 18 + i % 3,
-        p90Scope: '11月1—7日门店已完成堂食订单，按出餐时长排序的P90；演示直接给定单店分位数，不对门店P90求平均作为集团P90。', completedDineInOrders: Math.round(a.orders * 0.92),
+        p90Scope: '11月1—7日门店已完成堂食订单，按出餐时长排序的P90；各店分位数分别列示，集团P90须按集团订单时长重新计算，不能以门店P90均值替代。', completedDineInOrders: Math.round(a.orders * 0.92),
         complaints, complaintGuests: a.guests, complaintPer100Guests: complaints / a.guests * 100, targetP90: 20, targetComplaint: 0.5 } };
   });
   const trackPlanTotals = aggregate(trackingStores.map(s => s.plan));
@@ -1681,8 +1681,8 @@
   const model = {
     dataVersion: DATA_VERSION,
     group: { name: '好美味餐饮集团', platformName: '好美味餐饮集团智能决策平台', storeCount: 120, storeType: '直营正餐连锁', perCapita: 80, currency: '万元',
-      guestDefinition: '综合就餐人次包含堂食及演示外卖就餐份数；归因中堂食人均按堂食人次，外卖单均按有效订单。旧orders为堂食桌单，不能当作外卖订单。',
-      dataProvenance: '全部为演示场景合成数据，不对应任何真实企业记录。120家门店逐店生成，所有集团数由门店加总。',
+      guestDefinition: '综合就餐人次包含堂食人次及外卖折算就餐份数；归因中堂食人均按堂食人次，外卖单均按有效订单。堂食桌单仅用于堂食核对，不能当作外卖订单。',
+      dataProvenance: '集团指标由120家门店逐项汇总；营业额、费用、利润与物料明细按统一期间、科目及计量口径勾稽。',
       profitDefinition: '门店经营利润＝折后营业额－列示的门店食材和经营费用；未计总部费用、折旧摊销、利息与所得税。不列增值税项目。',
       attributionMethod: attribution.methodSteps.join(' '),
       negativeTotal: NEGATIVE_TOTAL, profitDecline: money(actuals.september.profit - actuals.october.profit), positiveOffset: sum(causes.filter(c => c.impact > 0).map(c => c.impact)), forecastVersion: FORECAST_VERSION },
@@ -1690,11 +1690,11 @@
     flatFactors: ['volume', 'pricing', 'food-standard', 'procurement', 'usage', 'labor', 'opex'].map(id => causeIndex.get(id)),
     getCauseDetail: id => causeIndex.get(id) || null,
     forecast, forecastSpecs, tracking,
-    definitions: { storeDistribution: '120家门店按规模分层；客流、排班、促销及损耗采用不同权重，形成高、中、低影响的合成分布。门店与物料明细逐级加总到集团，不对应真实门店排名。',
+    definitions: { storeDistribution: '120家门店按规模分层，客流、排班、促销及损耗分别按对应权重测算。门店与物料明细逐级加总到集团，门店排序反映当前指标及筛选范围。',
       negativeShare: `顶层单项负向影响绝对值÷顶层全部负向影响${NEGATIVE_TOTAL.toFixed(2)}万元；只在相同层级加总。`,
       netDeclineShare: `单项对净下降的贡献＝－单项有符号影响÷净下降${money(actuals.september.profit-actuals.october.profit).toFixed(2)}万元；正向客流抵减为负占比，全部顶层贡献合计100%。`,
       parentShare: '子项有符号影响÷父项净影响；正负混合时可为负或超过100%，父项为零不显示。',
-      usageMaterials: '10月物料耗用穿透为合成演示台账：每店既有备料差异和报损金额按预设权重分到5种物料，数量按10月实际加权价反算；标准应耗复用既有物料用量，实际耗用＝标准应耗＋备料超耗＋报损。备料超耗与报损分别计量，均按实际价计量，不再叠加采购价差。保留未舍入数量用于勾稽，界面数量舍入可能产生显示尾差；不对应真实盘点或报损单。',
+      usageMaterials: '10月物料耗用按门店备料差异和报损金额分摊至5种物料，数量按10月加权价折算；标准应耗按对应物料用量计算，实际耗用＝标准应耗＋备料超耗＋报损。备料超耗与报损分别按实际价计量，不再叠加采购价差。保留未舍入数量用于勾稽，界面数量舍入可能产生显示尾差；执行核验须对照盘点、领用与报损记录。',
       materialScope: '材料表仅列8个重点原料，其价格影响合计85万元；不是全部食材采购清单。材料用量为标准应耗对应的合格入库领用量，超标耗用另列23万元并含其实际采购成本。',
       noDoubleCount: '标准数量的采购价差记85万元，超标准耗用按实际采购成本记23万元，二者不重复计量；新品追加现货采购价差25万元已包含在85万元内。销售优惠已从折后收入扣除，不重复列入市场费用。' }
   };
@@ -1837,7 +1837,7 @@
   }
   const model = { months, availableMonths: months.filter(row => row.year === 2026).map(row => row.id), defaultMonth: '2026-10', fields, getMonth, metrics, series,
     scope: { storeCount: 120, continuousStores: true, currentYear: 2026, priorYear: 2025, currency: '万元' },
-    definitions: { yoy: '同一月份与上年同月比较；基期金额大于0时按(本期/基期－1)×100计算。', mom: '本期与上月比较；1月对上年12月。基期金额大于0时计算。', share: '当前项目金额÷同月折后营业额×100；与其他月份的金额不混用。', provenance: '2026年9月、10月沿用主模型；其他月份为同一120家持续营业门店的合成历史。', targets: '2026年1—10月目标为本版独立设定的预算，非真实企业下达。收入按需求权重、人工按编制权重、场租按门店权重分解；食材预算按计划组合权重分解。目标金额分配至人民币分，毛利及利润由预算科目派生；未从实际或11月预测反推。' } };
+    definitions: { yoy: '同一月份与上年同月比较；基期金额大于0时按(本期/基期－1)×100计算。', mom: '本期与上月比较；1月对上年12月。基期金额大于0时计算。', share: '当前项目金额÷同月折后营业额×100；与其他月份的金额不混用。', provenance: '月度指标采用同一120家持续营业门店范围，各月集团金额由门店明细汇总；2026年9月、10月与利润归因采用一致的科目金额。', targets: '2026年1—10月目标按月度预算逐店分解：收入按需求权重、人工按编制权重、场租按门店权重、食材按计划组合权重分配。目标金额分配至人民币分，毛利及利润由预算科目计算，并与同期实际分别核对。' } };
   root.ReportHistory = model;
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
@@ -1849,22 +1849,22 @@
   const version = 'CAMPAIGN-DEMO-BOM-V1';
   const clone = value => JSON.parse(JSON.stringify(value));
   const round = n => Math.round(n * 1000000) / 1000000;
-  const sourceNote = '活动单位用量、菜单组合和供应商均为演示资料，不是品牌实际餐谱或已签报价；代金券按示例双人核销菜单备料，实际点单结构须核对。';
-  const suppliers = { beef: '禾牧肉类供应（示例）', chicken: '丰羽禽业供应（示例）', pork: '鲜达肉品供应（示例）',
-    cheese: '醇源乳品供应（示例）', hairtail: '海禾水产供应（示例）', crab: '澄鲜水产供应（示例）',
-    pigeon: '禾羽禽品供应（示例）', fishball: '鲜味食品供应（示例）' };
+  const sourceNote = '活动物料按单位净料用量、菜单组合与预计核销单量计算；代金券按双人核销菜单备料，执行前须核对餐谱、实际点单结构、采购规格与供货条件。';
+  const suppliers = { beef: '禾牧肉类供应', chicken: '丰羽禽业供应', pork: '鲜达肉品供应',
+    cheese: '醇源乳品供应', hairtail: '海禾水产供应', crab: '澄鲜水产供应',
+    pigeon: '禾羽禽品供应', fishball: '鲜味食品供应' };
   const catalog = M.forecast({ plan: 'anniversary' }).priceTargets.map(item => ({ materialId: item.materialId, name: item.name,
     unit: '公斤', unitPrice: item.targetPrice, supplierName: suppliers[item.materialId] })).concat(
     [['rice', '大米', 4.5], ['leafy-vegetables', '叶菜', 6], ['seasonal-vegetables', '时蔬', 8],
       ['oil', '食用油', 12], ['seasoning', '调味料', 20], ['eggs', '鸡蛋', 10]].map(([materialId, name, unitPrice]) => ({
-      materialId, name, unit: '公斤', unitPrice, supplierName: '集团综合食材供应（示例）' }))
+      materialId, name, unit: '公斤', unitPrice, supplierName: '集团综合食材供应' }))
   );
   const recipes = [
-    { id: 'family-four', name: '四人套餐演示配方', quantities: { beef: .6, chicken: .8, pork: .6, cheese: .15, rice: .8,
+    { id: 'family-four', name: '四人套餐用量配方', quantities: { beef: .6, chicken: .8, pork: .6, cheese: .15, rice: .8,
       'leafy-vegetables': 1, 'seasonal-vegetables': 1, oil: .12, seasoning: .1, eggs: .4 } },
-    { id: 'voucher-two', name: '150元双人核销菜单演示参考', quantities: { beef: .25, chicken: .3, pork: .2, rice: .3,
+    { id: 'voucher-two', name: '150元双人核销菜单参考', quantities: { beef: .25, chicken: .3, pork: .2, rice: .3,
       'leafy-vegetables': .3, 'seasonal-vegetables': .4, oil: .04, seasoning: .04, eggs: .1 } },
-    { id: 'single-chicken', name: '单品鸡肉小食演示配方', quantities: { chicken: .18, oil: .02, seasoning: .01 } }
+    { id: 'single-chicken', name: '单品鸡肉小食用量配方', quantities: { chicken: .18, oil: .02, seasoning: .01 } }
   ].map(recipe => {
     const items = Object.entries(recipe.quantities).map(([materialId, quantityKg]) => ({
       ...catalog.find(item => item.materialId === materialId), quantityKg }));
@@ -2075,15 +2075,15 @@
       materialBlockers: [...new Set(byStore.flatMap(store => store.materialBlockers))], validationIssues: activityBudget.issues,
       baseline: clone(totals), savings: 0, budgetAdjustment: 0, executionRates: { purchase: 1, usage: 1, labor: 1, utilities: 1, consumables: 1 }, executionRate: 1,
       volumeFactor: totals.guests / reference.totals.guests,
-      actions: reference.actions.map(action => ({ ...clone(action), target: '原量价模型参考：' + action.target, budgetReference: true, campaignReference: true })),
+      actions: reference.actions.map(action => ({ ...clone(action), target: '原量价方案参考：' + action.target, budgetReference: true, campaignReference: true })),
       costTargets: M.expenseKeys.map(key => ({ key, name: M.labels[key], amount: totals[key], rate: totals.revenue > 0 ? totals[key] / totals.revenue * 100 : 0,
         fixed: sum(byStore.map(store => store.fixedCosts[key])), rawBase: totals[key], improvementBase: 0,
         formula: key === 'food' ? '常规每客标准食材成本×常规人次＋各活动核销单×各自单位食材成本。' : key === 'marketing' ? '独立输入的整月推广费用；活动折扣仅在收入端冲减。' : '本店固定投入＋AI基准每客可变费用×本店常规与活动总人次。' })),
       capacityConstraints, capacityReadyStoreCount: byStore.filter(store => store.capacityUse <= 90).length,
       assumptions: { ...clone(reference.assumptions), guests: totals.guests, perCapita: inputs.netPerCapita, grossPerCapita: inputs.grossPerCapita, discountPerGuest: inputs.discountPerGuest, discountRate: inputs.discountRate,
-        demand: '常规经营与各项活动订单互斥，按各自实际成交/核销单量和每单人数汇总；不另加旧模型客流。',
+        demand: '常规经营与各项活动订单互斥，按各自成交或核销单量和每单人数汇总，避免客流重复计量。',
         note: '仅本期售出、本期核销的券队列；售券现金不直接计入经营营收，已核销券售价与核销补差共同形成营收，未核销预收单列。不含期初券负债、历史券核销或到期沉淀。',
-        readiness: '销量、核销率、单位食材成本与配方均为可修改的演示假设；店长须确认本店订单分组、供货与岗位资源后生效。',
+        readiness: '销量、核销率、单位食材成本与配方可按经营安排调整；店长须核对本店订单分组、供货与岗位资源后确认生效。',
         conditions: ['常规订单排除所有列示活动；活动之间不得叠加，同一就餐订单只归入一组。', `市场推广预算${totals.marketing}万元单独列费，折扣不重复计入费用。`, '套餐、单品券与自定义按单活动不补差；代金券按核销订单原额减券面值补差。', '有效核销活动须具备配方；单位食材预算不得低于所选配方成本，活动物料与常规物料合并后核对报价。', `${capacityConstraints.length}家门店目标超过原接待能力，确认前落实增能或预约分流。`] },
       revenueFormula: '互斥常规订单实收＋各活动核销单×（券售价＋订单原额－券面值）÷10,000；未核销预收不计营收', profitFormula: '预计折后营收－常规与活动食材成本－其他八项门店费用',
       changes: { reference: clone(defaultBudget.totals), profitDelta: round(totals.profit - defaultBudget.totals.profit), revenueDelta: round(totals.revenue - defaultBudget.totals.revenue), costDelta: round(totals.expenses - defaultBudget.totals.expenses), drivers, byStore: changeRows } };
@@ -2375,7 +2375,7 @@
       activity: '仅周年庆显式启用campaign-ledger-v1时生效；常规与各活动订单互斥，输入单价为元、输出金额为万元。仅本期售出本期核销队列，售券现金不重复计经营营收；未核销预收单列，活动物料按配方核销单独计算。',
       expenseBudget: '仅方案一显式启用store-standard-rates-v1时生效；费率单位为百分数，分母为折后营收；按逐店标准费用权重下沉集团手改率。费用率表示最终预算，不再次扣减参考整改收益。',
       budgetAdjustment: '预算调整＝原量价模型费用－新费用预算，正数增加预计利润、负数减少预计利润；baseline.profit＋savings＋budgetAdjustment＝当前预计利润。foodBudget中同样为physicalFoodCost－budgetTargetFoodCost，targetFoodCost保留原实物量价口径。',
-      marketing: '营销预算为整月绝对额，包含已承诺固定部分；销售折扣在收入端另扣且只扣一次。', provenance: '用于AI工作台产品演示的条件测算；未连接真实AI、营销、采购或门店业务服务。' } };
+      marketing: '营销预算为整月绝对额，包含已承诺固定部分；销售折扣在收入端另扣且只扣一次。', provenance: '按客流、成交价格、费用预算及整改执行条件测算，经营方案经门店确认后用于安排采购、备料与人员班次。' } };
   root.AiScenarioModel = model;
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
@@ -2458,16 +2458,16 @@
   const regularIds = ['beef', 'chicken', 'pork'];
   const newIds = ['cheese', 'hairtail', 'crab', 'pigeon', 'fishball'];
   const profiles = {
-    beef: { specification: '同10月验收等级、部位与净重规格的冷鲜牛肉', margin: .6, capacityKg: 90000, primary: '禾牧肉类供应（示例）', backup: '汇鲜冷链供应（示例）' },
-    chicken: { specification: '同10月验收等级、部位与净重规格的鸡肉', margin: .3, capacityKg: 180000, primary: '丰羽禽业供应（示例）', backup: '益鲜禽肉供应（示例）' },
-    pork: { specification: '同10月验收部位、切割与净重规格的五花肉', margin: .2, capacityKg: 90000, primary: '鲜达肉品供应（示例）', backup: '康禾肉类供应（示例）' },
-    cheese: { specification: '同新品配方成分、包装与净重规格的芝士', margin: .5, capacityKg: 25000, primary: '醇源乳品供应（示例）', backup: '优焙乳品供应（示例）' },
-    hairtail: { specification: '同10月采购等级、规格与净重口径的带鱼', margin: .3, capacityKg: 50000, primary: '海禾水产供应（示例）', backup: '鲜洋水产供应（示例）' },
-    crab: { specification: '同10月采购品种、规格与净重口径的螃蟹', margin: .6, capacityKg: 18000, primary: '澄鲜水产供应（示例）', backup: '丰海水产供应（示例）' },
-    pigeon: { specification: '同10月采购品级、规格与净重口径的鸽子', margin: .5, capacityKg: 18000, primary: '禾羽禽品供应（示例）', backup: '鲜羽禽业供应（示例）' },
-    fishball: { specification: '同新品配方成分、包装与净重规格的鱼丸', margin: .2, capacityKg: 35000, primary: '鲜味食品供应（示例）', backup: '禾味食品供应（示例）' }
+    beef: { specification: '同10月验收等级、部位与净重规格的冷鲜牛肉', margin: .6, capacityKg: 90000, primary: '禾牧肉类供应', backup: '汇鲜冷链供应' },
+    chicken: { specification: '同10月验收等级、部位与净重规格的鸡肉', margin: .3, capacityKg: 180000, primary: '丰羽禽业供应', backup: '益鲜禽肉供应' },
+    pork: { specification: '同10月验收部位、切割与净重规格的五花肉', margin: .2, capacityKg: 90000, primary: '鲜达肉品供应', backup: '康禾肉类供应' },
+    cheese: { specification: '同新品配方成分、包装与净重规格的芝士', margin: .5, capacityKg: 25000, primary: '醇源乳品供应', backup: '优焙乳品供应' },
+    hairtail: { specification: '同10月采购等级、规格与净重口径的带鱼', margin: .3, capacityKg: 50000, primary: '海禾水产供应', backup: '鲜洋水产供应' },
+    crab: { specification: '同10月采购品种、规格与净重口径的螃蟹', margin: .6, capacityKg: 18000, primary: '澄鲜水产供应', backup: '丰海水产供应' },
+    pigeon: { specification: '同10月采购品级、规格与净重口径的鸽子', margin: .5, capacityKg: 18000, primary: '禾羽禽品供应', backup: '鲜羽禽业供应' },
+    fishball: { specification: '同新品配方成分、包装与净重规格的鱼丸', margin: .2, capacityKg: 35000, primary: '鲜味食品供应', backup: '禾味食品供应' }
   };
-  const sourceNote = '供应商名称、参考报价及月供能力来自演示参考资料，不是真实供应商档案、市场行情或供货承诺。目标价和采购量沿用当前11月测算，须议价与签约确认。';
+  const sourceNote = '采购方案按同品级、同规格、含税到货口径比较参考报价与月供能力。目标价和采购量沿用当前11月测算，须议价与签约确认。';
   const deliveryNote = '建议锁定月度量价，按门店日需求分日配送；四段数量用于确认交付计划，不要求集中入库或月末补足库存。';
   function batches(quantityKg) {
     const labels = ['11月1—7日', '11月8—14日', '11月15—21日', '11月22—30日'];
@@ -2484,14 +2484,14 @@
       name: backup ? profile.backup : profile.primary,
       referenceQuote: round(p.targetPrice + profile.margin + (backup ? .4 : 0)),
       capacityKg: backup ? Math.floor(profile.capacityKg * .8) : profile.capacityKg,
-      capacityNote: '演示参考月供能力，需核实，非真实供货承诺。',
+      capacityNote: '参考月供能力，须核实可供数量、配送范围与交付承诺。',
       recommendedQuantityKg: backup ? 0 : p.quantityKg,
       paymentTerms: '建议验收后月结30天，须双方确认。',
       deliveryTerms: backup ? '仅预留备供资格；启用前确认实际接替量、线路与到货日期。' : '建议按门店日需求分日配送，先确认配送线路、时段与冷链验收条件。',
-      quotationCondition: backup ? '本次不分配采购量。参考报价仅用于全量替代比较；启用前按实际接替量独立询价，不能套用主供的月度承诺条件。' : `以整月${quotationMinKg}—${quotationMaxKg}公斤为示例量阶条件；同品级、同规格、含税到货，目标价和月度承诺均待确认。`,
-      quoteStatus: '未签参考报价（示例）',
+      quotationCondition: backup ? '本次不分配采购量。参考报价仅用于全量替代比较；启用前按实际接替量独立询价，不能套用主供的月度承诺条件。' : `以整月${quotationMinKg}—${quotationMaxKg}公斤为量阶测算条件；同品级、同规格、含税到货，目标价和月度承诺均待确认。`,
+      quoteStatus: '参考报价，待议价签约',
       signed: false,
-      sourceNote: '演示供应商参考资料，不是企业供应商档案或已取得的真实报价。'
+      sourceNote: '执行前复核供应商资质、报价单、配送线路与履约能力，以双方签约结果为准。'
     };
   }
   function build(forecast, kind = 'regular') {
@@ -2578,19 +2578,19 @@
         campaign ? `本方案常规互斥客流${text(regularGuests,0)}人次，加活动核销${text(forecast.totals.guests-regularGuests,0)}人次，共${text(forecast.totals.guests,0)}人次；折前营业额${money(forecast.totals.grossSales)}、优惠${money(forecast.totals.discount)}、折后收入${money(forecast.totals.revenue)}由各类订单分别汇总。` : `本方案按整月${text(input.guests, 0)}人次、折前人均${text(input.grossPerCapita)}元及每客优惠${text(input.discountPerGuest)}元测算，折后人均${text(input.netPerCapita)}元。`,
         `市场推广最终总预算${money(forecast.totals.marketing)}；${forecast.priceTargets.length}项重点原料按集团采购条件测算，${requotes}项采购数量需要重新询价。`,
         `${forecast.capacityReadyStoreCount}家门店测算产能使用率不超过90%，${forecast.capacityConstraints.length}家门店目标超过现有接待能力，需逐店落实资源。`,
-        ...(expenseRates ? ['九项费用采用逐店AI基准最终费用的演示标准费率；集团费用率＝各店费用金额合计÷各店折后营业额合计，按营业额金额加权；手改集团费率按当前逐店标准费用权重分配。'] : [])
+        ...(expenseRates ? ['九项费用采用逐店AI基准最终费用的标准费率；集团费用率＝各店费用金额合计÷各店折后营业额合计，按营业额金额加权；手改集团费率按当前逐店标准费用权重分配。'] : [])
       ],
       features: campaign ? [
         `按${input.activities.length}项活动各自的售出数量、核销率、每单人数、成交价格与单位食材成本测算，用户可增删活动并逐项调整。`,
         `常规订单与活动核销人次互斥统计；售出未核销券不计入本月餐饮营业额、不形成备料需求，推广最终预算${money(forecast.totals.marketing)}独立计费。`,
-        `活动按所选演示配方${input.recipeVersion}生成明确物料用量，成本只计一次；由店长确认预算版本后，再核对7天库存、备料和排班。`
+        '活动按已选用量模板生成明确物料用量，成本只计一次；由店长确认预算版本后，再核对7天库存、备料和排班。'
       ] : event ? [
         `以周年庆套餐和会员券组织活动，围绕${text(input.guests, 0)}人次的目标安排推广、核销与高峰服务。`,
         `将活动价格与新品采购、备料和用工一起测算；每客优惠${text(input.discountPerGuest)}元冲减收入，推广预算${money(forecast.totals.marketing)}另计费用。`,
         '由店长核对本店活动承接、成本执行和岗位资源后生效，再据该店生效版本安排7天物料与排班。'
       ] : [
         `延续现行营销策略，以折前人均${text(input.grossPerCapita)}元、每客优惠${text(input.discountPerGuest)}元维护既有消费场景。`,
-        expenseRates ? '按逐店演示标准费率生成九项最终费用预算，允许逐项调整费率；原固定投入与食材量价估算单独核对，预算调整不代表整改已经落实。' : '把改善重点放在采购、配方耗用、临时工时、设备启停和物耗领用，保留固定人工与必要服务配置。',
+        expenseRates ? '按逐店标准费率生成九项最终费用预算，允许逐项调整费率；原固定投入与食材量价估算单独核对，预算调整不代表整改已经落实。' : '把改善重点放在采购、配方耗用、临时工时、设备启停和物耗领用，保留固定人工与必要服务配置。',
         '先测算各店可承接的客流和成本预算，经店长核对后逐店生效，适合优先稳定经营与修复执行差异。'
       ],
       difficulties: [
@@ -2599,7 +2599,7 @@
         forecast.capacityConstraints.length ? `${forecast.capacityConstraints.length}家门店存在产能缺口，须确认增能或预约分流；其他门店仍需核对分时高峰和人员班次。` : '集团总量可承接不代表每个时段都可承接，店长仍需核对分时客流、后厨和高峰岗位。',
         '排班减少与耗用改善需同时守住出餐、客诉和必要经营投入，预算改善须在实际结算后核验。',
         ...(expenseRates ? [`${fixedGapStores}家门店预算低于原固定投入参考，缺口未落实合同、人员或资源调整前不可确认生效；食材费率不自动改变配方、份量、物料公斤数或供应商报价。`] : []),
-        ...(campaign ? [`${materialGapStores}家门店仍有活动配方或单位食材成本缺口；月度可确认预算，缺口关闭前不能确认7天清单或批量建单。配方与代金券双人菜单均为演示参考，须核对品牌实际餐谱及核销点单结构。`] : [])
+        ...(campaign ? [`${materialGapStores}家门店仍有活动配方或单位食材成本缺口；月度可确认预算，缺口关闭前不能确认7天清单或批量建单。执行前须核对活动配方、代金券双人菜单及实际核销点单结构。`] : [])
       ]
     };
   }
@@ -2679,11 +2679,11 @@
       setAttention('revenue',`本店常规与活动核销合计收入${money(row.revenue)}，每客${text(row.guests?row.revenue*10000/row.guests:0)}元为汇总后的派生指标；预计日均${text(row.dailyGuests)}人次，核对核销及高峰接待。`,
         '逐活动核对套餐实收、代金券售价与核销补差、单品券实收；未核销售券款与本月餐饮收入分开。',overCapacity?'warn':'normal');
       setAttention('food',`本店食材预算${money(row.food)}，含常规${money(row.foodBudget.regularFoodCost)}、活动${money(row.foodBudget.activityFoodCost)}；常规物料与活动核销所选配方分别测算后合并，活动单位食材成本不反推公斤数。`,
-        `活动使用${input.recipeVersion}演示单位配方，按本店实际核销预测形成明确公斤数，售出未核销券不备料；常规8项原料与6项补充食材仍为演示参考。${materialBlockers.length?`仍有${materialBlockers.length}项活动配方或成本缺口，本次仅可确认经营预算，不能确认执行清单或建单。`:'核对配方、库存、供应商、报价及实际菜单组合，7天清单需另由店长确认。'}`,
+        `活动按已选用量模板及本店核销预测形成明确公斤数，售出未核销券不备料；常规物料由8项重点原料与6项补充食材组成，须核对菜单覆盖范围。${materialBlockers.length?`仍有${materialBlockers.length}项活动配方或成本缺口，本次仅可确认经营预算，不能确认执行清单或建单。`:'核对配方、库存、供应商、报价及实际菜单组合，7天清单需另由店长确认。'}`,
         materialBlockers.length?'bad':requotes?'warn':'normal');
     }
     if (expenseRates) for (const item of attention.filter(item => M.expenseKeys.includes(item.key))) {
-      item.focus += ` 本店最终目标费率${text(item.value / row.revenue * 100)}%，采用演示标准费用率或集团手改费率的分店分配。`;
+      item.focus += ` 本店最终目标费率${text(item.value / row.revenue * 100)}%，采用标准费用率或集团手改费率的分店分配。`;
       if (item.value < row.fixedCosts[item.key]) {
         item.verification += ` 本项预算低于原固定投入参考${money(row.fixedCosts[item.key])}，缺口须落实合同、人员或资源调整并重新测算，当前不可确认生效。`;
         item.tone = 'bad';
@@ -2697,8 +2697,8 @@
       storeResource: { seats: store.seats, capacityGuestsPerDay: capacity, capacityUse: row.capacityUse, dailyGuests: row.dailyGuests },
       materials, attention,
       checks: [
-        { id: 'parameters', label: '客流、优惠和预算已逐项核对', description: campaign ? `本店常规互斥${text(row.regularGuests,0)}人次加活动核销${text(row.guests-row.regularGuests,0)}人次，收入${money(row.revenue)}按各类核销订单汇总；已逐项核对售出量、核销率、每单人数、优惠与推广最终预算。` : `本店整月${text(row.guests, 0)}人次、折后人均${text(row.perCapita)}元及收入${money(row.revenue)}，费用按本版本逐项核对。${expenseRates ? '九项费用来自逐店演示标准率；集团费率由费用金额与折后营收合计计算，手改率按标准费用权重落店。' : ''}` },
-        { id: 'costs', label: campaign ? '活动单位成本、配方与费用假设已核对' : expenseRates ? '采购量价、费用预算与固定投入条件已核对' : '采购与成本执行条件已落实', description: campaign ? `活动食材预算按单位成本与核销数测算，明确用量来自${input.recipeVersion}演示配方，不能按预算金额反推公斤数。${materialBlockers.length?`尚有${materialBlockers.length}项物料缺口，本次仅确认经营预算，补齐并重新测算前不得确认7天清单或批量建单。`:'常规物料、活动配方、菜单组合和采购报价须逐项核对，执行前再由店长确认库存及人员清单。'}` : `${requotes ? `${requotes}项需重新询价，先落实集团量价和供货条件；` : '集团采购价格与配送条件需落实；'}${expenseRates ? `食材费率不自动改变公斤数、配方和报价，须核对目标与量价差额；费用预算不代表固定投入已调整。${budgetBlockers.length ? `仍有${budgetBlockers.length}项固定投入预算缺口，处理并重新测算后才可确认。` : '合同、人员及资源安排须逐项核对。'}` : '本店收货、配方、耗用、排班及费用执行安排已经核对，预算改善待后续结算核验。'}` },
+        { id: 'parameters', label: '客流、优惠和预算已逐项核对', description: campaign ? `本店常规互斥${text(row.regularGuests,0)}人次加活动核销${text(row.guests-row.regularGuests,0)}人次，收入${money(row.revenue)}按各类核销订单汇总；已逐项核对售出量、核销率、每单人数、优惠与推广最终预算。` : `本店整月${text(row.guests, 0)}人次、折后人均${text(row.perCapita)}元及收入${money(row.revenue)}，费用按本版本逐项核对。${expenseRates ? '九项费用来自逐店标准率；集团费率由费用金额与折后营收合计计算，手改率按标准费用权重落店。' : ''}` },
+        { id: 'costs', label: campaign ? '活动单位成本、配方与费用假设已核对' : expenseRates ? '采购量价、费用预算与固定投入条件已核对' : '采购与成本执行条件已落实', description: campaign ? `活动食材预算按单位成本与核销数测算，明确用量来自已选活动用量模板，不能按预算金额反推公斤数。${materialBlockers.length?`尚有${materialBlockers.length}项物料缺口，本次仅确认经营预算，补齐并重新测算前不得确认7天清单或批量建单。`:'常规物料、活动配方、菜单组合和采购报价须逐项核对，执行前再由店长确认库存及人员清单。'}` : `${requotes ? `${requotes}项需重新询价，先落实集团量价和供货条件；` : '集团采购价格与配送条件需落实；'}${expenseRates ? `食材费率不自动改变公斤数、配方和报价，须核对目标与量价差额；费用预算不代表固定投入已调整。${budgetBlockers.length ? `仍有${budgetBlockers.length}项固定投入预算缺口，处理并重新测算后才可确认。` : '合同、人员及资源安排须逐项核对。'}` : '本店收货、配方、耗用、排班及费用执行安排已经核对，预算改善待后续结算核验。'}` },
         { id: 'resources', label: overCapacity ? '本店增能或预约分流已落实' : '人员、后厨与高峰服务资源已核对',
           description: `预计日均${text(row.dailyGuests)}人次，现有日接待能力${text(capacity)}人次；须核对分时高峰、人员班次、后厨及服务资源。${overCapacity ? `日均目标已超出约${text(dailyGap)}人次，确认前须落实增能或预约分流，不能仅勾选预算而忽略容量。` : '即使日均有余量，也须落实高峰承接；分时客流超过能力时先确认增能或预约分流。'}` }
       ]
@@ -2721,7 +2721,7 @@
     ['seasonal-vegetables', '时蔬', 8, .2], ['oil', '食用油', 12, .12],
     ['seasoning', '调味料', 20, .16], ['eggs', '鸡蛋', 10, .14]
   ];
-  const sourceNote = '14项演示食材目录由8项已确认原料与6项补充食材组成，不等于真实完整BOM；补充食材按其他标准食材成本分摊，未把损耗费用充作标准用量。库存、在途、名册与可用性均为演示假设，尚未连接真实库存或人事系统。';
+  const sourceNote = '本清单由8项重点原料与6项补充食材组成，执行前须核对菜单及完整配方的覆盖范围；补充食材按其他标准食材成本分摊，损耗费用不充作标准用量。库存、在途、安全库存及人员可用性须由店长逐项确认。';
   function allocate(units, weights) {
     const base = sum(weights), exact = weights.map(w => units * w / base), values = exact.map(Math.floor);
     const rank = exact.map((n, i) => ({ i, fraction: n - values[i] })).sort((a, b) => b.fraction - a.fraction || a.i - b.i);
@@ -2743,8 +2743,8 @@
   function buildMaterials(proposal, weights, inventory) {
     const campaign = proposal.inputs.activityMode === 'campaign-ledger-v1';
     const otherStandardYuan = proposal.finance.foodBudget.otherStandardFoodCost * 10000;
-    const definitions = proposal.materials.map(m => ({ ...m, basis: '已生效方案的本店原料月量', supplierName: m.supplierName || '集团食材协议供应商（示例）' })).concat(
-      extraMaterials.map(([materialId, name, unitPrice, share]) => ({ materialId, name, unitPrice, quantityKg: otherStandardYuan * share / unitPrice, basis: `其他标准食材成本的${round(share * 100, 0)}%演示分摊`, supplierName: '集团综合食材供应（示例）' }))
+    const definitions = proposal.materials.map(m => ({ ...m, basis: '已生效方案的本店原料月量', supplierName: m.supplierName || '集团食材协议供应商' })).concat(
+      extraMaterials.map(([materialId, name, unitPrice, share]) => ({ materialId, name, unitPrice, quantityKg: otherStandardYuan * share / unitPrice, basis: `其他标准食材成本的${round(share * 100, 0)}%分摊`, supplierName: '集团综合食材供应' }))
     );
     if (campaign) {
       definitions.forEach(m=>Object.assign(m,{ regularQuantityKg:m.quantityKg, regularCostYuan:m.quantityKg*m.unitPrice, activityQuantityKg:0, activityCostYuan:0, activitySources:[] }));
@@ -2753,7 +2753,7 @@
         for (const item of activity.materialItems || []) {
           let material = definitions.find(m=>m.materialId===item.materialId);
           if (!material) {
-            material = { ...item, quantityKg:0, regularQuantityKg:0, regularCostYuan:0, activityQuantityKg:0, activityCostYuan:0, activitySources:[], basis:'活动明确单位用量演示配方' };
+            material = { ...item, quantityKg:0, regularQuantityKg:0, regularCostYuan:0, activityQuantityKg:0, activityCostYuan:0, activitySources:[], basis:'活动单位用量配方' };
             definitions.push(material);
           }
           material.activityQuantityKg += item.quantityKg;
@@ -2778,7 +2778,7 @@
         ...(campaign ? { regularMonthlyQuantityKg:round(m.regularQuantityKg,6), activityMonthlyQuantityKg:round(m.activityQuantityKg,6),
           activityMonthlyCostYuan:round(m.activityCostYuan,2), activitySources:m.activitySources } : {}),
         onHandKg, inboundKg, safetyKg, packKg, purchaseKg, purchaseCostYuan: round(purchaseKg * m.unitPrice, 2), demandCostYuan: round(demandKg * m.unitPrice, 2),
-        inventorySource: Object.keys(edited).length ? '店长录入与演示默认值组合，待确认' : '演示默认：现存2天、在途0.5天、安全库存0.5天',
+        inventorySource: Object.keys(edited).length ? '店长录入值与计划预设组合，执行前须确认' : '计划预设：现存2天、在途0.5天、安全库存0.5天，执行前须确认',
         requiresRequote: Boolean(m.requiresRequote), basis: m.basis, requiredArrival: '从计划首日起按日需求分批确认到货，在途须在使用前到达' };
     });
   }
@@ -2802,7 +2802,7 @@
     const employeeRows = [], storeOffset = Number(proposal.storeId.replace(/\D/g, '')) % 7;
     const addEmployee = (role, support) => {
       const i = employeeRows.length;
-      employeeRows.push({ id: `${proposal.storeId}-${support ? 'T' : 'E'}${String(i + 1).padStart(3, '0')}`, name: `${support ? '支援员工' : '本店员工'}${String(i + 1).padStart(2, '0')}（示例）`, role,
+      employeeRows.push({ id: `${proposal.storeId}-${support ? 'T' : 'E'}${String(i + 1).padStart(3, '0')}`, name: `${support ? '支援员工' : '本店员工'}${String(i + 1).padStart(2, '0')}`, role,
         days: Array(7).fill('休'), hours: 0, restDay: (i + storeOffset) % 7, support });
     };
     roles.forEach(role => { for (let i = 0; i < counts[role]; i++) addEmployee(role, false); });
@@ -2837,7 +2837,7 @@
       requiredHours: sum(daySlots) * shiftHours, requiredCostYuan: sum(daySlots) * shiftCost, unfilledSlots: sum(vacancies.map(v => v.headcount)), vacancies,
       hourlyCostYuan, shiftHours, maxHoursPerEmployee: 36, extraStaff, baseEmployeeCount: poolSize,
       shifts: [{ name: '早班', start: '10:00', end: '16:00', hours: 6 }, { name: '晚班', start: '16:00', end: '22:00', hours: 6 }],
-      sourceNote: '按门店座位规模给定固定示例名册，再按客流与预算排班；6小时班、每天最多一班、每周最多6班36小时且至少1休为演示排班规则。30元为人工综合折算成本，不代表员工实际时薪；真实技能、可用性、考勤及薪酬须接入人事后核实，预算余量不作为新增利润。' + (!weeklyGuests?' 本周客流为0，未生成服务需求班；固定人工预算仍保留，不代表停业或免付工资，营业与值守安排须店长另行核对。':'') };
+      sourceNote: '按门店座位规模测算岗位配置，再按客流与预算排班；班次按6小时安排，每人每天最多一班、每周最多6班36小时且至少休息1天。30元为人工综合折算成本，员工工资须按薪酬口径另行核对；排班前须核实岗位技能、可用班次、考勤与薪酬，预算余量不作为新增利润。' + (!weeklyGuests?' 本周客流为0，未生成服务需求班；固定人工预算仍保留，不代表停业或免付工资，营业与值守安排须店长另行核对。':'') };
   }
   function build(approval, options = {}) {
     if (!approval || !approval.confirmedAt || !approval.proposal) throw new Error('请先由本店店长确认经营方案');
@@ -2848,7 +2848,7 @@
     const blockers = [...(proposal.budgetBlockers || proposal.finance.budgetBlockers || []), ...(proposal.materialBlockers || proposal.finance.materialBlockers || [])], warnings = [], crossMonth = dates.some(d => d.slice(0, 7) !== proposal.period);
     const campaign = proposal.inputs.activityMode === 'campaign-ledger-v1';
     if (campaign) {
-      warnings.push(`活动物料按已确认核销量和${proposal.inputs.recipeVersion}演示配方月量推演7/30，售出未核销券不备料；常规与活动同物料合并，单价不同时以月用量加权参考价列示，不追加损益费用。`);
+      warnings.push('活动物料按已确认核销量和当前配方月量推演7/30，售出未核销券不备料；常规与活动同物料合并，单价不同时以月用量加权参考价列示，不追加损益费用。');
     }
     if (!staffing.daily.some(day=>day.guests)) warnings.push('本周预测客流为0，未生成服务需求班；固定费用预算保留，营业与值守安排请店长另行核对。');
     let foodBudgetSummary;
@@ -2880,7 +2880,7 @@
       ...(foodBudgetSummary ? { foodBudgetSummary } : {}),
       weeklyGuests: sum(staffing.daily.map(d => d.guests)), materialPurchaseCostYuan: round(sum(materials.map(m => m.purchaseCostYuan)), 2),
       inventoryNote: '默认按日均需求设置现存2天、在途0.5天、安全库存0.5天；店长可逐项修改。采购量＝需求＋安全库存－现存－在途，不足0取0，再按包装量向上取整；在途及采购交付时间须覆盖实际使用日。',
-      sourceNote: sourceNote+(campaign?` 常规部分沿用演示分摊；活动部分按${proposal.inputs.recipeVersion}的明确单位配方与本店核销量加入，并保留逐活动来源。配方为演示餐谱，代金券菜单组合须按实际点单核对。`:'') };
+      sourceNote: sourceNote+(campaign?' 常规部分按标准食材需求分摊；活动部分按当前用量模板与本店核销量加入，并保留逐活动来源。执行前须核对配方，代金券菜单组合须按实际点单核对。':'') };
   }
   const model = { build };
   root.SevenDayPlan = model;
@@ -3100,7 +3100,7 @@
     const id=activity.id,scope=`data-campaign-activity="${escape(id)}"`,isVoucher=activity.type==='voucher',group=preview.groups.find(row=>row.id===id);
     const recipe=root.CampaignRecipes.get(activity.recipeId),recipes=root.CampaignRecipes.templates;
     const details=activity.type==='package'?'套餐原价':activity.type==='item'?'单品原价':isVoucher?'券面值':'每单折前价';
-    return `<details class="campaign-card" data-campaign-card="${escape(id)}" ${expanded.has(id)?'open':''}><summary><span><strong id="campaign-name-${escape(id)}">${index+1}. ${escape(activity.name)}</strong><small id="campaign-summary-${escape(id)}">${escape(groupSummary(group))}</small></span><span class="hmw-tag" id="campaign-type-label-${escape(id)}">${escape(activity.customType||types[activity.type])}</span></summary><div class="campaign-card-body"><div class="campaign-card-actions"><button type="button" class="hmw-link" data-campaign-copy="${escape(id)}">复制活动方案</button><button type="button" class="hmw-link" data-campaign-remove="${escape(id)}">删除活动</button></div><div class="campaign-fields">${input('活动方案名称','name',activity.name,'type="text" required maxlength="60"',scope)}<label><span>活动类型</span><select data-campaign-type="${escape(id)}">${Object.entries(types).map(([type,name])=>`<option value="${type}" ${activity.type===type?'selected':''}>${name}</option>`).join('')}</select></label>${activity.type==='custom'?input('自定义类型名称','customType',activity.customType||'自定义促销','type="text" required maxlength="30"',scope):''}${numeric(activity.type==='package'?'预计销售份数':'预计销售数量','soldQuantity',activity.soldQuantity,scope)}${numeric('本期预计消费/核销率（%）','redemptionRate',activity.redemptionRate,scope,0,100,.01)}${numeric(details+'（元）','faceValue',activity.faceValue,scope,0,100000,.01)}${numeric(isVoucher?'购券价格（元）':activity.type==='package'?'套餐售价（元）':'销售价格（元）','salePrice',activity.salePrice,scope,0,100000,.01)}${isVoucher?numeric('每次核销订单折前消费额（元）','basketGross',activity.basketGross,scope,0,100000,.01):''}${numeric('每次消费/核销就餐人数','guestsPerOrder',activity.guestsPerOrder,scope,1,50,1)}${numeric('每次消费食材成本预算（元）','unitFoodCost',activity.unitFoodCost,scope,0,100000,.000001)}<label><span>备料用量模板</span><select data-campaign-recipe="${escape(id)}"><option value="">待提供用量模板</option>${recipes.map(item=>`<option value="${escape(item.id)}" ${activity.recipeId===item.id?'selected':''}>${escape(item.name)}</option>`).join('')}</select></label></div><p class="campaign-price-note" id="campaign-price-${escape(id)}">${priceNote(activity)}</p><p class="campaign-recipe-note" id="campaign-recipe-${escape(id)}">${recipe?`示例用量模板：${escape(recipe.name)}，参考食材成本${amount(recipe.unitFoodCost,6)}元/单。更换模板会带入参考成本，可另行调整预算。`:'有效消费的活动须补齐明确的用量模板，才能生成可创建单据的物料清单。'}</p></div></details>`;
+    return `<details class="campaign-card" data-campaign-card="${escape(id)}" ${expanded.has(id)?'open':''}><summary><span><strong id="campaign-name-${escape(id)}">${index+1}. ${escape(activity.name)}</strong><small id="campaign-summary-${escape(id)}">${escape(groupSummary(group))}</small></span><span class="hmw-tag" id="campaign-type-label-${escape(id)}">${escape(activity.customType||types[activity.type])}</span></summary><div class="campaign-card-body"><div class="campaign-card-actions"><button type="button" class="hmw-link" data-campaign-copy="${escape(id)}">复制活动方案</button><button type="button" class="hmw-link" data-campaign-remove="${escape(id)}">删除活动</button></div><div class="campaign-fields">${input('活动方案名称','name',activity.name,'type="text" required maxlength="60"',scope)}<label><span>活动类型</span><select data-campaign-type="${escape(id)}">${Object.entries(types).map(([type,name])=>`<option value="${type}" ${activity.type===type?'selected':''}>${name}</option>`).join('')}</select></label>${activity.type==='custom'?input('自定义类型名称','customType',activity.customType||'自定义促销','type="text" required maxlength="30"',scope):''}${numeric(activity.type==='package'?'预计销售份数':'预计销售数量','soldQuantity',activity.soldQuantity,scope)}${numeric('本期预计消费/核销率（%）','redemptionRate',activity.redemptionRate,scope,0,100,.01)}${numeric(details+'（元）','faceValue',activity.faceValue,scope,0,100000,.01)}${numeric(isVoucher?'购券价格（元）':activity.type==='package'?'套餐售价（元）':'销售价格（元）','salePrice',activity.salePrice,scope,0,100000,.01)}${isVoucher?numeric('每次核销订单折前消费额（元）','basketGross',activity.basketGross,scope,0,100000,.01):''}${numeric('每次消费/核销就餐人数','guestsPerOrder',activity.guestsPerOrder,scope,1,50,1)}${numeric('每次消费食材成本预算（元）','unitFoodCost',activity.unitFoodCost,scope,0,100000,.000001)}<label><span>备料用量模板</span><select data-campaign-recipe="${escape(id)}"><option value="">待提供用量模板</option>${recipes.map(item=>`<option value="${escape(item.id)}" ${activity.recipeId===item.id?'selected':''}>${escape(item.name)}</option>`).join('')}</select></label></div><p class="campaign-price-note" id="campaign-price-${escape(id)}">${priceNote(activity)}</p><p class="campaign-recipe-note" id="campaign-recipe-${escape(id)}">${recipe?`用量模板：${escape(recipe.name)}，参考食材成本${amount(recipe.unitFoodCost,6)}元/单。更换模板会带入参考成本，可另行调整预算。`:'有效消费的活动须补齐明确的用量模板，才能生成可创建单据的物料清单。'}</p></div></details>`;
   }
   function priceNote(activity){
     const face=Number(activity.faceValue)||0,sale=Number(activity.salePrice)||0,basket=activity.type==='voucher'?(Number(activity.basketGross)||0):face;
@@ -3111,7 +3111,7 @@
     const preview=model().activityBudget(draft);
     if(!initialized&&draft.activities.length){expanded.add(draft.activities[0].id);initialized=true;}
     const regularScope='data-campaign-regular="true"',regular=draft.regular;
-    return `<section class="campaign-editor"><header><h3>活动方案与销售预测</h3><p>按常规订单和各活动的预计消费/核销测算营收，再预测门店成本与利润。每笔消费只归入一组，下列活动不叠加；常规订单不包含活动订单。</p></header><details class="campaign-regular"><summary>未参加下列活动的常规订单</summary><div class="campaign-fields">${numeric('预计常规订单数','orders',regular.orders,regularScope)}${numeric('每单就餐人数','guestsPerOrder',regular.guestsPerOrder,regularScope,1,50)}${numeric('每单折前金额（元）','grossPerOrder',regular.grossPerOrder,regularScope,0,100000,.01)}${numeric('每单日常优惠（元）','discountPerOrder',regular.discountPerOrder,regularScope,0,100000,.01)}</div><p>常规食材按现有菜单演示标准估算；订单、人次均不再与活动重复相加。</p></details><div id="campaignActivityCards">${draft.activities.map((activity,index)=>activityCard(activity,index,preview)).join('')}</div><div class="campaign-add"><label><span>新增活动类型</span><select id="campaignAddType">${Object.entries(types).map(([type,name])=>`<option value="${type}">${name}</option>`).join('')}</select></label><button type="button" class="hmw-button" data-campaign-add>新增活动方案</button></div><div class="campaign-marketing">${numeric('市场推广费用预算（万元）','marketingBudget',draft.marketingBudget,'data-campaign-global="true"',0,100000,.01)}<small>推广支出单独计入费用，销售折扣只在收入端扣减一次。</small></div><div class="campaign-validation" id="campaignIssues" ${(preview.issues||[]).length?'':'hidden'}><strong>请先修正活动参数</strong><ul id="campaignIssueList">${issueHtml(preview)}</ul></div><div class="campaign-preview"><header><h4>本期活动与常规经营测算</h4><span>以下为草稿，重新测算后更新门店方案</span></header><p class="campaign-volume">预计消费就餐 <strong id="campaignGuests">${amount(preview.totals.guests,0)}人次</strong> · 核心金额按以下10项查看</p><div id="campaignCorePreview">${root.coreMetrics(preview.totals,'campaign-draft')}</div><div class="hmw-table-wrap"><table class="hmw-table campaign-ledger"><thead><tr><th>消费分组</th><th class="numeric">预计消费/核销单数</th><th class="numeric">就餐人次</th><th class="numeric">折前金额/万元</th><th class="numeric">优惠/万元</th><th class="numeric">消费营收/万元</th><th class="numeric">食材预算/万元</th></tr></thead><tbody id="campaignLedger">${ledgerRows(preview)}</tbody></table></div><div class="campaign-cash"><strong>现金与消费收入分开看</strong><p id="campaignCashText">${cashText(preview)}</p><small>本模型按本期新售活动及其本期核销估算，不含历史券核销。未核销款单列，不作为本期消费营收；退款与到期未使用款未在本模型中确认收益。</small></div><details class="campaign-expense-details"><summary>查看各项费用明细与计算依据（已计入经营利润）</summary><div class="campaign-costs" id="campaignCostRows">${costRows(preview)}</div><p class="campaign-source">食材按常规菜单标准与活动单位成本估算；人工及其他费用结合门店固定投入和预计消费人次测算。默认活动配有明确的演示用量模板，新增活动可选模板；费用金额不能直接反推食材公斤数。</p></details></div></section>`;
+    return `<section class="campaign-editor"><header><h3>活动方案与销售预测</h3><p>按常规订单和各活动的预计消费/核销测算营收，再预测门店成本与利润。每笔消费只归入一组，下列活动不叠加；常规订单不包含活动订单。</p></header><details class="campaign-regular"><summary>未参加下列活动的常规订单</summary><div class="campaign-fields">${numeric('预计常规订单数','orders',regular.orders,regularScope)}${numeric('每单就餐人数','guestsPerOrder',regular.guestsPerOrder,regularScope,1,50)}${numeric('每单折前金额（元）','grossPerOrder',regular.grossPerOrder,regularScope,0,100000,.01)}${numeric('每单日常优惠（元）','discountPerOrder',regular.discountPerOrder,regularScope,0,100000,.01)}</div><p>常规食材按现有菜单标准估算；订单、人次均不再与活动重复相加。</p></details><div id="campaignActivityCards">${draft.activities.map((activity,index)=>activityCard(activity,index,preview)).join('')}</div><div class="campaign-add"><label><span>新增活动类型</span><select id="campaignAddType">${Object.entries(types).map(([type,name])=>`<option value="${type}">${name}</option>`).join('')}</select></label><button type="button" class="hmw-button" data-campaign-add>新增活动方案</button></div><div class="campaign-marketing">${numeric('市场推广费用预算（万元）','marketingBudget',draft.marketingBudget,'data-campaign-global="true"',0,100000,.01)}<small>推广支出单独计入费用，销售折扣只在收入端扣减一次。</small></div><div class="campaign-validation" id="campaignIssues" ${(preview.issues||[]).length?'':'hidden'}><strong>请先修正活动参数</strong><ul id="campaignIssueList">${issueHtml(preview)}</ul></div><div class="campaign-preview"><header><h4>本期活动与常规经营测算</h4><span>以下为草稿，重新测算后更新门店方案</span></header><p class="campaign-volume">预计消费就餐 <strong id="campaignGuests">${amount(preview.totals.guests,0)}人次</strong> · 核心金额按以下10项查看</p><div id="campaignCorePreview">${root.coreMetrics(preview.totals,'campaign-draft')}</div><div class="hmw-table-wrap"><table class="hmw-table campaign-ledger"><thead><tr><th>消费分组</th><th class="numeric">预计消费/核销单数</th><th class="numeric">就餐人次</th><th class="numeric">折前金额/万元</th><th class="numeric">优惠/万元</th><th class="numeric">消费营收/万元</th><th class="numeric">食材预算/万元</th></tr></thead><tbody id="campaignLedger">${ledgerRows(preview)}</tbody></table></div><div class="campaign-cash"><strong>现金与消费收入分开看</strong><p id="campaignCashText">${cashText(preview)}</p><small>本模型按本期新售活动及其本期核销估算，不含历史券核销。未核销款单列，不作为本期消费营收；退款与到期未使用款未在本模型中确认收益。</small></div><details class="campaign-expense-details"><summary>查看各项费用明细与计算依据（已计入经营利润）</summary><div class="campaign-costs" id="campaignCostRows">${costRows(preview)}</div><p class="campaign-source">食材按常规菜单标准与活动单位成本估算；人工及其他费用结合门店固定投入和预计消费人次测算。默认活动配有明确的用量模板，新增活动可选模板；费用金额不能直接反推食材公斤数。</p></details></div></section>`;
   }
   function ledgerRows(preview){return preview.groups.map(group=>`<tr><td>${escape(group.name)}</td><td class="numeric">${amount(group.redemptions,0)}</td><td class="numeric">${amount(group.guests,0)}</td><td class="numeric">${amount(group.grossSales)}</td><td class="numeric">${amount(group.discount)}</td><td class="numeric">${amount(group.revenue)}</td><td class="numeric">${amount(group.food)}</td></tr>`).join('');}
   function cashText(preview){const cash=preview.cash;return `本期预计总收款${money(cash.received)}；其中活动已消费/核销价款${money(cash.redeemed)}、核销补差${money(cash.extraPayment)}；未核销预收${money(cash.deferred)}，不再重复加入消费营收。`;}
@@ -3157,6 +3157,23 @@ const amt = (value,decimals=2) => (Number(Number(value).toFixed(decimals))||0).t
 const signedAmt = (value,decimals=2) => `${Number(Number(value).toFixed(decimals))>0?'+':''}${amt(value,decimals)}`;
 const pct = (value,base,decimals=1) => base?`${num(value/base*100,decimals)}%`:'—';
 const esc = value => String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function businessText(value){
+  return String(value??'')
+    .replace(/渠道拆分为本产品内置演示数据：/g,'渠道计算口径：')
+    .replace(/未接入真实POS或外卖平台。/g,'')
+    .replace(/14项演示食材目录由8项已确认原料与6项补充食材组成，不等于真实完整BOM/g,'物料清单由8项已确认原料与6项补充食材组成，执行前须核对菜单及完整配方覆盖范围')
+    .replace(/库存、在途、名册与可用性均为演示假设，尚未连接真实库存或人事系统。/g,'库存、在途与人员可用性须逐项核对。')
+    .replace(/按门店座位规模给定固定示例名册/g,'按门店人员配置安排岗位')
+    .replace(/真实技能、可用性、考勤及薪酬须接入人事后核实/g,'人员技能、可用性、考勤及薪酬须逐项核对')
+    .replace(/不代表品牌真实餐谱或供应商已签报价/g,'配方、菜单组合与采购报价须确认')
+    .replace(/不是品牌实际餐谱或已签报价/g,'配方与采购报价须确认')
+    .replace(/不是真实供应商档案、市场行情或供货承诺/g,'须核对供应商资质、市场行情与供货条件')
+    .replace(/不是企业供应商档案或已取得的真实报价/g,'报价与供货条件须确认')
+    .replace(/非真实供货承诺/g,'供货条件待确认')
+    .replace(/CAMPAIGN-DEMO-BOM-V(\d+)/g,'配方V$1')
+    .replace(/（示例）|\(示例\)/g,'')
+    .replace(/演示|示例|模拟/g,'');
+}
 const key = row => row.storeId||row.id;
 const storeName = row => row.storeName||row.name;
 const pages = [['attribution','10月利润归因'],['forecast','11月经营建议'],['tracking','执行跟进']];
@@ -3296,7 +3313,7 @@ const strategyFields=[
 const expenseOrder=['marketing',...M.expenseKeys.filter(key=>key!=='marketing')];
 function expenseBudgetEditor(d){
   const budget=AI.expenseBudget(d),rows=expenseOrder.map(key=>budget.rows.find(row=>row.key===key));
-  return `<section class="ai-expense-editor"><header><h3>费用占比与预计金额</h3><p>各店预计折后营收 × 本店标准占比，先算门店金额，再汇总集团占比。标准采用本演示方案一各店基准费用率。</p></header><div class="ai-expense-head" aria-hidden="true"><span>费用项目</span><span>集团占折后营收</span><span>预计金额</span><span>默认计算依据</span></div>${rows.map(row=>`<div class="ai-expense-row" data-expense-row="${row.key}"><label for="ai-expense-${row.key}">${esc(row.name)}</label><span class="ai-number-input"><input id="ai-expense-${row.key}" type="number" required min="0" max="100" step="0.000001" data-expense-rate="${row.key}" aria-label="${esc(row.name)}占折后营收比例" value="${Object.hasOwn(d.expenseRatios,row.key)?esc(d.expenseRatios[row.key]):Number(row.rate.toFixed(6))}"><span>%</span></span><strong class="ai-expense-amount" id="ai-expense-amount-${row.key}">${amt(row.amount,2)}<small>万元</small></strong><div class="ai-expense-default"><small id="ai-expense-default-${row.key}">${Object.hasOwn(d.expenseRatios,row.key)?'人工调整 · ':''}门店标准加权 ${amt(row.standardRate,6)}%</small><button type="button" class="hmw-link" data-expense-reset="${row.key}" ${Object.hasOwn(d.expenseRatios,row.key)?'':'hidden'}>恢复门店标准</button></div></div>`).join('')}<h4>10项核心指标 · 草稿预算</h4><div id="expenseCorePreview">${coreMetrics(expensePreviewRow(d,budget),'steady-draft')}</div><p class="hmw-note">费用明细合计 <span id="aiExpenseTotal">${amt(budget.totals.expenses)}万元</span>，已全部计入经营利润。餐具、物耗、维修、推广见上方费用配置。</p><p class="hmw-note">费用占比合计无需等于100%，差额为经营利润率。手改集团占比按各店当前标准金额权重分配，保留门店差异；未修改项保留原始精度。以上为草稿预算，重新测算并经店长确认后生效。</p><p class="ai-expense-warning" id="aiExpenseFixedWarning" ${budget.fixedGaps.length?'':'hidden'}>${new Set(budget.fixedGaps.map(gap=>gap.storeId)).size}家门店预算低于原固定投入参考，须落实合同、人员或资源调整后再确认。</p></section>`;
+  return `<section class="ai-expense-editor"><header><h3>费用占比与预计金额</h3><p>各店预计折后营收 × 本店标准占比，先算门店金额，再汇总集团占比。标准采用方案一各店基准费用率。</p></header><div class="ai-expense-head" aria-hidden="true"><span>费用项目</span><span>集团占折后营收</span><span>预计金额</span><span>默认计算依据</span></div>${rows.map(row=>`<div class="ai-expense-row" data-expense-row="${row.key}"><label for="ai-expense-${row.key}">${esc(row.name)}</label><span class="ai-number-input"><input id="ai-expense-${row.key}" type="number" required min="0" max="100" step="0.000001" data-expense-rate="${row.key}" aria-label="${esc(row.name)}占折后营收比例" value="${Object.hasOwn(d.expenseRatios,row.key)?esc(d.expenseRatios[row.key]):Number(row.rate.toFixed(6))}"><span>%</span></span><strong class="ai-expense-amount" id="ai-expense-amount-${row.key}">${amt(row.amount,2)}<small>万元</small></strong><div class="ai-expense-default"><small id="ai-expense-default-${row.key}">${Object.hasOwn(d.expenseRatios,row.key)?'人工调整 · ':''}门店标准加权 ${amt(row.standardRate,6)}%</small><button type="button" class="hmw-link" data-expense-reset="${row.key}" ${Object.hasOwn(d.expenseRatios,row.key)?'':'hidden'}>恢复门店标准</button></div></div>`).join('')}<h4>10项核心指标 · 草稿预算</h4><div id="expenseCorePreview">${coreMetrics(expensePreviewRow(d,budget),'steady-draft')}</div><p class="hmw-note">费用明细合计 <span id="aiExpenseTotal">${amt(budget.totals.expenses)}万元</span>，已全部计入经营利润。餐具、物耗、维修、推广见上方费用配置。</p><p class="hmw-note">费用占比合计无需等于100%，差额为经营利润率。手改集团占比按各店当前标准金额权重分配，保留门店差异；未修改项保留原始精度。以上为草稿预算，重新测算并经店长确认后生效。</p><p class="ai-expense-warning" id="aiExpenseFixedWarning" ${budget.fixedGaps.length?'':'hidden'}>${new Set(budget.fixedGaps.map(gap=>gap.storeId)).size}家门店预算低于原固定投入参考，须落实合同、人员或资源调整后再确认。</p></section>`;
 }
 function refreshExpensePreview(){
   if(scenario.draft.costMode!=='store-standard-rates-v1'||!$('#aiExpenseRevenue'))return;
@@ -3339,11 +3356,11 @@ function forecastStoreTable(f,query=''){
 function actionCard(action,tracking=false,firstLayer=false){
   const amount=firstLayer?amt:num,condition=action.condition||action.description||'';
   const adjusted=actionAdjusted(action);
-  return `<article class="hmw-action"><h3>${esc(action.title)} ${tracking?`<span class="hmw-tag ${adjusted?'blue':'warn'}">${adjusted?'已调整 · 效果待复核':esc(action.status||'待执行')}</span>`:''}</h3><p>${esc(firstLayer?condition.replace('1,150元价差','0.115万元价差'):condition)}</p>${action.metric||action.target?`<p><b>${esc(action.metric||'验收目标')}：</b>${esc(action.target||'')}</p>`:''}<div class="hmw-action-meta"><span>负责人：${esc(action.owner)}</span><span>${action.deadlineRole?esc(action.deadlineRole):'截止'}：${esc(action.deadline)}</span>${action.scopeStoreIds?`<span>覆盖 ${action.scopeStoreIds.length} 家门店</span>`:''}${!tracking&&Number.isFinite(action.saving)?`<span class="hmw-tag blue">${action.campaignReference?'原经营模型参考':action.budgetReference?'标准已含改善参考':'本场景收益'} ${amount(action.saving)}${firstLayer?'万元':'万'}</span>`:''}${action.readyBy?`<span>准备就绪：${esc(action.readyBy)}</span>`:''}${tracking?`<button class="hmw-link" data-adjust="${action.id}" ${adjusted?'disabled':''}>${adjusted?'已登记整改':'登记调整完成'}</button>`:''}</div>${action.driverDetails?.length?actionDriverDetails(action,firstLayer):''}</article>`;
+  return `<article class="hmw-action"><h3>${esc(action.title)} ${tracking?`<span class="hmw-tag ${adjusted?'blue':'warn'}">${adjusted?'已调整 · 效果待复核':esc(action.status||'待执行')}</span>`:''}</h3><p>${esc(businessText(firstLayer?condition.replace('1,150元价差','0.115万元价差'):condition))}</p>${action.metric||action.target?`<p><b>${esc(action.metric||'验收目标')}：</b>${esc(action.target||'')}</p>`:''}<div class="hmw-action-meta"><span>负责人：${esc(action.owner)}</span><span>${action.deadlineRole?esc(action.deadlineRole):'截止'}：${esc(action.deadline)}</span>${action.scopeStoreIds?`<span>覆盖 ${action.scopeStoreIds.length} 家门店</span>`:''}${!tracking&&Number.isFinite(action.saving)?`<span class="hmw-tag blue">${action.campaignReference?'原经营模型参考':action.budgetReference?'标准已含改善参考':'本场景收益'} ${amount(action.saving)}${firstLayer?'万元':'万'}</span>`:''}${action.readyBy?`<span>准备就绪：${esc(action.readyBy)}</span>`:''}${tracking?`<button class="hmw-link" data-adjust="${action.id}" ${adjusted?'disabled':''}>${adjusted?'已登记整改':'登记调整完成'}</button>`:''}</div>${action.driverDetails?.length?actionDriverDetails(action,firstLayer):''}</article>`;
 }
 function actionDriverDetails(action,firstLayer=false){
   const amount=firstLayer?amt:num;
-  return `<details class="hmw-detail"><summary>查看金额测算与执行条件</summary><p class="hmw-note">${esc(action.calculation||'')}</p>${action.driverDetails.map(d=>d.currentPrice!=null?`<div class="hmw-action-meta"><b>${esc(d.name)}</b><span>${amount(d.quantity,0)}${d.unit} ×（${amount(d.currentPrice)} − ${amount(d.targetPrice)}）元/${d.unit} ÷10,000</span><span>× ${amount(action.executionRate??100,0)}% = ${amount(d.saving,4)}万元</span><span class="hmw-tag warn">${esc(d.status)}</span></div>`:d.hours!=null?`<p class="hmw-note">${amount(d.hours,2)}小时 × ${amount(d.hourlyCost)}元/小时 ÷10,000 × ${amount(action.executionRate??100,0)}% = ${amount(d.saving,4)}万元。${esc(d.note||'')}</p>`:d.beforeKg!=null?`<p class="hmw-note">可避免超标耗用 ${amount(d.beforeKg,0)}公斤 × ${amount(d.unitCost)}元/公斤 ÷10,000 × ${amount(action.executionRate??100,0)}% = ${amount(d.saving,4)}万元。${esc(d.note||'')}</p>`:`<p class="hmw-note">${esc(d.name)}：整改前预算 ${amount(d.before,2)} → 全达成目标 ${amount(d.after,2)}万元；按本场景整改达成率，预计减少 ${amount(d.saving,4)}万元。</p>`).join('')}</details>`;
+  return `<details class="hmw-detail"><summary>查看金额测算与执行条件</summary><p class="hmw-note">${esc(businessText(action.calculation||''))}</p>${action.driverDetails.map(d=>d.currentPrice!=null?`<div class="hmw-action-meta"><b>${esc(d.name)}</b><span>${amount(d.quantity,0)}${d.unit} ×（${amount(d.currentPrice)} − ${amount(d.targetPrice)}）元/${d.unit} ÷10,000</span><span>× ${amount(action.executionRate??100,0)}% = ${amount(d.saving,4)}万元</span><span class="hmw-tag warn">${esc(d.status)}</span></div>`:d.hours!=null?`<p class="hmw-note">${amount(d.hours,2)}小时 × ${amount(d.hourlyCost)}元/小时 ÷10,000 × ${amount(action.executionRate??100,0)}% = ${amount(d.saving,4)}万元。${esc(businessText(d.note||''))}</p>`:d.beforeKg!=null?`<p class="hmw-note">可避免超标耗用 ${amount(d.beforeKg,0)}公斤 × ${amount(d.unitCost)}元/公斤 ÷10,000 × ${amount(action.executionRate??100,0)}% = ${amount(d.saving,4)}万元。${esc(businessText(d.note||''))}</p>`:`<p class="hmw-note">${esc(d.name)}：整改前预算 ${amount(d.before,2)} → 全达成目标 ${amount(d.after,2)}万元；按本场景整改达成率，预计减少 ${amount(d.saving,4)}万元。</p>`).join('')}</details>`;
 }
 function renderTracking(){
   const t=M.tracking,s=t.summary,p=s.plan,a=s.actual;
@@ -3372,7 +3389,7 @@ function trackingBridge(){
 }
 function forecastAssumptions(f){
   const overloaded=f.byStore.filter(r=>r.capacityUse>100);
-  return `<p>${esc(f.assumptions.demand)}</p><div class="hmw-mini-kpis"><div><small>食材目标费率</small><strong>${pct(f.totals.food,f.totals.revenue)}</strong></div><div><small>人工目标费率</small><strong>${pct(f.totals.labor,f.totals.revenue)}</strong></div><div><small>产能余量≥10%门店</small><strong>${f.capacityReadyStoreCount}<span>/120</span></strong></div></div><ul class="hmw-note">${f.assumptions.conditions.map(c=>`<li>${esc(c)}</li>`).join('')}</ul><p class="hmw-note">${esc(f.assumptions.note)}</p><p class="hmw-note">${esc(f.assumptions.readiness||'')}</p>${overloaded.length?`<div class="hmw-insight"><span><strong>${overloaded.length}家门店预计超过现有产能</strong>　须先调整活动客流分配或确认增加承接能力；本预测以约束得到解决为条件。</span></div>`:''}`;
+  return `<p>${esc(businessText(f.assumptions.demand))}</p><div class="hmw-mini-kpis"><div><small>食材目标费率</small><strong>${pct(f.totals.food,f.totals.revenue)}</strong></div><div><small>人工目标费率</small><strong>${pct(f.totals.labor,f.totals.revenue)}</strong></div><div><small>产能余量≥10%门店</small><strong>${f.capacityReadyStoreCount}<span>/120</span></strong></div></div><ul class="hmw-note">${f.assumptions.conditions.map(c=>`<li>${esc(businessText(c))}</li>`).join('')}</ul><p class="hmw-note">${esc(businessText(f.assumptions.note))}</p><p class="hmw-note">${esc(businessText(f.assumptions.readiness||''))}</p>${overloaded.length?`<div class="hmw-insight"><span><strong>${overloaded.length}家门店预计超过现有产能</strong>　须先调整活动客流分配或确认增加承接能力；本预测以约束得到解决为条件。</span></div>`:''}`;
 }
 function causeTabs(c,tab){return `<div class="hmw-tabs"><button class="${tab==='detail'?'active':''}" data-cause-tab="${c.id}" data-tab="detail">细项分析</button><button class="${tab==='stores'?'active':''}" data-cause-tab="${c.id}" data-tab="stores">120家门店分布</button></div>`;}
 function showCause(id,tab='detail'){
@@ -3460,8 +3477,8 @@ function pushTasks(){
 function remediationPlans(){
   const regular=M.materials.filter(m=>!m.newProduct).sort((a,b)=>a.priceImpact-b.priceImpact),fresh=M.materials.filter(m=>m.newProduct).sort((a,b)=>a.priceImpact-b.priceImpact);
   const plans=[
-    {id:'supplier-negotiation',category:'food',causeId:'procurement',title:`对${regular.map(m=>m.name).join('、')}逐项开展供应商议价。`,summary:'逐项明确主谈供应商、参考报价、目标价、月度承诺量及分批交付安排。',name:'供应商谈价方案',evidence:`上述物料10月采购价差合计增加成本${amt(-regular.reduce((s,m)=>s+m.priceImpact,0))}万元，优先处理价差影响较大的物料。`,steps:['采购负责人按下列供应商与目标价发起谈判，逐项确认同品级、同规格、含税到仓及账期口径。','以本方案的月度建议量谈锁价条件，确认最低承诺量、供货上限与分批交付安排；不足承诺下限或超出报价区间时重新询价。','谈价未达目标时对比备选报价与预计成本，经确认后再签约；将成交价、承诺量及交付计划逐项写入采购协议。'],verification:'用后续实际采购量和结算到货价复核价差，同时检查验收质量与供货及时性；历史价差不作为承诺节约额。',missing:'供应商及参考报价为示例档案；目标价取当前11月预算，尚未签约。真实执行前需核实市场行情、供应商资质、实时报价及同规格验收要求。'},
-    {id:'new-purchase',category:'food',causeId:'procurement',title:`根据新品销量预测，落实${fresh.map(m=>m.name).join('、')}的采购量与价格。`,summary:'逐项明确新品供货商、目标价、采购承诺量与四段交付排期，减少临时高价补货。',name:'新品采购方案',evidence:`新品追加现货采购价差合计增加成本${amt(-fresh.reduce((s,m)=>s+m.priceImpact,0))}万元；历史试销配额与整月批量合约需分别核对。`,steps:['产品与采购负责人按下列物料、供应商与月度采购建议量，核对门店销量预测、单份标准用量和可用库存。','按目标价与月度最低承诺量逐项议价；需求未达到门槛时重新询价，避免为锁价盲目超量采购。','按四段交付排期落实分日配送，确认采购价格、合同承诺及追加采购规则；销量偏离预测时调整后续批次。'],verification:'核对预测用量与实际用量、锁价采购覆盖及临采量，并检查库存周转与报损是否恶化。',missing:'供应商与参考报价为示例档案，11月目标价尚未签约；门店库存、最新需求与合约条件待核实。历史试销门槛与本轮预算承诺量分别列示，不能混用。'},
+    {id:'supplier-negotiation',category:'food',causeId:'procurement',title:`对${regular.map(m=>m.name).join('、')}逐项开展供应商议价。`,summary:'逐项明确主谈供应商、参考报价、目标价、月度承诺量及分批交付安排。',name:'供应商谈价方案',evidence:`上述物料10月采购价差合计增加成本${amt(-regular.reduce((s,m)=>s+m.priceImpact,0))}万元，优先处理价差影响较大的物料。`,steps:['采购负责人按下列供应商与目标价发起谈判，逐项确认同品级、同规格、含税到仓及账期口径。','以本方案的月度建议量谈锁价条件，确认最低承诺量、供货上限与分批交付安排；不足承诺下限或超出报价区间时重新询价。','谈价未达目标时对比备选报价与预计成本，经确认后再签约；将成交价、承诺量及交付计划逐项写入采购协议。'],verification:'用后续实际采购量和结算到货价复核价差，同时检查验收质量与供货及时性；历史价差不作为承诺节约额。',missing:'供应商参考报价及11月目标价尚待谈判与签约确认，执行前需核实市场行情、供应商资质、报价有效期及同规格验收要求。'},
+    {id:'new-purchase',category:'food',causeId:'procurement',title:`根据新品销量预测，落实${fresh.map(m=>m.name).join('、')}的采购量与价格。`,summary:'逐项明确新品供货商、目标价、采购承诺量与四段交付排期，减少临时高价补货。',name:'新品采购方案',evidence:`新品追加现货采购价差合计增加成本${amt(-fresh.reduce((s,m)=>s+m.priceImpact,0))}万元；历史试销配额与整月批量合约需分别核对。`,steps:['产品与采购负责人按下列物料、供应商与月度采购建议量，核对门店销量预测、单份标准用量和可用库存。','按目标价与月度最低承诺量逐项议价；需求未达到门槛时重新询价，避免为锁价盲目超量采购。','按四段交付排期落实分日配送，确认采购价格、合同承诺及追加采购规则；销量偏离预测时调整后续批次。'],verification:'核对预测用量与实际用量、锁价采购覆盖及临采量，并检查库存周转与报损是否恶化。',missing:'供应商参考报价及11月目标价尚待签约确认；门店库存、最新需求与合约条件待核实。历史试销门槛与本轮预算承诺量分别列示，不能混用。'},
     {id:'prep',category:'food',causeId:'usage-prep',title:'对备料超耗较高的门店，按销量分批备料并核对出成率。',summary:'按门店与物料定位超耗，列出标准用量核查、备料批次调整和复盘方法。',name:'备料优化方案',steps:['区域运营负责人优先复核下列门店，厨务逐项核对实际销量、标准配方用量与盘点实耗。','对超耗物料检查切配出成率、称量及备料批次，按预计销量安排首批备料和后续补料。','记录每批投入、成品产出和剩余量，按同类经营日复核偏差，再调整备料量。'],verification:'按实际销量重新计算标准应耗，比较单位销量超耗及备料超耗成本，同时检查缺货和出餐是否受影响。',missing:'门店分时销量、备料批次与出成率实测记录待核实后，才能确定具体备料数量。'},
     {id:'waste',category:'food',causeId:'usage-waste',title:'对报损较高的门店，逐项核查报损物料与余料去向。',summary:'形成优先核查清单，分别制定收货、储存及余料处理措施。',name:'报损整改方案',steps:['店长与厨务负责人按物料核对报损数量、金额、原因及余料记录，优先检查报损影响较大的门店。','现场核查收货品质、保质期、温控及先进先出执行情况；根据查明原因调整收货与储存方式。','对照销售与备料记录确认余料来源，依照食品安全要求调整备料和处理流程，保留每日复核记录。'],verification:'按同类经营日比较报损量、单位销量报损成本与余料量，同时核对盘点差异，避免仅靠少报报损形成改善。',missing:'具体报损原因、保质期及现场检查记录待补充，尚不能认定为某一种操作问题。'},
     {id:'peak-staffing',category:'labor',causeId:'labor-peak',title:'对高峰加班及临时支援较多的门店，调整班次衔接与支援安排。',summary:'结合高峰客流、在岗人数及超标准工时，制定高峰用工调整步骤。',name:'高峰用工调整方案',steps:['区域运营与店长核对高峰分时客流、排班、考勤及加班审批，确认支援是否与实际需求匹配。','优先调整班次重叠、岗位分工和跨店支援安排，再评估可以减少的加班，保留高峰必要岗位。','选取同类经营日复核调整前后工时和服务表现，发现排队或出餐恶化时及时回调。'],verification:'比较相近客流下的高峰加班、支援工时与人工费用，同时核对高峰出餐时长和百客有效客诉。',missing:'分时客流、岗位排班与考勤明细待补充；现有归因金额不能直接换算为可削减人员数。'},
@@ -3493,7 +3510,7 @@ function procurementPlanBody(plan){
     const s=item.primarySupplier,b=item.backupSupplier;
     return `<article class="ai-procurement-item" data-purchase-material="${item.materialId}"><header><div><h4>${esc(item.name)}</h4><p>${esc(item.specification)}</p></div><span class="hmw-tag ${item.requiresRequote?'warn':'blue'}">${item.requiresRequote?'采购量变动 · 需重新询价':'目标价待议价确认'}</span></header><p class="ai-procurement-decision">建议与<strong>${esc(s.name)}</strong>谈至<strong>${amt(item.targetPrice)}元/公斤</strong>，按<strong>${amt(item.quantityKg,0)}公斤</strong>落实11月采购与分批交付。</p><dl class="ai-procurement-numbers"><div><dt>10月参考价</dt><dd>${amt(item.currentPrice)}<small>元/公斤</small></dd></div><div><dt>供应商参考报价</dt><dd>${amt(s.referenceQuote)}<small>元/公斤</small></dd></div><div class="is-target"><dt>建议谈价目标</dt><dd>${amt(item.targetPrice)}<small>元/公斤</small></dd></div><div><dt>月度建议采购量</dt><dd>${amt(item.quantityKg,0)}<small>公斤</small></dd></div><div><dt>月度锁价承诺下限</dt><dd>${amt(item.minimumCommitmentKg,0)}<small>公斤</small></dd></div></dl><p class="ai-procurement-calculation">目标全部达成的条件节约：${amt(item.quantityKg,0)}公斤 ×（${amt(item.currentPrice)} − ${amt(item.targetPrice)}）元/公斤 ÷ 10,000 ＝ <strong>${amt(item.potentialSaving)}万元</strong>。</p><div class="hmw-table-wrap"><table class="hmw-table ai-procurement-suppliers"><thead><tr><th>主谈与备选供应商</th><th class="numeric">参考报价 / 元·公斤</th><th class="numeric">建议分配量 / 公斤</th><th class="numeric">参考月供能力 / 公斤</th><th>建议账期</th></tr></thead><tbody>${supplierRow(s,'主谈')}${supplierRow(b,'备选')}</tbody></table></div><p class="hmw-note">报价适用月度量：${amt(item.quotationMinKg,0)}—${amt(item.quotationMaxKg,0)}公斤。备选供应商预留资格、分配量为0，启用时重新确认量价；${esc(s.deliveryTerms)}</p><details class="ai-procurement-schedule"><summary>查看分批交付与谈判要点</summary><div class="ai-procurement-batches">${item.batches.map(batch=>`<div><small>${esc(batch.label)}</small><strong>${amt(batch.quantityKg,0)}<span>公斤</span></strong></div>`).join('')}</div><p>按周锁定交付额度，再按门店日需求分日配送。四段合计${amt(item.quantityKg,0)}公斤，按滚动销量调整后续批次；月度承诺量与一次到货量分开确认。</p><blockquote>致${esc(s.name)}：我方11月拟采购${esc(item.name)}${amt(item.quantityKg,0)}公斤，按${esc(item.specification)}、含税到仓口径执行。贵方参考报价${amt(s.referenceQuote)}元/公斤，我方目标为${amt(item.targetPrice)}元/公斤，请按月度承诺及上述交付排期确认最终价格、账期和供货能力。</blockquote><p>若主谈未达目标：向${esc(b.name)}按全量${amt(item.quantityKg,0)}公斤重新询价。若按参考价${amt(b.referenceQuote)}元/公斤供货，月采购支出为${amt(item.quantityKg*b.referenceQuote/10000)}万元，比目标预算高${amt(item.quantityKg*b.referenceQuote/10000-item.monthlyTargetCost)}万元；由采购与财务确认后再启用，并相应复核11月经营建议。</p></details></article>`;
   }).join('');
-  return `<div class="ai-remediation-plan ai-procurement-plan" data-remediation-detail="${plan.id}"><div class="ai-procurement-summary"><span>11月采购安排 · ${esc(planNames[f.plan])}</span><h3>供应商、目标价格与采购量建议</h3><p>示例供应商及参考报价，目标价待议价确认。</p><div class="ai-procurement-totals"><div><small>计划采购量</small><strong>${amt(p.quantityTotal,0)}<span>公斤</span></strong></div><div><small>目标全部达成可节约</small><strong>${amt(p.potentialSavingTotal)}<span>万元</span></strong></div></div><p>当前采购整改达成率${amt(p.purchaseExecution*100,0)}%，对应测算${amt(p.savingTotal)}万元；已包含在该方案的采购整改收益中，待实际结算确认。</p><button class="hmw-link" data-nav="forecast">前往11月经营建议调整方案</button></div>${items}<h3>执行步骤</h3><ol>${plan.steps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol><h3>效果核验</h3><p>${esc(plan.verification)}</p><details class="ai-procurement-history"><summary>查看10月问题与历史量价依据</summary><p>${esc(plan.evidence)}</p>${remediationPlanEvidence(plan)}</details><div class="ai-remediation-pending"><strong>签约前确认</strong><p>${esc(plan.missing)}</p></div><button class="hmw-button" data-cause="${plan.causeId}">查看相关归因及门店明细</button></div>`;
+  return `<div class="ai-remediation-plan ai-procurement-plan" data-remediation-detail="${plan.id}"><div class="ai-procurement-summary"><span>11月采购安排 · ${esc(planNames[f.plan])}</span><h3>供应商、目标价格与采购量建议</h3><p>供应商参考报价与目标价待议价确认。</p><div class="ai-procurement-totals"><div><small>计划采购量</small><strong>${amt(p.quantityTotal,0)}<span>公斤</span></strong></div><div><small>目标全部达成可节约</small><strong>${amt(p.potentialSavingTotal)}<span>万元</span></strong></div></div><p>当前采购整改达成率${amt(p.purchaseExecution*100,0)}%，对应测算${amt(p.savingTotal)}万元；已包含在该方案的采购整改收益中，待实际结算确认。</p><button class="hmw-link" data-nav="forecast">前往11月经营建议调整方案</button></div>${items}<h3>执行步骤</h3><ol>${plan.steps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol><h3>效果核验</h3><p>${esc(plan.verification)}</p><details class="ai-procurement-history"><summary>查看10月问题与历史量价依据</summary><p>${esc(plan.evidence)}</p>${remediationPlanEvidence(plan)}</details><div class="ai-remediation-pending"><strong>签约前确认</strong><p>${esc(plan.missing)}</p></div><button class="hmw-button" data-cause="${plan.causeId}">查看相关归因及门店明细</button></div>`;
 }
 function operatingExpensePlan(){
   const f=scenario.applied,marketingFixed=AI.bounds(f.plan).marketingBudget.min;
@@ -3609,7 +3626,7 @@ document.addEventListener('click',event=>{
   const action=event.target.closest('[data-action]')?.dataset.action;
   if(action==='baseline')dialog('9月模式下的10月基准测算',baselineTables(),'渠道量价与成本费用参考');
   if(action==='substitution')dialog('固定顺序连环替代',substitutionTable(),'每一步利润变化均由模型重算');
-  if(action==='methodology')dialog('数据与方法口径',`<p>${esc(M.attribution.sourceNote)}</p><p>${esc(M.definitions.usageMaterials)}</p><ol>${M.attribution.methodSteps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><p>月度目标不进入本归因桥。净下降贡献以环比差额为分母，基准缺口贡献以基准减实际为分母；各层级不可混用。数据均来自内置业务模型，未验证真实企业因果。</p>`,'9月模式 · '+M.attribution.version);
+  if(action==='methodology')dialog('数据与方法口径',`<p>${esc(M.attribution.sourceNote)}</p><p>${esc(M.definitions.usageMaterials)}</p><ol>${M.attribution.methodSteps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><p>月度目标不进入本归因桥。净下降贡献以环比差额为分母，基准缺口贡献以基准减实际为分母；各层级不可混用。经营归因按上述口径分解，整改效果须结合后续实际执行核验。</p>`,'9月模式 · '+M.attribution.version);
   if(action==='statement')dialog('9月与10月管理利润表',pnlTable([{label:'9月实际',row:M.actuals.september,rate:true},{label:'10月实际',row:M.actuals.october,rate:true}]));
   if(action==='show-evidence'){globalThis.AiPlatform?.revealEvidence();$('#aiEvidence').scrollIntoView({block:'start',behavior:'instant'});}
   if(action==='edit-strategy'){globalThis.AiPlatform?.revealEvidence();$('#aiStrategyForm').scrollIntoView({block:'start',behavior:'instant'});}
@@ -3629,7 +3646,7 @@ document.addEventListener('change',event=>{
 $('#hmwClose').onclick=()=>$('#hmwDialog').close();
 $('#hmwDialog').addEventListener('close',()=>{const modal=$('#hmwDialog');if(!modal.open)delete modal.dataset.remediationOrigin;});
 $('#hmwDialog').addEventListener('click',event=>{if(event.target===$('#hmwDialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
-$('#hmwFullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{toast('请在独立浏览器中使用全屏');}};
+$('#hmwFullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{toast('当前环境暂不支持全屏');}};
 window.addEventListener('hashchange',()=>{state.search='';render();window.scrollTo(0,0);});
 render();
 </script>
@@ -3657,7 +3674,7 @@ render();
   let removedTurn=null;
   const route=()=>location.hash.slice(1)||'attribution';
   const activeTask=()=>saved.tasks.find(t=>t.id===route());
-  const persist=()=>{try{localStorage.setItem(storageKey,JSON.stringify(saved));}catch{toast('浏览器存储不可用，本次会话仍可继续');}};
+  const persist=()=>{try{localStorage.setItem(storageKey,JSON.stringify(saved));}catch{toast('记录暂未保存，请稍后重试');}};
   const appFor=page=>apps.find(a=>a.id===page)||apps[0];
   function closeSidebar(){
     const returnFocus=location.hash.split('?')[0]==='#manager'&&document.body.classList.contains('sidebar-open')&&($('#awManagerSidebar')?.contains(document.activeElement)||document.activeElement===$('#platformMobileBackdrop'));
@@ -3687,12 +3704,12 @@ render();
   function catalog(){return `<section class="platform-catalog"><header><span class="platform-eyebrow">为餐饮经营而构建</span><h1>应用</h1><p>选择专业应用，把数据变成可执行的经营决策。</p></header><div class="platform-app-grid">${apps.map(a=>`<article class="platform-app-card"><div class="platform-app-icon">${icon(a.id)}</div><span class="hmw-tag">${a.tag}</span><h2>${a.name}</h2><p>${a.description}</p><small>${a.detail}</small><button class="hmw-button primary" data-platform-app="${a.id}">开始任务</button><button class="hmw-button ghost" data-nav="${a.id}">查看已有任务</button></article>`).join('')}</div><div class="platform-catalog-note">三个应用共享经营口径，可在任务中继续追问，并打开报告或测算方案。</div></section>`;}
   function resources(){
     const rows=[['statement','管理利润表','9月与10月 · 14项损益指标 · 集团及120家门店','结构化数据'],['stores','门店档案','华东、华北、华南 · 120家直营正餐门店','门店资料'],['materials','菜品与原料','8种重点原料 · 标准用量、采购价格及价差','经营数据'],['rules','经营规则与指标口径','9月模式基准、连环替代、标准成本与贡献分母','知识文档']];
-    return `<section class="platform-catalog"><header><span class="platform-eyebrow">经营分析的共同依据</span><h1>数据与知识</h1><p>管理应用当前可使用的资料，查看来源、范围与计算口径。</p></header><div class="platform-resource-list">${rows.map(([id,name,desc,type])=>`<article>${svg(id==='rules'?'file':'database')}<div><h3>${name}</h3><p>${desc}</p></div><span class="hmw-tag">${type}</span><button class="hmw-button" ${id==='statement'?'data-action="statement"':`data-platform-resource="${id}"`}>查看</button></article>`).join('')}</div><p class="platform-catalog-note">当前为工作空间内置资料，来自产品演示业务模型；外部业务系统尚未连接。</p></section>`;
+    return `<section class="platform-catalog"><header><span class="platform-eyebrow">经营分析的共同依据</span><h1>数据与知识</h1><p>管理应用当前可使用的资料，查看来源、范围与计算口径。</p></header><div class="platform-resource-list">${rows.map(([id,name,desc,type])=>`<article>${svg(id==='rules'?'file':'database')}<div><h3>${name}</h3><p>${desc}</p></div><span class="hmw-tag">${type}</span><button class="hmw-button" ${id==='statement'?'data-action="statement"':`data-platform-resource="${id}"`}>查看</button></article>`).join('')}</div><p class="platform-catalog-note">资料按经营期间、门店与指标口径组织，供归因、方案测算与执行核验使用。</p></section>`;
   }
   function turns(messages){return messages.map((m,index)=>{
     const oldData=m.dataVersion!==M.dataVersion,historical=oldData||state.page==='attribution'&&m.methodVersion!==M.attribution.version;
-    const displayAnswer=m.answer.replace(/(\d[\d,]*)\.(\d+)(?=万元)/g,(_,integer,fraction)=>{const digits=fraction.replace(/0+$/,'');return digits?`${integer}.${digits}`:integer;});
-    return `<article class="platform-chat-turn"><div class="platform-user-message">${esc(m.question)}</div><div class="platform-turn-controls"><button class="hmw-button ghost" data-delete-turn="${index}" aria-label="删除这条提问及回复">删除</button></div><div class="platform-assistant-message"><div class="ai-thread-head"><span class="ai-avatar">${svg('spark')}</span><b>经营助手</b>${historical?`<span class="hmw-tag">历史回答 · ${oldData?'旧数据':'旧口径'}</span>`:''}</div>${m.format==='attribution-brief'&&!historical?aiAttributionBrief():`<p>${esc(displayAnswer)}</p>`}${historical?'<p class="hmw-note">此处保留原回答快照；当前报告已使用更新后的演示数据。</p><button class="hmw-button" data-action="show-evidence">查看当前报告</button>':m.action?replyAction(m.action):''}</div></article>`;
+    const displayAnswer=businessText(m.answer).replace(/(\d[\d,]*)\.(\d+)(?=万元)/g,(_,integer,fraction)=>{const digits=fraction.replace(/0+$/,'');return digits?`${integer}.${digits}`:integer;});
+    return `<article class="platform-chat-turn"><div class="platform-user-message">${esc(m.question)}</div><div class="platform-turn-controls"><button class="hmw-button ghost" data-delete-turn="${index}" aria-label="删除这条提问及回复">删除</button></div><div class="platform-assistant-message"><div class="ai-thread-head"><span class="ai-avatar">${svg('spark')}</span><b>经营助手</b>${historical?`<span class="hmw-tag">历史回答 · ${oldData?'旧数据':'旧口径'}</span>`:''}</div>${m.format==='attribution-brief'&&!historical?aiAttributionBrief():`<p>${esc(displayAnswer)}</p>`}${historical?'<p class="hmw-note">此处保留原回答快照；当前报告已使用更新后的经营资料。</p><button class="hmw-button" data-action="show-evidence">查看当前报告</button>':m.action?replyAction(m.action):''}</div></article>`;
   }).join('');}
   function deleteTurn(index){
     const task=activeTask(),messages=task?.messages||saved.messages[state.page];
@@ -3760,7 +3777,7 @@ render();
       return {answer:`其他经营费用的净影响为${signedAmt(opex.impact)}万元，已逐科目比较9月模式费率参考与10月实际。\n租金费率参考${amt(method.baseline.rent)}万元，10月实际${amt(b.rent)}万元，对利润影响${signedAmt(rent.impact)}万元。实际租金金额没有下降，这部分是规模摊薄，不能当作已兑现整改收益。其余科目包含正负差异，需继续核对实际费用和业务执行证据。`,action:{type:'cause',id:'opex'}};
     }
     if(/利润|归因|营收|收入|复盘|10月/.test(question))return {answer:`10月折后营业额${amt(b.revenue)}万元，较9月增长${pct(b.revenue-a.revenue,a.revenue)}；门店利润由${amt(a.profit)}万元降至${amt(b.profit)}万元，减少${amt(a.profit-b.profit)}万元。\n9月模式代入10月业务量后的基准利润为${amt(method.baseline.profit)}万元，实际较基准少${amt(method.baselineGap)}万元。全桥各因素为：${M.causes.map(c=>`${c.name}${signedAmt(c.impact)}万元`).join('；')}。\n净下降贡献以${amt(M.group.profitDecline)}万元为分母，基准缺口贡献以${amt(method.baselineGap)}万元为分母，两种口径分别展示。`,format:'attribution-brief',action:{type:'report'}};
-    return {answer:'当前工作空间支持9月模式下的10月利润归因、11月方案测算与周执行查询。你可以问“9月模式基准利润怎么算”，或“人工结构摊薄和工时偏差分别是多少”。\n其他开放式问题需要接入真实大模型后处理。'};
+    return {answer:'当前工作空间支持9月模式下的10月利润归因、11月方案测算与周执行查询。你可以问“9月模式基准利润怎么算”，或“人工结构摊薄和工时偏差分别是多少”。\n请补充经营期间、门店范围和需要分析的指标。'};
   }
   function submit(){
     const input=$('#platformPrompt'),question=input.value.trim();if(!question)return;
@@ -3776,7 +3793,7 @@ render();
     const box=$('#platformContext');box.hidden=!box.hidden;if(box.hidden)return;
     const app=appFor(state.page),task=pushTasks().find(t=>t.id===state.page);
     const methodContext=state.page==='attribution'?`<section class="platform-context-section"><small>归因口径</small><h3>9月模式下的10月基准</h3><p>基准利润${amt(M.attribution.baseline.profit)}万元，10月实际${amt(M.actuals.october.profit)}万元，基准缺口${amt(M.attribution.baselineGap)}万元。</p><p>同一组门店，按9月分渠道单价、成本费用率和10月业务量建立基准，随后连环替代至实际。</p><button class="hmw-button" data-action="baseline">查看基准计算</button></section><section class="platform-context-section"><small>贡献分母</small><p>全桥净下降：${amt(M.group.profitDecline)}万元。<br>基准至实际缺口：${amt(M.attribution.baselineGap)}万元。<br>不利影响构成：${amt(M.group.negativeTotal)}万元。</p></section>`:'';
-    box.innerHTML=`<header><h2>任务上下文</h2><button class="platform-icon-button" data-platform-action="context" aria-label="关闭任务上下文">${svg('close')}</button></header><section class="platform-context-section"><small>当前应用</small><h3>${app.name}</h3><p>${app.description}</p></section><section class="platform-context-section"><small>数据范围</small><h3>好美味餐饮集团</h3><p>120家直营正餐门店<br>华东 · 华北 · 华南</p><button class="hmw-button" data-action="statement">查看管理利润表</button></section>${methodContext}<section class="platform-context-section"><small>任务成果</small><h3>${task.artifact}</h3><p>${app.detail}</p><button class="hmw-button" data-platform-action="context-report">打开报告</button></section><section class="platform-context-section"><small>能力说明</small><p>${state.page==='attribution'?esc(M.attribution.sourceNote):'使用内置经营模型与资料。'}当前未连接外部业务系统或真实大模型。</p></section>`;
+    box.innerHTML=`<header><h2>任务上下文</h2><button class="platform-icon-button" data-platform-action="context" aria-label="关闭任务上下文">${svg('close')}</button></header><section class="platform-context-section"><small>当前应用</small><h3>${app.name}</h3><p>${app.description}</p></section><section class="platform-context-section"><small>数据范围</small><h3>好美味餐饮集团</h3><p>120家直营正餐门店<br>华东 · 华北 · 华南</p><button class="hmw-button" data-action="statement">查看管理利润表</button></section>${methodContext}<section class="platform-context-section"><small>任务成果</small><h3>${task.artifact}</h3><p>${app.detail}</p><button class="hmw-button" data-platform-action="context-report">打开报告</button></section><section class="platform-context-section"><small>计算口径</small><p>${state.page==='attribution'?esc(M.attribution.sourceNote):'经营建议按销量、核销、采购量价和门店费用预算测算；执行结果按生效版本核对。'}</p></section>`;
   }
   document.querySelectorAll('[data-platform-icon]').forEach(el=>el.innerHTML=svg(el.dataset.platformIcon));
   document.addEventListener('click',event=>{
@@ -3789,11 +3806,11 @@ render();
     if(action==='context')context();
     if(action==='context-report'){if(['new','apps','resources'].includes(route()))navigate(state.page);revealEvidence();$('#platformContext').hidden=true;$('#aiEvidence')?.scrollIntoView({block:'start'});}
     if(action==='hide-report'){opened.delete(activeTask()?.id||state.page);$('#aiEvidence').hidden=true;($('.platform-artifact-button')||$('.ai-message-actions')||$('.platform-task-heading')).scrollIntoView({block:'center'});}
-    if(action==='workspace')dialog('好美味经营工作空间','<p>面向120家直营餐饮门店，包含利润归因、经营建议与执行跟进三个应用。</p><h3>当前能力</h3><p>支持查看内置经营资料、确定性方案测算、门店下钻及浏览器内任务历史。新建任务与追问记录保存在当前浏览器。</p><h3>连接状态</h3><p>当前为前端交互演示，未接入真实大模型、企业数据接口、团队同步或自动调度。</p>','AI 应用平台');
+    if(action==='workspace')dialog('好美味经营工作空间','<p>面向120家直营餐饮门店，包含利润归因、经营建议与执行跟进三个应用。</p><h3>当前能力</h3><p>支持经营资料查询、方案测算、门店下钻和任务历史管理。</p><h3>业务流程</h3><p>集团制定经营方案并下发，店长确认本店方案、物料与排班，按生效版本跟进执行。</p>','AI 应用平台');
     const resource=event.target.closest('[data-platform-resource]')?.dataset.platformResource;
     if(resource==='materials')dialog('菜品与原料资料',materialsTable());
     if(resource==='stores')dialog('120家门店档案',`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>编号</th><th>门店</th><th>区域</th><th>业态</th><th>座位数</th></tr></thead><tbody>${M.stores.map(s=>`<tr><td>${s.id}</td><td>${s.name}</td><td>${s.region}</td><td>${s.format}</td><td>${s.seats}</td></tr>`).join('')}</tbody></table></div>`);
-    if(resource==='rules')dialog('经营规则与指标口径',`<h3>门店经营利润</h3><p>折后营业额减列示的食材成本与门店经营费用；未计总部费用、折旧摊销、利息和所得税。</p><h3>9月模式下的10月基准</h3><p>每店以9月堂食实收人均乘10月堂食就餐人次，以9月外卖实收单均乘10月外卖有效订单，再按该店9月各项成本费用率计算基准利润。堂食桌单与人次分别计量，价格已含销售优惠时不再重复扣折扣。当前基准利润${num(M.attribution.baseline.profit)}万元，基准至实际缺口${num(M.attribution.baselineGap)}万元；10月目标只做完成情况分析。</p><h3>连环替代顺序</h3><ol>${M.attribution.methodSteps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol><p>固定的替代顺序用于分配交互影响，基准已经计入10月业务量，后续不再重复加量。账面分解不等于措施的因果效果。</p><h3>标准成本下钻</h3><p>按实际销量核对标准配方、标准用量与采购价格，超标耗用单列。人工先比较全费率参考与固定/弹性工时标准，再核对实际工时；租金及人工结构摊薄不当作已实现整改收益。</p><h3>三种贡献分母</h3><p>全桥净下降贡献以${num(M.group.profitDecline)}万元为分母；基准缺口贡献以${num(M.attribution.baselineGap)}万元为分母；顶层不利影响构成以${num(M.group.negativeTotal)}万元为分母。子项按父项有符号净影响计算，正负抵减时单项贡献可超过100%或为负；显示合计可能因四舍五入略有差异。</p><h3>数据来源</h3><p>${esc(M.attribution.sourceNote)}</p><h3>预测与执行</h3><p>11月方案采用其独立需求与预算假设。销售优惠冲减收入，营销总预算单列费用。修改草稿后须显式重新测算；人工预测不改写冻结周计划。</p>`);
+    if(resource==='rules')dialog('经营规则与指标口径',`<h3>门店经营利润</h3><p>折后营业额减列示的食材成本与门店经营费用；未计总部费用、折旧摊销、利息和所得税。</p><h3>9月模式下的10月基准</h3><p>每店以9月堂食实收人均乘10月堂食就餐人次，以9月外卖实收单均乘10月外卖有效订单，再按该店9月各项成本费用率计算基准利润。堂食桌单与人次分别计量，价格已含销售优惠时不再重复扣折扣。当前基准利润${num(M.attribution.baseline.profit)}万元，基准至实际缺口${num(M.attribution.baselineGap)}万元；10月目标只做完成情况分析。</p><h3>连环替代顺序</h3><ol>${M.attribution.methodSteps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol><p>固定的替代顺序用于分配交互影响，基准已经计入10月业务量，后续不再重复加量。账面分解不等于措施的因果效果。</p><h3>标准成本下钻</h3><p>按实际销量核对标准配方、标准用量与采购价格，超标耗用单列。人工先比较全费率参考与固定/弹性工时标准，再核对实际工时；租金及人工结构摊薄不当作已实现整改收益。</p><h3>三种贡献分母</h3><p>全桥净下降贡献以${num(M.group.profitDecline)}万元为分母；基准缺口贡献以${num(M.attribution.baselineGap)}万元为分母；顶层不利影响构成以${num(M.group.negativeTotal)}万元为分母。子项按父项有符号净影响计算，正负抵减时单项贡献可超过100%或为负；显示合计可能因四舍五入略有差异。</p><h3>计算口径</h3><p>${esc(M.attribution.sourceNote)}</p><h3>预测与执行</h3><p>11月方案采用其独立需求与预算假设。销售优惠冲减收入，营销总预算单列费用。修改草稿后须显式重新测算；人工预测不改写冻结周计划。</p>`);
   });
   $('#platformComposer').addEventListener('submit',event=>{event.preventDefault();submit();});
   $('#platformPrompt').addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();$('#platformComposer').requestSubmit();}});
@@ -3830,7 +3847,8 @@ render();
   const savedOptions=flow.weekly[view.storeId]?.options;
   if(savedOptions){view.startDate=savedOptions.startDate;view.inventory=JSON.parse(JSON.stringify(savedOptions.inventory||{}));view.extraStaff=savedOptions.extraStaff||0;}
   const money=value=>amt(value,2)+'元';
-  const list=items=>`<ul>${items.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`;
+  const list=items=>`<ul>${items.map(s=>`<li>${esc(businessText(s))}</li>`).join('')}</ul>`;
+  const documentNumber=id=>String(id||'').replace(/^DEMO-/,'');
   const approval=()=>flow.approvals[view.storeId];
   const weekly=()=>flow.weekly[view.storeId];
   function syncShared(){
@@ -3846,7 +3864,7 @@ render();
   function validWeekly(){const a=approval(),w=weekly();return Boolean(a&&w&&w.plan.storeId===view.storeId&&w.plan.sourceSignature===a.proposal.signature&&w.plan.sourceVersion===a.versionLabel);}
   function save(next){
     try{localStorage.setItem(storageKey,JSON.stringify(next));flow=next;return true;}
-    catch{toast('浏览器未能保存本次操作，请检查存储空间后重试；确认和单据状态未更新。');return false;}
+    catch{toast('本次操作未能保存，请重试；确认与单据状态未更新。');return false;}
   }
   function setStore(id){
     if(!M.stores.some(s=>s.id===id))return;
@@ -3887,30 +3905,30 @@ render();
     const a=approval(),current=isCurrent(proposal);
     if(view.candidateSignature!==proposal.signature){view.checks={};view.candidateSignature=proposal.signature;}
     const checks=current?(a.checks||{}):view.checks;
-    const renderAttention=item=>`<div class="aw-attention-row" data-attention-item="${item.key}"><div><strong>${esc(item.label)}</strong><span class="${item.tone==='bad'?'bad':''}">${amt(item.value)}<small>万元</small></span></div><p>${esc(item.focus)}</p><small>核对：${esc(item.verification)}</small></div>`;
+    const renderAttention=item=>`<div class="aw-attention-row" data-attention-item="${item.key}"><div><strong>${esc(item.label)}</strong><span class="${item.tone==='bad'?'bad':''}">${amt(item.value)}<small>万元</small></span></div><p>${esc(businessText(item.focus))}</p><small>核对：${esc(businessText(item.verification))}</small></div>`;
     const attention=coreKeys.map(key=>proposal.attention.find(item=>item.key===key)).filter(Boolean).map(item=>renderAttention({...item,label:coreLines.find(line=>line[0]===item.key)[1]})).join('');
     const extraAttention=proposal.attention.filter(item=>!coreKeys.includes(item.key)).map(renderAttention).join('');
-    return `<section class="aw-store-panel" id="awStorePanel"><header><div><span class="aw-eyebrow">门店测算与生效</span><h3>${esc(proposal.storeName)} <small>${esc(proposal.storeId)}</small></h3><p>本次演示店长：${esc(proposal.manager)} · ${esc(planNames[proposal.planId])}<br>方案来源：${esc(publication?.versionLabel||a?.proposal.publicationVersion||'历史生效版本')}</p></div><span class="hmw-tag ${current?'good':'warn'}">${current?'店长已确认 · 本店生效':'本次测算待确认'}</span></header>${coreMetrics(proposal.finance,'store-result')}<p class="aw-note">预计就餐${amt(proposal.finance.guests,0)}人次 · 接待产能使用率${amt(proposal.storeResource.capacityUse,1)}%。经营利润已扣全部费用；餐具、物耗、维修、推广在费用明细中核对。</p>${proposal.budgetBlockers?.length?`<div class="aw-blockers"><strong>本店费用预算缺口待解决</strong>${list(proposal.budgetBlockers)}</div>`:''}${proposal.storeResource.capacityUse>100?`<p class="aw-warning">本店预计客流超过现有承接能力，确认前须落实增能或预约分流，并核对分时高峰。</p>`:''}${a?`<div class="aw-effective-version"><strong>当前生效：${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])} · 店长${esc(a.proposal.manager)} · 确认于${esc(new Date(a.confirmedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}</span>${!current?'<p>新参数尚未替代该版本。7天物料与排班继续使用本店已确认版本，直到店长确认新方案。</p>':''}</div>`:'<p class="aw-note">测算结果尚未生效，店长完成以下核对并确认后，才能生成本店执行计划。</p>'}<details class="aw-attention"><summary>查看10项核心指标的店长关注提示</summary><div class="aw-attention-list">${attention}</div></details><details class="aw-core-expenses aw-extra-attention"><summary>餐具、物耗、维修、推广费用明细与关注提示</summary><div class="aw-attention-list">${extraAttention}</div></details><div class="aw-manager-checks">${proposal.checks.map(c=>`<label><input type="checkbox" data-aw-monthly-check="${c.id}" ${checks[c.id]?'checked':''} ${current?'disabled':''}><span><strong>${esc(c.label)}</strong><small>${esc(c.description)}</small></span></label>`).join('')}</div><button class="hmw-button primary" id="awConfirmMonthly" data-aw-action="confirm-monthly" ${!publication||current||proposal.budgetBlockers?.length||!proposal.checks.every(c=>view.checks[c.id])?'disabled':''}>${current?'本店方案已确认生效':'确认本店经营方案生效'}</button></section>`;
+    return `<section class="aw-store-panel" id="awStorePanel"><header><div><span class="aw-eyebrow">门店测算与生效</span><h3>${esc(proposal.storeName)} <small>${esc(proposal.storeId)}</small></h3><p>店长：${esc(proposal.manager)} · ${esc(planNames[proposal.planId])}<br>方案来源：${esc(publication?.versionLabel||a?.proposal.publicationVersion||'历史生效版本')}</p></div><span class="hmw-tag ${current?'good':'warn'}">${current?'店长已确认 · 本店生效':'本次测算待确认'}</span></header>${coreMetrics(proposal.finance,'store-result')}<p class="aw-note">预计就餐${amt(proposal.finance.guests,0)}人次 · 接待产能使用率${amt(proposal.storeResource.capacityUse,1)}%。经营利润已扣全部费用；餐具、物耗、维修、推广在费用明细中核对。</p>${proposal.budgetBlockers?.length?`<div class="aw-blockers"><strong>本店费用预算缺口待解决</strong>${list(proposal.budgetBlockers)}</div>`:''}${proposal.storeResource.capacityUse>100?`<p class="aw-warning">本店预计客流超过现有承接能力，确认前须落实增能或预约分流，并核对分时高峰。</p>`:''}${a?`<div class="aw-effective-version"><strong>当前生效：${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])} · 店长${esc(a.proposal.manager)} · 确认于${esc(new Date(a.confirmedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}</span>${!current?'<p>新参数尚未替代该版本。7天物料与排班继续使用本店已确认版本，直到店长确认新方案。</p>':''}</div>`:'<p class="aw-note">测算结果尚未生效，店长完成以下核对并确认后，才能生成本店执行计划。</p>'}<details class="aw-attention"><summary>查看10项核心指标的店长关注提示</summary><div class="aw-attention-list">${attention}</div></details><details class="aw-core-expenses aw-extra-attention"><summary>餐具、物耗、维修、推广费用明细与关注提示</summary><div class="aw-attention-list">${extraAttention}</div></details><div class="aw-manager-checks">${proposal.checks.map(c=>`<label><input type="checkbox" data-aw-monthly-check="${c.id}" ${checks[c.id]?'checked':''} ${current?'disabled':''}><span><strong>${esc(c.label)}</strong><small>${esc(businessText(c.description))}</small></span></label>`).join('')}</div><button class="hmw-button primary" id="awConfirmMonthly" data-aw-action="confirm-monthly" ${!publication||current||proposal.budgetBlockers?.length||!proposal.checks.every(c=>view.checks[c.id])?'disabled':''}>${current?'本店方案已确认生效':'确认本店经营方案生效'}</button></section>`;
   }
   function materialsTable(p){
-    return `<div class="hmw-table-wrap"><table class="hmw-table aw-materials"><thead><tr><th>物料 / 供货参考</th><th class="numeric">7天需求 / 公斤</th><th>现存 / 公斤</th><th>在途 / 公斤</th><th>安全库存 / 公斤</th><th class="numeric">建议申请 / 公斤</th><th class="numeric">参考价 / 元·公斤</th></tr></thead><tbody>${p.materials.map(m=>`<tr data-week-material="${m.materialId}"><td><strong>${esc(m.name)}</strong><small>${esc(m.supplierName||'综合食材供应（示例）')}</small></td><td class="numeric">${amt(m.demandKg,3)}</td>${['onHandKg','inboundKg','safetyKg'].map(field=>`<td><input type="number" min="0" step="0.001" aria-label="${esc(m.name)}${field==='onHandKg'?'现存':field==='inboundKg'?'在途':'安全库存'}" data-aw-stock="${m.materialId}" data-field="${field}" value="${view.inventory[m.materialId]?.[field]??m[field]}"></td>`).join('')}<td class="numeric"><strong>${amt(m.purchaseKg,3)}</strong></td><td class="numeric">${amt(m.unitPrice)}</td></tr>`).join('')}</tbody></table></div><p class="aw-note">建议申请＝需求＋安全库存－现存－在途，最低为0，再按包装量取整。修改库存后请更新清单。</p><details class="aw-secondary-detail"><summary>查看7天逐日物料需求</summary><div class="hmw-table-wrap"><table class="hmw-table aw-daily-materials"><thead><tr><th>物料 / 公斤</th>${p.dates.map(d=>`<th class="numeric">${esc(d.slice(5))}</th>`).join('')}</tr></thead><tbody>${p.materials.map(m=>`<tr><td>${esc(m.name)}</td>${m.dailyDemand.map(q=>`<td class="numeric">${amt(q,3)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>`;
+    return `<div class="hmw-table-wrap"><table class="hmw-table aw-materials"><thead><tr><th>物料 / 供货参考</th><th class="numeric">7天需求 / 公斤</th><th>现存 / 公斤</th><th>在途 / 公斤</th><th>安全库存 / 公斤</th><th class="numeric">建议申请 / 公斤</th><th class="numeric">参考价 / 元·公斤</th></tr></thead><tbody>${p.materials.map(m=>`<tr data-week-material="${m.materialId}"><td><strong>${esc(m.name)}</strong><small>${esc(businessText(m.supplierName||'综合食材供应'))}</small></td><td class="numeric">${amt(m.demandKg,3)}</td>${['onHandKg','inboundKg','safetyKg'].map(field=>`<td><input type="number" min="0" step="0.001" aria-label="${esc(m.name)}${field==='onHandKg'?'现存':field==='inboundKg'?'在途':'安全库存'}" data-aw-stock="${m.materialId}" data-field="${field}" value="${view.inventory[m.materialId]?.[field]??m[field]}"></td>`).join('')}<td class="numeric"><strong>${amt(m.purchaseKg,3)}</strong></td><td class="numeric">${amt(m.unitPrice)}</td></tr>`).join('')}</tbody></table></div><p class="aw-note">建议申请＝需求＋安全库存－现存－在途，最低为0，再按包装量取整。修改库存后请更新清单。</p><details class="aw-secondary-detail"><summary>查看7天逐日物料需求</summary><div class="hmw-table-wrap"><table class="hmw-table aw-daily-materials"><thead><tr><th>物料 / 公斤</th>${p.dates.map(d=>`<th class="numeric">${esc(d.slice(5))}</th>`).join('')}</tr></thead><tbody>${p.materials.map(m=>`<tr><td>${esc(m.name)}</td>${m.dailyDemand.map(q=>`<td class="numeric">${amt(q,3)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>`;
   }
   function staffingTable(p){
     const s=p.staffing;
-    return `<div class="aw-week-metrics"><div><small>计划排班工时</small><strong>${amt(s.totalHours)}<span>小时</span></strong></div><div><small>排班折算费用</small><strong>${money(s.totalCostYuan)}</strong></div><div><small>本店7天人工预算</small><strong>${money(s.budgetYuan)}</strong></div></div><div class="hmw-table-wrap"><table class="hmw-table aw-daily-staff"><thead><tr><th>日期</th><th class="numeric">预计客流</th><th class="numeric">早班人数</th><th class="numeric">晚班人数</th><th class="numeric">工时</th><th class="numeric">折算费用 / 元</th></tr></thead><tbody>${s.daily.map(d=>`<tr><td>${esc(d.date)}</td><td class="numeric">${amt(d.guests,0)}</td><td class="numeric">${d.earlyCount}</td><td class="numeric">${d.lateCount}</td><td class="numeric">${amt(d.hours)}</td><td class="numeric">${amt(d.costYuan)}</td></tr>`).join('')}</tbody></table></div><details class="aw-secondary-detail"><summary>查看逐人排班与休息安排（${s.employees.length}名示例人员）</summary><div class="hmw-table-wrap"><table class="hmw-table aw-roster"><thead><tr><th>员工</th><th>岗位</th>${p.dates.map(d=>`<th>${esc(d.slice(5))}</th>`).join('')}<th class="numeric">7天工时</th></tr></thead><tbody>${s.employees.map(e=>`<tr><td>${esc(e.name)}</td><td>${esc(e.role)}</td>${e.days.map(day=>`<td>${esc(day)}</td>`).join('')}<td class="numeric">${amt(e.hours)}</td></tr>`).join('')}</tbody></table></div></details><p class="aw-note">${esc(s.sourceNote||'示例人员与可用性；早班10:00—16:00、晚班16:00—22:00，按每班6小时、综合30元/小时折算。请店长核对真实人员和可用时段。')}</p>`;
+    return `<div class="aw-week-metrics"><div><small>计划排班工时</small><strong>${amt(s.totalHours)}<span>小时</span></strong></div><div><small>排班折算费用</small><strong>${money(s.totalCostYuan)}</strong></div><div><small>本店7天人工预算</small><strong>${money(s.budgetYuan)}</strong></div></div><div class="hmw-table-wrap"><table class="hmw-table aw-daily-staff"><thead><tr><th>日期</th><th class="numeric">预计客流</th><th class="numeric">早班人数</th><th class="numeric">晚班人数</th><th class="numeric">工时</th><th class="numeric">折算费用 / 元</th></tr></thead><tbody>${s.daily.map(d=>`<tr><td>${esc(d.date)}</td><td class="numeric">${amt(d.guests,0)}</td><td class="numeric">${d.earlyCount}</td><td class="numeric">${d.lateCount}</td><td class="numeric">${amt(d.hours)}</td><td class="numeric">${amt(d.costYuan)}</td></tr>`).join('')}</tbody></table></div><details class="aw-secondary-detail"><summary>查看逐人排班与休息安排（${s.employees.length}名员工）</summary><div class="hmw-table-wrap"><table class="hmw-table aw-roster"><thead><tr><th>员工</th><th>岗位</th>${p.dates.map(d=>`<th>${esc(d.slice(5))}</th>`).join('')}<th class="numeric">7天工时</th></tr></thead><tbody>${s.employees.map(e=>`<tr><td>${esc(businessText(e.name))}</td><td>${esc(e.role)}</td>${e.days.map(day=>`<td>${esc(day)}</td>`).join('')}<td class="numeric">${amt(e.hours)}</td></tr>`).join('')}</tbody></table></div></details><p class="aw-note">${esc(businessText(s.sourceNote||'人员安排：早班10:00—16:00、晚班16:00—22:00，按每班6小时、综合30元/小时折算。请店长核对人员和可用时段。'))}</p>`;
   }
   function receiptPanel(r){
-    return `<section class="aw-receipts"><header><h4>单据与排班创建回执</h4><span class="hmw-tag">演示回执</span></header><p>${esc(r.storeName)} · ${esc(r.sourceVersion)} · ${esc(r.startDate)}—${esc(r.endDate)}</p><div class="aw-receipt-grid">${[['supplyChain','供应链系统'],['humanResources','人事系统']].map(([id,name])=>{const d=r[id];return `<article><small>${name}</small><h4>${esc(d.type)}</h4><span class="hmw-tag ${d.status==='not_required'?'':'blue'}">${d.status==='not_required'?'库存充足，无需补货申请':'演示创建成功'}</span><p>${esc(d.id||'本次不创建空申请单')}</p><button class="hmw-link" data-aw-action="view-document" data-document="${id}" data-receipt="${esc(r.batchId)}">查看单据内容</button></article>`;}).join('')}</div><p class="aw-note">回执为本演示生成的示例记录，未写入真实供应链或人事系统；重复点击会复用同一批次。</p></section>`;
+    return `<section class="aw-receipts"><header><h4>补货申请与排班草稿</h4><span class="hmw-tag warn">待提交</span></header><p>${esc(r.storeName)} · ${esc(r.sourceVersion)} · ${esc(r.startDate)}—${esc(r.endDate)}</p><div class="aw-receipt-grid">${[['supplyChain','供应链系统'],['humanResources','人事系统']].map(([id,name])=>{const d=r[id];return `<article><small>${name}</small><h4>${esc(d.type)}</h4><span class="hmw-tag ${d.status==='not_required'?'':'blue'}">${d.status==='not_required'?'库存充足，无需补货申请':'草稿已生成 · 待提交'}</span><p>${esc(documentNumber(d.id)||'本次不创建空申请单')}</p><button class="hmw-link" data-aw-action="view-document" data-document="${id}" data-receipt="${esc(r.batchId)}">查看单据内容</button></article>`;}).join('')}</div><p class="aw-note">提交状态：待提交。重复生成将复用同一批次，不重复创建草稿。</p></section>`;
   }
   function weekPanel(){
     const a=approval(),w=weekly(),p=w?.plan,valid=validWeekly(),r=receipt();
     if(!a)return `<div class="aw-empty"><h3>先确认本店经营方案</h3><p>${esc(getStore(view.storeId).name)}尚无店长确认的生效方案。确认后，系统才会据此生成7天物料与人员计划。</p><button class="hmw-button" data-aw-scroll="awStorePanel">前往本店方案确认</button></div>`;
-    return `<div class="aw-week-source"><strong>${esc(a.proposal.storeName)} · ${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])}</span><p>仅使用本店已确认的方案。物料和人员清单确认后，再创建对应单据。</p></div><div class="aw-week-controls"><label><span>执行开始日期</span><input id="awStartDate" type="date" min="${today()}" value="${esc(view.startDate)}"></label><label><span>额外可用支援人数</span><input id="awExtraStaff" type="number" min="0" max="50" step="1" value="${view.extraStaff}"></label><button class="hmw-button primary" data-aw-action="generate-week">${p?'更新7天执行清单':'生成本店7天执行清单'}</button></div>${!p?'<p class="aw-note">将按该店已生效方案生成物料需求、库存扣减和早晚班安排，跨月日期会明确提示。</p>':`<div class="aw-week-plan" data-week-key="${esc(p.key)}"><header><h3>${esc(p.startDate)}—${esc(p.endDate)} · 7天计划</h3><span class="hmw-tag ${!valid?'warn':w.confirmedAt?'good':''}">${!valid?'来源已变更，须重新生成':w.confirmedAt?'店长已确认':'待店长确认清单'}</span></header>${!valid?'<p class="aw-warning">本店已确认新的月度方案，旧清单不可继续确认或创建单据，请先更新。</p>':''}${weekExpired()?'<p class="aw-warning">执行开始日期已早于今天，请更新日期并重新生成接下来7天的清单。历史单据回执仍可查看。</p>':''}${p.warnings.length?`<details class="aw-secondary-detail" ${p.crossMonth?'open':''}><summary>计划依据与执行提示（${p.warnings.length}项）</summary>${list(p.warnings)}</details>`:''}${p.blockers.length?`<div class="aw-blockers"><strong>以下问题解决后才能确认</strong>${list(p.blockers)}</div>`:''}<h4>物料清单</h4><p>${esc(p.sourceNote)}</p>${materialsTable(p)}<h4>人员排班清单</h4>${staffingTable(p)}<p class="aw-warning" id="awWeekDraftNotice" ${view.weekDirty?'':'hidden'}>日期、库存或支援人数已有修改，请更新清单后重新确认。</p><label class="aw-week-ack"><input type="checkbox" id="awWeekAck" ${view.weekAck||w.confirmedAt?'checked':''} ${w.confirmedAt?'disabled':''}><span>本店店长已核对物料需求、现存与在途、人员可用性及日期安排${p.crossMonth?'，并确认跨月计划口径':''}。</span></label><div class="aw-week-actions"><button class="hmw-button" id="awConfirmWeek" data-aw-action="confirm-week" ${!valid||weekExpired()||view.weekDirty||!view.weekAck||p.blockers.length||w.confirmedAt?'disabled':''}>${w.confirmedAt?'本店7天清单已确认':'确认本店物料与排班清单'}</button><button class="hmw-button primary" id="awCreateDocuments" data-aw-action="create-documents" ${!valid||weekExpired()||view.weekDirty||!w.confirmedAt||p.blockers.length||r?'disabled':''}>${r?'本批次已创建演示单据':'一键创建补货申请与排班单'}</button></div><p class="aw-note">演示对接：当前未连接外部系统。确认后将生成两类示例单据及回执，不执行真实采购或人员变更。</p>${r?receiptPanel(r):''}</div>`}`;
+    return `<div class="aw-week-source"><strong>${esc(a.proposal.storeName)} · ${esc(a.versionLabel)}</strong><span>${esc(planNames[a.proposal.planId])}</span><p>仅使用本店已确认的方案。物料和人员清单确认后，再创建对应单据。</p></div><div class="aw-week-controls"><label><span>执行开始日期</span><input id="awStartDate" type="date" min="${today()}" value="${esc(view.startDate)}"></label><label><span>额外可用支援人数</span><input id="awExtraStaff" type="number" min="0" max="50" step="1" value="${view.extraStaff}"></label><button class="hmw-button primary" data-aw-action="generate-week">${p?'更新7天执行清单':'生成本店7天执行清单'}</button></div>${!p?'<p class="aw-note">将按该店已生效方案生成物料需求、库存扣减和早晚班安排，跨月日期会明确提示。</p>':`<div class="aw-week-plan" data-week-key="${esc(p.key)}"><header><h3>${esc(p.startDate)}—${esc(p.endDate)} · 7天计划</h3><span class="hmw-tag ${!valid?'warn':w.confirmedAt?'good':''}">${!valid?'来源已变更，须重新生成':w.confirmedAt?'店长已确认':'待店长确认清单'}</span></header>${!valid?'<p class="aw-warning">本店已确认新的月度方案，旧清单不可继续确认或创建单据，请先更新。</p>':''}${weekExpired()?'<p class="aw-warning">执行开始日期已早于今天，请更新日期并重新生成接下来7天的清单。历史单据回执仍可查看。</p>':''}${p.warnings.length?`<details class="aw-secondary-detail" ${p.crossMonth?'open':''}><summary>计划依据与执行提示（${p.warnings.length}项）</summary>${list(p.warnings)}</details>`:''}${p.blockers.length?`<div class="aw-blockers"><strong>以下问题解决后才能确认</strong>${list(p.blockers)}</div>`:''}<h4>物料清单</h4><p>${esc(businessText(p.sourceNote))}</p>${materialsTable(p)}<h4>人员排班清单</h4>${staffingTable(p)}<p class="aw-warning" id="awWeekDraftNotice" ${view.weekDirty?'':'hidden'}>日期、库存或支援人数已有修改，请更新清单后重新确认。</p><label class="aw-week-ack"><input type="checkbox" id="awWeekAck" ${view.weekAck||w.confirmedAt?'checked':''} ${w.confirmedAt?'disabled':''}><span>本店店长已核对物料需求、现存与在途、人员可用性及日期安排${p.crossMonth?'，并确认跨月计划口径':''}。</span></label><div class="aw-week-actions"><button class="hmw-button" id="awConfirmWeek" data-aw-action="confirm-week" ${!valid||weekExpired()||view.weekDirty||!view.weekAck||p.blockers.length||w.confirmedAt?'disabled':''}>${w.confirmedAt?'本店7天清单已确认':'确认本店物料与排班清单'}</button><button class="hmw-button primary" id="awCreateDocuments" data-aw-action="create-documents" ${!valid||weekExpired()||view.weekDirty||!w.confirmedAt||p.blockers.length||r?'disabled':''}>${r?'本批次草稿已生成':'一键生成补货申请与排班草稿'}</button></div><p class="aw-note">确认后生成补货申请与排班草稿，待提交至供应链与人事系统。</p>${r?receiptPanel(r):''}</div>`}`;
   }
   function distributionPanel(){
     const sig=P.signature(scenario.applied),same=publication?.signature===sig;
     const confirmed=publication?Object.values(flow.approvals).filter(a=>a.proposal.signature===publication.signature).length:0;
-    return `<section class="aw-distribution"><header><div><h3>下发与门店确认进度</h3><p>${publication?`${esc(publication.versionLabel)} · ${esc(planNames[publication.forecast.plan])} · ${esc(new Date(publication.publishedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}`:'尚未下发经营方案'}</p></div><span class="hmw-tag ${publication?'blue':''}" id="awPublishedCount">已下发版确认 ${confirmed} / ${M.stores.length} 店</span></header>${publication?`<p>已下发版集团预计营业额${amt(publication.forecast.totals.revenue)}万元，经营利润${amt(publication.forecast.totals.profit)}万元。${same?'当前测算与已下发版一致。':'当前测算尚未替代已下发版本。'}</p>`:''}<div class="aw-week-actions"><button class="hmw-button primary" id="awPublish" data-aw-action="publish" ${scenario.dirty||same?'disabled':''}>${same?'当前测算已下发':'下发当前测算至店长工作台'}</button></div><p class="aw-note">调整方案并重新测算后，可再次下发。各店确认后分别生效；集团下发不会直接替换门店已生效方案。演示进度保存在当前浏览器中。</p></section>`;
+    return `<section class="aw-distribution"><header><div><h3>下发与门店确认进度</h3><p>${publication?`${esc(publication.versionLabel)} · ${esc(planNames[publication.forecast.plan])} · ${esc(new Date(publication.publishedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}))}`:'尚未下发经营方案'}</p></div><span class="hmw-tag ${publication?'blue':''}" id="awPublishedCount">已下发版确认 ${confirmed} / ${M.stores.length} 店</span></header>${publication?`<p>已下发版集团预计营业额${amt(publication.forecast.totals.revenue)}万元，经营利润${amt(publication.forecast.totals.profit)}万元。${same?'当前测算与已下发版一致。':'当前测算尚未替代已下发版本。'}</p>`:''}<div class="aw-week-actions"><button class="hmw-button primary" id="awPublish" data-aw-action="publish" ${scenario.dirty||same?'disabled':''}>${same?'当前测算已下发':'下发当前测算至店长工作台'}</button></div><p class="aw-note">调整方案并重新测算后，可再次下发。各店确认后分别生效；集团下发不会直接替换门店已生效方案。</p></section>`;
   }
   function renderWorkspace(){
     const d=P.describe(scenario.applied,M);
@@ -3918,7 +3936,7 @@ render();
   }
   function recordsPanel(){
     const records=[...flow.dispatches].reverse().filter(r=>r.storeId===view.storeId);
-    return `<section class="aw-section" id="awDocumentsSection"><header><span class="aw-eyebrow">本店单据</span><h2>单据记录</h2><p>${esc(getStore(view.storeId).name)} · 共${records.length}个已创建批次，按创建时间由近到远展示。</p></header>${records.length?records.map(receiptPanel).join(''):'<div class="aw-empty"><h3>暂无单据记录</h3><p>确认本店7天物料与排班清单并创建单据后，可在这里查看回执。</p><button class="hmw-button" data-aw-view="weekly">前往7天物料与排班</button></div>'}</section>`;
+    return `<section class="aw-section" id="awDocumentsSection"><header><span class="aw-eyebrow">本店单据</span><h2>单据记录</h2><p>${esc(getStore(view.storeId).name)} · 共${records.length}个已生成批次，按创建时间由近到远展示。</p></header>${records.length?records.map(receiptPanel).join(''):'<div class="aw-empty"><h3>暂无单据记录</h3><p>确认本店7天物料与排班清单并生成草稿后，可在这里查看单据。</p><button class="hmw-button" data-aw-view="weekly">前往7天物料与排班</button></div>'}</section>`;
   }
   function renderManager(){
     const requested=new URLSearchParams(location.hash.split('?')[1]||'').get('store');
@@ -3930,12 +3948,12 @@ render();
     const title=managerPages.find(([id])=>id===section)[1];
     $('#hmwBreadcrumb').textContent='店长工作台 / '+title;document.title=title+' · 好美味店长工作台';
     $('#awManagerSidebar .hmw-brand').setAttribute('href',managerUrl(view.storeId,'proposal'));
-    $('#awManagerStore').innerHTML=`<label for="awStoreSelect">当前门店 <small>演示切换</small></label><select id="awStoreSelect" aria-label="选择当前门店">${M.stores.map(s=>`<option value="${s.id}" ${s.id===view.storeId?'selected':''}>${esc(s.name)} · ${esc(s.region)}</option>`).join('')}</select><small>${esc(store.id)} · ${esc(store.region)}</small>`;
-    $('#awManagerNav').innerHTML=managerPages.map(([id,label,note])=>`<button data-aw-view="${id}" class="${id===section?'active':''}" ${id===section?'aria-current="page"':''}><span class="ai-task-icon">${icon(id==='proposal'?'forecast':id==='weekly'?'tracking':'attribution')}</span><span class="ai-task-body"><b>${label}</b><small>${id==='proposal'?(publication?(a?.proposal.signature===publication.signature?'本店方案已生效':'收到方案待确认'):'等待集团下发'):id==='documents'?records.length+'个已创建批次':note}</small></span></button>`).join('');
+    $('#awManagerStore').innerHTML=`<label for="awStoreSelect">当前门店 <small>切换门店</small></label><select id="awStoreSelect" aria-label="选择当前门店">${M.stores.map(s=>`<option value="${s.id}" ${s.id===view.storeId?'selected':''}>${esc(s.name)} · ${esc(s.region)}</option>`).join('')}</select><small>${esc(store.id)} · ${esc(store.region)}</small>`;
+    $('#awManagerNav').innerHTML=managerPages.map(([id,label,note])=>`<button data-aw-view="${id}" class="${id===section?'active':''}" ${id===section?'aria-current="page"':''}><span class="ai-task-icon">${icon(id==='proposal'?'forecast':id==='weekly'?'tracking':'attribution')}</span><span class="ai-task-body"><b>${label}</b><small>${id==='proposal'?(publication?(a?.proposal.signature===publication.signature?'本店方案已生效':'收到方案待确认'):'等待集团下发'):id==='documents'?records.length+'个已生成批次':note}</small></span></button>`).join('');
     $('#awManagerProfile').innerHTML=`<div class="platform-profile"><span class="platform-profile-avatar">店</span><span><b>${esc(store.manager)}</b><small>${esc(store.name)} · 门店工作空间</small></span></div>`;
     let content;
     if(section==='weekly'){
-      content=`<section class="aw-section" id="awWeeklySection"><header><span class="aw-eyebrow">本店执行</span><h2>接下来7天的物料与人员排班</h2><p>使用本店已确认方案生成清单，核对库存与人员可用性后确认，再创建演示单据。</p></header>${weekPanel()}</section>`;
+      content=`<section class="aw-section" id="awWeeklySection"><header><span class="aw-eyebrow">本店执行</span><h2>接下来7天的物料与人员排班</h2><p>使用本店已确认方案生成清单，核对库存与人员可用性后确认，再生成单据草稿。</p></header>${weekPanel()}</section>`;
     }else if(section==='documents')content=recordsPanel();
     else{
       const proposal=publication?P.build(publication.forecast,M,view.storeId):a?.proposal;
@@ -3945,9 +3963,10 @@ render();
   }
   function showDocument(type,batchId){
     const r=batchId?flow.dispatches.find(r=>r.batchId===batchId&&r.storeId===view.storeId):receipt();if(!r)return;const d=r[type];if(!d)return;
+    const notRequired=d.status==='not_required';
     const payload=d.payload;
-    const body=type==='supplyChain'?`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>物料</th><th class="numeric">申请量 / 公斤</th><th class="numeric">参考价 / 元·公斤</th></tr></thead><tbody>${(payload.lines||[]).map(x=>`<tr><td>${esc(x.name)}</td><td class="numeric">${amt(x.quantityKg,3)}</td><td class="numeric">${amt(x.unitPrice)}</td></tr>`).join('')||'<tr><td colspan="3">库存充足，本批次无需补货申请。</td></tr>'}</tbody></table></div>`:`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>员工</th><th>岗位</th>${r.humanResources.payload.daily.map(day=>`<th>${esc(day.date.slice(5))}</th>`).join('')}<th>工时</th></tr></thead><tbody>${payload.employees.map(e=>`<tr><td>${esc(e.name)}</td><td>${esc(e.role)}</td>${e.days.map(day=>`<td>${esc(day)}</td>`).join('')}<td>${amt(e.hours)}</td></tr>`).join('')}</tbody></table></div>`;
-    dialog(d.type,`<p>${esc(d.id||'无需创建')} · ${esc(r.storeName)} · ${esc(r.sourceVersion)} · ${esc(r.startDate)}—${esc(r.endDate)}</p>${body}<p>演示单据，未写入真实外部系统。</p>`,'店长已确认 · 演示创建回执');
+    const body=type==='supplyChain'?`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>物料</th><th class="numeric">申请量 / 公斤</th><th class="numeric">参考价 / 元·公斤</th></tr></thead><tbody>${(payload.lines||[]).map(x=>`<tr><td>${esc(x.name)}</td><td class="numeric">${amt(x.quantityKg,3)}</td><td class="numeric">${amt(x.unitPrice)}</td></tr>`).join('')||'<tr><td colspan="3">库存充足，本批次无需补货申请。</td></tr>'}</tbody></table></div>`:`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>员工</th><th>岗位</th>${r.humanResources.payload.daily.map(day=>`<th>${esc(day.date.slice(5))}</th>`).join('')}<th>工时</th></tr></thead><tbody>${payload.employees.map(e=>`<tr><td>${esc(businessText(e.name))}</td><td>${esc(e.role)}</td>${e.days.map(day=>`<td>${esc(day)}</td>`).join('')}<td>${amt(e.hours)}</td></tr>`).join('')}</tbody></table></div>`;
+    dialog(d.type,`<p>${esc(documentNumber(d.id)||'无需生成')} · ${esc(r.storeName)} · ${esc(r.sourceVersion)} · ${esc(r.startDate)}—${esc(r.endDate)}</p>${body}<p>${notRequired?'库存充足，无需生成或提交补货申请。':'单据草稿已生成，提交状态：待提交。'}</p>`,notRequired?'库存充足 · 无需补货申请':'店长已确认 · 单据待提交');
   }
   document.addEventListener('click',event=>{
     const menu=event.target.closest('[data-aw-view]');if(menu&&managerView()){openManager(menu.dataset.awView);return;}
@@ -3987,7 +4006,7 @@ render();
         if(weekExpired())throw new Error('执行开始日期已过去，请更新为接下来7天的清单。');
         if(view.weekDirty)throw new Error('清单参数已修改，请先更新并重新确认。');
         const result=F.createDocuments(flow,view.storeId,weekly()?.plan.key,now);
-        if(save(result.state)){render();$('.aw-receipts')?.scrollIntoView({block:'start',behavior:'instant'});toast(result.reused?'已复用本批次演示单据，没有重复创建。':'演示单据与排班已创建，请查看回执。');}
+        if(save(result.state)){render();$('.aw-receipts')?.scrollIntoView({block:'start',behavior:'instant'});toast(result.reused?'已复用本批次草稿，没有重复生成。':result.receipt.supplyChain.status==='not_required'?'排班草稿已生成，库存充足无需补货申请。':'补货申请与排班草稿已生成，待提交。');}
       }
       if(action==='view-document')showDocument(button.dataset.document,button.dataset.receipt);
     }catch(error){toast(error.message||'操作未完成，请检查当前方案与确认状态。');}
