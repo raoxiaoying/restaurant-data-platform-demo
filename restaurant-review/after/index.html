@@ -1058,6 +1058,56 @@
 .ai-expense-warning{padding:12px 15px;border:1px solid #efd6a5;border-radius:8px;background:#fffbf1;color:#946824!important;font-size:13px!important;line-height:1.9}
 @media(max-width:1100px){.ai-expense-head{display:none}.ai-expense-row{grid-template-columns:minmax(100px,1fr) minmax(130px,1fr);gap:9px 18px}.ai-expense-default{grid-column:2}.ai-expense-amount{grid-column:1;grid-row:auto}.ai-expense-row .ai-number-input input{min-height:42px}}
 @media(max-width:760px){.ai-expense-row{padding:14px 0;grid-template-columns:minmax(0,1fr) minmax(110px,1fr);gap:8px 12px}.ai-expense-row>label{font-size:13px}.ai-expense-default>small{font-size:10px}.ai-expense-amount{font-size:17px}.ai-expense-totals{grid-template-columns:minmax(0,1fr)}.ai-expense-totals>div{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.ai-expense-totals strong{margin-top:0;font-size:18px}}
+.campaign-editor{margin-top:24px;padding-top:22px;border-top:1px solid #dbe5f3;min-width:0}
+.campaign-editor>header h3{margin:0 0 8px;font-size:18px;color:#334f75}
+.campaign-editor>header p,.campaign-source{font-size:13px!important;line-height:1.9;color:#7287a3}
+.campaign-regular{margin:18px 0;padding:15px 17px;border:1px solid #dce6f5;border-radius:9px;background:#f7faff}
+.campaign-regular>summary{color:#45668f;font-size:14px;font-weight:600;cursor:pointer}
+.campaign-regular>p{margin-bottom:0;font-size:12px!important;color:#7a8ea9}
+.campaign-card{margin:14px 0;border:1px solid #d9e4f6;border-radius:11px;background:#fff;overflow:hidden}
+.campaign-card>summary{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:18px 20px;cursor:pointer;list-style:none;background:#f8faff}
+.campaign-card>summary::before{content:'›';flex-shrink:0;font-size:23px;color:#7e99bc;transition:transform .15s}
+.campaign-card[open]>summary::before{transform:rotate(90deg)}
+.campaign-card>summary>span:first-of-type{flex:1;min-width:0}
+.campaign-card>summary strong{display:block;color:#35547c;font-size:16px;overflow-wrap:anywhere}
+.campaign-card>summary small{display:block;margin-top:6px;color:#7b8faa;font-size:12px;line-height:1.8}
+.campaign-card-body{padding:17px 20px}
+.campaign-card-actions{display:flex;justify-content:flex-end;gap:18px;margin-bottom:15px}
+.campaign-card-actions button{font-size:12px}
+.campaign-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 20px;margin-top:16px;min-width:0}
+.campaign-fields label,.campaign-add label,.campaign-marketing label{display:grid;gap:8px;min-width:0;color:#526f94;font-size:13px}
+.ai-platform .campaign-fields input,.ai-platform .campaign-fields select,.ai-platform .campaign-add select,.ai-platform .campaign-marketing input{width:100%;min-width:0;min-height:43px;padding:9px 11px;border:1px solid #d5e1f3;border-radius:7px;background:#fff;color:#3e5b81;font-size:15px;outline-offset:2px;box-sizing:border-box}
+.campaign-fields small{font-size:11px;line-height:1.7;color:#8496af}
+.campaign-price-note{padding:11px 14px;border-radius:8px;background:#f4f8ff;font-size:13px!important;color:#5278aa!important}
+.campaign-recipe-note{font-size:11px!important;line-height:1.9;color:#7b8ea8!important}
+.campaign-add{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin:21px 0}
+.campaign-add label{min-width:180px}
+.campaign-marketing{display:flex;align-items:center;flex-wrap:wrap;gap:15px;margin:22px 0}
+.campaign-marketing label{min-width:220px}
+.campaign-marketing>small{flex:1;min-width:170px;color:#8093af;font-size:12px;line-height:1.8}
+.campaign-validation{padding:14px 17px;border:1px solid #eac6ce;border-radius:9px;background:#fff6f8;color:#a74057;font-size:13px}
+.campaign-validation ul{margin:8px 0 0;padding-left:20px;line-height:1.8}
+.campaign-preview{margin:25px 0 0}
+.campaign-preview>header{display:flex;justify-content:space-between;align-items:center;gap:15px}
+.campaign-preview>header h4{margin:0!important;font-size:16px}
+.campaign-preview>header span{font-size:11px;color:#8094af}
+.campaign-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:17px 0}
+.campaign-metrics>div{padding:15px 17px;border:1px solid #dce6f5;border-radius:9px;background:#f6f9ff;min-width:0}
+.campaign-metrics small{display:block;color:#7b90ad;font-size:12px}
+.campaign-metrics strong{display:block;margin-top:7px;color:#2e5e9d;font-size:23px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.campaign-metrics strong.bad{color:#be3453}
+.campaign-ledger{min-width:840px}
+.campaign-ledger td,.campaign-ledger th{padding:13px 12px;font-size:12px}
+.campaign-cash{margin:18px 0;padding:15px 17px;border:1px solid #e4d8f5;border-radius:9px;background:#faf7ff}
+.campaign-cash>strong{color:#705391;font-size:13px}
+.campaign-cash p{margin:8px 0;color:#725f8c!important;font-size:13px!important;line-height:1.9}
+.campaign-cash>small{color:#9688a7;font-size:11px;line-height:1.9}
+.campaign-costs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.campaign-costs>div{padding:13px 15px;border:1px solid #e1e9f5;border-radius:8px;background:#fff;min-width:0}
+.campaign-costs span,.campaign-costs small{display:block;color:#7d8fa8;font-size:11px;line-height:1.8}
+.campaign-costs strong{display:block;margin:5px 0;color:#496b97;font-size:17px;overflow-wrap:anywhere}
+@media(max-width:1100px){.campaign-costs{grid-template-columns:repeat(2,minmax(0,1fr))}.campaign-preview>header{align-items:flex-start;flex-direction:column;gap:7px}.campaign-metrics strong{font-size:21px}}
+@media(max-width:760px){.campaign-card>summary{padding:14px 12px;align-items:flex-start;gap:10px;flex-wrap:wrap}.campaign-card>summary>span:first-of-type{flex:1 1 170px}.campaign-card>summary strong{font-size:14px}.campaign-card>summary small{font-size:11px}.campaign-card-body{padding:14px 12px}.campaign-fields{grid-template-columns:minmax(0,1fr);gap:15px}.campaign-regular{padding:14px 12px}.campaign-add,.campaign-marketing{align-items:stretch;flex-direction:column}.campaign-add label,.campaign-marketing label{min-width:0;width:100%}.campaign-marketing>small{min-width:0}.campaign-metrics{grid-template-columns:minmax(0,1fr)}.campaign-metrics>div{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.campaign-metrics strong{margin:0;font-size:20px}.campaign-costs{grid-template-columns:minmax(0,1fr)}.campaign-costs>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px}.campaign-costs strong{grid-column:2;grid-row:span 2;margin:0;font-size:17px}.campaign-cash{padding:13px}.campaign-card-actions{gap:20px;justify-content:space-between}}
 </style>
 </head>
 <body class="hmw-app ai-workspace ai-platform">
@@ -1739,10 +1789,262 @@
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
 </script>
+  <script>/* 活动演示配方：单位用量明确列示，不代表品牌真实餐谱或供应商已签报价。 */
+(function (root) {
+  'use strict';
+  const M = root.HaomeiweiModel || (typeof module !== 'undefined' && module.exports ? require('./haomeiwei-model.js') : null);
+  const version = 'CAMPAIGN-DEMO-BOM-V1';
+  const clone = value => JSON.parse(JSON.stringify(value));
+  const round = n => Math.round(n * 1000000) / 1000000;
+  const sourceNote = '活动单位用量、菜单组合和供应商均为演示资料，不是品牌实际餐谱或已签报价；代金券按示例双人核销菜单备料，实际点单结构须核对。';
+  const suppliers = { beef: '禾牧肉类供应（示例）', chicken: '丰羽禽业供应（示例）', pork: '鲜达肉品供应（示例）',
+    cheese: '醇源乳品供应（示例）', hairtail: '海禾水产供应（示例）', crab: '澄鲜水产供应（示例）',
+    pigeon: '禾羽禽品供应（示例）', fishball: '鲜味食品供应（示例）' };
+  const catalog = M.forecast({ plan: 'anniversary' }).priceTargets.map(item => ({ materialId: item.materialId, name: item.name,
+    unit: '公斤', unitPrice: item.targetPrice, supplierName: suppliers[item.materialId] })).concat(
+    [['rice', '大米', 4.5], ['leafy-vegetables', '叶菜', 6], ['seasonal-vegetables', '时蔬', 8],
+      ['oil', '食用油', 12], ['seasoning', '调味料', 20], ['eggs', '鸡蛋', 10]].map(([materialId, name, unitPrice]) => ({
+      materialId, name, unit: '公斤', unitPrice, supplierName: '集团综合食材供应（示例）' }))
+  );
+  const recipes = [
+    { id: 'family-four', name: '四人套餐演示配方', quantities: { beef: .6, chicken: .8, pork: .6, cheese: .15, rice: .8,
+      'leafy-vegetables': 1, 'seasonal-vegetables': 1, oil: .12, seasoning: .1, eggs: .4 } },
+    { id: 'voucher-two', name: '150元双人核销菜单演示参考', quantities: { beef: .25, chicken: .3, pork: .2, rice: .3,
+      'leafy-vegetables': .3, 'seasonal-vegetables': .4, oil: .04, seasoning: .04, eggs: .1 } },
+    { id: 'single-chicken', name: '单品鸡肉小食演示配方', quantities: { chicken: .18, oil: .02, seasoning: .01 } }
+  ].map(recipe => {
+    const items = Object.entries(recipe.quantities).map(([materialId, quantityKg]) => ({
+      ...catalog.find(item => item.materialId === materialId), quantityKg }));
+    return { id: recipe.id, name: recipe.name, version, unitFoodCost: round(items.reduce((n, item) => n + item.quantityKg * item.unitPrice, 0)), items, sourceNote };
+  });
+  const api = { version, catalog: clone(catalog), templates: recipes.map(({ items, ...recipe }) => clone(recipe)), sourceNote,
+    get: id => { const recipe = recipes.find(item => item.id === id); return recipe ? clone(recipe) : null; } };
+  root.CampaignRecipes = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
+  <script>/* 周年庆活动的独立演示账：互斥订单、本期售券队列及配方用量，不连接真实业务。 */
+(function (root) {
+  'use strict';
+  const M = root.HaomeiweiModel || (typeof module !== 'undefined' && module.exports ? require('./haomeiwei-model.js') : null);
+  const Recipes = root.CampaignRecipes || (typeof module !== 'undefined' && module.exports ? require('./campaign-recipes.js') : null);
+  const reference = M.forecast({ plan: 'anniversary' }), mode = 'campaign-ledger-v1';
+  const clone = value => JSON.parse(JSON.stringify(value));
+  const round = value => Number.isFinite(value) ? Math.round(value * 1000000) / 1000000 : 0;
+  const sum = values => round(values.reduce((total, value) => total + value, 0));
+  const money = yuan => round(yuan / 10000);
+  const types = ['package', 'voucher', 'item', 'custom'];
+  let nextId = 1;
+  function template(type = 'custom', id) {
+    const presets = {
+      package: { name: '四人周年庆套餐', soldQuantity: 50000, redemptionRate: 100, salePrice: 299, faceValue: 369, basketGross: 369, guestsPerOrder: 4, recipeId: 'family-four' },
+      voucher: { name: '45元抵100元代金券', soldQuantity: 50000, redemptionRate: 80, salePrice: 45, faceValue: 100, basketGross: 150, guestsPerOrder: 2, recipeId: 'voucher-two' },
+      item: { name: '39元单品19.9元券', soldQuantity: 20000, redemptionRate: 90, salePrice: 19.9, faceValue: 39, basketGross: 39, guestsPerOrder: 1, recipeId: 'single-chicken' },
+      custom: { name: '自定义活动', customType: '自定义活动', soldQuantity: 0, redemptionRate: 100, salePrice: 0, faceValue: 0, basketGross: 0, guestsPerOrder: 1, recipeId: '' }
+    };
+    const kind = types.includes(type) ? type : 'custom', preset = presets[kind], recipe = Recipes.get(preset.recipeId);
+    return { id: id || `activity-${kind}-${nextId++}`, type: kind, ...preset, unitFoodCost: recipe ? recipe.unitFoodCost : 0 };
+  }
+  function defaults() {
+    return { plan: 'anniversary', activityMode: mode, recipeVersion: Recipes.version,
+      regular: { orders: 175000, guestsPerOrder: 2, grossPerOrder: 180, discountPerOrder: 20 }, marketingBudget: 140,
+      activities: [template('package', 'package-family'), template('voucher', 'voucher-two'), template('item', 'item-chicken')] };
+  }
+  function numeric(value) {
+    if (typeof value !== 'number' && typeof value !== 'string') return null;
+    if (typeof value === 'string' && value.trim() === '') return null;
+    const number = Number(value);
+    return Number.isFinite(number) ? number : null;
+  }
+  function normalize(raw = {}) {
+    const initial = defaults(), regular = { ...initial.regular, ...raw.regular };
+    const result = { plan: 'anniversary', activityMode: mode, recipeVersion: Recipes.version,
+      regular: Object.fromEntries(Object.keys(initial.regular).map(key => [key, numeric(regular[key])])),
+      marketingBudget: numeric(raw.marketingBudget === undefined ? initial.marketingBudget : raw.marketingBudget),
+      activities: (Array.isArray(raw.activities) ? raw.activities : initial.activities).map(activity => {
+        const row = activity || {}, normalized = { id: String(row.id || ''), type: String(row.type || ''), name: String(row.name || '').trim() };
+        if (normalized.type === 'custom') normalized.customType = String(row.customType || '').trim();
+        for (const key of ['soldQuantity', 'redemptionRate', 'salePrice', 'faceValue', 'basketGross', 'guestsPerOrder', 'unitFoodCost']) normalized[key] = numeric(row[key]);
+        if (normalized.type !== 'voucher') normalized.basketGross = normalized.faceValue;
+        normalized.recipeId = String(row.recipeId || '');
+        return normalized;
+      }) };
+    const valid = value => typeof value === 'number' && value >= 0 ? value : 0;
+    const regularOrders = valid(result.regular.orders), regularGuests = regularOrders * valid(result.regular.guestsPerOrder);
+    let guests = regularGuests, gross = regularOrders * valid(result.regular.grossPerOrder), discount = regularOrders * Math.min(valid(result.regular.discountPerOrder), valid(result.regular.grossPerOrder));
+    for (const row of result.activities) {
+      const orders = Math.round(valid(row.soldQuantity) * Math.min(100, valid(row.redemptionRate)) / 100);
+      guests += orders * valid(row.guestsPerOrder);
+      gross += orders * valid(row.basketGross);
+      discount += orders * Math.max(0, valid(row.faceValue) - valid(row.salePrice));
+    }
+    result.guests = round(guests);
+    result.grossPerCapita = guests > 0 ? round(gross / guests) : 0;
+    result.discountPerGuest = guests > 0 ? round(discount / guests) : 0;
+    result.netPerCapita = guests > 0 ? round((gross - discount) / guests) : 0;
+    result.discountRate = gross > 0 ? round(discount / gross * 100) : 0;
+    for (const key of ['purchaseExecution', 'usageExecution', 'laborExecution', 'utilitiesExecution', 'consumablesExecution']) result[key] = 1;
+    return result;
+  }
+  function allocate(total, weights, precision = 1) {
+    const units = Math.round(total * precision), denominator = weights.reduce((n, value) => n + value, 0);
+    if (!units || !denominator) return weights.map(() => 0);
+    const exact = weights.map(weight => units * weight / denominator), values = exact.map(Math.floor);
+    const ranked = exact.map((value, i) => ({ i, fraction: value - values[i] })).sort((a, b) => b.fraction - a.fraction || a.i - b.i);
+    for (let i = 0, remainder = units - values.reduce((a, b) => a + b, 0); i < remainder; i++) values[ranked[i].i]++;
+    return values.map(value => value / precision);
+  }
+  function complete(row) {
+    const result = { ...row };
+    result.expenses = sum(M.expenseKeys.map(key => result[key]));
+    result.grossProfit = round(result.revenue - result.food);
+    result.operatingExpenses = round(result.expenses - result.food);
+    result.otherExRent = sum(['utilities', 'tableware', 'consumables', 'maintenance', 'marketing', 'otherStoreExpense'].map(key => result[key]));
+    result.other = round(result.rent + result.otherExRent);
+    result.profit = round(result.revenue - result.expenses);
+    result.perCapita = result.guests > 0 ? result.revenue * 10000 / result.guests : 0;
+    result.margin = result.revenue > 0 ? result.profit / result.revenue * 100 : 0;
+    result.foodRate = result.revenue > 0 ? result.food / result.revenue * 100 : 0;
+    result.laborRate = result.revenue > 0 ? result.labor / result.revenue * 100 : 0;
+    return result;
+  }
+  const groupAmountKeys = ['guests', 'grossSales', 'discount', 'revenue', 'food', 'extraPayment', 'cashReceived', 'deferredCash', 'redeemedCash', 'recipeFoodCost'];
+  function budget(raw = defaults()) {
+    const inputs = normalize(raw), issues = [], seen = new Set(['regular']);
+    if (raw.activities !== undefined && !Array.isArray(raw.activities)) issues.push('活动清单须为数组；可清空为零项活动');
+    function number(value, label, minimum = 0, maximum = Number.MAX_SAFE_INTEGER, integer = false) {
+      if (value === null || !Number.isFinite(value) || value < minimum || value > maximum || (integer && !Number.isSafeInteger(value))) {
+        issues.push(`${label}须为${integer ? '整数，且' : '有效数字，且'}在${minimum}—${maximum}之间`);
+        return 0;
+      }
+      return value;
+    }
+    const regular = inputs.regular, regularOrders = number(regular.orders, '常规经营订单数', 0, Number.MAX_SAFE_INTEGER, true);
+    const regularParty = number(regular.guestsPerOrder, '常规每单人数', 1, 50, true), regularGross = number(regular.grossPerOrder, '常规每单折前金额');
+    let regularDiscount = number(regular.discountPerOrder, '常规每单优惠额');
+    if (regularDiscount > regularGross) { issues.push('常规每单优惠额不能超过折前金额'); regularDiscount = regularGross; }
+    const marketing = number(inputs.marketingBudget, '市场推广预算');
+    const regularCounts = allocate(regularOrders, M.stores.map(store => store.demandWeight));
+    const regularRows = regularCounts.map((count, i) => {
+      const guests = count * regularParty, food = round(reference.byStore[i].food * guests / reference.byStore[i].guests);
+      return { id: 'regular', type: 'regular', name: '常规经营（不含下列活动订单）', soldQuantity: count, redemptions: count, guests,
+        grossSales: money(count * regularGross), discount: money(count * regularDiscount), revenue: money(count * (regularGross - regularDiscount)), food,
+        extraPayment: 0, cashReceived: money(count * (regularGross - regularDiscount)), deferredCash: 0, redeemedCash: 0, recipeFoodCost: food,
+        unitFoodCost: count > 0 ? food * 10000 / count : 0, recipeId: '', bomVersion: '', materialItems: [], materialBlockers: [] };
+    });
+    const allRows = [regularRows];
+    for (const activity of inputs.activities) {
+      const label = activity.name || '未命名活动';
+      if (!activity.id || seen.has(activity.id)) issues.push(`${label}的活动标识为空或重复`);
+      seen.add(activity.id);
+      if (!types.includes(activity.type)) issues.push(`${label}的活动类型无效`);
+      if (!activity.name) issues.push('活动名称不能为空');
+      const sold = number(activity.soldQuantity, `${label}销量`, 0, Number.MAX_SAFE_INTEGER, true), rate = number(activity.redemptionRate, `${label}核销率`, 0, 100);
+      const face = number(activity.faceValue, `${label}原价/券面值`);
+      let basket = number(activity.basketGross, `${label}核销订单原额`);
+      let sale = number(activity.salePrice, `${label}售价`);
+      if (sale > face) { issues.push(`${label}售价不能超过原价/券面值`); sale = face; }
+      if (face > basket) { issues.push(`${label}券面值不能超过核销订单原额`); basket = face; }
+      const party = number(activity.guestsPerOrder, `${label}每单人数`, 1, 50, true), foodCost = number(activity.unitFoodCost, `${label}单位食材成本`);
+      const count = Math.round(sold * rate / 100), soldRows = allocate(sold, M.stores.map(store => store.promoWeight));
+      const redeemedRows = allocate(count, soldRows), recipe = Recipes.get(activity.recipeId), topUp = Math.max(0, basket - face);
+      allRows.push(soldRows.map((quantity, i) => {
+        const redemptions = redeemedRows[i], materialBlockers = [];
+        if (redemptions > 0 && !recipe) materialBlockers.push(`${label}有${redemptions}单核销，尚未选择可用配方，不能生成完整物料计划。`);
+        if (redemptions > 0 && recipe && foodCost + .000001 < recipe.unitFoodCost) materialBlockers.push(`${label}单位食材预算${foodCost}元低于配方成本${recipe.unitFoodCost}元，须调整预算或配方。`);
+        return { ...activity, soldQuantity: quantity, redemptions, guests: redemptions * party,
+          grossSales: money(redemptions * basket), discount: money(redemptions * (face - sale)), revenue: money(redemptions * (sale + topUp)), food: money(redemptions * foodCost),
+          extraPayment: money(redemptions * topUp), cashReceived: money(quantity * sale + redemptions * topUp), deferredCash: money((quantity - redemptions) * sale), redeemedCash: money(redemptions * sale),
+          unitFoodCost: foodCost, recipeId: activity.recipeId, bomVersion: recipe ? recipe.version : '', recipeFoodCost: recipe ? money(redemptions * recipe.unitFoodCost) : 0,
+          materialItems: recipe ? recipe.items.map(item => ({ ...clone(item), quantityKg: round(item.quantityKg * redemptions), sourceActivityId: activity.id, recipeId: recipe.id, bomVersion: recipe.version })) : [], materialBlockers };
+      }));
+    }
+    const groups = allRows.map(rows => {
+      const first = rows[0], result = { id: first.id, type: first.type, name: first.name, soldQuantity: sum(rows.map(row => row.soldQuantity)), redemptions: sum(rows.map(row => row.redemptions)),
+        unitFoodCost: first.type === 'regular' ? (regularOrders > 0 ? sum(rows.map(row => row.food)) * 10000 / regularOrders : 0) : first.unitFoodCost,
+        recipeId: first.recipeId, bomVersion: first.bomVersion, materialItems: first.materialItems.map((item, index) => ({ ...item, quantityKg: sum(rows.map(row => row.materialItems[index].quantityKg)) })) };
+      if (first.customType) result.customType = first.customType;
+      for (const key of groupAmountKeys) result[key] = sum(rows.map(row => row[key]));
+      return result;
+    });
+    const marketingRows = allocate(marketing, reference.byStore.map(store => store.marketing), 1000000);
+    const byStore = reference.byStore.map((store, i) => {
+      const rows = allRows.map(group => group[i]), costs = {};
+      for (const key of M.expenseKeys) costs[key] = key === 'food' ? sum(rows.map(row => row.food)) : key === 'marketing' ? marketingRows[i] : round(store.fixedCosts[key] + (store[key] - store.fixedCosts[key]) * sum(rows.map(row => row.guests)) / store.guests);
+      const ledger = complete({ ...Object.fromEntries(['guests', 'grossSales', 'discount', 'revenue'].map(key => [key, sum(rows.map(row => row[key]))])), orders: sum(rows.map(row => row.redemptions)), ...costs });
+      const budgetBlockers = M.expenseKeys.filter(key => costs[key] < store.fixedCosts[key]).map(key => `${M.labels[key]}预算${costs[key]}万元低于原固定投入参考${store.fixedCosts[key]}万元，须落实调整后确认。`);
+      return { ...clone(store), ...ledger, regularGuests: regularRows[i].guests, regularGroup: regularRows[i], activityRows: rows.slice(1),
+        materialBlockers: [...issues, ...rows.flatMap(row => row.materialBlockers)], budgetBlockers,
+        variableCosts: Object.fromEntries(M.expenseKeys.map(key => [key, Math.max(0, round(costs[key] - store.fixedCosts[key]))])), dailyGuests: ledger.guests / 30,
+        capacityUse: ledger.guests / store.capacityGuests * 100, foodTargetRate: ledger.foodRate, laborTargetRate: ledger.laborRate };
+    });
+    const totals = complete(Object.fromEntries(['guests', 'orders', 'grossSales', 'discount', 'revenue', ...M.expenseKeys].map(key => [key, sum(byStore.map(store => store[key]))])));
+    return { groups, totals, cash: { received: sum(groups.map(group => group.cashReceived)), redeemed: sum(groups.map(group => group.redeemedCash)), extraPayment: sum(groups.map(group => group.extraPayment)), deferred: sum(groups.map(group => group.deferredCash)) },
+      issues, byStore };
+  }
+  function calculate(raw = defaults()) {
+    const inputs = normalize(raw), activityBudget = budget(raw), defaultBudget = budget(defaults());
+    const priceTargets = reference.priceTargets.map(material => {
+      const storeRows = activityBudget.byStore.map((store, i) => {
+        const quantityKg = round(material.storeRows[i].quantityKg * store.regularGuests / reference.byStore[i].guests);
+        const currentCost = money(quantityKg * material.currentPrice), targetCost = money(quantityKg * material.targetPrice);
+        return { storeId: store.storeId, storeName: store.storeName, region: store.region, quantityKg, currentPrice: material.currentPrice, targetPrice: material.targetPrice,
+          currentCost, targetCost, potentialSaving: round(currentCost - targetCost), saving: round(currentCost - targetCost) };
+      });
+      const quantityKg = sum(storeRows.map(row => row.quantityKg)), quoteRangeValid = quantityKg === 0 || (quantityKg >= material.minimumCommitmentKg && quantityKg <= material.quantityKg * 1.1);
+      return { ...clone(material), storeRows, quantityKg, currentCost: sum(storeRows.map(row => row.currentCost)), potentialSaving: sum(storeRows.map(row => row.potentialSaving)), saving: sum(storeRows.map(row => row.saving)), effectivePrice: material.targetPrice,
+        quoteRangeValid, requiresRequote: !quoteRangeValid, condition: '仅常规互斥客流的原料预测；活动配方月量另列，须合并相同物料后重新核对量价和供货条件。' };
+    });
+    const byStore = activityBudget.byStore.map((store, i) => {
+      const original = reference.byStore[i], factor = store.regularGuests / original.guests;
+      const current = sum(priceTargets.map(material => material.storeRows[i].currentCost)), purchaseSaving = sum(priceTargets.map(material => material.storeRows[i].saving));
+      const usageSaving = round(original.usageSaving * factor), materialEffectiveCost = sum(priceTargets.map(material => money(material.storeRows[i].quantityKg * material.effectivePrice)));
+      const regularFoodCost = store.regularGroup.food, activityFoodCost = sum(store.activityRows.map(row => row.food)), activityPhysicalCost = sum(store.activityRows.map(row => row.recipeFoodCost));
+      const foodBudget = { rawFoodCost: round(regularFoodCost + purchaseSaving + usageSaving), materialCurrentCost: current,
+        otherStandardFoodCost: round(regularFoodCost - materialEffectiveCost), avoidableExcessBefore: usageSaving, avoidableExcessAfter: 0,
+        purchaseSaving, usageSaving, targetFoodCost: regularFoodCost, regularFoodCost, activityFoodCost,
+        physicalFoodCost: round(regularFoodCost + activityPhysicalCost), budgetTargetFoodCost: store.food, budgetAdjustment: round(regularFoodCost + activityPhysicalCost - store.food) };
+      return { ...store, foodBudget, purchaseSaving, usageSaving, plannedSavings: 0,
+        savingsByCost: Object.fromEntries(M.expenseKeys.map(key => [key, 0])), budgetAdjustment: 0 };
+    });
+    const totals = activityBudget.totals, foodKeys = Object.keys(byStore[0].foodBudget);
+    const foodBudget = { ...Object.fromEntries(foodKeys.map(key => [key, sum(byStore.map(store => store.foodBudget[key]))])), formula: '常规食材只按常规互斥客流测算；活动食材＝各活动核销单量×各自单位成本，配方物料月量另列，不计入常规其他食材。' };
+    const definitions = [['grossSales', '折前营业额变化', 1], ['discount', '销售折扣变化', -1], ...M.expenseKeys.map(key => [key, `${M.labels[key]}变化`, -1])];
+    const changeRows = byStore.map((store, i) => ({ storeId: store.storeId, storeName: store.storeName,
+      profitDelta: round(store.profit - defaultBudget.byStore[i].profit), revenueDelta: round(store.revenue - defaultBudget.byStore[i].revenue),
+      drivers: definitions.map(([id, name, sign]) => ({ id, name, label: name, formula: sign === 1 ? '当前折前金额－默认活动方案折前金额' : '默认活动方案金额－当前金额', impact: round((store[id] - defaultBudget.byStore[i][id]) * sign) })) }));
+    const drivers = definitions.map(([id, name, sign]) => ({ id, name, label: name, formula: sign === 1 ? '当前折前金额－默认活动方案折前金额' : '默认活动方案金额－当前金额',
+      impact: sum(changeRows.map(store => store.drivers.find(row => row.id === id).impact)), storeRows: changeRows.map(store => ({ storeId: store.storeId, storeName: store.storeName, impact: store.drivers.find(row => row.id === id).impact })) }));
+    const capacityConstraints = byStore.filter(store => store.capacityUse > 100).map(store => ({ storeId: store.storeId, storeName: store.storeName, capacityUse: store.capacityUse,
+      dailyCapacity: store.capacityGuests / 30, requiredDailyGuests: store.dailyGuests, dailyGap: store.dailyGuests - store.capacityGuests / 30, condition: '活动与常规客流合计超过原接待能力，先确认增能或预约分流。' }));
+    return { ...clone(reference), plan: 'anniversary', label: '人工调整｜周年庆活动组合', version: 'NOV-CAMPAIGN', referenceVersion: 'NOV-CAMPAIGN-DEFAULT', inputs,
+      totals, group: totals, byStore, activityBudget, priceTargets, foodBudget, regularGuests: sum(byStore.map(store => store.regularGuests)), activityRows: activityBudget.groups.filter(group => group.id !== 'regular'),
+      materialBlockers: [...new Set(byStore.flatMap(store => store.materialBlockers))], validationIssues: activityBudget.issues,
+      baseline: clone(totals), savings: 0, budgetAdjustment: 0, executionRates: { purchase: 1, usage: 1, labor: 1, utilities: 1, consumables: 1 }, executionRate: 1,
+      volumeFactor: totals.guests / reference.totals.guests,
+      actions: reference.actions.map(action => ({ ...clone(action), target: '原量价模型参考：' + action.target, budgetReference: true, campaignReference: true })),
+      costTargets: M.expenseKeys.map(key => ({ key, name: M.labels[key], amount: totals[key], rate: totals.revenue > 0 ? totals[key] / totals.revenue * 100 : 0,
+        fixed: sum(byStore.map(store => store.fixedCosts[key])), rawBase: totals[key], improvementBase: 0,
+        formula: key === 'food' ? '常规每客标准食材成本×常规人次＋各活动核销单×各自单位食材成本。' : key === 'marketing' ? '独立输入的整月推广费用；活动折扣仅在收入端冲减。' : '本店固定投入＋AI基准每客可变费用×本店常规与活动总人次。' })),
+      capacityConstraints, capacityReadyStoreCount: byStore.filter(store => store.capacityUse <= 90).length,
+      assumptions: { ...clone(reference.assumptions), guests: totals.guests, perCapita: inputs.netPerCapita, grossPerCapita: inputs.grossPerCapita, discountPerGuest: inputs.discountPerGuest, discountRate: inputs.discountRate,
+        demand: '常规经营与各项活动订单互斥，按各自实际成交/核销单量和每单人数汇总；不另加旧模型客流。',
+        note: '仅本期售出、本期核销的券队列；售券现金不直接计入经营营收，已核销券售价与核销补差共同形成营收，未核销预收单列。不含期初券负债、历史券核销或到期沉淀。',
+        readiness: '销量、核销率、单位食材成本与配方均为可修改的演示假设；店长须确认本店订单分组、供货与岗位资源后生效。',
+        conditions: ['常规订单排除所有列示活动；活动之间不得叠加，同一就餐订单只归入一组。', `市场推广预算${totals.marketing}万元单独列费，折扣不重复计入费用。`, '套餐、单品券与自定义按单活动不补差；代金券按核销订单原额减券面值补差。', '有效核销活动须具备配方；单位食材预算不得低于所选配方成本，活动物料与常规物料合并后核对报价。', `${capacityConstraints.length}家门店目标超过原接待能力，确认前落实增能或预约分流。`] },
+      revenueFormula: '互斥常规订单实收＋各活动核销单×（券售价＋订单原额－券面值）÷10,000；未核销预收不计营收', profitFormula: '预计折后营收－常规与活动食材成本－其他八项门店费用',
+      changes: { reference: clone(defaultBudget.totals), profitDelta: round(totals.profit - defaultBudget.totals.profit), revenueDelta: round(totals.revenue - defaultBudget.totals.revenue), costDelta: round(totals.expenses - defaultBudget.totals.expenses), drivers, byStore: changeRows } };
+  }
+  const model = { mode, defaults, template, normalize, budget, calculate };
+  root.CampaignPlan = model;
+  if (typeof module !== 'undefined' && module.exports) module.exports = model;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
   <script>/* 人工策略测算适配器：沿用演示业务模型，不修改历史、AI基准或已锁定执行计划。 */
 (function (root) {
   'use strict';
   const M = root.HaomeiweiModel || (typeof module !== 'undefined' && module.exports ? require('./haomeiwei-model.js') : null);
+  const Campaign = root.CampaignPlan || (typeof module !== 'undefined' && module.exports ? require('./campaign-plan.js') : null);
   const SCALE = 1000000;
   const round = n => Math.round(n * SCALE) / SCALE;
   const sum = values => round(values.reduce((a, b) => a + b, 0));
@@ -1771,6 +2073,7 @@
       laborExecution: { min: 0, max: 1, step: .1 }, utilitiesExecution: { min: 0, max: 1, step: .1 }, consumablesExecution: { min: 0, max: 1, step: .1 } };
   }
   function normalize(input = {}) {
+    if (input.plan === 'anniversary' && input.activityMode === 'campaign-ledger-v1') return Campaign.normalize(input);
     const original = defaults(input.plan || 'anniversary'), limits = bounds(original.plan), result = { plan: original.plan };
     for (const [key, limit] of Object.entries(limits)) {
       const n = input[key] === '' || input[key] == null ? original[key] : Number(input[key]);
@@ -1902,6 +2205,7 @@
     return { inputs, totals, byStore, priceTargets, baseline, savings, foodBudget, rawRows, avoidableUsage };
   }
   function calculate(input = {}) {
+    if (input.plan === 'anniversary' && input.activityMode === 'campaign-ledger-v1') return Campaign.calculate(input);
     if (input.plan === 'steady' && input.costMode === expenseCostMode) return calculateExpenseBudget(input);
     const inputs = normalize(input), originalInputs = normalize(defaults(inputs.plan));
     const reference = references[inputs.plan], spec = specFor(inputs.plan), v = inputs.guests / spec.guests;
@@ -2012,8 +2316,10 @@
         costDelta: round(totals.expenses - reference.totals.expenses), drivers, byStore: changeRows } };
   }
   const model = { defaults, expenseDefaults, expenseBudget, normalize, calculate, base: (plan = 'anniversary') => clone(references[plan] || specFor(plan)), bounds,
+    activityDefaults: () => Campaign.defaults(), activityTemplate: type => Campaign.template(type), activityBudget: draft => Campaign.budget(draft), activityBase: () => Campaign.calculate(Campaign.defaults()),
     executionFields: { ...executionFields },
     definitions: { price: '折前人均、每客优惠额均为元/人；折后人均为两者之差，discountRate为派生百分数。', execution: '各执行率输入0—1；动作executionRate以0—100百分数输出。',
+      activity: '仅周年庆显式启用campaign-ledger-v1时生效；常规与各活动订单互斥，输入单价为元、输出金额为万元。仅本期售出本期核销队列，售券现金不重复计经营营收；未核销预收单列，活动物料按配方核销单独计算。',
       expenseBudget: '仅方案一显式启用store-standard-rates-v1时生效；费率单位为百分数，分母为折后营收；按逐店标准费用权重下沉集团手改率。费用率表示最终预算，不再次扣减参考整改收益。',
       budgetAdjustment: '预算调整＝原量价模型费用－新费用预算，正数增加预计利润、负数减少预计利润；baseline.profit＋savings＋budgetAdjustment＝当前预计利润。foodBudget中同样为physicalFoodCost－budgetTargetFoodCost，targetFoodCost保留原实物量价口径。',
       marketing: '营销预算为整月绝对额，包含已承诺固定部分；销售折扣在收入端另扣且只扣一次。', provenance: '用于AI工作台产品演示的条件测算；未连接真实AI、营销、采购或门店业务服务。' } };
@@ -2184,11 +2490,18 @@
   const money = n => `${text(n)}万元`;
   const names = { steady: '方案一：现行营销策略 + 成本项整改', anniversary: '方案二：周年庆活动+成本联动' };
   const usesExpenseRates = forecast => forecast.plan === 'steady' && forecast.inputs.costMode === 'store-standard-rates-v1';
+  const usesActivities = forecast => forecast.plan === 'anniversary' && forecast.inputs.activityMode === 'campaign-ledger-v1';
 
   function signature(forecast) {
     const inputs = Object.fromEntries(Object.keys(forecast.inputs).sort().map(key => [key, forecast.inputs[key]]));
     if (usesExpenseRates(forecast)) inputs.expenseRatios = Object.fromEntries(sourceModel.expenseKeys
       .filter(key => Object.prototype.hasOwnProperty.call(forecast.inputs.expenseRatios, key)).map(key => [key, forecast.inputs.expenseRatios[key]]));
+    if (usesActivities(forecast)) {
+      inputs.regular = Object.fromEntries(['orders','guestsPerOrder','grossPerOrder','discountPerOrder'].map(key=>[key,forecast.inputs.regular[key]]));
+      inputs.activities = forecast.inputs.activities.map(activity=>Object.fromEntries(
+        ['id','type','name','customType','soldQuantity','redemptionRate','salePrice','faceValue','basketGross','guestsPerOrder','unitFoodCost','recipeId']
+          .filter(key=>Object.prototype.hasOwnProperty.call(activity,key)).map(key=>[key,activity[key]]))).sort((a,b)=>a.id.localeCompare(b.id));
+    }
     return JSON.stringify({
       dataVersion: forecast.dataVersion || sourceModel.dataVersion,
       referenceVersion: forecast.referenceVersion || forecast.version,
@@ -2198,21 +2511,27 @@
   }
 
   function describe(forecast, M) {
-    const input = forecast.inputs, event = forecast.plan === 'anniversary', expenseRates = usesExpenseRates(forecast);
+    const input = forecast.inputs, event = forecast.plan === 'anniversary', expenseRates = usesExpenseRates(forecast), campaign = usesActivities(forecast);
     const regions = [...new Set(M.stores.map(s => s.region))];
     const seats = M.stores.reduce((n, s) => n + s.seats, 0);
     const requotes = forecast.priceTargets.filter(p => p.requiresRequote).length;
     const fixedGapStores = forecast.byStore.filter(row => row.budgetBlockers?.length).length;
+    const regularGuests = forecast.byStore.reduce((n,row)=>n+(row.regularGuests || 0),0);
+    const materialGapStores = forecast.byStore.filter(row=>row.materialBlockers?.length).length;
     return {
       planId: forecast.plan, title: names[forecast.plan],
       brandFacts: [
         `${M.group.name}采用${M.group.storeType}业态，品牌参考人均${text(M.group.perCapita)}元；覆盖${regions.join('、')}的${M.stores.length}家门店、${text(seats, 0)}个座位。`,
-        `本方案按整月${text(input.guests, 0)}人次、折前人均${text(input.grossPerCapita)}元及每客优惠${text(input.discountPerGuest)}元测算，折后人均${text(input.netPerCapita)}元。`,
+        campaign ? `本方案常规互斥客流${text(regularGuests,0)}人次，加活动核销${text(forecast.totals.guests-regularGuests,0)}人次，共${text(forecast.totals.guests,0)}人次；折前营业额${money(forecast.totals.grossSales)}、优惠${money(forecast.totals.discount)}、折后收入${money(forecast.totals.revenue)}由各类订单分别汇总。` : `本方案按整月${text(input.guests, 0)}人次、折前人均${text(input.grossPerCapita)}元及每客优惠${text(input.discountPerGuest)}元测算，折后人均${text(input.netPerCapita)}元。`,
         `市场推广最终总预算${money(forecast.totals.marketing)}；${forecast.priceTargets.length}项重点原料按集团采购条件测算，${requotes}项采购数量需要重新询价。`,
         `${forecast.capacityReadyStoreCount}家门店测算产能使用率不超过90%，${forecast.capacityConstraints.length}家门店目标超过现有接待能力，需逐店落实资源。`,
         ...(expenseRates ? ['九项费用采用逐店AI基准最终费用的演示标准费率；集团费用率＝各店费用金额合计÷各店折后营业额合计，按营业额金额加权；手改集团费率按当前逐店标准费用权重分配。'] : [])
       ],
-      features: event ? [
+      features: campaign ? [
+        `按${input.activities.length}项活动各自的售出数量、核销率、每单人数、成交价格与单位食材成本测算，用户可增删活动并逐项调整。`,
+        `常规订单与活动核销人次互斥统计；售出未核销券不计入本月餐饮营业额、不形成备料需求，推广最终预算${money(forecast.totals.marketing)}独立计费。`,
+        `活动按所选演示配方${input.recipeVersion}生成明确物料用量，成本只计一次；由店长确认预算版本后，再核对7天库存、备料和排班。`
+      ] : event ? [
         `以周年庆套餐和会员券组织活动，围绕${text(input.guests, 0)}人次的目标安排推广、核销与高峰服务。`,
         `将活动价格与新品采购、备料和用工一起测算；每客优惠${text(input.discountPerGuest)}元冲减收入，推广预算${money(forecast.totals.marketing)}另计费用。`,
         '由店长核对本店活动承接、成本执行和岗位资源后生效，再据该店生效版本安排7天物料与排班。'
@@ -2222,11 +2541,12 @@
         '先测算各店可承接的客流和成本预算，经店长核对后逐店生效，适合优先稳定经营与修复执行差异。'
       ],
       difficulties: [
-        `客流${text(input.guests, 0)}人次属于本次经营假设，须结合预约、会员响应和本店实际核对；优惠与投放不会自动产生客流。`,
+        campaign ? `常规与活动核销合计${text(forecast.totals.guests,0)}人次属于经营假设，须核对常规客流已剔除活动顾客、每单人数、核销率及分时预约，避免重复计量。` : `客流${text(input.guests, 0)}人次属于本次经营假设，须结合预约、会员响应和本店实际核对；优惠与投放不会自动产生客流。`,
         requotes ? `${requotes}项原料数量超出既有报价区间，集团须重新确认量价、配送和供货条件，目标价不能直接作为已签价格。` : '采购目标价及集团锁量条件仍待执行确认，店长应核对本店到货规格、配送和临采安排。',
         forecast.capacityConstraints.length ? `${forecast.capacityConstraints.length}家门店存在产能缺口，须确认增能或预约分流；其他门店仍需核对分时高峰和人员班次。` : '集团总量可承接不代表每个时段都可承接，店长仍需核对分时客流、后厨和高峰岗位。',
         '排班减少与耗用改善需同时守住出餐、客诉和必要经营投入，预算改善须在实际结算后核验。',
-        ...(expenseRates ? [`${fixedGapStores}家门店预算低于原固定投入参考，缺口未落实合同、人员或资源调整前不可确认生效；食材费率不自动改变配方、份量、物料公斤数或供应商报价。`] : [])
+        ...(expenseRates ? [`${fixedGapStores}家门店预算低于原固定投入参考，缺口未落实合同、人员或资源调整前不可确认生效；食材费率不自动改变配方、份量、物料公斤数或供应商报价。`] : []),
+        ...(campaign ? [`${materialGapStores}家门店仍有活动配方或单位食材成本缺口；月度可确认预算，缺口关闭前不能确认7天清单或批量建单。配方与代金券双人菜单均为演示参考，须核对品牌实际餐谱及核销点单结构。`] : [])
       ]
     };
   }
@@ -2235,8 +2555,9 @@
     const store = M.stores.find(s => s.id === storeId);
     const row = forecast.byStore.find(s => s.storeId === storeId);
     if (!store || !row) throw new Error(`未知门店：${storeId}`);
-    const input = forecast.inputs, overCapacity = row.capacityUse > 100, expenseRates = usesExpenseRates(forecast);
+    const input = forecast.inputs, overCapacity = row.capacityUse > 100, expenseRates = usesExpenseRates(forecast), campaign = usesActivities(forecast);
     const budgetBlockers = clone(row.budgetBlockers || []);
+    const activityRows = clone(row.activityRows || []), materialBlockers = clone(row.materialBlockers || []);
     const suppliers = [...procurement.build(forecast, 'regular').items, ...procurement.build(forecast, 'new').items];
     const materials = forecast.priceTargets.map(p => {
       const quantity = p.storeRows.find(s => s.storeId === storeId);
@@ -2250,7 +2571,7 @@
     const capacity = store.capacityGuestsPerDay, dailyGap = Math.max(0, row.dailyGuests - capacity);
     const requotes = materials.filter(p => p.requiresRequote).length;
     const grossMargin = row.revenue ? row.grossProfit / row.revenue * 100 : 0;
-    const per100 = value => value * 1000000 / row.guests;
+    const per100 = value => row.guests ? value * 1000000 / row.guests : 0;
     const attention = [
       { key: 'grossSales', label: '折前营业额', value: row.grossSales,
         focus: `本店预计${text(row.guests, 0)}人次、折前人均${text(input.grossPerCapita)}元，对应折前营业额${money(row.grossSales)}；核对菜单标价及计划售卖范围。`,
@@ -2295,6 +2616,19 @@
         focus: `本店预计利润${money(row.profit)}、利润率${text(row.margin)}%；确认以上收入和全部费用可以执行后，再将该版本作为门店目标。`,
         verification: '按收入减全部列示成本费用复核，不将计划节约当作已实现收益；店长未确认前仍是测算建议。', tone: row.profit < 0 ? 'bad' : overCapacity ? 'warn' : 'normal' }
     ];
+    if (campaign) {
+      const activityGuests = activityRows.reduce((n,activity)=>n+activity.guests,0);
+      const setAttention = (key,focus,verification,tone='normal') => Object.assign(attention.find(item=>item.key===key),{focus,verification,tone});
+      setAttention('grossSales',`本店常规互斥客流${text(row.regularGuests,0)}人次，活动核销${text(activityGuests,0)}人次，共${text(row.guests,0)}人次，折前金额${money(row.grossSales)}；核对每类活动的核销单数、每单人数和菜单标价。`,
+        '常规订单与活动订单分别核算，活动顾客不再计入常规客流；售券数量不等于核销数量。');
+      setAttention('discount',`本店优惠合计${money(row.discount)}，由常规订单优惠和各活动核销订单优惠汇总；套餐、代金券和单品券逐项核对售价、抵扣额及补差款。`,
+        '按已核销订单核对折前金额与餐饮收入之差，销售折扣不再重复列推广费；未核销券款不提前计餐饮收入。',row.grossSales && row.discount/row.grossSales>=.15?'warn':'normal');
+      setAttention('revenue',`本店常规与活动核销合计收入${money(row.revenue)}，每客${text(row.guests?row.revenue*10000/row.guests:0)}元为汇总后的派生指标；预计日均${text(row.dailyGuests)}人次，核对核销及高峰接待。`,
+        '逐活动核对套餐实收、代金券售价与核销补差、单品券实收；未核销售券款与本月餐饮收入分开。',overCapacity?'warn':'normal');
+      setAttention('food',`本店食材预算${money(row.food)}，含常规${money(row.foodBudget.regularFoodCost)}、活动${money(row.foodBudget.activityFoodCost)}；常规物料与活动核销所选配方分别测算后合并，活动单位食材成本不反推公斤数。`,
+        `活动使用${input.recipeVersion}演示单位配方，按本店实际核销预测形成明确公斤数，售出未核销券不备料；常规8项原料与6项补充食材仍为演示参考。${materialBlockers.length?`仍有${materialBlockers.length}项活动配方或成本缺口，本次仅可确认经营预算，不能确认执行清单或建单。`:'核对配方、库存、供应商、报价及实际菜单组合，7天清单需另由店长确认。'}`,
+        materialBlockers.length?'bad':requotes?'warn':'normal');
+    }
     if (expenseRates) for (const item of attention.filter(item => M.expenseKeys.includes(item.key))) {
       item.focus += ` 本店最终目标费率${text(item.value / row.revenue * 100)}%，采用演示标准费用率或集团手改费率的分店分配。`;
       if (item.value < row.fixedCosts[item.key]) {
@@ -2306,12 +2640,12 @@
       storeId, storeName: store.name, region: store.region, manager: store.manager,
       period: '2026-11', monthlyDays: 30, planId: forecast.plan,
       signature: signature({ ...forecast, dataVersion: M.dataVersion }),
-      inputs: clone(input), dataVersion: M.dataVersion, finance: clone(row), budgetBlockers,
+      inputs: clone(input), dataVersion: M.dataVersion, finance: clone(row), budgetBlockers, activityRows, materialBlockers,
       storeResource: { seats: store.seats, capacityGuestsPerDay: capacity, capacityUse: row.capacityUse, dailyGuests: row.dailyGuests },
       materials, attention,
       checks: [
-        { id: 'parameters', label: '客流、优惠和预算已逐项核对', description: `本店整月${text(row.guests, 0)}人次、折后人均${text(row.perCapita)}元及收入${money(row.revenue)}，费用按本版本逐项核对。${expenseRates ? '九项费用来自逐店演示标准率；集团费率由费用金额与折后营收合计计算，手改率按标准费用权重落店。' : ''}` },
-        { id: 'costs', label: expenseRates ? '采购量价、费用预算与固定投入条件已核对' : '采购与成本执行条件已落实', description: `${requotes ? `${requotes}项需重新询价，先落实集团量价和供货条件；` : '集团采购价格与配送条件需落实；'}${expenseRates ? `食材费率不自动改变公斤数、配方和报价，须核对目标与量价差额；费用预算不代表固定投入已调整。${budgetBlockers.length ? `仍有${budgetBlockers.length}项固定投入预算缺口，处理并重新测算后才可确认。` : '合同、人员及资源安排须逐项核对。'}` : '本店收货、配方、耗用、排班及费用执行安排已经核对，预算改善待后续结算核验。'}` },
+        { id: 'parameters', label: '客流、优惠和预算已逐项核对', description: campaign ? `本店常规互斥${text(row.regularGuests,0)}人次加活动核销${text(row.guests-row.regularGuests,0)}人次，收入${money(row.revenue)}按各类核销订单汇总；已逐项核对售出量、核销率、每单人数、优惠与推广最终预算。` : `本店整月${text(row.guests, 0)}人次、折后人均${text(row.perCapita)}元及收入${money(row.revenue)}，费用按本版本逐项核对。${expenseRates ? '九项费用来自逐店演示标准率；集团费率由费用金额与折后营收合计计算，手改率按标准费用权重落店。' : ''}` },
+        { id: 'costs', label: campaign ? '活动单位成本、配方与费用假设已核对' : expenseRates ? '采购量价、费用预算与固定投入条件已核对' : '采购与成本执行条件已落实', description: campaign ? `活动食材预算按单位成本与核销数测算，明确用量来自${input.recipeVersion}演示配方，不能按预算金额反推公斤数。${materialBlockers.length?`尚有${materialBlockers.length}项物料缺口，本次仅确认经营预算，补齐并重新测算前不得确认7天清单或批量建单。`:'常规物料、活动配方、菜单组合和采购报价须逐项核对，执行前再由店长确认库存及人员清单。'}` : `${requotes ? `${requotes}项需重新询价，先落实集团量价和供货条件；` : '集团采购价格与配送条件需落实；'}${expenseRates ? `食材费率不自动改变公斤数、配方和报价，须核对目标与量价差额；费用预算不代表固定投入已调整。${budgetBlockers.length ? `仍有${budgetBlockers.length}项固定投入预算缺口，处理并重新测算后才可确认。` : '合同、人员及资源安排须逐项核对。'}` : '本店收货、配方、耗用、排班及费用执行安排已经核对，预算改善待后续结算核验。'}` },
         { id: 'resources', label: overCapacity ? '本店增能或预约分流已落实' : '人员、后厨与高峰服务资源已核对',
           description: `预计日均${text(row.dailyGuests)}人次，现有日接待能力${text(capacity)}人次；须核对分时高峰、人员班次、后厨及服务资源。${overCapacity ? `日均目标已超出约${text(dailyGap)}人次，确认前须落实增能或预约分流，不能仅勾选预算而忽略容量。` : '即使日均有余量，也须落实高峰承接；分时客流超过能力时先确认增能或预约分流。'}` }
       ]
@@ -2354,10 +2688,31 @@
     return round(n);
   }
   function buildMaterials(proposal, weights, inventory) {
+    const campaign = proposal.inputs.activityMode === 'campaign-ledger-v1';
     const otherStandardYuan = proposal.finance.foodBudget.otherStandardFoodCost * 10000;
     const definitions = proposal.materials.map(m => ({ ...m, basis: '已生效方案的本店原料月量', supplierName: m.supplierName || '集团食材协议供应商（示例）' })).concat(
       extraMaterials.map(([materialId, name, unitPrice, share]) => ({ materialId, name, unitPrice, quantityKg: otherStandardYuan * share / unitPrice, basis: `其他标准食材成本的${round(share * 100, 0)}%演示分摊`, supplierName: '集团综合食材供应（示例）' }))
     );
+    if (campaign) {
+      definitions.forEach(m=>Object.assign(m,{ regularQuantityKg:m.quantityKg, regularCostYuan:m.quantityKg*m.unitPrice, activityQuantityKg:0, activityCostYuan:0, activitySources:[] }));
+      for (const activity of proposal.activityRows || proposal.finance.activityRows || []) {
+        if (!activity.redemptions) continue;
+        for (const item of activity.materialItems || []) {
+          let material = definitions.find(m=>m.materialId===item.materialId);
+          if (!material) {
+            material = { ...item, quantityKg:0, regularQuantityKg:0, regularCostYuan:0, activityQuantityKg:0, activityCostYuan:0, activitySources:[], basis:'活动明确单位用量演示配方' };
+            definitions.push(material);
+          }
+          material.activityQuantityKg += item.quantityKg;
+          material.activityCostYuan += item.quantityKg*item.unitPrice;
+          material.quantityKg = material.regularQuantityKg+material.activityQuantityKg;
+          material.unitPrice = material.quantityKg ? round((material.regularCostYuan+material.activityCostYuan)/material.quantityKg,6) : item.unitPrice;
+          material.activitySources.push({ activityId:activity.id, name:activity.name, recipeId:activity.recipeId,
+            bomVersion:activity.bomVersion, quantityKg:item.quantityKg, unitPrice:item.unitPrice });
+        }
+      }
+      definitions.filter(m=>m.activitySources.length).forEach(m=>{ m.basis += '；加活动核销对应的明确配方月量，不再乘售出数量或重复计费'; });
+    }
     return definitions.map(m => {
       const demandGrams = Math.round(m.quantityKg * 7 / proposal.monthlyDays * 1000), demandKg = demandGrams / 1000, daily = demandKg / 7;
       const edited = inventory[m.materialId] || {}, onHandKg = inventoryValue(edited.onHandKg, daily * 2);
@@ -2367,6 +2722,8 @@
       const purchaseKg = Math.ceil(netGrams / (packKg * 1000)) * packKg;
       return { materialId: m.materialId, name: m.name, unit: '公斤', unitPrice: m.unitPrice, supplierName: m.supplierName,
         monthlyQuantityKg: round(m.quantityKg), dailyDemand: allocate(demandGrams, weights).map(g => g / 1000), demandKg,
+        ...(campaign ? { regularMonthlyQuantityKg:round(m.regularQuantityKg,6), activityMonthlyQuantityKg:round(m.activityQuantityKg,6),
+          activityMonthlyCostYuan:round(m.activityCostYuan,2), activitySources:m.activitySources } : {}),
         onHandKg, inboundKg, safetyKg, packKg, purchaseKg, purchaseCostYuan: round(purchaseKg * m.unitPrice, 2), demandCostYuan: round(demandKg * m.unitPrice, 2),
         inventorySource: Object.keys(edited).length ? '店长录入与演示默认值组合，待确认' : '演示默认：现存2天、在途0.5天、安全库存0.5天',
         requiresRequote: Boolean(m.requiresRequote), basis: m.basis, requiredArrival: '从计划首日起按日需求分批确认到货，在途须在使用前到达' };
@@ -2375,10 +2732,11 @@
   function buildStaffing(proposal, dates, weights, extraStaff) {
     const shiftHours = 6, hourlyCostYuan = 30, shiftCost = shiftHours * hourlyCostYuan;
     const budgetYuan = round(proposal.finance.labor * 10000 * 7 / proposal.monthlyDays, 2);
-    const guests = allocate(Math.round(proposal.finance.guests * 7 / proposal.monthlyDays), weights);
-    const daySlots = allocate(Math.floor((budgetYuan + .000001) / shiftCost), weights).map(n => Math.max(6, n));
+    const weeklyGuests = Math.round(proposal.finance.guests * 7 / proposal.monthlyDays), guests = allocate(weeklyGuests, weights);
+    const daySlots = weeklyGuests ? allocate(Math.floor((budgetYuan + .000001) / shiftCost), weights).map(n => Math.max(6, n)) : dates.map(()=>0);
     const roles = ['后厨', '前厅', '值班'], jobs = dates.map(() => []);
     daySlots.forEach((count, day) => {
+      if (!count) return;
       const early = Math.ceil(count / 2), late = count - early;
       for (const [shift, slots] of [['早班', early], ['晚班', late]]) {
         const kitchen = Math.min(slots - 2, Math.ceil((slots - 1) * .55)), front = slots - 1 - kitchen;
@@ -2426,7 +2784,7 @@
       requiredHours: sum(daySlots) * shiftHours, requiredCostYuan: sum(daySlots) * shiftCost, unfilledSlots: sum(vacancies.map(v => v.headcount)), vacancies,
       hourlyCostYuan, shiftHours, maxHoursPerEmployee: 36, extraStaff, baseEmployeeCount: poolSize,
       shifts: [{ name: '早班', start: '10:00', end: '16:00', hours: 6 }, { name: '晚班', start: '16:00', end: '22:00', hours: 6 }],
-      sourceNote: '按门店座位规模给定固定示例名册，再按客流与预算排班；6小时班、每天最多一班、每周最多6班36小时且至少1休为演示排班规则。30元为人工综合折算成本，不代表员工实际时薪；真实技能、可用性、考勤及薪酬须接入人事后核实，预算余量不作为新增利润。' };
+      sourceNote: '按门店座位规模给定固定示例名册，再按客流与预算排班；6小时班、每天最多一班、每周最多6班36小时且至少1休为演示排班规则。30元为人工综合折算成本，不代表员工实际时薪；真实技能、可用性、考勤及薪酬须接入人事后核实，预算余量不作为新增利润。' + (!weeklyGuests?' 本周客流为0，未生成服务需求班；固定人工预算仍保留，不代表停业或免付工资，营业与值守安排须店长另行核对。':'') };
   }
   function build(approval, options = {}) {
     if (!approval || !approval.confirmedAt || !approval.proposal) throw new Error('请先由本店店长确认经营方案');
@@ -2434,7 +2792,12 @@
     const extraStaff = Number(options.extraStaff || 0);
     if (!Number.isInteger(extraStaff) || extraStaff < 0 || extraStaff > 50) throw new Error('支援人数须为0—50的整数');
     const materials = buildMaterials(proposal, weights, options.inventory || {}), staffing = buildStaffing(proposal, dates, weights, extraStaff);
-    const blockers = [...(proposal.budgetBlockers || proposal.finance.budgetBlockers || [])], warnings = [], crossMonth = dates.some(d => d.slice(0, 7) !== proposal.period);
+    const blockers = [...(proposal.budgetBlockers || proposal.finance.budgetBlockers || []), ...(proposal.materialBlockers || proposal.finance.materialBlockers || [])], warnings = [], crossMonth = dates.some(d => d.slice(0, 7) !== proposal.period);
+    const campaign = proposal.inputs.activityMode === 'campaign-ledger-v1';
+    if (campaign) {
+      warnings.push(`活动物料按已确认核销量和${proposal.inputs.recipeVersion}演示配方月量推演7/30，售出未核销券不备料；常规与活动同物料合并，单价不同时以月用量加权参考价列示，不追加损益费用。`);
+    }
+    if (!staffing.daily.some(day=>day.guests)) warnings.push('本周预测客流为0，未生成服务需求班；固定费用预算保留，营业与值守安排请店长另行核对。');
     let foodBudgetSummary;
     if (proposal.planId === 'steady' && proposal.inputs.costMode === 'store-standard-rates-v1') {
       const { physicalFoodCost, budgetTargetFoodCost } = proposal.finance.foodBudget;
@@ -2463,7 +2826,8 @@
       sourceConfirmedAt: approval.confirmedAt, startDate: dates[0], endDate: dates[6], dates, materials, staffing, blockers, warnings, crossMonth,
       ...(foodBudgetSummary ? { foodBudgetSummary } : {}),
       weeklyGuests: sum(staffing.daily.map(d => d.guests)), materialPurchaseCostYuan: round(sum(materials.map(m => m.purchaseCostYuan)), 2),
-      inventoryNote: '默认按日均需求设置现存2天、在途0.5天、安全库存0.5天；店长可逐项修改。采购量＝需求＋安全库存－现存－在途，不足0取0，再按包装量向上取整；在途及采购交付时间须覆盖实际使用日。', sourceNote };
+      inventoryNote: '默认按日均需求设置现存2天、在途0.5天、安全库存0.5天；店长可逐项修改。采购量＝需求＋安全库存－现存－在途，不足0取0，再按包装量向上取整；在途及采购交付时间须覆盖实际使用日。',
+      sourceNote: sourceNote+(campaign?` 常规部分沿用演示分摊；活动部分按${proposal.inputs.recipeVersion}的明确单位配方与本店核销量加入，并保留逐活动来源。配方为演示餐谱，代金券菜单组合须按实际点单核对。`:'') };
   }
   const model = { build };
   root.SevenDayPlan = model;
@@ -2495,7 +2859,7 @@
     return weekly;
   }
   function verifyReady(plan) {
-    requireValue(Array.isArray(plan.blockers) && plan.blockers.length === 0, '7天计划仍有资源缺口或预算条件未落实，请先处理后确认');
+    requireValue(Array.isArray(plan.blockers) && plan.blockers.length === 0, '7天计划仍有资源缺口、预算条件未落实或物料缺口，请先处理后确认');
   }
 
   function verifyDate(plan, nowISO) {
@@ -2584,6 +2948,76 @@
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
 </script>
+  <script>/* 周年庆活动配置：本期销售与核销口径的演示测算。 */
+(function(root){
+  'use strict';
+  const types={package:'套餐',voucher:'代金券',item:'单品券',custom:'自定义活动'};
+  const expanded=new Set();let initialized=false,sequence=0;
+  const model=()=>root.AiScenarioModel;
+  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const amount=(value,digits=2)=>Number(Number(value||0).toFixed(digits)).toLocaleString('zh-CN',{maximumFractionDigits:digits});
+  const money=value=>amount(value)+'万元';
+  const node=id=>document.getElementById(id);
+  const ratio=(value,base)=>base>0?amount(value/base*100,2)+'%':'—';
+  const uniqueId=()=>`campaign-${Date.now().toString(36)}-${++sequence}`;
+  function input(label,field,value,attrs,scope){
+    return `<label><span>${label}</span><input ${scope} data-campaign-field="${field}" value="${escape(value)}" ${attrs}></label>`;
+  }
+  const numeric=(label,field,value,scope,min=0,max=10000000,step=1)=>input(label,field,value,`type="number" required min="${min}" max="${max}" step="${step}"`,scope);
+  function issueHtml(preview){return (preview.issues||[]).slice(0,8).map(issue=>`<li>${escape(issue)}</li>`).join('');}
+  function groupSummary(group){return group?`预计消费/核销 ${amount(group.redemptions,0)} 单 · 消费营收 ${money(group.revenue)} · 就餐 ${amount(group.guests,0)} 人次`:'请补齐活动参数';}
+  function activityCard(activity,index,preview){
+    const id=activity.id,scope=`data-campaign-activity="${escape(id)}"`,isVoucher=activity.type==='voucher',group=preview.groups.find(row=>row.id===id);
+    const recipe=root.CampaignRecipes.get(activity.recipeId),recipes=root.CampaignRecipes.templates;
+    const details=activity.type==='package'?'套餐原价':activity.type==='item'?'单品原价':isVoucher?'券面值':'每单折前价';
+    return `<details class="campaign-card" data-campaign-card="${escape(id)}" ${expanded.has(id)?'open':''}><summary><span><strong id="campaign-name-${escape(id)}">${index+1}. ${escape(activity.name)}</strong><small id="campaign-summary-${escape(id)}">${escape(groupSummary(group))}</small></span><span class="hmw-tag" id="campaign-type-label-${escape(id)}">${escape(activity.customType||types[activity.type])}</span></summary><div class="campaign-card-body"><div class="campaign-card-actions"><button type="button" class="hmw-link" data-campaign-copy="${escape(id)}">复制活动方案</button><button type="button" class="hmw-link" data-campaign-remove="${escape(id)}">删除活动</button></div><div class="campaign-fields">${input('活动方案名称','name',activity.name,'type="text" required maxlength="60"',scope)}<label><span>活动类型</span><select data-campaign-type="${escape(id)}">${Object.entries(types).map(([type,name])=>`<option value="${type}" ${activity.type===type?'selected':''}>${name}</option>`).join('')}</select></label>${activity.type==='custom'?input('自定义类型名称','customType',activity.customType||'自定义促销','type="text" required maxlength="30"',scope):''}${numeric(activity.type==='package'?'预计销售份数':'预计销售数量','soldQuantity',activity.soldQuantity,scope)}${numeric('本期预计消费/核销率（%）','redemptionRate',activity.redemptionRate,scope,0,100,.01)}${numeric(details+'（元）','faceValue',activity.faceValue,scope,0,100000,.01)}${numeric(isVoucher?'购券价格（元）':activity.type==='package'?'套餐售价（元）':'销售价格（元）','salePrice',activity.salePrice,scope,0,100000,.01)}${isVoucher?numeric('每次核销订单折前消费额（元）','basketGross',activity.basketGross,scope,0,100000,.01):''}${numeric('每次消费/核销就餐人数','guestsPerOrder',activity.guestsPerOrder,scope,1,50,1)}${numeric('每次消费食材成本预算（元）','unitFoodCost',activity.unitFoodCost,scope,0,100000,.000001)}<label><span>备料用量模板</span><select data-campaign-recipe="${escape(id)}"><option value="">待提供用量模板</option>${recipes.map(item=>`<option value="${escape(item.id)}" ${activity.recipeId===item.id?'selected':''}>${escape(item.name)}</option>`).join('')}</select></label></div><p class="campaign-price-note" id="campaign-price-${escape(id)}">${priceNote(activity)}</p><p class="campaign-recipe-note" id="campaign-recipe-${escape(id)}">${recipe?`示例用量模板：${escape(recipe.name)}，参考食材成本${amount(recipe.unitFoodCost,6)}元/单。更换模板会带入参考成本，可另行调整预算。`:'有效消费的活动须补齐明确的用量模板，才能生成可创建单据的物料清单。'}</p></div></details>`;
+  }
+  function priceNote(activity){
+    const face=Number(activity.faceValue)||0,sale=Number(activity.salePrice)||0,basket=activity.type==='voucher'?(Number(activity.basketGross)||0):face;
+    const benefit=face-sale,extra=Math.max(0,basket-face),fold=face>0?amount(sale/face*10,2)+'折':'—';
+    return activity.type==='voucher'?`券面${amount(face)}元，售价${amount(sale)}元（${fold}）；每次核销补差${amount(extra)}元、合计消费营收${amount(sale+extra)}元，优惠${amount(benefit)}元。`:`每份/单优惠${amount(benefit)}元，售价为原价的${fold}；就餐人数由本活动的消费/核销单数计算。`;
+  }
+  function renderEditor(draft){
+    const preview=model().activityBudget(draft);
+    if(!initialized&&draft.activities.length){expanded.add(draft.activities[0].id);initialized=true;}
+    const regularScope='data-campaign-regular="true"',regular=draft.regular;
+    return `<section class="campaign-editor"><header><h3>活动方案与销售预测</h3><p>按常规订单和各活动的预计消费/核销测算营收，再预测门店成本与利润。每笔消费只归入一组，下列活动不叠加；常规订单不包含活动订单。</p></header><details class="campaign-regular"><summary>未参加下列活动的常规订单</summary><div class="campaign-fields">${numeric('预计常规订单数','orders',regular.orders,regularScope)}${numeric('每单就餐人数','guestsPerOrder',regular.guestsPerOrder,regularScope,1,50)}${numeric('每单折前金额（元）','grossPerOrder',regular.grossPerOrder,regularScope,0,100000,.01)}${numeric('每单日常优惠（元）','discountPerOrder',regular.discountPerOrder,regularScope,0,100000,.01)}</div><p>常规食材按现有菜单演示标准估算；订单、人次均不再与活动重复相加。</p></details><div id="campaignActivityCards">${draft.activities.map((activity,index)=>activityCard(activity,index,preview)).join('')}</div><div class="campaign-add"><label><span>新增活动类型</span><select id="campaignAddType">${Object.entries(types).map(([type,name])=>`<option value="${type}">${name}</option>`).join('')}</select></label><button type="button" class="hmw-button" data-campaign-add>新增活动方案</button></div><div class="campaign-marketing">${numeric('市场推广费用预算（万元）','marketingBudget',draft.marketingBudget,'data-campaign-global="true"',0,100000,.01)}<small>推广支出单独计入费用，销售折扣只在收入端扣减一次。</small></div><div class="campaign-validation" id="campaignIssues" ${(preview.issues||[]).length?'':'hidden'}><strong>请先修正活动参数</strong><ul id="campaignIssueList">${issueHtml(preview)}</ul></div><div class="campaign-preview"><header><h4>本期活动与常规经营测算</h4><span>以下为草稿，重新测算后更新门店方案</span></header><div class="campaign-metrics"><div><small>预计消费营收</small><strong id="campaignRevenue">${money(preview.totals.revenue)}</strong></div><div><small>预计销售折扣</small><strong id="campaignDiscount">${money(preview.totals.discount)}</strong></div><div><small>预计就餐人次</small><strong id="campaignGuests">${amount(preview.totals.guests,0)}人次</strong></div><div><small>预计经营利润</small><strong id="campaignProfit" class="${preview.totals.profit<0?'bad':''}">${money(preview.totals.profit)}</strong></div></div><div class="hmw-table-wrap"><table class="hmw-table campaign-ledger"><thead><tr><th>消费分组</th><th class="numeric">预计消费/核销单数</th><th class="numeric">就餐人次</th><th class="numeric">折前金额/万元</th><th class="numeric">优惠/万元</th><th class="numeric">消费营收/万元</th><th class="numeric">食材预算/万元</th></tr></thead><tbody id="campaignLedger">${ledgerRows(preview)}</tbody></table></div><div class="campaign-cash"><strong>现金与消费收入分开看</strong><p id="campaignCashText">${cashText(preview)}</p><small>本模型按本期新售活动及其本期核销估算，不含历史券核销。未核销款单列，不作为本期消费营收；退款与到期未使用款未在本模型中确认收益。</small></div><h4>预计成本费用</h4><div class="campaign-costs" id="campaignCostRows">${costRows(preview)}</div><p class="campaign-source">食材按常规菜单标准与活动单位成本估算；人工及其他费用结合门店固定投入和预计消费人次测算。默认活动配有明确的演示用量模板，新增活动可选模板；费用金额不能直接反推食材公斤数。</p></div></section>`;
+  }
+  function ledgerRows(preview){return preview.groups.map(group=>`<tr><td>${escape(group.name)}</td><td class="numeric">${amount(group.redemptions,0)}</td><td class="numeric">${amount(group.guests,0)}</td><td class="numeric">${amount(group.grossSales)}</td><td class="numeric">${amount(group.discount)}</td><td class="numeric">${amount(group.revenue)}</td><td class="numeric">${amount(group.food)}</td></tr>`).join('');}
+  function cashText(preview){const cash=preview.cash;return `本期预计总收款${money(cash.received)}；其中活动已消费/核销价款${money(cash.redeemed)}、核销补差${money(cash.extraPayment)}；未核销预收${money(cash.deferred)}，不再重复加入消费营收。`;}
+  function costRows(preview){return root.HaomeiweiModel.expenseKeys.map(key=>{const value=preview.totals[key]??preview.byStore.reduce((total,row)=>total+(row[key]||0),0);return `<div><span>${escape(root.HaomeiweiModel.labels[key])}</span><strong>${money(value)}</strong><small>占消费营收 ${ratio(value,preview.totals.revenue)}</small></div>`;}).join('');}
+  function refresh(){
+    if(!node('campaignRevenue'))return;
+    const preview=model().activityBudget(scenario.draft);
+    node('campaignRevenue').textContent=money(preview.totals.revenue);node('campaignDiscount').textContent=money(preview.totals.discount);node('campaignGuests').textContent=amount(preview.totals.guests,0)+'人次';node('campaignProfit').textContent=money(preview.totals.profit);node('campaignProfit').className=preview.totals.profit<0?'bad':'';
+    node('campaignLedger').innerHTML=ledgerRows(preview);node('campaignCostRows').innerHTML=costRows(preview);node('campaignCashText').textContent=cashText(preview);node('campaignIssueList').innerHTML=issueHtml(preview);node('campaignIssues').hidden=!(preview.issues||[]).length;const submit=document.querySelector('#aiStrategyForm button[type=submit]');if(submit)submit.disabled=Boolean(preview.issues?.length);
+    scenario.draft.activities.forEach((activity,index)=>{node('campaign-name-'+activity.id).textContent=`${index+1}. ${activity.name}`;node('campaign-summary-'+activity.id).textContent=groupSummary(preview.groups.find(row=>row.id===activity.id));node('campaign-price-'+activity.id).textContent=priceNote(activity);node('campaign-type-label-'+activity.id).textContent=activity.customType||types[activity.type];});
+  }
+  function edited(){markDraft();refresh();root.AdviceWorkspace?.refreshGates();}
+  document.addEventListener('input',event=>{
+    const target=event.target,field=target.dataset.campaignField;if(!field)return;
+    const value=target.type==='number'?(target.value===''?'':Number(target.value)):target.value;
+    if(target.dataset.campaignActivity){const activity=scenario.draft.activities.find(row=>row.id===target.dataset.campaignActivity);if(activity){activity[field]=value;if(field==='faceValue'&&activity.type!=='voucher')activity.basketGross=value;}}
+    else if(target.dataset.campaignRegular)scenario.draft.regular[field]=value;
+    else if(target.dataset.campaignGlobal)scenario.draft[field]=value;
+    else return;
+    edited();
+  });
+  document.addEventListener('change',event=>{
+    const target=event.target;if(target.dataset.campaignType){const id=target.dataset.campaignType,index=scenario.draft.activities.findIndex(row=>row.id===id);if(index<0)return;scenario.draft.activities[index]={...model().activityTemplate(target.value),id};expanded.add(id);markDraft();render();}
+    if(target.dataset.campaignRecipe){const activity=scenario.draft.activities.find(row=>row.id===target.dataset.campaignRecipe);if(!activity)return;activity.recipeId=target.value;const recipe=root.CampaignRecipes.get(target.value);if(recipe)activity.unitFoodCost=recipe.unitFoodCost;markDraft();render();}
+  });
+  document.addEventListener('click',event=>{
+    const add=event.target.closest('[data-campaign-add]'),copy=event.target.closest('[data-campaign-copy]'),remove=event.target.closest('[data-campaign-remove]');if(!add&&!copy&&!remove)return;
+    if(add){const item={...model().activityTemplate(node('campaignAddType').value),id:uniqueId()};scenario.draft.activities.push(item);expanded.add(item.id);}
+    if(copy){const original=scenario.draft.activities.find(row=>row.id===copy.dataset.campaignCopy);if(!original)return;const item={...JSON.parse(JSON.stringify(original)),id:uniqueId(),name:original.name+'（副本）'};scenario.draft.activities.push(item);expanded.add(item.id);}
+    if(remove){scenario.draft.activities=scenario.draft.activities.filter(row=>row.id!==remove.dataset.campaignRemove);expanded.delete(remove.dataset.campaignRemove);}
+    markDraft();render();
+  });
+  document.addEventListener('toggle',event=>{const id=event.target.dataset?.campaignCard;if(id){if(event.target.open)expanded.add(id);else expanded.delete(id);}},true);
+  root.CampaignEditor={render:renderEditor,refresh};
+})(globalThis);
+</script>
   <script>const M = globalThis.HaomeiweiModel;
 const AI = globalThis.AiScenarioModel;
 const $ = selector => document.querySelector(selector);
@@ -2591,14 +3025,14 @@ const num = (value,decimals=2) => (Number(Number(value).toFixed(decimals))||0).t
 const signed = (value,decimals=2) => `${Number(Number(value).toFixed(decimals))>0?'+':''}${num(value,decimals)}`;
 const amt = (value,decimals=2) => (Number(Number(value).toFixed(decimals))||0).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:decimals});
 const signedAmt = (value,decimals=2) => `${Number(Number(value).toFixed(decimals))>0?'+':''}${amt(value,decimals)}`;
-const pct = (value,base,decimals=1) => `${num(base?value/base*100:0,decimals)}%`;
+const pct = (value,base,decimals=1) => base?`${num(value/base*100,decimals)}%`:'—';
 const esc = value => String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key = row => row.storeId||row.id;
 const storeName = row => row.storeName||row.name;
 const pages = [['attribution','10月利润归因'],['forecast','11月经营建议'],['tracking','执行跟进']];
 const planNames = {steady:'方案一：现行营销策略 + 成本项整改',anniversary:'方案二：周年庆活动+成本联动'};
 const state = {page:'attribution',search:'',trackingFilter:'all'};
-const scenario={draft:AI.defaults('anniversary'),applied:AI.calculate(AI.defaults('anniversary')),revision:0,dirty:false,lastChanges:[]};
+const scenario={draft:AI.activityDefaults(),applied:AI.calculate(AI.activityDefaults()),revision:0,dirty:false,lastChanges:[]};
 let adjustments={};
 const actionStorageKey='haomeiwei-actions-v1:'+M.dataVersion;
 try{adjustments=JSON.parse(localStorage.getItem(actionStorageKey)||'{}');}catch{}
@@ -2652,9 +3086,9 @@ function foodMaterialFocus(){
   return `<div class="ai-food-focus"><header><strong>食材成本差异：采购价格与超标准损耗</strong><small>10月累计 · 集团口径 · 占比以各自细项因素减利额为分母</small></header><div class="ai-food-grid"><section data-food-factor="procurement"><h4>采购价格差异 · 重点物料 TOP5</h4><p class="ai-food-coverage">前${rows.length}项减利<strong>${amt(total)}万元</strong>，占本因素<strong>${pct(total,-purchase.impact)}</strong></p><ol>${materialRows}</ol><button class="hmw-link" data-cause="procurement">查看全部${M.materials.length}项及门店明细 →</button></section><section data-food-factor="usage"><h4>超标准损耗差异</h4><p class="ai-food-coverage">合计减利<strong>${amt(-usage.impact)}万元。</strong></p><ol>${usageRows}</ol><button class="hmw-link" data-cause="usage">查看损耗差异及门店明细 →</button></section></div></div>`;
 }
 function forecastFormationGraphic(f){
-  if(f.expenseBudget){
+  if(f.expenseBudget||f.activityBudget){
     const rows=f.changes.drivers.filter(row=>Math.abs(row.impact)>.000001).map(row=>({name:row.name.replace('预算调整',''),impact:row.impact}));
-    return `<figure class="ai-data-figure"><header><h4>当前费用预算下的利润变化</h4><p>对比方案一基准，收入与九项最终费用分别计入；金额单位：万元。</p></header>${bridgeSvg(rows,f.changes.reference.profit,f.totals.profit,'方案一基准','当前预算利润',true)}<figcaption>当前预计折后营收${amt(f.totals.revenue)}万元，减费用预算${amt(f.totals.expenses)}万元，得到预计利润${amt(f.totals.profit)}万元。标准费用已包含原方案整改参考，不再追加一份收益。</figcaption></figure>`;
+    return `<figure class="ai-data-figure"><header><h4>${f.activityBudget?'活动与费用预测下的利润变化':'当前费用预算下的利润变化'}</h4><p>对比${f.activityBudget?'默认活动方案':'方案一基准'}，收入与九项最终费用分别计入；金额单位：万元。</p></header>${bridgeSvg(rows,f.changes.reference.profit,f.totals.profit,f.activityBudget?'默认活动方案':'方案一基准','当前预算利润',true)}<figcaption>当前预计折后营收${amt(f.totals.revenue)}万元，减费用预算${amt(f.totals.expenses)}万元，得到预计利润${amt(f.totals.profit)}万元。${f.activityBudget?'活动按预计消费/核销计收入，售出现金不再重复计入；成本费用只计一次。':'标准费用已包含原方案整改参考，不再追加一份收益。'}</figcaption></figure>`;
   }
   const names={purchase:'采购',usage:'耗用',labor:'工时',utilities:'能耗',consumables:'物耗'};
   const rows=f.actions.filter(a=>Math.abs(a.saving||0)>.000001).map(a=>({name:names[a.id]||a.title,impact:a.saving}));
@@ -2701,7 +3135,7 @@ function renderForecast(){
     `<section class="ai-result-block" id="aiForecastResult">${forecastResult(chosen,reference)}</section>`;
 }
 function aiPlanCard(id){
-  const f=AI.base(id),active=scenario.draft.plan===id;
+  const f=id==='anniversary'?AI.activityBase():AI.base(id),active=scenario.draft.plan===id;
   return `<article class="hmw-plan ${active?'selected':''}" data-plan="${id}"><div class="hmw-plan-title"><div>${esc(planNames[id])}<p>${id==='steady'?'保持现行营销策略，针对成本项落实整改':'周年庆活动与成本项联动测算'}</p></div><span class="hmw-tag blue">AI 初始预测</span></div><div class="hmw-plan-kpis"><div><small>预计营业额</small><strong>${amt(f.totals.revenue,0)}<span>万元</span></strong></div><div><small>预计门店利润</small><strong>${amt(f.totals.profit,1)}<span>万元</span></strong></div><div><small>利润率</small><strong>${pct(f.totals.profit,f.totals.revenue)}</strong></div></div><p>${amt(f.totals.guests/10000,0)}万人次 · 折后人均${amt(f.totals.perCapita,0)}元 · 采购与产能条件待确认</p><button class="hmw-button ${active?'primary':''}" data-select-plan="${id}">${active?'正在此方案上调整':'以此方案调整'}</button></article>`;
 }
 const strategyFields=[
@@ -2739,17 +3173,17 @@ function refreshExpensePreview(){
   $('#aiExpenseFixedWarning').textContent=`${count}家门店预算低于原固定投入参考，须落实合同、人员或资源调整后再确认。`;
 }
 function strategyEditor(){
-  const d=scenario.draft,marketingMinimum=AI.bounds(d.plan).marketingBudget.min,ratioMode=d.costMode==='store-standard-rates-v1';
-  const fields=ratioMode?strategyFields.slice(0,3):strategyFields;
-  return `<form class="ai-strategy-panel" id="aiStrategyForm"><header><div><span class="ai-message-label">人工调整草稿</span><h2>调整11月经营策略与执行条件</h2><p>从AI方案出发，调整经营假设后再测算。</p></div><span class="ai-draft-badge" id="aiDraftBadge">${scenario.dirty?'有修改 · 待重新测算':'参数与已测算版本一致'}</span></header><div class="ai-strategy-grid"><label><span>营销策略</span><select id="aiStrategySelect" aria-label="营销策略"><option value="steady" ${d.plan==='steady'?'selected':''}>${esc(planNames.steady)}</option><option value="anniversary" ${d.plan==='anniversary'?'selected':''}>${esc(planNames.anniversary)}</option></select><small>切换策略将载入该方案的初始假设</small></label>${fields.map(([id,label,unit,min,max,step])=>`<label><span>${label}</span><span class="ai-number-input"><input type="number" required data-scenario-field="${id}" id="ai-${id}" aria-label="${label}" data-scenario-scale="${max===1?100:1}" min="${id==='marketingBudget'?marketingMinimum:min}" max="${max===1?100:max}" step="${max===1?1:step}" value="${max===1?Math.round(d[id]*100):d[id]}"><span>${unit}</span></span><small>${id==='guests'?'优惠调整后，客流假设需单独确认':id==='grossPerCapita'?(ratioMode?'定价改变后，各店费用按标准占收比重新估算':'仅测定价变化；菜品组合与每客份量不变'):id==='discountPerGuest'?'直接冲减营业额，不重复计营销费':id.endsWith('Execution')?'0%为尚未实现整改收益，100%为全部达成；不调整固定费用':`已承诺费用下限${marketingMinimum}万元，总预算按填写额计入`}</small></label>`).join('')}</div>${ratioMode?expenseBudgetEditor(d):''}<div class="ai-strategy-footer"><div><button type="button" class="hmw-button ghost" data-action="reset-draft">恢复AI初始参数</button><button type="submit" class="hmw-button primary">重新测算</button></div></div></form>`;
+  const d=scenario.draft,marketingMinimum=AI.bounds(d.plan).marketingBudget.min,ratioMode=d.costMode==='store-standard-rates-v1',activityMode=d.activityMode==='campaign-ledger-v1';
+  const fields=activityMode?[]:ratioMode?strategyFields.slice(0,3):strategyFields;
+  return `<form class="ai-strategy-panel" id="aiStrategyForm"><header><div><span class="ai-message-label">人工调整草稿</span><h2>调整11月经营策略与执行条件</h2><p>从AI方案出发，调整经营假设后再测算。</p></div><span class="ai-draft-badge" id="aiDraftBadge">${scenario.dirty?'有修改 · 待重新测算':'参数与已测算版本一致'}</span></header><div class="ai-strategy-grid"><label><span>营销策略</span><select id="aiStrategySelect" aria-label="营销策略"><option value="steady" ${d.plan==='steady'?'selected':''}>${esc(planNames.steady)}</option><option value="anniversary" ${d.plan==='anniversary'?'selected':''}>${esc(planNames.anniversary)}</option></select><small>切换策略将载入该方案的初始假设</small></label>${fields.map(([id,label,unit,min,max,step])=>`<label><span>${label}</span><span class="ai-number-input"><input type="number" required data-scenario-field="${id}" id="ai-${id}" aria-label="${label}" data-scenario-scale="${max===1?100:1}" min="${id==='marketingBudget'?marketingMinimum:min}" max="${max===1?100:max}" step="${max===1?1:step}" value="${max===1?Math.round(d[id]*100):d[id]}"><span>${unit}</span></span><small>${id==='guests'?'优惠调整后，客流假设需单独确认':id==='grossPerCapita'?(ratioMode?'定价改变后，各店费用按标准占收比重新估算':'仅测定价变化；菜品组合与每客份量不变'):id==='discountPerGuest'?'直接冲减营业额，不重复计营销费':id.endsWith('Execution')?'0%为尚未实现整改收益，100%为全部达成；不调整固定费用':`已承诺费用下限${marketingMinimum}万元，总预算按填写额计入`}</small></label>`).join('')}</div>${activityMode?globalThis.CampaignEditor.render(d):ratioMode?expenseBudgetEditor(d):''}<div class="ai-strategy-footer"><div><button type="button" class="hmw-button ghost" data-action="reset-draft">恢复AI初始参数</button><button type="submit" class="hmw-button primary" ${activityMode&&AI.activityBudget(d).issues.length?'disabled':''}>重新测算</button></div></div></form>`;
 }
 function forecastResult(f,reference){
-  const t=f.totals,r=reference.totals,delta=t.profit-r.profit;
+  const t=f.totals,r=f.activityBudget?f.changes.reference:reference.totals,delta=t.profit-r.profit;
   const userMessage=scenario.revision?`<div class="ai-changes-summary"><span class="ai-result-version">你的调整 · V${scenario.revision}</span><p>${scenario.lastChanges.length?scenario.lastChanges.map(c=>esc(c)).join('；'):'沿用当前参数重新核算'}</p></div>`:'';
-  return userMessage+`<div class="ai-thread-head"><span class="ai-avatar">✦</span><div><h2>${scenario.revision?'AI 已完成重新测算':'AI 初始测算结果'}</h2><small>${esc(planNames[f.plan])} · ${scenario.revision?'人工测算 V'+scenario.revision:'AI原方案'} · 120家门店</small></div><span class="hmw-tag ${scenario.revision?'blue':''}">${scenario.revision?'已更新集团与门店':'待你调整策略'}</span></div><div class="hmw-kpis">${kpi('预计折后营业额',amt(t.revenue,2),'万元',`AI同策略初始预测 ${amt(r.revenue,2)}万元`)}${kpi('预计门店经营利润',amt(t.profit,2),'万元',`较AI同策略初始预测 ${signedAmt(delta,2)}万元`,t.profit<0?'bad':'')}${kpi('预计门店经营利润率',pct(t.profit,t.revenue),'',`就餐 ${amt(t.guests,0)}人次 · 折后人均 ${amt(t.perCapita,2)}元`,t.profit<0?'bad':'')}</div><div class="ai-message-context" id="aiAppliedContext">本结果为当前测算参数，店长确认后生效。${scenario.dirty?'有草稿修改尚未进入结果。':''}${f.expenseBudget?'费用按门店标准占收比及手改目标汇总，标准整改不再重复计收益。':'营销预算按填写总额计入，折扣已从营业额扣减。'}</div>`+
+  return userMessage+`<div class="ai-thread-head"><span class="ai-avatar">✦</span><div><h2>${scenario.revision?'AI 已完成重新测算':'AI 初始测算结果'}</h2><small>${esc(planNames[f.plan])} · ${scenario.revision?'人工测算 V'+scenario.revision:'AI原方案'} · 120家门店</small></div><span class="hmw-tag ${scenario.revision?'blue':''}">${scenario.revision?'已更新集团与门店':'待你调整策略'}</span></div><div class="hmw-kpis">${kpi('预计折后营业额',amt(t.revenue,2),'万元',`AI同策略初始预测 ${amt(r.revenue,2)}万元`)}${kpi('预计门店经营利润',amt(t.profit,2),'万元',`较AI同策略初始预测 ${signedAmt(delta,2)}万元`,t.profit<0?'bad':'')}${kpi('预计门店经营利润率',pct(t.profit,t.revenue),'',`就餐 ${amt(t.guests,0)}人次 · ${t.guests?'折后人均 '+amt(t.perCapita,2)+'元':'无消费人次，客单价—'}`,t.profit<0?'bad':'')}</div><div class="ai-message-context" id="aiAppliedContext">本结果为当前测算参数，店长确认后生效。${scenario.dirty?'有草稿修改尚未进入结果。':''}${f.activityBudget?'营收按常规消费及活动预计核销汇总，未核销预收单列，不重复计销售折扣。':f.expenseBudget?'费用按门店标准占收比及手改目标汇总，标准整改不再重复计收益。':'营销预算按填写总额计入，折扣已从营业额扣减。'}</div>`+
     forecastFormationGraphic(f)+panel('人工方案与AI原方案对照',pnlTable([{label:'AI同策略原方案',row:r,rate:true},{label:scenario.revision?'人工方案 V'+scenario.revision:'当前预测',row:t,rate:true}],false,true),`<span class="hmw-tag">金额 / 万元</span>`,'比较同一策略基准；更改策略后按对应AI原方案重新比较')+
-    `<div class="hmw-grid wide"><div>${panel('AI 测算结论与执行条件',`<div class="hmw-panel-body">${forecastAssumptions(f)}${f.expenseBudget?`<div class="hmw-equation"><div><small>预计折后营收</small><strong>${amt(t.revenue)}万元</strong></div><b>−</b><div><small>九项最终费用预算</small><strong>${amt(t.expenses)}万元</strong></div><b>＝</b><div><small>当前预计利润</small><strong>${amt(t.profit)}万元</strong></div></div>`:`<div class="hmw-equation"><div><small>同参数未整改利润</small><strong>${amt(f.baseline.profit)}万元</strong></div><b>＋</b><div><small>各项整改预计收益</small><strong>${amt(f.savings)}万元</strong></div><b>＝</b><div><small>当前预计利润</small><strong>${amt(t.profit)}万元</strong></div></div>`}</div>`)}</div><div>${panel('相对AI原方案，利润如何变化',scenarioChanges(f,reference))}</div></div>`+
-    panel(f.expenseBudget?'标准预算的执行参考与落实条件':'AI 更新的经营行动',`<div class="hmw-panel-body"><div class="hmw-action-list">${f.actions.map(a=>actionCard(a,false,true)).join('')}</div></div>`,`<span class="hmw-tag blue">与本次测算同步</span>`)+
+    `<div class="hmw-grid wide"><div>${panel('AI 测算结论与执行条件',`<div class="hmw-panel-body">${forecastAssumptions(f)}${f.expenseBudget||f.activityBudget?`<div class="hmw-equation"><div><small>预计折后营收</small><strong>${amt(t.revenue)}万元</strong></div><b>−</b><div><small>九项最终费用预算</small><strong>${amt(t.expenses)}万元</strong></div><b>＝</b><div><small>当前预计利润</small><strong>${amt(t.profit)}万元</strong></div></div>`:`<div class="hmw-equation"><div><small>同参数未整改利润</small><strong>${amt(f.baseline.profit)}万元</strong></div><b>＋</b><div><small>各项整改预计收益</small><strong>${amt(f.savings)}万元</strong></div><b>＝</b><div><small>当前预计利润</small><strong>${amt(t.profit)}万元</strong></div></div>`}</div>`)}</div><div>${panel('相对AI原方案，利润如何变化',scenarioChanges(f,{totals:r}))}</div></div>`+
+    panel(f.activityBudget?'活动执行与资源落实参考':f.expenseBudget?'标准预算的执行参考与落实条件':'AI 更新的经营行动',`<div class="hmw-panel-body"><div class="hmw-action-list">${f.actions.map(a=>actionCard(a,false,true)).join('')}</div></div>`,`<span class="hmw-tag blue">与本次测算同步</span>`)+
     panel('120家门店 · 当前方案预测',`<div class="hmw-panel-body"><input class="hmw-search" data-search="forecast" aria-label="搜索预测门店" placeholder="搜索门店名称、编号或区域" value="${esc(state.search)}"></div><div id="forecastStores">${forecastStoreTable(f,state.search)}</div>`,`<button class="hmw-button" data-nav="tracking">查看锁定版本执行 →</button>`,'逐店金额加总到当前集团预测；点击门店查看采购量价、费用和行动条件');
 }
 function scenarioChanges(f,reference){
@@ -2763,7 +3197,7 @@ function forecastStoreTable(f,query=''){
 function actionCard(action,tracking=false,firstLayer=false){
   const amount=firstLayer?amt:num,condition=action.condition||action.description||'';
   const adjusted=actionAdjusted(action);
-  return `<article class="hmw-action"><h3>${esc(action.title)} ${tracking?`<span class="hmw-tag ${adjusted?'blue':'warn'}">${adjusted?'已调整 · 效果待复核':esc(action.status||'待执行')}</span>`:''}</h3><p>${esc(firstLayer?condition.replace('1,150元价差','0.115万元价差'):condition)}</p>${action.metric||action.target?`<p><b>${esc(action.metric||'验收目标')}：</b>${esc(action.target||'')}</p>`:''}<div class="hmw-action-meta"><span>负责人：${esc(action.owner)}</span><span>${action.deadlineRole?esc(action.deadlineRole):'截止'}：${esc(action.deadline)}</span>${action.scopeStoreIds?`<span>覆盖 ${action.scopeStoreIds.length} 家门店</span>`:''}${!tracking&&Number.isFinite(action.saving)?`<span class="hmw-tag blue">${action.budgetReference?'标准已含改善参考':'本场景收益'} ${amount(action.saving)}${firstLayer?'万元':'万'}</span>`:''}${action.readyBy?`<span>准备就绪：${esc(action.readyBy)}</span>`:''}${tracking?`<button class="hmw-link" data-adjust="${action.id}" ${adjusted?'disabled':''}>${adjusted?'已登记整改':'登记调整完成'}</button>`:''}</div>${action.driverDetails?.length?actionDriverDetails(action,firstLayer):''}</article>`;
+  return `<article class="hmw-action"><h3>${esc(action.title)} ${tracking?`<span class="hmw-tag ${adjusted?'blue':'warn'}">${adjusted?'已调整 · 效果待复核':esc(action.status||'待执行')}</span>`:''}</h3><p>${esc(firstLayer?condition.replace('1,150元价差','0.115万元价差'):condition)}</p>${action.metric||action.target?`<p><b>${esc(action.metric||'验收目标')}：</b>${esc(action.target||'')}</p>`:''}<div class="hmw-action-meta"><span>负责人：${esc(action.owner)}</span><span>${action.deadlineRole?esc(action.deadlineRole):'截止'}：${esc(action.deadline)}</span>${action.scopeStoreIds?`<span>覆盖 ${action.scopeStoreIds.length} 家门店</span>`:''}${!tracking&&Number.isFinite(action.saving)?`<span class="hmw-tag blue">${action.campaignReference?'原经营模型参考':action.budgetReference?'标准已含改善参考':'本场景收益'} ${amount(action.saving)}${firstLayer?'万元':'万'}</span>`:''}${action.readyBy?`<span>准备就绪：${esc(action.readyBy)}</span>`:''}${tracking?`<button class="hmw-link" data-adjust="${action.id}" ${adjusted?'disabled':''}>${adjusted?'已登记整改':'登记调整完成'}</button>`:''}</div>${action.driverDetails?.length?actionDriverDetails(action,firstLayer):''}</article>`;
 }
 function actionDriverDetails(action,firstLayer=false){
   const amount=firstLayer?amt:num;
@@ -2837,8 +3271,8 @@ function showStore(id,context='attribution',causeId=null){
     const storeNegative=-M.causes.map(c=>s.causes[c.id]).filter(v=>v<0).reduce((sum,v)=>sum+v,0);
     body+=`<div class="hmw-mini-kpis"><div data-tone="history"><small>9月实际利润</small><strong class="${s.september.profit<0?'bad':''}">${num(s.september.profit)}<span>万</span></strong></div><div data-tone="reference"><small>9月模式下10月基准</small><strong class="${contextRow.baseline.profit<0?'bad':''}">${num(contextRow.baseline.profit)}<span>万</span></strong></div><div data-tone="actual"><small>10月实际利润</small><strong class="${s.october.profit<0?'bad':''}">${num(s.october.profit)}<span>万</span></strong></div></div><p>本店环比净变化${signed(s.profitChange,4)}万元；基准利润减实际利润为${num(contextRow.baselineGap,4)}万元，两个比较分开解释。</p><h3>本店利润归因</h3><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>因素</th><th class="numeric">利润影响 / 万元</th><th class="numeric">本店不利影响占比</th></tr></thead><tbody>${M.causes.map(c=>{const impact=s.causes[c.id];return `<tr><td><button class="hmw-link" data-store="${id}" data-context="attribution" data-cause-context="${c.id}">${c.name}</button></td><td class="numeric ${badClass(impact)}">${signed(impact,4)}</td><td class="numeric">${impact<0?pct(-impact,storeNegative):'—'}</td></tr>`;}).join('')}<tr class="total"><td>净变化</td><td class="numeric ${badClass(s.profitChange)}">${signed(s.profitChange,4)}</td><td>与本店利润表一致</td></tr></tbody></table></div><details class="hmw-detail"><summary>本店渠道量价与9月模式基准</summary>${baselineTables(contextRow)}</details><details class="hmw-detail"><summary>本店连环替代与标准成本</summary>${substitutionTable(contextRow)}${standardCostTable(contextRow)}</details>${!currentCause?storeMaterialTable(id):''}<h3>本店实际与基准管理利润表</h3>`+pnlTable([{label:'9月实际',row:s.september,rate:true},{label:'9月模式下10月基准',row:contextRow.baseline,rate:true},{label:'10月实际',row:s.october,rate:true}]);
   }else if(context==='forecast'){
-    const f=scenario.applied,reference=AI.base(f.plan),selected=f.byStore.find(r=>key(r)===id),original=reference.byStore.find(r=>key(r)===id);
-    body+=`<div class="hmw-mini-kpis"><div><small>AI同策略原方案利润</small><strong>${num(original.profit)}<span>万</span></strong></div><div><small>${scenario.revision?'人工方案 V'+scenario.revision:'当前预测'}利润</small><strong>${num(selected.profit)}<span>万</span></strong></div><div><small>当前方案产能使用率</small><strong>${num(selected.capacityUse,1)}<span>%</span></strong></div></div>${selected.capacityUse>100?'<div class="hmw-insight">本店预计就餐人次超过现有产能。先确认分流、增能或下调销量，再锁定执行计划。</div>':''}<p>${esc(planNames[f.plan])}，预计就餐${num(selected.guests,0)}人次，折后人均${num(selected.perCapita,2)}元；日均${num(selected.dailyGuests,0)}人次，现有月承接能力${num(selected.capacityGuests,0)}人次。</p>`+pnlTable([{label:'10月实际',row:s.october},{label:'AI同策略原方案',row:original,rate:true},{label:scenario.revision?'人工方案 V'+scenario.revision:'当前预测',row:selected,rate:true}])+`<h3>本店 · 当前方案执行条件</h3><div class="hmw-action-list">${f.actions.map(action=>storeForecastAction(action,f,selected,s)).join('')}</div><p class="hmw-note">${f.expenseBudget?'本店最终费用按标准占收比和集团手改目标测算，原量价与整改仅作执行参考，不再二次增加利润。':`本店整改预计合计${num(selected.plannedSavings,4)}万元，已在食材、人工、能耗和物耗中扣减；采购、耗用、工时、能耗与物耗分别按所列达成率执行。`}${scenario.dirty?'草稿修改尚未进入本店结果。':''}</p>`;
+    const f=scenario.applied,reference=f.activityBudget?AI.activityBase():AI.base(f.plan),selected=f.byStore.find(r=>key(r)===id),original=reference.byStore.find(r=>key(r)===id);
+    body+=`<div class="hmw-mini-kpis"><div><small>AI同策略原方案利润</small><strong>${num(original.profit)}<span>万</span></strong></div><div><small>${scenario.revision?'人工方案 V'+scenario.revision:'当前预测'}利润</small><strong>${num(selected.profit)}<span>万</span></strong></div><div><small>当前方案产能使用率</small><strong>${num(selected.capacityUse,1)}<span>%</span></strong></div></div>${selected.capacityUse>100?'<div class="hmw-insight">本店预计就餐人次超过现有产能。先确认分流、增能或下调销量，再锁定执行计划。</div>':''}<p>${esc(planNames[f.plan])}，预计就餐${num(selected.guests,0)}人次，折后人均${num(selected.perCapita,2)}元；日均${num(selected.dailyGuests,0)}人次，现有月承接能力${num(selected.capacityGuests,0)}人次。</p>`+pnlTable([{label:'10月实际',row:s.october},{label:'AI同策略原方案',row:original,rate:true},{label:scenario.revision?'人工方案 V'+scenario.revision:'当前预测',row:selected,rate:true}])+`<h3>本店 · 当前方案执行条件</h3><div class="hmw-action-list">${f.actions.map(action=>storeForecastAction(action,f,selected,s)).join('')}</div><p class="hmw-note">${f.activityBudget?'本店按常规订单和各活动预计核销测算收入、人次及食材；执行参考金额不另加利润。':f.expenseBudget?'本店最终费用按标准占收比和集团手改目标测算，原量价与整改仅作执行参考，不再二次增加利润。':`本店整改预计合计${num(selected.plannedSavings,4)}万元，已在食材、人工、能耗和物耗中扣减；采购、耗用、工时、能耗与物耗分别按所列达成率执行。`}${scenario.dirty?'草稿修改尚未进入本店结果。':''}</p>`;
   }else {
     const r=M.tracking.stores.find(row=>key(row)===id);
     body+=`<div class="hmw-mini-kpis"><div><small>周计划利润</small><strong>${num(r.plan.profit)}<span>万</span></strong></div><div><small>本周实际利润</small><strong>${num(r.actual.profit)}<span>万</span></strong></div><div><small>利润偏差</small><strong>${signed(r.actual.profit-r.plan.profit)}<span>万</span></strong></div></div><h3>${r.abnormal?r.scenario:'本店执行对照'}</h3>`;
@@ -2854,7 +3288,7 @@ function storeCauseChildren(c,id){
 }
 function storeForecastAction(action,f,row,store){
   const target=action.id==='purchase'?`本店采购优化预计 ${num(row.purchaseSaving,4)}万元；逐项满足报价、锁量与分周交付条件。`:action.id==='usage'?`本店耗用优化预计 ${num(row.usageSaving,4)}万元；盘点实耗与标准应耗逐日核对。`:action.id==='labor'?`本店人工预算 ${num(row.labor)}万元、费率 ${pct(row.labor,row.revenue)}；其中可调工时优化 ${num(row.savingsByCost.labor,4)}万元。`:action.id==='utilities'?`本店能耗预算 ${num(row.utilities)}万元、费率 ${pct(row.utilities,row.revenue)}。`:action.id==='consumables'?`本店物耗预算 ${num(row.consumables)}万元、费率 ${pct(row.consumables,row.revenue)}。`:`本店预计 ${num(row.guests,0)}人次、人均 ${num(row.perCapita)}元；折扣 ${num(row.discount)}万元，市场推广预算 ${num(row.marketing)}万元。`;
-  const prices=action.id==='purchase'?`<details class="hmw-detail"><summary>本店采购目标量与目标价</summary><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>原料</th><th class="numeric">本店预计公斤</th><th class="numeric">参考单价</th><th class="numeric">目标单价</th><th class="numeric">本店收益 / 万元</th></tr></thead><tbody>${f.priceTargets.map(p=>{const r=p.storeRows.find(r=>r.storeId===key(row));return `<tr><td>${p.name}</td><td class="numeric">${num(r.quantityKg,0)}</td><td class="numeric">${num(r.currentPrice)}</td><td class="numeric">${num(r.targetPrice)}</td><td class="numeric">${num(r.saving,4)}</td></tr>`;}).join('')}</tbody></table></div><p class="hmw-note">${f.expenseBudget?'原物料量价作为执行参考，费用目标调整不代表公斤、配方或报价已同步变更；差额须落实后再安排采购。':`本店预计公斤×单价差÷10,000×整改达成率，计入上表食材成本；集团锁量由采购统一汇总，目标价待满足签约条件。`}</p></details>`:'';
+  const prices=action.id==='purchase'?`<details class="hmw-detail"><summary>本店采购目标量与目标价</summary><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>原料</th><th class="numeric">本店预计公斤</th><th class="numeric">参考单价</th><th class="numeric">目标单价</th><th class="numeric">本店收益 / 万元</th></tr></thead><tbody>${f.priceTargets.map(p=>{const r=p.storeRows.find(r=>r.storeId===key(row));return `<tr><td>${p.name}</td><td class="numeric">${num(r.quantityKg,0)}</td><td class="numeric">${num(r.currentPrice)}</td><td class="numeric">${num(r.targetPrice)}</td><td class="numeric">${num(r.saving,4)}</td></tr>`;}).join('')}</tbody></table></div><p class="hmw-note">${f.expenseBudget||f.activityBudget?'原物料量价作为常规菜单执行参考，费用目标调整不代表公斤、配方或报价已同步变更；差额须落实后再安排采购。':`本店预计公斤×单价差÷10,000×整改达成率，计入上表食材成本；集团锁量由采购统一汇总，目标价待满足签约条件。`}</p></details>`:'';
   return `<article class="hmw-action"><h3>${action.title}</h3><p>${target}</p><p>${esc(action.condition)}</p><div class="hmw-action-meta"><span>门店负责人：${store.manager}</span><span>集团协同：${action.owner}</span><span>${action.deadlineRole||'截止'}：${action.deadline}</span></div>${prices}</article>`;
 }
 function trackingEvidence(r){
@@ -2932,10 +3366,10 @@ function operatingExpensePlan(){
   ];
   const items=definitions.map(d=>{
     const historical=M.attribution.expenseRows.find(r=>r.key===d.key),cause=M.getCauseDetail('opex-'+d.key);
-    return {...d,...historical,causeId:cause.id,forecastBefore:f.baseline[d.key],forecastBudget:f.totals[d.key],saving:Math.round((f.baseline[d.key]-f.totals[d.key])*1000000)/1000000,target:f.expenseBudget?`本项最终费用目标${amt(f.totals[d.key])}万元，占折后营收${pct(f.totals[d.key],f.totals.revenue)}；对照同参数未整改参考${amt(f.baseline[d.key])}万元核对合同、用量与结算，预算差额不代表整改已落实。`:d.goal(),stores:cause.storeRows.filter(s=>s.impact<0).sort((a,b)=>a.impact-b.impact).slice(0,3)};
+    return {...d,...historical,causeId:cause.id,forecastBefore:f.baseline[d.key],forecastBudget:f.totals[d.key],saving:Math.round((f.baseline[d.key]-f.totals[d.key])*1000000)/1000000,target:f.expenseBudget||f.activityBudget?`本项最终费用目标${amt(f.totals[d.key])}万元，占折后营收${pct(f.totals[d.key],f.totals.revenue)}；对照同参数未整改参考${amt(f.baseline[d.key])}万元核对合同、用量与结算，预算差额不代表整改已落实。`:d.goal(),stores:cause.storeRows.filter(s=>s.impact<0).sort((a,b)=>a.impact-b.impact).slice(0,3)};
   });
   const sum=field=>Math.round(items.reduce((n,r)=>n+r[field],0)*1000000)/1000000;
-  return {items,plan:f.plan,expenseBudget:Boolean(f.expenseBudget),impact:sum('impact'),historicalBaseline:sum('baseline'),actual:sum('actual'),forecastBefore:sum('forecastBefore'),forecastBudget:sum('forecastBudget'),saving:sum('saving')};
+  return {items,plan:f.plan,expenseBudget:Boolean(f.expenseBudget||f.activityBudget),impact:sum('impact'),historicalBaseline:sum('baseline'),actual:sum('actual'),forecastBefore:sum('forecastBefore'),forecastBudget:sum('forecastBudget'),saving:sum('saving')};
 }
 function operatingExpensePlanBody(plan){
   const p=operatingExpensePlan(),negative=-p.items.filter(r=>r.impact<0).reduce((n,r)=>n+r.impact,0),positive=p.items.filter(r=>r.impact>0).reduce((n,r)=>n+r.impact,0);
@@ -2972,7 +3406,7 @@ function aiAttributionBrief(){
 function aiSummary(page){
   if(page==='attribution')return aiAttributionBrief()+`<div class="ai-message-actions"><button class="hmw-button primary" data-action="show-evidence">查看完整归因</button><button class="hmw-button" data-nav="forecast">推演11月方案</button></div>`;
   if(page==='forecast'){
-    const one=AI.base('steady'),two=AI.base('anniversary');
+    const one=AI.base('steady'),two=AI.activityBase();
     return `<div class="ai-decision-summary"><section class="ai-decision-intro"><h2>当前假设下，方案二预计利润更高。</h2><p>${esc(planNames.steady)}，预计利润<strong class="ai-value-actual">${amt(one.totals.profit,1)}万元</strong>；${esc(planNames.anniversary)}，预计利润<strong class="ai-value-reference">${amt(two.totals.profit,1)}万元</strong>。你可以从任一方案出发，调整策略后重新测算。</p><div class="ai-summary-metrics"><div data-tone="actual"><small>${esc(planNames.steady)}</small><strong>${amt(one.totals.profit,1)}<span>万元利润</span></strong><em>${amt(one.totals.revenue,0)}万元营业额</em></div><div data-tone="reference"><small>${esc(planNames.anniversary)}</small><strong>${amt(two.totals.profit,1)}<span>万元利润</span></strong><em>${amt(two.totals.revenue,0)}万元营业额</em></div></div></section><section><h3 class="ai-insight-heading">策略判断与落地条件</h3><div class="ai-insight-grid"><article class="ai-insight-card"><h4>看清整套策略的差异</h4><p>两案销量、折扣和营销费不同；利润差来自整套经营假设，不能直接当作单项促销收益。</p></article><article class="ai-insight-card"><h4>先确认采购与承接能力</h4><p>采购价格与门店产能仍须逐项确认。客流、优惠和预算可以调整后重新测算。</p></article></div></section><div class="ai-next-step"><strong>下一步</strong><p>确认采购与产能条件，选择经营方案，再调整参数核对集团与逐店预测。</p></div><div class="ai-message-actions"><button class="hmw-button primary" data-action="edit-strategy">调整策略并重新测算</button><button class="hmw-button" data-select-plan="steady">从方案一开始</button><button class="hmw-button" data-select-plan="anniversary">从方案二开始</button></div><div class="ai-message-context">依据：10月归因发现的问题、11月30天需求假设、采购量价与逐店费用预算。</div></div>`;
   }
   const t=M.tracking,s=t.summary;
@@ -2984,18 +3418,20 @@ function workspaceView(page,content){
   return `<section class="ai-message"><div class="ai-thread-head"><span class="ai-avatar">✦</span><div><h2>好美味经营助手</h2><small>${task.trigger} · ${task.status}</small></div><span class="hmw-tag blue">AI 主动推送</span></div><div class="ai-summary">${aiSummary(page)}</div></section><section class="ai-artifact" id="aiEvidence"><header class="ai-artifact-head"><div><span class="ai-message-label">AI 分析附件</span><h2>${task.artifact}</h2></div><span class="hmw-tag">120家直营门店</span></header><div class="ai-work-area">${content}</div></section>`;
 }
 function markDraft(){
-  scenario.dirty=Object.keys(AI.defaults(scenario.draft.plan)).some(id=>scenario.draft[id]!==scenario.applied.inputs[id])||Object.values(scenario.draft.expenseRatios||{}).some(value=>value===''||!Number.isFinite(Number(value))||Number(value)<0||Number(value)>100)||JSON.stringify(AI.normalize(scenario.draft))!==JSON.stringify(AI.normalize(scenario.applied.inputs));
+  scenario.dirty=(scenario.draft.activityMode?AI.activityBudget(scenario.draft).issues.length>0:Object.keys(AI.defaults(scenario.draft.plan)).some(id=>scenario.draft[id]!==scenario.applied.inputs[id])||Object.values(scenario.draft.expenseRatios||{}).some(value=>value===''||!Number.isFinite(Number(value))||Number(value)<0||Number(value)>100))||JSON.stringify(AI.normalize(scenario.draft))!==JSON.stringify(AI.normalize(scenario.applied.inputs));
   if($('#aiDraftBadge'))$('#aiDraftBadge').textContent=scenario.dirty?'有修改 · 待重新测算':'参数与已测算版本一致';
   if($('#aiAppliedContext'))$('#aiAppliedContext').textContent=scenario.dirty?'草稿已修改，此处仍为上次已测算结果；重新测算后更新。':(scenario.applied.expenseBudget?'本结果为当前测算参数，店长确认后生效。费用按占收比目标汇总，不重复计整改收益。':'本结果为当前测算参数，店长确认后生效。营销预算按填写总额计入，折扣已从营业额扣减。');
 }
-function chooseStrategy(plan){globalThis.AiPlatform?.revealEvidence();scenario.draft=plan==='steady'?AI.expenseDefaults():AI.defaults(plan);markDraft();render();$('#aiStrategyForm').scrollIntoView({block:'start',behavior:'instant'});}
+function chooseStrategy(plan){globalThis.AiPlatform?.revealEvidence();scenario.draft=plan==='steady'?AI.expenseDefaults():AI.activityDefaults();markDraft();render();$('#aiStrategyForm').scrollIntoView({block:'start',behavior:'instant'});}
 function recalculate(){
+  if(scenario.draft.activityMode&&AI.activityBudget(scenario.draft).issues.length){toast('请先修正活动配置中的问题，再重新测算。');return;}
   const previous=scenario.applied.inputs,next=AI.normalize(scenario.draft);
   scenario.lastChanges=[];
   if(previous.plan!==next.plan)scenario.lastChanges.push(`策略：${planNames[previous.plan]} → ${planNames[next.plan]}`);
-  (next.costMode?strategyFields.slice(0,3):strategyFields).forEach(([id,label,unit])=>{if(next[id]!==previous[id])scenario.lastChanges.push(`${label}：${amt(previous[id]*(unit==='%'?100:1),id==='guests'?0:2)} → ${amt(next[id]*(unit==='%'?100:1),id==='guests'?0:2)}${unit}`);});
+  (next.activityMode?[]:next.costMode?strategyFields.slice(0,3):strategyFields).forEach(([id,label,unit])=>{if(next[id]!==previous[id])scenario.lastChanges.push(`${label}：${amt(previous[id]*(unit==='%'?100:1),id==='guests'?0:2)} → ${amt(next[id]*(unit==='%'?100:1),id==='guests'?0:2)}${unit}`);});
   if(next.costMode){scenario.lastChanges.push('费用预算按门店标准占收比加权汇总');Object.entries(next.expenseRatios).forEach(([key,rate])=>scenario.lastChanges.push(`${M.labels[key]}占收比人工调整为${amt(rate,6)}%`));}
-  scenario.applied=AI.calculate(next);scenario.draft={...next};scenario.revision++;scenario.dirty=false;state.search='';
+  if(next.activityMode)scenario.lastChanges.push(`已按${next.activities.length}项活动的销量、价格与预计核销及常规订单重新测算`);
+  scenario.applied=AI.calculate(next);scenario.draft=JSON.parse(JSON.stringify(next));scenario.revision++;scenario.dirty=false;state.search='';
   render();$('#aiForecastResult').scrollIntoView({block:'start',behavior:'instant'});toast('已重新测算集团、120家门店及相应行动条件');
 }
 function navigate(page){if(!pages.some(([id])=>id===page))page='attribution';globalThis.AiPlatform?.openPage();if($('#hmwDialog').open)$('#hmwDialog').close();state.search='';location.hash=page;render();}
@@ -3135,8 +3571,9 @@ render();
     if(store){const row=page==='forecast'?scenario.applied.byStore.find(s=>s.storeId===store.id):page==='tracking'?M.tracking.stores.find(s=>s.storeId===store.id)?.actual:store.october;return {answer:`${store.name}（${store.region}）${page==='forecast'?'当前方案预测':page==='tracking'?'本周实际':'10月实际'}：折后营业额${amt(row.revenue)}万元，门店经营利润${amt(row.profit)}万元。可打开门店详情，继续核对费用与行动条件。`,action:{type:'store',id:store.id,context:page}};}
     if(page==='forecast'){
       const f=scenario.applied,match=question.match(/优惠.*?(?:增加|提高|多|加)\s*(\d+(?:\.\d+)?)\s*元/);
+      if(match&&f.activityBudget)return {answer:'本方案的优惠由各活动价格决定。请调整套餐售价、券售价、券面值或核销订单金额，再重新测算；不会把派生的人均优惠额单独应用到活动。',action:{type:'report'}};
       if(match){const discount=f.inputs.discountPerGuest+Number(match[1]);if(discount>40)return {answer:'增加后的每客优惠超过当前模型40元上限。请在策略测算中选择范围内的优惠，并确认客流假设。'};const next=AI.calculate({...f.inputs,discountPerGuest:discount});return {answer:`在当前已测算方案、客流和其他条件不变时，人均优惠由${amt(f.inputs.discountPerGuest)}元增加至${amt(discount)}元，预计营业额${amt(next.totals.revenue)}万元，利润${amt(next.totals.profit)}万元，利润变化${signedAmt(next.totals.profit-f.totals.profit)}万元。\n这是独立试算，尚未应用到方案。可打开策略编辑器调整参数后重新测算。`,action:{type:'report'}};}
-      return {answer:`${planNames.steady}预计利润${amt(AI.base('steady').totals.profit)}万元；${planNames.anniversary}预计利润${amt(AI.base('anniversary').totals.profit)}万元。\n当前已测算版本预计营业额${amt(f.totals.revenue)}万元，利润${amt(f.totals.profit)}万元。你可以调整客流、优惠和营销预算，提交后重新计算。采购报价与门店产能仍需确认。`,action:{type:'report'}};
+      return {answer:`${planNames.steady}预计利润${amt(AI.base('steady').totals.profit)}万元；${planNames.anniversary}预计利润${amt(AI.activityBase().totals.profit)}万元。\n当前已测算版本预计营业额${amt(f.totals.revenue)}万元，利润${amt(f.totals.profit)}万元。${f.activityBudget?'你可以调整活动类型、销量、售价、核销率、用量模板和成本预算后重新计算。':'你可以调整客流、优惠和营销预算，提交后重新计算。'}采购报价与门店产能仍需确认。`,action:{type:'report'}};
     }
     if(page==='tracking')return {answer:`本周120家门店实际利润${amt(M.tracking.summary.actual.profit)}万元，较冻结周计划少${amt(M.tracking.summary.plan.profit-M.tracking.summary.actual.profit)}万元。\n优先跟进上海06店低峰临时工时、北京07店临采价差、深圳02店报损及设备能耗。登记动作完成后，收益仍需在后续周期复核。`,action:{type:'report'}};
     const method=M.attribution,a=M.actuals.september,b=M.actuals.october;
@@ -3215,7 +3652,7 @@ render();
   'use strict';
   const P=root.StoreProposal,W=root.SevenDayPlan,F=root.AdviceFlowState;
   const storageKey='haomeiwei-advice-flow-v1:'+M.dataVersion;
-  const initial={steady:AI.calculate(AI.expenseDefaults()),anniversary:AI.calculate(AI.defaults('anniversary'))};
+  const initial={steady:AI.calculate(AI.expenseDefaults()),anniversary:AI.calculate(AI.activityDefaults())};
   let flow=F.empty();
   try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved&&saved.approvals&&saved.weekly&&Array.isArray(saved.dispatches))flow=saved;}catch{}
   const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
@@ -3339,7 +3776,7 @@ render();
     if(t.dataset.awMonthlyCheck){view.checks[t.dataset.awMonthlyCheck]=t.checked;refreshGates();}
     if(t.id==='awWeekAck'){view.weekAck=t.checked;refreshGates();}
   });
-  root.AdviceWorkspace={render:renderWorkspace};
+  root.AdviceWorkspace={render:renderWorkspace,refreshGates};
   render();
 })(globalThis);
 </script>
