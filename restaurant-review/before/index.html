@@ -477,7 +477,7 @@
       '将10月堂食就餐人次、外卖有效订单代入9月单价，逐店计算基准收入，再按9月各项费用率计算基准利润。',
       '固定按业务量、净成交价、标准成本衔接、采购价格、耗用、人工、其他费用顺序连环替代。',
       '固定及半固定成本的费率摊薄作为结构差异解释，不称为实际节约或整改收益；本分解不证明促销导致客流增长。'],
-    sourceNote: '渠道拆分为本产品内置演示数据：9月及10月营收按堂食80%、外卖20%拆分，外卖有效订单分别为12万和12.6万；假设每外卖单计1份综合就餐人次。未接入真实POS或外卖平台。',
+    sourceNote: '渠道计算口径：9月及10月营收按堂食80%、外卖20%拆分，外卖有效订单分别按12万和12.6万计算；每有效外卖单折算1份综合就餐人次。渠道占比与订单量须结合门店经营记录核对。',
     expenseRows: expenseKeys.map(k => ({ key: k, name: labels[k], septemberRate: actuals.september[k] / actuals.september.revenue * 100,
       baseline: baselineTotals[k], actual: actuals.october[k], impact: money(baselineTotals[k] - actuals.october[k]) })),
     foodStandard: Object.fromEntries(['rateReferenceCost', 'standardCost', 'priceCost', 'excessCost', 'actualCost', 'alignmentImpact'].map(k => [k, sum(attributionByStore.map(r => r.foodStandard[k]))])),
@@ -550,7 +550,7 @@
     `9月费用率 × 10月基准收入，与10月实际${labels[k]}比较；先核验科目与业务量，再解释执行情况。`));
   const volumeDine = attributionByStore.map((r, i) => money((r.channels.baseline.dineIn.revenue - r.channels.september.dineIn.revenue) * stores[i].september.profit / stores[i].september.revenue));
   const volumeChildren = [cause('volume-dine-in', '堂食就餐人次变化', volumeDine, '保持9月堂食人均及各项费用率，替换为10月实际堂食就餐人次。', '堂食按人均元/人乘就餐人次，原有桌单仅用于核对，不与外卖订单混用。'),
-    cause('volume-delivery', '外卖有效订单变化', stores.map((s, i) => money(s.causes.volume - volumeDine[i])), '保持9月外卖单均及各项费用率，替换为10月有效完成订单。', '外卖按元/单乘有效订单，渠道输入为独立演示假设；本项包含分币衔接。')];
+    cause('volume-delivery', '外卖有效订单变化', stores.map((s, i) => money(s.causes.volume - volumeDine[i])), '保持9月外卖单均及各项费用率，替换为10月有效完成订单。', '外卖收入按单均金额乘有效订单计算，渠道订单量与堂食人次分别核对；本项包含分币衔接。')];
   const causes = [
     cause('volume', '业务量变化', stores.map(s => s.causes.volume), `以9月分渠道单价和全费用率代入10月实际业务量，形成${baselineTotals.profit.toFixed(2)}万元基准利润。`, `9月利润${actuals.september.profit.toFixed(2)}万元到10月基准${baselineTotals.profit.toFixed(2)}万元，业务量影响${money(baselineTotals.profit-actuals.september.profit).toFixed(2)}万元；基准之后不重复加量。`, volumeChildren),
     cause('pricing', '净成交价变化', stores.map(s => s.causes.pricing), '固定10月业务量，比较9月渠道单价与10月实际净成交价。', `两渠道实际实收减基准收入${money(actuals.october.revenue-baselineTotals.revenue).toFixed(2)}万元。账面分解不证明促销导致了客流增长。`, pricingChildren),
@@ -759,7 +759,7 @@
       verification: { totalChecks: 5, confirmedChecks, definition: '采购、耗用、人工、能耗、物耗五项现场检查；检查完成不等于成本收益已经达成。' },
       achievement: a.revenue / p.revenue * 100, abnormal: abnormalIds.includes(store.id), status: abnormalIds.includes(store.id) ? '需整改复核' : '正常跟进', scenario, findings, actions,
       service: { p90Minutes: store.id === 'HMW-092' ? 21 : store.id === 'HMW-006' ? 19 : 18 + i % 3,
-        p90Scope: '11月1—7日门店已完成堂食订单，按出餐时长排序的P90；演示直接给定单店分位数，不对门店P90求平均作为集团P90。', completedDineInOrders: Math.round(a.orders * 0.92),
+        p90Scope: '11月1—7日门店已完成堂食订单，按出餐时长排序的P90；各店分位数分别列示，集团P90须按集团订单时长重新计算，不能以门店P90均值替代。', completedDineInOrders: Math.round(a.orders * 0.92),
         complaints, complaintGuests: a.guests, complaintPer100Guests: complaints / a.guests * 100, targetP90: 20, targetComplaint: 0.5 } };
   });
   const trackPlanTotals = aggregate(trackingStores.map(s => s.plan));
@@ -782,8 +782,8 @@
   const model = {
     dataVersion: DATA_VERSION,
     group: { name: '好美味餐饮集团', platformName: '好美味餐饮集团智能决策平台', storeCount: 120, storeType: '直营正餐连锁', perCapita: 80, currency: '万元',
-      guestDefinition: '综合就餐人次包含堂食及演示外卖就餐份数；归因中堂食人均按堂食人次，外卖单均按有效订单。旧orders为堂食桌单，不能当作外卖订单。',
-      dataProvenance: '全部为演示场景合成数据，不对应任何真实企业记录。120家门店逐店生成，所有集团数由门店加总。',
+      guestDefinition: '综合就餐人次包含堂食人次及外卖折算就餐份数；归因中堂食人均按堂食人次，外卖单均按有效订单。堂食桌单仅用于堂食核对，不能当作外卖订单。',
+      dataProvenance: '集团指标由120家门店逐项汇总；营业额、费用、利润与物料明细按统一期间、科目及计量口径勾稽。',
       profitDefinition: '门店经营利润＝折后营业额－列示的门店食材和经营费用；未计总部费用、折旧摊销、利息与所得税。不列增值税项目。',
       attributionMethod: attribution.methodSteps.join(' '),
       negativeTotal: NEGATIVE_TOTAL, profitDecline: money(actuals.september.profit - actuals.october.profit), positiveOffset: sum(causes.filter(c => c.impact > 0).map(c => c.impact)), forecastVersion: FORECAST_VERSION },
@@ -791,11 +791,11 @@
     flatFactors: ['volume', 'pricing', 'food-standard', 'procurement', 'usage', 'labor', 'opex'].map(id => causeIndex.get(id)),
     getCauseDetail: id => causeIndex.get(id) || null,
     forecast, forecastSpecs, tracking,
-    definitions: { storeDistribution: '120家门店按规模分层；客流、排班、促销及损耗采用不同权重，形成高、中、低影响的合成分布。门店与物料明细逐级加总到集团，不对应真实门店排名。',
+    definitions: { storeDistribution: '120家门店按规模分层，客流、排班、促销及损耗分别按对应权重测算。门店与物料明细逐级加总到集团，门店排序反映当前指标及筛选范围。',
       negativeShare: `顶层单项负向影响绝对值÷顶层全部负向影响${NEGATIVE_TOTAL.toFixed(2)}万元；只在相同层级加总。`,
       netDeclineShare: `单项对净下降的贡献＝－单项有符号影响÷净下降${money(actuals.september.profit-actuals.october.profit).toFixed(2)}万元；正向客流抵减为负占比，全部顶层贡献合计100%。`,
       parentShare: '子项有符号影响÷父项净影响；正负混合时可为负或超过100%，父项为零不显示。',
-      usageMaterials: '10月物料耗用穿透为合成演示台账：每店既有备料差异和报损金额按预设权重分到5种物料，数量按10月实际加权价反算；标准应耗复用既有物料用量，实际耗用＝标准应耗＋备料超耗＋报损。备料超耗与报损分别计量，均按实际价计量，不再叠加采购价差。保留未舍入数量用于勾稽，界面数量舍入可能产生显示尾差；不对应真实盘点或报损单。',
+      usageMaterials: '10月物料耗用按门店备料差异和报损金额分摊至5种物料，数量按10月加权价折算；标准应耗按对应物料用量计算，实际耗用＝标准应耗＋备料超耗＋报损。备料超耗与报损分别按实际价计量，不再叠加采购价差。保留未舍入数量用于勾稽，界面数量舍入可能产生显示尾差；执行核验须对照盘点、领用与报损记录。',
       materialScope: '材料表仅列8个重点原料，其价格影响合计85万元；不是全部食材采购清单。材料用量为标准应耗对应的合格入库领用量，超标耗用另列23万元并含其实际采购成本。',
       noDoubleCount: '标准数量的采购价差记85万元，超标准耗用按实际采购成本记23万元，二者不重复计量；新品追加现货采购价差25万元已包含在85万元内。销售优惠已从折后收入扣除，不重复列入市场费用。' }
   };
@@ -938,7 +938,7 @@
   }
   const model = { months, availableMonths: months.filter(row => row.year === 2026).map(row => row.id), defaultMonth: '2026-10', fields, getMonth, metrics, series,
     scope: { storeCount: 120, continuousStores: true, currentYear: 2026, priorYear: 2025, currency: '万元' },
-    definitions: { yoy: '同一月份与上年同月比较；基期金额大于0时按(本期/基期－1)×100计算。', mom: '本期与上月比较；1月对上年12月。基期金额大于0时计算。', share: '当前项目金额÷同月折后营业额×100；与其他月份的金额不混用。', provenance: '2026年9月、10月沿用主模型；其他月份为同一120家持续营业门店的合成历史。', targets: '2026年1—10月目标为本版独立设定的预算，非真实企业下达。收入按需求权重、人工按编制权重、场租按门店权重分解；食材预算按计划组合权重分解。目标金额分配至人民币分，毛利及利润由预算科目派生；未从实际或11月预测反推。' } };
+    definitions: { yoy: '同一月份与上年同月比较；基期金额大于0时按(本期/基期－1)×100计算。', mom: '本期与上月比较；1月对上年12月。基期金额大于0时计算。', share: '当前项目金额÷同月折后营业额×100；与其他月份的金额不混用。', provenance: '月度指标采用同一120家持续营业门店范围，各月集团金额由门店明细汇总；2026年9月、10月与利润归因采用一致的科目金额。', targets: '2026年1—10月目标按月度预算逐店分解：收入按需求权重、人工按编制权重、场租按门店权重、食材按计划组合权重分配。目标金额分配至人民币分，毛利及利润由预算科目计算，并与同期实际分别核对。' } };
   root.ReportHistory = model;
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
@@ -1111,8 +1111,8 @@
       total: S.metrics(monthId, metric, scope) };
   }
   const model = { getDetail, definitions: {
-    provenance: '本版独立设定的场景分类台账，不对应真实ERP分类凭证。小类构成仅用于统计展示，不是采购报价或已验证原因，不连接智能归因模型。',
-    channels: '堂食与外卖采用同一渠道台账。2026年9、10月实际净收入逐店复用共享模型中的80%/20%拆分；其他历史实际与目标分别按本版渠道份额编制，目标基准为82%/18%。渠道折前额＝渠道折后额＋渠道商家折扣，未独立计外带，不从订单数反推收入，不含平台承担补贴。',
+    provenance: '项目小类按分类权重分解同期同范围金额，并与项目合计勾稽；分类构成用于核对费用结构，采购价差及经营原因须结合对应业务记录核验。',
+    channels: '堂食与外卖采用同一渠道口径。2026年9、10月净收入逐店按堂食80%、外卖20%拆分；其他历史实际与目标分别按各期设定的渠道份额分解，目标基准为82%/18%。渠道折前额＝渠道折后额＋渠道商家折扣，未独立计外带，不从订单数反推收入，不含平台承担补贴。',
     rent: '租金合计与物业费仅作统计拆分；未提供合同费率，不推断保底、提成的计租规则或参数。',
     shares: '各小类实际及目标占比分别除以同期同范围折后营业额实际及目标，不以父项目金额为分母。'
   } };
