@@ -316,13 +316,28 @@
 .ai-platform .ai-brief-table caption{padding:14px 16px;background:#fafcff;color:#36557e;text-align:left;font-size:13px;font-weight:600}
 .ai-platform .ai-brief-table :is(th,td){padding:12px 15px}
 .ai-platform p.ai-brief-method{margin:12px 0 0;color:#8c909b;font-size:13px;line-height:1.85;white-space:normal}
-.ai-platform .ai-brief-priorities{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0;margin:18px 0 0;list-style:none}
+.ai-platform .ai-brief-priorities{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;padding:0;margin:18px 0 0;list-style:none}
 .ai-platform .ai-brief-priorities li::marker{color:#8c9099}
-.ai-platform .ai-brief-priorities li>strong{display:flex;align-items:baseline;justify-content:space-between;gap:12px;color:#334e76;font-size:15px}
-.ai-platform .ai-brief-priorities li>strong .bad{font-size:19px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.ai-platform .ai-brief-priorities li{min-width:0;padding:18px;border:1px solid #e5ebf5;border-radius:11px;background:#fafcff}
+.ai-platform .ai-brief-priorities>li>strong{display:flex;align-items:baseline;justify-content:space-between;gap:12px;color:#334e76;font-size:15px}
+.ai-platform .ai-brief-priorities>li>strong .bad{font-size:19px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ai-platform .ai-brief-priorities>li{min-width:0;padding:20px;border:1px solid #e5ebf5;border-radius:11px;background:#fff}
 .ai-platform .ai-brief-priorities p{margin:8px 0;color:#536986;font-size:14px;line-height:1.75;white-space:normal}
 .ai-platform .ai-brief-priorities .hmw-link{margin-right:15px;font-size:14px}
+.ai-platform .ai-remediation-impact{display:flex;align-items:baseline;gap:10px}
+.ai-platform .ai-remediation-impact small{color:#77869c;font-size:12px;font-weight:400;white-space:nowrap}
+.ai-platform .ai-remediation-items{margin:16px 0 0;padding:0;list-style:none}
+.ai-platform .ai-remediation-items>li{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 0;border-top:1px solid #e7edf5}
+.ai-platform .ai-remediation-items>li>div{min-width:0}
+.ai-platform .ai-remediation-items h4{margin:0;color:#2c4262;font-size:15px;font-weight:600;line-height:1.85}
+.ai-platform .ai-remediation-items p{margin:6px 0 0}
+.ai-platform .ai-remediation-items .hmw-button{flex-shrink:0;min-height:40px;padding:8px 13px;border-color:#d6e2fa;background:#f5f8ff;color:var(--dolink-blue-strong);font-size:14px;white-space:nowrap}
+.ai-platform .ai-remediation-items .hmw-button:hover{border-color:var(--dolink-blue);background:#edf3ff}
+.ai-platform .ai-remediation-plan ol{padding-left:22px;color:#536986;font-size:14px;line-height:1.9}
+.ai-platform .ai-remediation-plan li+li{margin-top:12px}
+.ai-platform .ai-remediation-pending{margin:20px 0;padding:14px 16px;border:1px solid #e1e8f3;border-radius:8px;background:#f7f9fc}
+.ai-platform .ai-remediation-pending>strong{color:#405c7d;font-size:14px}
+.ai-platform .ai-remediation-pending>p{margin:6px 0 0}
+@media(max-width:760px){.ai-platform .ai-remediation-impact{flex-direction:column;align-items:flex-end;gap:2px}.ai-platform .ai-remediation-items>li{align-items:flex-start;flex-direction:column;gap:12px}.ai-platform .ai-remediation-items .hmw-button{max-width:100%;white-space:normal;text-align:left}}
 @media(max-width:760px){.ai-platform .ai-brief-figure{padding:13px}.ai-platform .ai-brief-chart-meta{font-size:12px}.ai-platform .ai-brief-legend{gap:9px}.ai-platform .ai-brief-caption{padding:12px}.ai-platform .ai-brief-section h3{font-size:18px}}
 .ai-platform .platform-artifact-button{display:flex;align-items:center;gap:15px;width:100%;min-width:0;margin:20px 0 24px;padding:19px 21px;border:1px solid #d5e2f7;border-radius:13px;background:linear-gradient(105deg,#f9fbff,#edf3ff);box-shadow:0 2px 8px #326fff04;color:#364f79;text-align:left;cursor:pointer}
 .ai-platform .platform-artifact-button:hover{border-color:#98b5ee;background:#edf3ff;box-shadow:0 4px 18px #326fff0c}
@@ -546,7 +561,7 @@
 .ai-platform .ai-brief-priorities [data-category=food]{--category-color:#8054b8;--category-soft:#f7f0ff;--category-line:#b08bdb}
 .ai-platform .ai-brief-priorities [data-category=labor]{--category-color:#3762ba;--category-soft:#eef5ff;--category-line:#79a1ee}
 .ai-platform .ai-brief-priorities [data-category=opex]{--category-color:#a92370;--category-soft:#fff1f8;--category-line:#db2777}
-.ai-platform .ai-brief-priorities li[data-category]{border-color:color-mix(in srgb,var(--category-line) 35%,white);border-top:3px solid var(--category-line);background:var(--category-soft)}
+.ai-platform .ai-brief-priorities li[data-category]{border-color:#e1e9f5;border-left:3px solid var(--category-line);background:#fff}
 .ai-platform .ai-brief-priorities li[data-category]>strong{color:var(--category-color)}
 .ai-platform .ai-brief-priorities strong .bad{color:#be3453}
 .ai-platform .ai-brief-priorities strong .good{color:#087760}
@@ -759,7 +774,7 @@
   .ai-platform .ai-summary-metrics em{grid-column:1;font-size:11px}
   .ai-platform .ai-summary-metrics .ai-date{font-size:18px}
   .ai-platform .ai-insight-grid,.ai-platform .ai-brief-priorities{grid-template-columns:minmax(0,1fr)}
-  .ai-platform .ai-insight-card,.ai-platform .ai-brief-priorities li{padding:16px}
+  .ai-platform .ai-insight-card,.ai-platform .ai-brief-priorities>li{padding:16px}
   .ai-platform .ai-insight-heading{margin-top:24px;font-size:17px}
   .ai-platform .ai-brief-figure{padding:13px}
   .ai-platform .ai-brief-section{margin-top:26px;padding-top:23px}
@@ -1924,22 +1939,61 @@ function pushTasks(){
     {id:'tracking',title:'执行跟进',period:'11月1日—7日',status:'3家待复核',artifact:'周执行核对与整改跟进',trigger:'11月1—7日执行数据核对后'}
   ];
 }
+function remediationPlans(){
+  const regular=M.materials.filter(m=>!m.newProduct).sort((a,b)=>a.priceImpact-b.priceImpact),fresh=M.materials.filter(m=>m.newProduct).sort((a,b)=>a.priceImpact-b.priceImpact);
+  const plans=[
+    {id:'supplier-negotiation',category:'food',causeId:'procurement',title:`对${regular.map(m=>m.name).join('、')}逐项开展供应商议价。`,summary:'结合历史采购价、采购量及待核实的市场行情，整理谈价依据、价格比较和协商步骤。',name:'供应商谈价方案',evidence:`上述物料10月采购价差合计增加成本${amt(-regular.reduce((s,m)=>s+m.priceImpact,0))}万元，优先处理价差影响较大的物料。`,steps:['采购负责人向现有及备选供应商索取同品级、同规格的含税到货报价，记录报价日期、有效期、配送与账期。','逐项对比9月成交价、10月实际到货价及同口径市场行情，区分市场普涨与供应商报价差异，核实后确定建议谈价区间。','按下一采购周期需求协商阶梯报价、分批到货和价格有效期；确认品质、供货量与履约条件后再确定采购安排。'],verification:'用后续实际采购量和结算到货价复核价差，同时检查验收质量与供货及时性；历史价差不作为承诺节约额。',missing:'市场行情、供应商名称及最新报价尚未提供。需补充来源、日期、规格、税费与运费口径后，才能确定建议谈价区间。'},
+    {id:'new-purchase',category:'food',causeId:'procurement',title:`根据新品销量预测，落实${fresh.map(m=>m.name).join('、')}的采购量与价格。`,summary:'对照新品预估与实际用量，明确批量锁价门槛、采购承诺及分批到货安排。',name:'新品采购方案',evidence:`新品追加现货采购价差合计增加成本${amt(-fresh.reduce((s,m)=>s+m.priceImpact,0))}万元；历史试销配额与整月批量合约需分别核对。`,steps:['产品与采购负责人按门店销量、单份标准用量和可用库存，滚动更新下一采购周期需求。','逐项向供应商确认最新最低承诺量、报价有效期和锁价条件；需求未达到门槛时比较分批报价或替代供货安排，避免为锁价盲目超量采购。','在活动开始前确认采购数量、价格、交付批次及追加采购规则；销量偏离预测时及时调整后续批次。'],verification:'核对预测用量与实际用量、锁价采购覆盖及临采量，并检查库存周转与报损是否恶化。',missing:'下期销量预测、可用库存及供应商最新合约条件待补充；下表为10月历史记录，不直接作为下期采购承诺。'},
+    {id:'prep',category:'food',causeId:'usage-prep',title:'对备料超耗较高的门店，按销量分批备料并核对出成率。',summary:'按门店与物料定位超耗，列出标准用量核查、备料批次调整和复盘方法。',name:'备料优化方案',steps:['区域运营负责人优先复核下列门店，厨务逐项核对实际销量、标准配方用量与盘点实耗。','对超耗物料检查切配出成率、称量及备料批次，按预计销量安排首批备料和后续补料。','记录每批投入、成品产出和剩余量，按同类经营日复核偏差，再调整备料量。'],verification:'按实际销量重新计算标准应耗，比较单位销量超耗及备料超耗成本，同时检查缺货和出餐是否受影响。',missing:'门店分时销量、备料批次与出成率实测记录待核实后，才能确定具体备料数量。'},
+    {id:'waste',category:'food',causeId:'usage-waste',title:'对报损较高的门店，逐项核查报损物料与余料去向。',summary:'形成优先核查清单，分别制定收货、储存及余料处理措施。',name:'报损整改方案',steps:['店长与厨务负责人按物料核对报损数量、金额、原因及余料记录，优先检查报损影响较大的门店。','现场核查收货品质、保质期、温控及先进先出执行情况；根据查明原因调整收货与储存方式。','对照销售与备料记录确认余料来源，依照食品安全要求调整备料和处理流程，保留每日复核记录。'],verification:'按同类经营日比较报损量、单位销量报损成本与余料量，同时核对盘点差异，避免仅靠少报报损形成改善。',missing:'具体报损原因、保质期及现场检查记录待补充，尚不能认定为某一种操作问题。'},
+    {id:'peak-staffing',category:'labor',causeId:'labor-peak',title:'对高峰加班及临时支援较多的门店，调整班次衔接与支援安排。',summary:'结合高峰客流、在岗人数及超标准工时，制定高峰用工调整步骤。',name:'高峰用工调整方案',steps:['区域运营与店长核对高峰分时客流、排班、考勤及加班审批，确认支援是否与实际需求匹配。','优先调整班次重叠、岗位分工和跨店支援安排，再评估可以减少的加班，保留高峰必要岗位。','选取同类经营日复核调整前后工时和服务表现，发现排队或出餐恶化时及时回调。'],verification:'比较相近客流下的高峰加班、支援工时与人工费用，同时核对高峰出餐时长和百客有效客诉。',missing:'分时客流、岗位排班与考勤明细待补充；现有归因金额不能直接换算为可削减人员数。'},
+    {id:'low-staffing',category:'labor',causeId:'labor-low',title:'对低峰临时工时未回调的门店，按实际客流调整低峰班次。',summary:'先确认低峰冗余时段，再调整临时用工与上下班时间，保留必要岗位。',name:'低峰排班调整方案',steps:['店长将分时客流、在岗人数及临时工时对照，确认低峰时段和需要保留的基本岗位。','与人事核对用工约定，调整低峰临时班次及错峰上下班安排，保留高峰前的备料和交接能力。','按同类经营日比较调整前后工时与人工费用，并根据实际客流回调。'],verification:'核对低峰临时工时、总人工费用及单位客流用工，同时检查高峰衔接、出餐时长和客诉。',missing:'分时客流、临时用工约定及可调整班次待核实后，才能形成具体排班表。'},
+    {id:'coupon',category:'pricing',causeId:'pricing-coupon',title:'核对通用券与折扣叠加情况，调整导致订单毛利偏低的优惠规则。',summary:'列出需要核查的优惠组合，比较调整前后实收、订单毛利和订单量。',name:'优惠规则调整方案',steps:['营销与财务负责人核对各渠道的通用券、折扣及平台补贴承担方式，列出实际叠加组合。','结合订单实收和对应食材成本核对毛利，逐项确定叠加限制、适用商品及优惠门槛。','先比较相近门店和同类经营日的订单量、实收及总毛利，再决定是否扩大调整。'],verification:'同时观察净成交价、订单毛利、订单量与总毛利，防止单均上涨但总毛利下降。',missing:'订单级优惠组合、补贴承担及订单成本明细待补充；现有汇总归因尚不能指认某一活动违规或无效。'},
+    {id:'new-promotion',category:'pricing',causeId:'pricing-new',title:'逐款核对新品促销实收与成本，调整毛利不足的促销价格和范围。',summary:'结合新品销量、实收及材料成本，形成逐款促销复核与调整步骤。',name:'新品促销调整方案',steps:['产品、营销与财务负责人逐款核对新品销量、折后实收、单份用量及实际采购价。','对照单品毛利，比较调整折扣、优惠适用范围和套餐组合的方案，并评估销量变化。','在可比较的门店与经营日观察新品销量、总毛利及老品替代情况，再确定推广范围。'],verification:'比较新品实收、单品毛利、销量及整体毛利；采购价差与售价变化分别核对。',missing:'完整单品成本、活动订单明细及销量变化依据待补充，尚不能给出确定的最优促销价。'}
+  ];
+  const fees=[
+    ['other-expense','opex-otherStoreExpense','逐店核对其他费用的用途与结算凭据，按查明原因处理超支。','其他费用整改方案','按费用金额与利润偏差排序，核对用途、审批、合同与结算凭据。',['财务与店长逐笔核对费用用途、归属期间、审批及结算凭据，先确认差异来源。','区分必要支出、一次性支出和可控超支；对发现的结算差错按财务流程更正，对可控支出明确调整事项。','由责任部门确认后续支出安排，下一周期按同口径复核，保留必要经营投入。'],'复核同口径费用、结算更正及后续支出，区分一次性变化与持续改善。','费用用途、合同、审批与结算凭据待核实，当前差异不等于违规或重复支出。'],
+    ['marketing-expense','opex-marketing','核对市场推广费用与活动约定，调整经评估效益不足的后续投放。','推广费用调整方案','对照活动预算、合同结算及投放效果，明确可调整的后续支出。',['营销与财务核对各活动预算、已承诺合同金额及实际结算，确认费用偏差。','结合活动带来的实收与毛利评价投入效果，区分可调整投放和必须履行的承诺。','对效益不足且可调整的后续投放提出减停或重配安排，经业务确认后执行。'],'复核推广费用和活动总毛利，单独列出已承诺费用及订单优惠，避免重复计算。','活动合同、订单关联及增量效果依据待补充，不能仅凭费用增加判断投放无效。'],
+    ['utilities-expense','opex-utilities','对能耗偏差较大的门店，核查设备启停及异常耗能。','能耗整改方案','结合门店业务量与能耗费用，安排电价、设备及启停时段核查。',['店长核对营业时长、业务量、账单与计费价格，区分价格变化和实际用量变化。','检查非营业时段设备运行、温控与设备故障，记录可调整事项。','根据核查结果调整启停安排或维修设备，保留食品储存和营业服务所需能耗。'],'比较相近营业时长和业务量下的能耗用量及费用，同时检查储存温控和服务。','电表用量、计费价格、营业时长及设备运行记录待补充。'],
+    ['consumables-expense','opex-consumables','对物耗偏差较大的门店，核对领用、库存与实际业务量。','物耗整改方案','按门店核对采购、领用及库存差异，再调整补货和领用安排。',['店长与仓管核对物耗采购、领用、期末库存及盘点，确认统计口径一致。','结合客流与订单量检查单位业务量物耗，核查集中领用或重复补货的具体原因。','对查明的过量领用或补货问题调整领用与补货安排，跟踪实际消耗。'],'比较单位客流或订单物耗及盘点差异，避免将延迟领用误作费用节约。','物耗采购、领用、盘点及单位业务量明细待补充。'],
+    ['maintenance-expense','opex-maintenance','逐笔核对维修项目、报价与验收，确认维修费用偏差原因。','维修费用核查方案','对照维修工单、报价、保修与验收记录，形成逐项处理清单。',['店长与设备负责人核对维修工单、故障原因、合同报价及验收结算。','检查是否在保修范围、是否重复故障及维修范围是否一致，区分必要维修与可优化事项。','对确认的结算差错或不合理报价按流程处理，对重复故障评估预防维护安排。'],'复核维修结算、重复故障与设备可用性，不能通过延误必要维修形成费用下降。','维修工单、合同、保修与验收记录待补充，当前费用偏差不代表维修不必要。']
+  ];
+  return plans.concat(fees.map(([id,causeId,title,name,summary,steps,verification,missing])=>({id,category:'opex',causeId,title,name,summary,steps,verification,missing})));
+}
+function remediationPlanEvidence(plan){
+  const table=(headers,rows)=>`<div class="hmw-table-wrap"><table class="hmw-table"><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
+  if(plan.id==='supplier-negotiation')return table(['物料','9月采购价 / 元·公斤','10月到货价 / 元·公斤','10月采购量 / 公斤','采购价差成本 / 万元'],M.materials.filter(m=>!m.newProduct).sort((a,b)=>a.priceImpact-b.priceImpact).map(m=>`<tr><td>${esc(m.name)}</td><td class="numeric">${amt(m.basePrice)}</td><td class="numeric">${amt(m.actualPrice)}</td><td class="numeric">${amt(m.purchaseKg,0)}</td><td class="numeric">${amt(-m.priceImpact)}</td></tr>`));
+  if(plan.id==='new-purchase')return table(['新品物料','预估 / 实际销量（份）','试销配额 / 追加现货（公斤）','配额价 / 现货价（元·公斤）','历史批量承诺门槛（公斤）'],M.materials.filter(m=>m.newProduct).sort((a,b)=>a.priceImpact-b.priceImpact).map(m=>`<tr><td>${esc(m.name)}</td><td class="numeric">${amt(m.forecastServings,0)} / ${amt(m.actualServings,0)}</td><td class="numeric">${amt(m.lockedKg,0)} / ${amt(m.spotKg,0)}</td><td class="numeric">${amt(m.basePrice)} / ${amt(m.spotPrice)}</td><td class="numeric">${amt(m.minimumCommitmentKg,0)}</td></tr>`));
+  if(plan.category==='food')return usageMaterialsTable(plan.causeId);
+  if(plan.category==='labor'){
+    const l=M.attribution.laborStandard;
+    return `<p>10月标准弹性工时${amt(l.standardHours)}小时，实际${amt(l.actualHours)}小时，综合时薪${amt(l.hourlyCost)}元。人工结构摊薄与超标准工时分别核算，不能将净差额直接当作可节约额。</p>`;
+  }
+  if(plan.category==='pricing'){
+    const c=M.attribution.channels;
+    return table(['渠道','9月实收单价 / 元','10月实收单价 / 元'],[['dineIn','堂食人均'],['delivery','外卖单均']].map(([id,label])=>`<tr><td>${label}</td><td class="numeric">${num(c.september[id].unitPrice,4)}</td><td class="numeric">${num(c.october[id].unitPrice,4)}</td></tr>`));
+  }
+  return '';
+}
+function showRemediationPlan(id){
+  const p=remediationPlans().find(p=>p.id===id);if(!p)return;
+  const c=M.getCauseDetail(p.causeId),stores=c.storeRows.filter(r=>r.impact<0).sort((a,b)=>a.impact-b.impact).slice(0,5);
+  const evidence=p.evidence||`${c.name}的10月利润影响为${signedAmt(c.impact)}万元。${c.description}`;
+  const storeTable=['supplier-negotiation','new-purchase'].includes(id)?'':`<h3>优先核查门店</h3><p>按本项减利金额展示前${stores.length}家，具体执行安排需结合现场核查。</p><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>门店</th><th>区域</th><th class="numeric">本项利润影响 / 万元</th></tr></thead><tbody>${stores.map(s=>`<tr><td><button class="hmw-link" data-store="${s.storeId}" data-context="attribution" data-cause-context="${p.causeId}">${esc(s.storeId)} · ${esc(s.storeName)}</button></td><td>${esc(s.region)}</td><td class="numeric bad">${signedAmt(s.impact,4)}</td></tr>`).join('')}</tbody></table></div>`;
+  dialog(p.name,`<div class="ai-remediation-plan" data-remediation-detail="${p.id}"><h3>整改措施</h3><p>${esc(p.title)}</p><h3>制定依据</h3><p>${esc(evidence)}</p>${remediationPlanEvidence(p)}<div class="ai-remediation-pending"><strong>执行前需核实</strong><p>${esc(p.missing)}</p></div>${storeTable}<h3>执行步骤</h3><ol>${p.steps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol><h3>效果核验</h3><p>${esc(p.verification)}</p><button class="hmw-button" data-cause="${p.causeId}">查看相关归因及门店明细</button></div>`,'10月整改建议 · '+M.getCauseDetail(p.category).name);
+  $('#hmwDialogBody').dataset.activeStore='';$('#hmwDialogBody').scrollTop=0;
+}
 function aiAttributionBrief(){
   const a=M.actuals.september,b=M.actuals.october,t=M.attribution,decline=a.profit-b.profit;
   const pricing=M.getCauseDetail('pricing'),food=M.getCauseDetail('food'),labor=M.getCauseDetail('labor'),opex=M.getCauseDetail('opex');
   const positive=M.group.positiveOffset,negative=M.group.negativeTotal,rent=M.getCauseDetail('opex-rent');
   const regularMaterials=M.materials.filter(m=>!m.newProduct).sort((a,b)=>a.priceImpact-b.priceImpact),newMaterials=M.materials.filter(m=>m.newProduct);
   const regularPriceCost=regularMaterials.reduce((sum,m)=>sum-m.priceImpact,0),newProductPriceCost=newMaterials.reduce((sum,m)=>sum-m.priceImpact,0);
-  const recommendations={
-    food:{direction:'重点物料比价，新品锁量采购，分批备料。',verification:'到货价、锁量覆盖、耗用、报损。'},
-    labor:{direction:'按客流排班，减低峰工时、保高峰配置。',verification:'工时、工资、出餐时长、客诉。'},
-    pricing:{direction:'限制优惠叠加，按订单毛利调整促销。',verification:'净成交价、订单毛利。'},
-    opex:{direction:'逐店核对超支，压降异常支出。',verification:'费用用途、结算凭据、超支额。'}
-  };
-  const priorities=M.causes.filter(c=>c.impact<0).sort((a,b)=>a.impact-b.impact).map(c=>{const r=recommendations[c.id];return `<li data-category="${c.id}"><strong>${esc(c.name)}<span class="bad">${signedAmt(c.impact,0)}万元</span></strong><p><strong>动作：</strong>${r.direction}</p><p><strong>核验：</strong>${r.verification}</p><button class="hmw-link" data-cause="${c.id}" aria-label="${esc(c.name)}明细">查看明细</button></li>`;}).join('');
+  const recommendations=remediationPlans();
+  const priorities=M.causes.filter(c=>c.impact<0).sort((a,b)=>a.impact-b.impact).map(c=>`<li data-category="${c.id}"><strong>${esc(c.name)}<span class="ai-remediation-impact"><small>10月利润影响</small><span class="bad">${signedAmt(c.impact,0)}万元</span></span></strong><ol class="ai-remediation-items">${recommendations.filter(p=>p.category===c.id).map(p=>`<li data-remediation-item="${p.id}"><div><h4>${recommendations.indexOf(p)+1}. ${esc(p.title)}</h4><p><strong>方案：</strong>${esc(p.summary)}</p></div><button type="button" class="hmw-button" data-remediation-plan="${p.id}">查看${esc(p.name)}</button></li>`).join('')}</ol></li>`).join('');
   return `<div class="ai-attribution-brief"><section class="ai-brief-section"><header><h3>一、利润变化全景</h3></header><div class="ai-brief-intro"><p>以<strong>9月实际经营模式</strong>为基准：按照9月实际的成本费用率计算10月基准利润，得到<strong class="ai-value-reference">${amt(t.baseline.profit)}万元</strong>；实际利润<strong class="ai-value-actual">${amt(b.profit)}万元</strong>，较基准少<strong class="ai-value-negative">${amt(t.baselineGap)}万元</strong>。与9月实际${amt(a.profit,0)}万元相比，利润净减少${amt(decline,0)}万元。</p><div class="ai-summary-metrics"><div data-tone="history"><small>9月实际利润</small><strong>${amt(a.profit,0)}<span>万元</span></strong></div><div data-tone="reference"><small>9月模式下10月基准</small><strong>${amt(t.baseline.profit)}<span>万元</span></strong><em>已计入10月实际业务量</em></div><div data-tone="actual"><small>10月实际利润</small><strong>${amt(b.profit,0)}<span>万元</span></strong><em class="ai-value-negative">较基准少${amt(t.baselineGap)}万元</em></div></div></div><figure class="ai-brief-figure"><div class="ai-brief-chart-meta"><span>金额单位：万元</span><div class="ai-brief-legend"><span><i class="total"></i>实绩</span><span><i class="reference"></i>基准检查点</span><span><i class="positive"></i>增加利润</span><span><i class="negative"></i>减少利润</span></div></div>${bridgeSvg(attributionChartRows(),a.profit,b.profit,'9月利润','10月利润',true)}<figcaption class="ai-brief-caption"><strong>图表解读</strong><p>营收增长未能转化为利润，主要压力来自食材采购、超标损耗和排班用工执行。食材成本增加导致利润减少<strong class="bad">${amt(-food.impact,0)}万元</strong>，人工成本增加导致利润减少<strong class="bad">${amt(-labor.impact,0)}万元</strong>。</p></figcaption></figure></section>
     <section class="ai-brief-section"><header><h3>二、利润变化的因素占比</h3></header>${attributionImpactGraphic()}<div class="ai-brief-caption"><strong>图表解读</strong><p><strong>食材成本差异，分为采购价格变动与超标准损耗：</strong></p><p><strong>1. 采购价格变动，增加成本<span class="bad">${amt(t.foodStandard.priceCost)}万元</span>。</strong>其中包括两类业务原因：</p><p class="ai-food-subcause"><strong>重点物料涨价：</strong>${regularMaterials.map(m=>`${esc(m.name)}增加成本${amt(-m.priceImpact)}万元`).join('、')}，合计增加<strong class="bad">${amt(regularPriceCost)}万元</strong>。</p><p class="ai-food-subcause">新品涉及的新食材未达到批量锁价的量，按市价采购，导致食材成本增加<strong class="bad">${amt(newProductPriceCost)}万元</strong>。</p><p><strong>2. 超标准损耗，增加成本<span class="bad">${amt(t.foodStandard.excessCost)}万元</span>。</strong>${M.getCauseDetail('usage').children.map(c=>`${esc(c.name)}${amt(-c.impact)}万元`).join('；')}。</p>${foodMaterialFocus()}<p><strong>人工成本差异：</strong>净减利<strong class="bad">${amt(-labor.impact)}万元</strong>，其中超标准工时影响<strong class="bad">${amt(-t.laborStandard.executionImpact)}万元</strong>，被<strong class="good">${amt(t.laborStandard.structureImpact)}万元</strong>结构摊薄部分抵消。</p><p><strong>净成交价变化：</strong>${pricing.children.map(c=>`${esc(c.name)}影响${signedAmt(c.impact)}万元`).join('；')}。</p><p><strong>其他经营费用：</strong>净影响<strong class="${badClass(opex.impact)}">${signedAmt(opex.impact)}万元</strong>；租金项<strong class="${badClass(rent.impact)}">${signedAmt(rent.impact)}万元</strong>来自规模摊薄，实际租金未减少。</p></div><details class="ai-contribution-detail"><summary>查看对净下降${amt(decline,0)}万元的完整贡献表</summary><div class="hmw-table-wrap ai-brief-table-wrap"><table class="hmw-table ai-brief-table"><caption>各因素对环比净下降${amt(decline,0)}万元的贡献</caption><thead><tr><th>经营因素</th><th class="numeric">利润影响 / 万元</th><th class="numeric">对利润净下降的贡献</th></tr></thead><tbody>${M.causes.map(c=>`<tr data-brief-cause="${c.id}"><td><button class="hmw-link" data-cause="${c.id}">${esc(c.name)}</button></td><td class="numeric ${badClass(c.impact)}">${signedAmt(c.impact)}</td><td class="numeric ${badClass(c.impact)}">${signed(c.netDeclineShare,1)}%</td></tr>`).join('')}<tr class="total" data-brief-total><td>利润净变化</td><td class="numeric bad">${signedAmt(-decline)}</td><td class="numeric">100.0%</td></tr></tbody></table></div><p class="ai-brief-method"><strong>占比口径：</strong>本表贡献＝−单项利润影响 ÷ 环比净下降${amt(decline,0)}万元，原始贡献合计100%；分项显示可能因四舍五入与合计略有差异。增利因素抵减降幅，记负贡献；减利因素记正贡献，可超过100%。顶层增利合计${amt(positive)}万元、减利合计${amt(negative)}万元；${amt(t.baseline.profit)}万元基准是检查点，不作为额外贡献相加。</p></details></section>
-    <section class="ai-brief-section"><header><h3>三、整改建议</h3></header><ol class="ai-brief-priorities">${priorities}</ol></section><div class="ai-message-context">收益按实绩核验 · <button class="hmw-link" data-action="methodology">数据口径</button></div></div>`;
+    <section class="ai-brief-section"><header><h3>三、整改建议</h3><p>按具体问题逐项整改，查看对应方案中的依据、执行步骤与核验方法。</p></header><ol class="ai-brief-priorities">${priorities}</ol></section><div class="ai-message-context">收益按实绩核验 · <button class="hmw-link" data-action="methodology">数据口径</button></div></div>`;
 }
 function aiSummary(page){
   if(page==='attribution')return aiAttributionBrief()+`<div class="ai-message-actions"><button class="hmw-button primary" data-action="show-evidence">查看完整归因</button><button class="hmw-button" data-nav="forecast">推演11月方案</button></div>`;
@@ -1980,6 +2034,7 @@ function render(){
 }
 document.addEventListener('click',event=>{
   const nav=event.target.closest('[data-nav]');if(nav){navigate(nav.dataset.nav);return;}
+  const remediation=event.target.closest('[data-remediation-plan]');if(remediation){showRemediationPlan(remediation.dataset.remediationPlan);return;}
   const cause=event.target.closest('[data-cause]');if(cause){showCause(cause.dataset.cause);return;}
   const causeTab=event.target.closest('[data-cause-tab]');if(causeTab){showCause(causeTab.dataset.causeTab,causeTab.dataset.tab);return;}
   const store=event.target.closest('[data-store]');if(store){showStore(store.dataset.store,store.dataset.context,store.dataset.causeContext);return;}
