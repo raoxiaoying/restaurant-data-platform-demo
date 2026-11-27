@@ -337,7 +337,8 @@
 .ai-platform .ai-remediation-pending{margin:20px 0;padding:14px 16px;border:1px solid #e1e8f3;border-radius:8px;background:#f7f9fc}
 .ai-platform .ai-remediation-pending>strong{color:#405c7d;font-size:14px}
 .ai-platform .ai-remediation-pending>p{margin:6px 0 0}
-@media(max-width:760px){.ai-platform .ai-remediation-impact{flex-direction:column;align-items:flex-end;gap:2px}.ai-platform .ai-remediation-items>li{align-items:flex-start;flex-direction:column;gap:12px}.ai-platform .ai-remediation-items .hmw-button{max-width:100%;white-space:normal;text-align:left}}
+@media(max-width:1100px){.ai-platform .ai-remediation-items>li{align-items:flex-start;flex-direction:column;gap:12px}.ai-platform .ai-remediation-items .hmw-button{max-width:100%;white-space:normal;text-align:left}}
+@media(max-width:760px){.ai-platform .ai-remediation-impact{flex-direction:column;align-items:flex-end;gap:2px}}
 @media(max-width:760px){.ai-platform .ai-brief-figure{padding:13px}.ai-platform .ai-brief-chart-meta{font-size:12px}.ai-platform .ai-brief-legend{gap:9px}.ai-platform .ai-brief-caption{padding:12px}.ai-platform .ai-brief-section h3{font-size:18px}}
 .ai-platform .platform-artifact-button{display:flex;align-items:center;gap:15px;width:100%;min-width:0;margin:20px 0 24px;padding:19px 21px;border:1px solid #d5e2f7;border-radius:13px;background:linear-gradient(105deg,#f9fbff,#edf3ff);box-shadow:0 2px 8px #326fff04;color:#364f79;text-align:left;cursor:pointer}
 .ai-platform .platform-artifact-button:hover{border-color:#98b5ee;background:#edf3ff;box-shadow:0 4px 18px #326fff0c}
@@ -1930,7 +1931,14 @@ function trackingEvidence(r){
   if(r.usageVariance){const v=r.usageVariance;html+=`<div class="hmw-equation">${esc(v.basis)} ${num(v.standardUseCost,6)}万元 ×（${num(v.actualWasteRate,1)}% − ${num(v.allowedWasteRate,1)}%） = ${num(v.extraCost,6)}万元超标准报损</div>`;}
   return html;
 }
-function dialog(title,body,label='好美味餐饮集团 · 120家直营门店'){$('#hmwDialogTitle').textContent=title;$('#hmwDialogLabel').textContent=label;$('#hmwDialogBody').innerHTML=body;if(!$('#hmwDialog').open)$('#hmwDialog').showModal();$('#hmwDialog').scrollTop=0;}
+function dialog(title,body,label='好美味餐饮集团 · 120家直营门店',remediationId=''){
+  const modal=$('#hmwDialog'),origin=remediationId||(modal.open?modal.dataset.remediationOrigin:'');
+  const plan=origin?remediationPlans().find(p=>p.id===origin):null;
+  modal.dataset.remediationOrigin=plan?.id||'';
+  const back=plan&&!remediationId?`<p><button class="hmw-link" data-remediation-plan="${plan.id}">返回${esc(plan.name)}</button></p>`:'';
+  $('#hmwDialogTitle').textContent=title;$('#hmwDialogLabel').textContent=label;$('#hmwDialogBody').innerHTML=back+body;
+  if(!modal.open)modal.showModal();modal.scrollTop=0;
+}
 function toast(message){$('#hmwToast').textContent=message;$('#hmwToast').hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#hmwToast').hidden=true,3200);}
 function pushTasks(){
   return [
@@ -1980,7 +1988,7 @@ function showRemediationPlan(id){
   const c=M.getCauseDetail(p.causeId),stores=c.storeRows.filter(r=>r.impact<0).sort((a,b)=>a.impact-b.impact).slice(0,5);
   const evidence=p.evidence||`${c.name}的10月利润影响为${signedAmt(c.impact)}万元。${c.description}`;
   const storeTable=['supplier-negotiation','new-purchase'].includes(id)?'':`<h3>优先核查门店</h3><p>按本项减利金额展示前${stores.length}家，具体执行安排需结合现场核查。</p><div class="hmw-table-wrap"><table class="hmw-table"><thead><tr><th>门店</th><th>区域</th><th class="numeric">本项利润影响 / 万元</th></tr></thead><tbody>${stores.map(s=>`<tr><td><button class="hmw-link" data-store="${s.storeId}" data-context="attribution" data-cause-context="${p.causeId}">${esc(s.storeId)} · ${esc(s.storeName)}</button></td><td>${esc(s.region)}</td><td class="numeric bad">${signedAmt(s.impact,4)}</td></tr>`).join('')}</tbody></table></div>`;
-  dialog(p.name,`<div class="ai-remediation-plan" data-remediation-detail="${p.id}"><h3>整改措施</h3><p>${esc(p.title)}</p><h3>制定依据</h3><p>${esc(evidence)}</p>${remediationPlanEvidence(p)}<div class="ai-remediation-pending"><strong>执行前需核实</strong><p>${esc(p.missing)}</p></div>${storeTable}<h3>执行步骤</h3><ol>${p.steps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol><h3>效果核验</h3><p>${esc(p.verification)}</p><button class="hmw-button" data-cause="${p.causeId}">查看相关归因及门店明细</button></div>`,'10月整改建议 · '+M.getCauseDetail(p.category).name);
+  dialog(p.name,`<div class="ai-remediation-plan" data-remediation-detail="${p.id}"><h3>整改措施</h3><p>${esc(p.title)}</p><h3>制定依据</h3><p>${esc(evidence)}</p>${remediationPlanEvidence(p)}<div class="ai-remediation-pending"><strong>执行前需核实</strong><p>${esc(p.missing)}</p></div>${storeTable}<h3>执行步骤</h3><ol>${p.steps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol><h3>效果核验</h3><p>${esc(p.verification)}</p><button class="hmw-button" data-cause="${p.causeId}">查看相关归因及门店明细</button></div>`,'10月整改建议 · '+M.getCauseDetail(p.category).name,p.id);
   $('#hmwDialogBody').dataset.activeStore='';$('#hmwDialogBody').scrollTop=0;
 }
 function aiAttributionBrief(){
@@ -2060,6 +2068,7 @@ document.addEventListener('change',event=>{
   if(event.target.id==='trackingFilter'){state.trackingFilter=event.target.value;$('#trackingStores').innerHTML=trackingStoreTable(state.search);}
 });
 $('#hmwClose').onclick=()=>$('#hmwDialog').close();
+$('#hmwDialog').addEventListener('close',()=>{delete $('#hmwDialog').dataset.remediationOrigin;});
 $('#hmwDialog').addEventListener('click',event=>{if(event.target===$('#hmwDialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
 $('#hmwFullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{toast('请在独立浏览器中使用全屏');}};
 window.addEventListener('hashchange',()=>{state.search='';render();window.scrollTo(0,0);});
